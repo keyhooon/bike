@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="bike.Views.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
+    Title="{Binding Title}"
+    material:MaterialNavigationPage.AppBarColor="#2c3e50"
+    material:MaterialNavigationPage.AppBarTitleTextAlignment="End"
+    material:MaterialNavigationPage.AppBarTitleTextFontFamily="Roboto"
+    material:MaterialNavigationPage.AppBarTitleTextFontSize="18"
+    material:MaterialNavigationPage.StatusBarColor="#1B3147">
+
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
+        <Label Text="Welcome to aaa Forms and Prism!" />
+        <material:MaterialCard
+            CornerRadius="5"
+            Elevation="5"
+            HeightRequest="20"
+            IsClickable="True" />
+        <material:MaterialButton
+            BackgroundColor="#EAEAEA"
+            Elevation="5"
+            HorizontalOptions="Center"
+            Text="Elevated Button"
+            TextColor="Black"
+            VerticalOptions="Center" />
+        <material:MaterialTextField
+            ErrorText="Error Text"
+            HeightRequest="150"
+            HelperText="Helper Text"
+            InputType="Default"
+            Placeholder="Placeholder"
+            Text="Input Text"
+            VerticalOptions="FillAndExpand" />
+        <material:MaterialMenuButton
+            ButtonType="Text"
+            Choices="{Binding Actions}"
+            Command="{Binding MenuCommand}"
+            CornerRadius="24" />
+    </StackLayout>
+
+</ContentPage>

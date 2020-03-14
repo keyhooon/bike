@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
+    <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1422" />
+    <PackageReference Include="XF.Material" Version="1.5.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\InfraStructure\InfraStructure.csproj" />
+    <ProjectReference Include="..\..\Modules\Battery\Battery.csproj" />
+    <ProjectReference Include="..\..\Modules\Communication\Communication.csproj" />
+    <ProjectReference Include="..\..\Modules\Core\Core.csproj" />
+    <ProjectReference Include="..\..\Modules\Light\Light.csproj" />
+    <ProjectReference Include="..\..\Modules\Pedal\Pedal.csproj" />
+    <ProjectReference Include="..\..\Modules\Servo\Servo.csproj" />
+    <ProjectReference Include="..\..\Modules\Throttle\Throttle.csproj" />
+  </ItemGroup>
+
+</Project>
