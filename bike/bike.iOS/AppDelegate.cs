@@ -1,4 +1,14 @@
-﻿using Foundation;
+using Syncfusion.ListView.XForms.iOS;
+using Syncfusion.SfRating.XForms.iOS;
+using Syncfusion.XForms.iOS.Core;
+using Syncfusion.SfMaps.XForms.iOS;
+using Syncfusion.XForms.iOS.Border;
+using Syncfusion.XForms.iOS.Graphics;
+using Syncfusion.XForms.iOS.Buttons;
+using Syncfusion.XForms.iOS.ComboBox;
+using Syncfusion.XForms.iOS.DataForm;
+using Syncfusion.SfNavigationDrawer.XForms.iOS;
+using Foundation;
 using Prism;
 using Prism.Ioc;
 using UIKit;
@@ -21,7 +31,17 @@ namespace bike.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.Init();
+global::Xamarin.Forms.Forms.Init();
+            SfListViewRenderer.Init();
+            SfRatingRenderer.Init();
+            Core.Init();
+            SfMapsRenderer.Init();
+            SfBorderRenderer.Init();
+            SfButtonRenderer.Init();
+            SfGradientViewRenderer.Init();
+SfComboBoxRenderer.Init();
+SfDataFormRenderer.Init();
+SfNavigationDrawerRenderer.Init();
             LoadApplication(new App(new iOSInitializer()));
 
             return base.FinishedLaunching(app, options);

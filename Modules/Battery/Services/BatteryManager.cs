@@ -28,7 +28,7 @@ namespace Battery.Services
             switch (e.Packet)
             {
                 case BatteryConfigurationPacket batteryConfigurationPacket:
-                    BatteryConfigurationSetting = mapper.Map<BatteryConfigurationPacket, BatteryConfigurationSetting>(batteryConfigurationPacket);
+                    BatteryConfiguration = mapper.Map<BatteryConfigurationPacket, BatteryConfiguration>(batteryConfigurationPacket);
                     break;
                 case BatteryOutputPacket batteryOutputPacket:
                     BatteryOutput = mapper.Map<BatteryOutputPacket, BatteryOutput>(batteryOutputPacket);
@@ -43,13 +43,13 @@ namespace Battery.Services
             RaisePropertyChanged(nameof(IsConnect));
             ConfigurationSendCommand.RaiseCanExecuteChanged();
             if (IsConnect)
-                dataTransport.DataTransmit(mapper.Map<BatteryConfigurationSetting, BatteryConfigurationPacket>(BatteryConfigurationSetting));
+                dataTransport.DataTransmit(mapper.Map<BatteryConfiguration, BatteryConfigurationPacket>(BatteryConfiguration));
         }
 
         private DelegateCommand _configurationSendCommand;
         public DelegateCommand ConfigurationSendCommand =>
             _configurationSendCommand ?? (_configurationSendCommand = new DelegateCommand(() => {
-                dataTransport.DataTransmit(mapper.Map<BatteryConfigurationSetting, BatteryConfigurationPacket>(BatteryConfigurationSetting));
+                dataTransport.DataTransmit(mapper.Map<BatteryConfiguration, BatteryConfigurationPacket>(BatteryConfiguration));
             }, () => dataTransport.IsConnect));
 
 
@@ -69,11 +69,11 @@ namespace Battery.Services
             set { SetProperty(ref _batteryOutput, value); }
         }
 
-        private BatteryConfigurationSetting _batteryConfigurationSetting;
-        public BatteryConfigurationSetting BatteryConfigurationSetting
+        private BatteryConfiguration _batteryConfiguration;
+        public BatteryConfiguration BatteryConfiguration
         {
-            get { return _batteryConfigurationSetting; }
-            set { SetProperty(ref _batteryConfigurationSetting, value); }
+            get { return _batteryConfiguration; }
+            set { SetProperty(ref _batteryConfiguration, value); }
         }
     }
 }

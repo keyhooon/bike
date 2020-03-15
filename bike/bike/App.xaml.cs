@@ -26,7 +26,9 @@ namespace bike
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            XF.Material.Forms.Material.Init(this, "Material.Style");
+            Plugin.Iconize.Iconize
+                .With(new Plugin.Iconize.Fonts.MaterialModule())
+                .With(new Plugin.Iconize.Fonts.MaterialDesignIconsModule());
             await NavigationService.NavigateAsync("NavigationPage/MainPage");
         }
 

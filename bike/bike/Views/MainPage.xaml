@@ -3,41 +3,164 @@
     x:Class="bike.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:material="clr-namespace:XF.Material.Forms.UI;assembly=XF.Material"
-    Title="{Binding Title}"
-    material:MaterialNavigationPage.AppBarColor="#2c3e50"
-    material:MaterialNavigationPage.AppBarTitleTextAlignment="End"
-    material:MaterialNavigationPage.AppBarTitleTextFontFamily="Roboto"
-    material:MaterialNavigationPage.AppBarTitleTextFontSize="18"
-    material:MaterialNavigationPage.StatusBarColor="#1B3147">
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+    xmlns:navigationdrawer="clr-namespace:Syncfusion.SfNavigationDrawer.XForms;assembly=Syncfusion.SfNavigationDrawer.XForms"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:sfavatar="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusion.Core.XForms"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <ContentPage.Content>
+        <navigationdrawer:SfNavigationDrawer x:Name="navigationDrawer" DrawerHeaderHeight="160">
+            <navigationdrawer:SfNavigationDrawer.ContentView>
+                <Grid x:Name="mainContentView" BackgroundColor="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <StackLayout BackgroundColor="#1aa1d6" Orientation="Horizontal">
+                        <button:SfButton
+                            BackgroundColor="#1aa1d6"
+                            Clicked="hamburgerButton_Clicked"
+                            FontSize="20"
+                            HeightRequest="50"
+                            HorizontalOptions="Start"
+                            Visual="Material"
+                            WidthRequest="50">
+                            <button:SfButton.Content>
+                                <iconize:IconButton
+                                    BackgroundColor="Transparent"
+                                    FontSize="20"
+                                    Text="md-dehaze"
+                                    TextColor="White"
+                                    WidthRequest="48" />
+                            </button:SfButton.Content>
+                        </button:SfButton>
+                        <Label
+                            x:Name="headerLabel"
+                            BackgroundColor="#1aa1d6"
+                            FontSize="16"
+                            HeightRequest="50"
+                            HorizontalTextAlignment="Center"
+                            Text="Home"
+                            TextColor="White"
+                            VerticalTextAlignment="Center" />
+                    </StackLayout>
+                    <Label
+                        x:Name="contentLabel"
+                        Grid.Row="1"
+                        FontSize="14"
+                        HorizontalOptions="Center"
+                        Text="Content View"
+                        TextColor="Black"
+                        VerticalOptions="Center" />
+                </Grid>
+            </navigationdrawer:SfNavigationDrawer.ContentView>
+            <navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
+                <Grid BackgroundColor="#1aa1d6" WidthRequest="80">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="120" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="StartAndExpand">
-        <Label Text="Welcome to aaa Forms and Prism!" />
-        <material:MaterialCard
-            CornerRadius="5"
-            Elevation="5"
-            HeightRequest="20"
-            IsClickable="True" />
-        <material:MaterialButton
-            BackgroundColor="#EAEAEA"
-            Elevation="5"
-            HorizontalOptions="Center"
-            Text="Elevated Button"
-            TextColor="Black"
-            VerticalOptions="Center" />
-        <material:MaterialTextField
-            ErrorText="Error Text"
-            HeightRequest="150"
-            HelperText="Helper Text"
-            InputType="Default"
-            Placeholder="Placeholder"
-            Text="Input Text"
-            VerticalOptions="FillAndExpand" />
-        <material:MaterialMenuButton
-            ButtonType="Text"
-            Choices="{Binding Actions}"
-            Command="{Binding MenuCommand}"
-            CornerRadius="24" />
-    </StackLayout>
+                    <sfavatar:SfAvatarView
+                        AvatarCharacter="Avatar10"
+                        ContentType="AvatarCharacter"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        WidthRequest="50" />
+                    <Label
+                        Grid.Row="1"
+                        FontSize="20"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Text="Guest"
+                        TextColor="White" />
+                </Grid>
+            </navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
+            <navigationdrawer:SfNavigationDrawer.DrawerContentView>
+                <StackLayout HeightRequest="40">
+
+                    <button:SfButton
+                        Margin="-35,0,0,0"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="CenterAndExpand">
+                        <button:SfButton.Content>
+                            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                                <iconize:IconButton
+                                    BackgroundColor="Transparent"
+                                    FontSize="20"
+                                    Text="md-dashboard"
+                                    WidthRequest="48" />
+                                <Label Text="Home" VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </button:SfButton.Content>
+                    </button:SfButton>
+                    <button:SfButton
+                        Margin="-35,0,0,0"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="CenterAndExpand">
+                        <button:SfButton.Content>
+                            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                                <iconize:IconButton
+                                    BackgroundColor="Transparent"
+                                    FontSize="20"
+                                    Text="md-settings"
+                                    WidthRequest="48" />
+                                <Label Text="Settings" VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </button:SfButton.Content>
+                    </button:SfButton>
+                    <button:SfButton
+                        Margin="-35,0,0,0"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="CenterAndExpand">
+                        <button:SfButton.Content>
+                            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                                <iconize:IconButton
+                                    BackgroundColor="Transparent"
+                                    FontSize="20"
+                                    Text="md-tune"
+                                    WidthRequest="48" />
+                                <Label Text="Configurations" VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </button:SfButton.Content>
+                    </button:SfButton>
+                    <button:SfButton
+                        Margin="-35,0,0,0"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="CenterAndExpand">
+                        <button:SfButton.Content>
+                            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                                <iconize:IconButton
+                                    BackgroundColor="Transparent"
+                                    FontSize="20"
+                                    Text="md-timeline"
+                                    WidthRequest="48" />
+                                <Label Text="Logs" VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </button:SfButton.Content>
+                    </button:SfButton>
+                    <button:SfButton
+                        Margin="-35,0,0,0"
+                        BackgroundColor="Transparent"
+                        HorizontalOptions="CenterAndExpand">
+                        <button:SfButton.Content>
+                            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                                <iconize:IconButton
+                                    BackgroundColor="Transparent"
+                                    FontSize="20"
+                                    Text="md-error"
+                                    WidthRequest="48" />
+                                <Label Text="Diagnostic" VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </button:SfButton.Content>
+                    </button:SfButton>
+                </StackLayout>
+            </navigationdrawer:SfNavigationDrawer.DrawerContentView>
+        </navigationdrawer:SfNavigationDrawer>
+
+    </ContentPage.Content>
 
 </ContentPage>

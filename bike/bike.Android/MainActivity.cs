@@ -16,7 +16,7 @@ namespace bike.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
-
+            Plugin.Iconize.Iconize.Init(Resource.Id.toolbar, Resource.Id.main_tablayout);
             LoadApplication(new App(new AndroidInitializer()));
         }
     }

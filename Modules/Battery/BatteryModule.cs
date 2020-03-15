@@ -21,13 +21,13 @@ namespace Battery
         {
             var mapperConfigurationExpression = containerProvider.Resolve<MapperConfigurationExpression>();
             mapperConfigurationExpression.CreateMap<BatteryConfigurationPacket, BatteryConfiguration>().ReverseMap();
-            mapperConfigurationExpression.CreateMap<BatteryConfigurationSetting, BatteryConfiguration>().ReverseMap();
+            mapperConfigurationExpression.CreateMap<BatteryConfiguration, BatteryConfiguration>().ReverseMap();
             mapperConfigurationExpression.CreateMap<BatteryOutputPacket, BatteryOutput>().ReverseMap();
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA, ViewAViewModel>();
+            containerRegistry.RegisterForNavigation<ViewA, BatteryOutputViewModel>();
             containerRegistry
                 .RegisterInstance(BatteryConfigurationEncoding.CreateBuilder())
                 .RegisterInstance(BatteryOutputEncoding.CreateBuilder());

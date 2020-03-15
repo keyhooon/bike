@@ -1,48 +1,72 @@
-﻿
-
+﻿using Plugin.Settings;
+using Plugin.Settings.Abstractions;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Battery.DataModel
+namespace Battery.DataSettings
 {
     public class BatteryConfiguration : BindableBase
     {
-        private double _overCurrent;
+
+        private static ISettings AppSettings => CrossSettings.Current;
+
+        [Display(Name = "Over Current", Prompt = "Enter Over Current", Description = "Max threshold for Current")]
+        [Range(10, 60, ErrorMessage = "Maximum Threshold for Current not in range(10 - 60)")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Over Current should not be empty")]
         public double OverCurrent
         {
-            get { return _overCurrent; }
-            set { SetProperty(ref _overCurrent, value); }
+            get => AppSettings.GetValueOrDefault(nameof(OverCurrent), double.PositiveInfinity);
+            set 
+            { 
+                AppSettings.AddOrUpdateValue(nameof(OverCurrent), value);
+                RaisePropertyChanged();
+            }
         }
 
-        private double _overVoltage;
+        [Display(Name = "Over Voltage", Prompt = "Enter Over Voltage", Description = "Max threshold for Voltage")]
+        [Range(40, 80, ErrorMessage = "Maximum Threshold for Voltage not in range(40 - 80)")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Over Voltage should not be empty")]
         public double OverVoltage
         {
-            get { return _overVoltage; }
-            set { SetProperty(ref _overVoltage, value); }
+            get => AppSettings.GetValueOrDefault(nameof(OverVoltage), double.PositiveInfinity);
+            set
+            {
+                AppSettings.AddOrUpdateValue(nameof(OverVoltage), value);
+                RaisePropertyChanged();
+            }
         }
 
-        private double _underVotlage;
         public double UnderVoltage
         {
-            get { return _underVotlage; }
-            set { SetProperty(ref _underVotlage, value); }
+            get => AppSettings.GetValueOrDefault(nameof(UnderVoltage), double.NegativeInfinity);
+            set
+            {
+                AppSettings.AddOrUpdateValue(nameof(UnderVoltage), value);
+                RaisePropertyChanged();
+            }
         }
 
-        private double _nominalVoltage;
         public double NominalVoltage
         {
-            get { return _nominalVoltage; }
-            set { SetProperty(ref _nominalVoltage, value); }
+            get => AppSettings.GetValueOrDefault(nameof(NominalVoltage), double.Epsilon);
+            set
+            {
+                AppSettings.AddOrUpdateValue(nameof(NominalVoltage), value);
+                RaisePropertyChanged();
+            }
         }
 
-        private double _overTemprature;
         public double OverTemprature
         {
-            get { return _overTemprature; }
-            set { SetProperty(ref _overTemprature, value); }
+            get => AppSettings.GetValueOrDefault(nameof(OverTemprature), double.PositiveInfinity);
+            set
+            {
+                AppSettings.AddOrUpdateValue(nameof(OverTemprature), value);
+                RaisePropertyChanged();
+            }
         }
-
     }
 }

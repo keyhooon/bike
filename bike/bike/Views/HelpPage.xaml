@@ -1,0 +1,403 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="bike.Views.Settings.HelpPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:controls="clr-namespace:bike.Controls"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:graphics="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:viewModel="clr-namespace:bike.ViewModels.Settings"
+    x:Name="helpPage"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource Gray-100}"
+    NavigationPage.HasNavigationBar="False"
+    mc:Ignorable="d">
+
+    <ContentPage.Resources>
+
+        <Color x:Key="Transparent">Transparent</Color>
+        <x:String x:Key="Back">&#xe709;</x:String>
+        <x:String x:Key="Search">&#xe705;</x:String>
+        <x:String x:Key="Share">&#xe704;</x:String>
+        <x:String x:Key="Next">&#xe71a;</x:String>
+        <x:String x:Key="Account">&#xe70e;</x:String>
+        <x:String x:Key="Bell">&#xe700;</x:String>
+        <x:String x:Key="Mail">&#xe70e;</x:String>
+        <x:String x:Key="Help">&#xe72c;</x:String>
+
+
+        <!--  Common style for entries  -->
+        <Style x:Key="ChatSearchEntryStyle" TargetType="control:BorderlessEntry">
+            <Setter Property="PlaceholderColor" Value="{DynamicResource Gray-700}" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="ReturnType" Value="Done" />
+        </Style>
+
+        <!--  Common style for NavigationBar button  -->
+        <Style x:Key="NavigationBarButtonStyle" TargetType="buttons:SfButton">
+            <Setter Property="TextColor" Value="{DynamicResource Gray-600}" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="WidthRequest" Value="38" />
+            <Setter Property="HeightRequest" Value="38" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Fill" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="BorderWidth" Value="0" />
+            <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
+        </Style>
+
+        <!--  Common style for icon buttons  -->
+        <Style x:Key="IconButtonStyle" TargetType="buttons:SfButton">
+            <Setter Property="TextColor" Value="{DynamicResource Gray-600}" />
+            <Setter Property="BackgroundColor" Value="{StaticResource Transparent}" />
+            <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="WidthRequest" Value="40" />
+        </Style>
+
+        <!--  Common style for icon label  -->
+        <Style x:Key="IconLabelStyle" TargetType="Label">
+            <Setter Property="Margin" Value="16,8" />
+            <Setter Property="TextColor" Value="{DynamicResource Gray-600}" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
+        </Style>
+
+        <!--  Common style for SfborderStyle  -->
+        <Style x:Key="SfBorderStyle" TargetType="border:SfBorder">
+            <Setter Property="BackgroundColor" Value="{DynamicResource Gray-White}" />
+            <Setter Property="BorderColor" Value="Transparent" />
+            <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        </Style>
+
+        <!--  Common style for  Label  -->
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat-Medium}" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="Margin" Value="16, 12" />
+            <Setter Property="BackgroundColor" Value="{StaticResource Transparent}" />
+            <Setter Property="LineHeight" Value="{OnPlatform Default=-1, Android=1.5}" />
+            <Setter Property="MaxLines" Value="2" />
+        </Style>
+
+        <!--  Common style for separator BoxView  -->
+        <Style x:Key="SeparatorStyle" TargetType="BoxView">
+            <Setter Property="HeightRequest" Value="1" />
+            <Setter Property="BackgroundColor" Value="{DynamicResource Gray-200}" />
+        </Style>
+
+        <!--  Common style for SfButtons  -->
+        <Style x:Key="SfButtonStyle" TargetType="buttons:SfButton">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
+            <Setter Property="FontFamily" Value="Montserrat-Regular" />
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+
+        <!--  Common style for rounded buttons  -->
+        <Style
+            x:Key="RoundButtonStyle"
+            BasedOn="{StaticResource SfButtonStyle}"
+            TargetType="buttons:SfButton">
+            <Setter Property="BorderColor" Value="{DynamicResource Gray-300}" />
+            <Setter Property="BorderWidth" Value="1" />
+            <Setter Property="CornerRadius" Value="22" />
+            <Setter Property="WidthRequest" Value="44" />
+            <Setter Property="HeightRequest" Value="44" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="BackgroundGradient">
+                <Setter.Value>
+                    <graphics:SfLinearGradientBrush>
+                        <graphics:SfLinearGradientBrush.GradientStops>
+                            <graphics:SfGradientStop Offset="0" Color="{DynamicResource PrimaryColor}" />
+                            <graphics:SfGradientStop Offset="1" Color="{DynamicResource PrimaryGradient}" />
+                        </graphics:SfLinearGradientBrush.GradientStops>
+                    </graphics:SfLinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+
+    <StackLayout Spacing="0">
+        <StackLayout
+            x:Name="TitleView"
+            Padding="16,8"
+            BackgroundColor="{DynamicResource Gray-White}"
+            HeightRequest="48"
+            HorizontalOptions="FillAndExpand"
+            Orientation="Horizontal"
+            Spacing="0">
+
+            <StackLayout
+                x:Name="Title"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="True"
+                Orientation="Horizontal"
+                Spacing="0"
+                VerticalOptions="FillAndExpand">
+
+                <buttons:SfButton
+                    x:Name="backButton"
+                    Command="{Binding BackButtonCommand}"
+                    CommandParameter="{x:Reference backButton}"
+                    CornerRadius="4"
+                    Style="{StaticResource IconButtonStyle}"
+                    Text="{StaticResource Back}" />
+                <Label
+                    Margin="16,0"
+                    FontFamily="{StaticResource Montserrat-Medium}"
+                    FontSize="16"
+                    HorizontalOptions="CenterAndExpand"
+                    LineHeight="{OnPlatform Default=-1,
+                                            Android=1.25}"
+                    Text="Help centre"
+                    TextColor="{DynamicResource Gray-900}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+
+            </StackLayout>
+
+            <StackLayout
+                x:Name="Search"
+                HorizontalOptions="EndAndExpand"
+                IsVisible="False"
+                Orientation="Horizontal"
+                Spacing="0">
+
+                <buttons:SfButton
+                    x:Name="BackToTitle"
+                    Clicked="BackToTitle_Clicked"
+                    Style="{StaticResource NavigationBarButtonStyle}"
+                    Text="{StaticResource Back}" />
+
+                <!--  Rounded Search Entry  -->
+                <border:SfBorder Style="{DynamicResource SfBorderStyle}">
+                    <controls:BorderlessEntry
+                        x:Name="SearchEntry"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="Search here"
+                        Style="{StaticResource ChatSearchEntryStyle}" />
+                </border:SfBorder>
+
+            </StackLayout>
+
+            <buttons:SfButton
+                x:Name="SearchButton"
+                Clicked="SearchButton_Clicked"
+                IsVisible="True"
+                Style="{StaticResource IconButtonStyle}"
+                Text="{StaticResource Search}" />
+
+        </StackLayout>
+
+        <ScrollView>
+
+            <StackLayout BackgroundColor="{DynamicResource Gray-100}" Spacing="0">
+
+                <!--  Header label for help with recent orders  -->
+                <Label
+                    Margin="16,0"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="12"
+                    HeightRequest="50"
+                    HorizontalOptions="FillAndExpand"
+                    LineHeight="{OnPlatform Default=-1,
+                                            Android=1.25}"
+                    Text="HELP WITH RECENT ORDERS"
+                    TextColor="{DynamicResource Gray-800}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+
+                <!--  Previous order label and navigation bar icon  -->
+                <controls:TapAnimationGrid
+                    BackgroundColor="{DynamicResource Gray-White}"
+                    ColumnSpacing="0"
+                    Command="{Binding IssuePreviousOrderCommand}"
+                    HeightRequest="48"
+                    RowSpacing="0"
+                    Tapped="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!--  Previous order label  -->
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Issues with Previous Order" />
+                    <!--  Navigation icon  -->
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource IconLabelStyle}"
+                        Text="{StaticResource Next}" />
+                </controls:TapAnimationGrid>
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                <!--  Return & refund label and navigation bar icon  -->
+                <controls:TapAnimationGrid
+                    BackgroundColor="{DynamicResource Gray-White}"
+                    ColumnSpacing="0"
+                    Command="{Binding Return_RefundCommand}"
+                    HeightRequest="48"
+                    RowSpacing="0"
+                    Tapped="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!--  Return and Refunds label  -->
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Returns and Refunds" />
+                    <!--  Navigation icon  -->
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource IconLabelStyle}"
+                        Text="{StaticResource Next}" />
+                </controls:TapAnimationGrid>
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                <!--  Header label for help with other queries  -->
+                <Label
+                    Margin="16,0"
+                    FontFamily="{StaticResource Montserrat-SemiBold}"
+                    FontSize="12"
+                    HeightRequest="71"
+                    HorizontalOptions="FillAndExpand"
+                    LineHeight="{OnPlatform Default=-1,
+                                            Android=1.25}"
+                    Text="HELP WITH OTHER QUERIES"
+                    TextColor="{DynamicResource Gray-800}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+
+                <!--  Payment related queries and navigation bar icon  -->
+                <controls:TapAnimationGrid
+                    BackgroundColor="{DynamicResource Gray-White}"
+                    ColumnSpacing="0"
+                    Command="{Binding PaymentQueriesCommand}"
+                    HeightRequest="48"
+                    RowSpacing="0"
+                    Tapped="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!--  Payment related queries label  -->
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Payment-Related Queries" />
+                    <!--  Navigation icon  -->
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource IconLabelStyle}"
+                        Text="{StaticResource Next}" />
+                </controls:TapAnimationGrid>
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                <!--  Offers related queries and navigation bar icon  -->
+                <controls:TapAnimationGrid
+                    BackgroundColor="{DynamicResource Gray-White}"
+                    ColumnSpacing="0"
+                    Command="{Binding OffersQueriesCommand}"
+                    HeightRequest="48"
+                    RowSpacing="0"
+                    Tapped="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!--  Offers related queries label  -->
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Offer-Related Queries" />
+                    <!--  Navigation icon  -->
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource IconLabelStyle}"
+                        Text="{StaticResource Next}" />
+                </controls:TapAnimationGrid>
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                <!--  Account related queries and navigation bar icon  -->
+                <controls:TapAnimationGrid
+                    BackgroundColor="{DynamicResource Gray-White}"
+                    ColumnSpacing="0"
+                    Command="{Binding AccountQueriesCommand}"
+                    HeightRequest="48"
+                    RowSpacing="0"
+                    Tapped="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!--  Account related queries label  -->
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Account-Related Queries" />
+                    <!--  Navigation icon  -->
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource IconLabelStyle}"
+                        Text="{StaticResource Next}" />
+                </controls:TapAnimationGrid>
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                <!--  Other queries and navigation bar icon  -->
+                <controls:TapAnimationGrid
+                    BackgroundColor="{DynamicResource Gray-White}"
+                    ColumnSpacing="0"
+                    Command="{Binding OtherQueriesCommand}"
+                    HeightRequest="48"
+                    RowSpacing="0"
+                    Tapped="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <!--  Other queries label  -->
+                    <Label
+                        Grid.Column="0"
+                        Style="{StaticResource LabelStyle}"
+                        Text="Other Queries" />
+                    <!--  Navigation icon  -->
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource IconLabelStyle}"
+                        Text="{StaticResource Next}" />
+                </controls:TapAnimationGrid>
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+
+</ContentPage>
