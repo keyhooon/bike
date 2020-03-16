@@ -5,6 +5,8 @@ using CoreModule.ViewModels;
 using Core;
 using Communication.Codec;
 using SharpCommunication.Base.Codec;
+using AutoMapper.Configuration;
+using Core.DataModels;
 
 namespace CoreModule
 {
@@ -12,7 +14,9 @@ namespace CoreModule
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {
-
+            var mapperConfigurationExpression = containerProvider.Resolve<MapperConfigurationExpression>();
+            mapperConfigurationExpression.CreateMap<CoreConfigurationPacket, CoreVersion>().ReverseMap();
+            mapperConfigurationExpression.CreateMap<CoreSituationPacket, CoreSituation>().ReverseMap();
         }
 
         public void RegisterTypes(IContainerRegistry containerRegistry)

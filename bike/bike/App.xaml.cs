@@ -34,6 +34,7 @@ namespace bike
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            
             containerRegistry.RegisterSingleton<MapperConfigurationExpression>();
             containerRegistry.RegisterSingleton<IConfigurationProvider, MapperConfiguration>();
             containerRegistry.RegisterForNavigation<NavigationPage>();

@@ -1,21 +1,21 @@
 ﻿using AutoMapper;
-using Battery.DataSettings;
 using Communication.Codec;
 using Communication.Service;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using Battery.DataTransfterPacket;
-using Battery.DataModel;
+using System.Collections.Generic;
+using System.Text;
+using Throttle.DataModels;
 
-namespace Battery.Services
+namespace Throttle.Services
 {
-    public class BatteryManager : BindableBase
+    class ThrottleManager : BindableBase
     {
         private readonly DataTransportFacade dataTransport;
         private readonly IMapper mapper;
 
-        public BatteryManager(DataTransportFacade dataTransport, IConfigurationProvider mapperConfiguration)
+        public ThrottleManager(DataTransportFacade dataTransport, IConfigurationProvider mapperConfiguration)
         {
             this.dataTransport = dataTransport;
             mapper = mapperConfiguration.CreateMapper();
@@ -27,11 +27,8 @@ namespace Battery.Services
         {
             switch (e.Packet)
             {
-                case BatteryConfigurationPacket batteryConfigurationPacket:
-                    BatteryConfiguration = mapper.Map<BatteryConfigurationPacket, BatteryConfiguration>(batteryConfigurationPacket);
-                    break;
-                case BatteryOutputPacket batteryOutputPacket:
-                    BatteryOutput = mapper.Map<BatteryOutputPacket, BatteryOutput>(batteryOutputPacket);
+                case ThrottleConfigurationPacket throttleConfigurationPacket:
+                    ThrottleConfiguration = mapper.Map<ThrottleConfigurationPacket, ThrottleConfiguration>(throttleConfigurationPacket);
                     break;
                 default:
                     break;
@@ -44,37 +41,33 @@ namespace Battery.Services
             ConfigurationSendCommand.RaiseCanExecuteChanged();
             ConfigurationReceiveCommand.RaiseCanExecuteChanged();
             if (IsConnect)
-                dataTransport.DataTransmit(mapper.Map<BatteryConfiguration, BatteryConfigurationPacket>(BatteryConfiguration));
+            {
+                dataTransport.DataTransmit(mapper.Map<ThrottleConfiguration, ThrottleConfigurationPacket>(ThrottleConfiguration));
+            }
         }
 
         private DelegateCommand _configurationSendCommand;
         public DelegateCommand ConfigurationSendCommand =>
             _configurationSendCommand ?? (_configurationSendCommand = new DelegateCommand(() => {
-                dataTransport.DataTransmit(mapper.Map<BatteryConfiguration, BatteryConfigurationPacket>(BatteryConfiguration));
+                dataTransport.DataTransmit(mapper.Map<ThrottleConfiguration, ThrottleConfigurationPacket>(ThrottleConfiguration));
             }, () => dataTransport.IsConnect));
 
 
         private DelegateCommand _configurationReceiveCommand;
         public DelegateCommand ConfigurationReceiveCommand =>
             _configurationReceiveCommand ?? (_configurationReceiveCommand = new DelegateCommand(() => {
-                dataTransport.CommandTransmit(new ReadCommand() {DataId = BatteryConfigurationPacket.id });
+                dataTransport.CommandTransmit(new ReadCommand() { DataId = ThrottleConfigurationPacket.id });
             }, () => dataTransport.IsConnect));
 
 
         public bool IsConnect => dataTransport.IsConnect;
 
-        private BatteryOutput _batteryOutput;
-        public BatteryOutput BatteryOutput
+        private ThrottleConfiguration _throttleConfiguration;
+        public ThrottleConfiguration ThrottleConfiguration
         {
-            get { return _batteryOutput; }
-            protected set { SetProperty(ref _batteryOutput, value); }
+            get { return _throttleConfiguration; }
+            protected set { SetProperty(ref _throttleConfiguration, value); }
         }
 
-        private BatteryConfiguration _batteryConfiguration;
-        public BatteryConfiguration BatteryConfiguration
-        {
-            get { return _batteryConfiguration; }
-            set { SetProperty(ref _batteryConfiguration, value); }
-        }
     }
 }

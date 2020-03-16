@@ -192,26 +192,6 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="Telerik.Xamarin.iOS">
-      <HintPath>C:\Program Files (x86)\Progress\Telerik UI for Xamarin R1 2020\Binaries\iOS\Telerik.Xamarin.iOS.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Telerik.XamarinForms.Chart">
-      <HintPath>C:\Program Files (x86)\Progress\Telerik UI for Xamarin R1 2020\Binaries\iOS\Telerik.XamarinForms.Chart.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Telerik.XamarinForms.Common">
-      <HintPath>C:\Program Files (x86)\Progress\Telerik UI for Xamarin R1 2020\Binaries\iOS\Telerik.XamarinForms.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Telerik.XamarinForms.DataVisualization">
-      <HintPath>C:\Program Files (x86)\Progress\Telerik UI for Xamarin R1 2020\Binaries\iOS\Telerik.XamarinForms.DataVisualization.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Telerik.XamarinForms.SkiaSharp">
-      <HintPath>C:\Program Files (x86)\Progress\Telerik UI for Xamarin R1 2020\Binaries\iOS\Telerik.XamarinForms.SkiaSharp.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>

@@ -11,6 +11,10 @@
     <None Remove="Assets\Images\4.jpg" />
     <None Remove="Assets\Images\5.jpg" />
     <None Remove="Assets\Images\6.png" />
+    <None Remove="Assets\Images\bike.jpg" />
+    <None Remove="Assets\Images\bike2.jpg" />
+    <None Remove="Assets\Images\bike3.jpg" />
+    <None Remove="Assets\Images\bike4.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +24,10 @@
     <EmbeddedResource Include="Assets\Images\4.jpg" />
     <EmbeddedResource Include="Assets\Images\5.jpg" />
     <EmbeddedResource Include="Assets\Images\6.png" />
+    <EmbeddedResource Include="Assets\Images\bike.jpg" />
+    <EmbeddedResource Include="Assets\Images\bike2.jpg" />
+    <EmbeddedResource Include="Assets\Images\bike3.jpg" />
+    <EmbeddedResource Include="Assets\Images\bike4.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -36,7 +44,6 @@
     <PackageReference Include="Xam.Plugin.Iconize.MaterialDesignIcons" Version="3.5.0.129" />
     <PackageReference Include="Xamarin.Forms" Version="4.5.0.356" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1422" />
-    <PackageReference Include="XF.Material" Version="1.5.7" />
   </ItemGroup>
 
   <ItemGroup>
