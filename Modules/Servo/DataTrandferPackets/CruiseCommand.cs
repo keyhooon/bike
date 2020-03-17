@@ -2,7 +2,7 @@
 using System;
 
 
-namespace Servo.DataTrandferPackets
+namespace Communication.Codec
 {
     class CruiseCommand : IFunctionPacket
     {

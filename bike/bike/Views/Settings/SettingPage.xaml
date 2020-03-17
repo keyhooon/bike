@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="bike.Views.Settings.SettingPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:control="clr-namespace:bike.Controls"
+    xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
+    xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+    xmlns:prism="http://prismlibrary.com"
+    x:Name="settingPage"
+    Title="Settings"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="{DynamicResource Gray-100}">
+    <ContentPage.Resources>
+
+        <Color x:Key="Transparent">Transparent</Color>
+        <x:String x:Key="Back">&#xe709;</x:String>
+
+        <Style x:Key="IconHeaderStyle" TargetType="iconize:IconImage">
+            <Setter Property="Margin" Value="16,8" />
+            <Setter Property="IconColor" Value="{DynamicResource Gray-600}" />
+            <Setter Property="IconSize" Value="42" />
+        </Style>
+
+        <Style x:Key="LableHeaderStyle" TargetType="Label">
+            <Setter Property="BackgroundColor" Value="{DynamicResource Gray-100}" />
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat-SemiBold}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="HeightRequest" Value="50" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+            <Setter Property="LineHeight" Value="{OnPlatform Default=-1, Android=1.25}" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="TextColor" Value="{DynamicResource Gray-800}" />
+        </Style>
+
+        <!--  Common style for icon buttons  -->
+        <Style x:Key="IconButtonStyle" TargetType="buttons:SfButton">
+            <Setter Property="TextColor" Value="{DynamicResource Gray-600}" />
+            <Setter Property="BackgroundColor" Value="{StaticResource Transparent}" />
+            <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="WidthRequest" Value="40" />
+        </Style>
+
+        <!--  Common style for icon label  -->
+        <Style x:Key="IconLabelStyle" TargetType="Label">
+            <Setter Property="Margin" Value="16,8" />
+            <Setter Property="TextColor" Value="{DynamicResource Gray-600}" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ContentPage.ControlTemplate>
+        <ControlTemplate>
+            <StackLayout Spacing="0">
+                <!--  Title View  -->
+                <control:TitleView Title="{TemplateBinding Title}" BackgroundColor="{DynamicResource Gray-White}">
+                    <control:TitleView.LeadingView>
+                        <buttons:SfButton
+                            x:Name="backButton"
+                            Command="{prism:GoBack}"
+                            CornerRadius="4"
+                            Style="{StaticResource IconButtonStyle}"
+                            Text="{StaticResource Back}" />
+                    </control:TitleView.LeadingView>
+                </control:TitleView>
+                <ContentPresenter />
+            </StackLayout>
+        </ControlTemplate>
+    </ContentPage.ControlTemplate>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Spacing="0">
+                <!--  Core Version  -->
+                <Grid Margin="5">
+                    <Grid.Resources />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <iconize:IconImage Icon="md-battery-charging-full" Style="{StaticResource IconHeaderStyle}" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource LableHeaderStyle}"
+                        Text="Core" />
+                </Grid>
+                <dataform:SfDataForm
+                    ContainerType="Filled"
+                    DataObject="{Binding CoreVersion}"
+                    LayoutOptions="TextInputLayout" />
+                <!--  Pedal Setting  -->
+                <Grid Margin="5">
+                    <Grid.Resources />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <iconize:IconImage Icon="md-device-hub" Style="{StaticResource IconHeaderStyle}" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource LableHeaderStyle}"
+                        Text="Pedal" />
+                </Grid>
+                <dataform:SfDataForm
+                    ContainerType="Filled"
+                    DataObject="{Binding PedalSetting}"
+                    LayoutOptions="TextInputLayout" />
+                <!--  Light Setting  -->
+                <Grid Margin="5">
+                    <Grid.Resources />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <iconize:IconImage Icon="md-device-hub" Style="{StaticResource IconHeaderStyle}" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource LableHeaderStyle}"
+                        Text="Pedal" />
+                </Grid>
+                <dataform:SfDataForm
+                    ContainerType="Filled"
+                    DataObject="{Binding LightSetting}"
+                    LayoutOptions="TextInputLayout" />
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

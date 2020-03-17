@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Pedal.DataModels
+namespace DataModels
 {
     public class PedalConfiguration : BindableBase
     {

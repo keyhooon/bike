@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using SharpCommunication.Base.Codec.Packets;
 
-namespace Pedal.DataTrandferPackets
+namespace Communication.Codec
 {
     public class PedalSettingPacket : IPacket, IAncestorPacket
     {

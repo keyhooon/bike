@@ -1,4 +1,5 @@
 ﻿using Syncfusion.SfMaps.XForms;
+using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
 namespace bike.Models.ContactUs
@@ -11,7 +12,7 @@ namespace bike.Models.ContactUs
         /// <summary>
         /// Gets or sets the image to pin location.
         /// </summary>
-        public string PinImage { get; set; }
+        public ImageSource PinImage { get; set; }
 
         /// <summary>
         /// Gets or sets the header.
@@ -36,7 +37,7 @@ namespace bike.Models.ContactUs
         /// <summary>
         /// Gets or sets the close icon image.
         /// </summary>
-        public string CloseImage { get; set; }
+        public ImageSource CloseImage { get; set; }
 
         #endregion
     }

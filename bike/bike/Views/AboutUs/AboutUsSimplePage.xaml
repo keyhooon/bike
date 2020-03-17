@@ -53,16 +53,11 @@
                     Spacing="0"
                     VerticalOptions="Center">
 
-                    <StackLayout.BindingContext>
-                        <viewModel:AboutUsViewModel />
-                    </StackLayout.BindingContext>
-
                     <!--  Product image  -->
                     <Image
                         HeightRequest="110"
-                        Source="{image:ImageResource bike.jpg}"
-                        WidthRequest="124">
-                    </Image>
+                        Source="{Binding ProductIcon}"
+                        WidthRequest="124" />
 
                     <!--  Product version  -->
                     <Label

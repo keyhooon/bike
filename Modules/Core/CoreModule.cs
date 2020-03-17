@@ -1,16 +1,14 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
-using CoreModule.Views;
-using CoreModule.ViewModels;
-using Core;
 using Communication.Codec;
-using SharpCommunication.Base.Codec;
 using AutoMapper.Configuration;
-using Core.DataModels;
+using DataModels;
+using Core.Views;
+using Core.ViewModels;
 
-namespace CoreModule
+namespace Module
 {
-    public class CoreModuleModule : IModule
+    public class CoreModule: IModule
     {
         public void OnInitialized(IContainerProvider containerProvider)
         {

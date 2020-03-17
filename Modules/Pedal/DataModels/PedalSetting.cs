@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pedal.DataModels
+namespace DataModels
 {
     public class PedalSetting :BindableBase
     {

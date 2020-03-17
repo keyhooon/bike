@@ -1,4 +1,4 @@
-﻿namespace Battery.DataTransfterPacket
+﻿namespace Communication.Codec
 {
     public static class CurrentCalibrationHelper
     {

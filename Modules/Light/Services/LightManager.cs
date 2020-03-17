@@ -1,17 +1,13 @@
 ﻿using AutoMapper;
 using Communication.Codec;
-using Communication.Service;
-using Light.DataModels;
-using Light.DataTrandferPackets;
+using DataModels;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Light.Services
+namespace Services
 {
-    class LightManager : BindableBase
+    public class LightManager : BindableBase
     {
         private readonly DataTransportFacade dataTransport;
         private readonly IMapper mapper;
@@ -19,12 +15,14 @@ namespace Light.Services
         public LightManager(DataTransportFacade dataTransport, IConfigurationProvider mapperConfiguration)
         {
             this.dataTransport = dataTransport;
+            LightState = new LightState();
+            LightSetting = new LightSetting();
             mapper = mapperConfiguration.CreateMapper();
             dataTransport.IsOpenChanged += DataTransport_IsOpenChanged;
             dataTransport.DataReceived += DataTransport_DataReceived;
         }
 
-        private void DataTransport_DataReceived(object sender, Core.PacketReceivedEventArg e)
+        private void DataTransport_DataReceived(object sender, PacketReceivedEventArg e)
         {
             switch (e.Packet)
             {

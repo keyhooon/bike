@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
 namespace bike.Models.Feedback
@@ -28,7 +29,7 @@ namespace bike.Models.Feedback
         /// <summary>
         /// Gets or sets the profile image.
         /// </summary>
-        public string CustomerImage { get; set; }
+        public ImageSource CustomerImage { get; set; }
 
         /// <summary>
         /// Gets or sets the comment.
@@ -38,6 +39,6 @@ namespace bike.Models.Feedback
         /// <summary>
         /// Gets or sets the list of images.
         /// </summary>
-        public List<string> Images { get; set; }
+        public List<ImageSource> Images { get; set; }
     }
 }

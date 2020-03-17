@@ -6,7 +6,7 @@ using SharpCommunication.Base.Codec.Packets;
 
 namespace Communication.Codec
 {
-    public     class ThrottleConfigurationPacket : IPacket, IAncestorPacket
+    public class ThrottleConfigurationPacket : IPacket, IAncestorPacket
     {
         public static readonly byte id = 10;
         private const byte ByteCount = 6;

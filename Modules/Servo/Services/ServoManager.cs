@@ -1,17 +1,15 @@
 ﻿using AutoMapper;
 using Communication.Codec;
-using Communication.Service;
+using DataModels;
 using Prism.Commands;
 using Prism.Mvvm;
-using Servo.DataModels;
-using Servo.DataTrandferPackets;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Servo.Services
+using System;
+
+
+namespace Services
 {
-    class ServoManager : BindableBase
+    public class ServoManager : BindableBase
     {
         private readonly DataTransportFacade dataTransport;
         private readonly IMapper mapper;
@@ -19,12 +17,15 @@ namespace Servo.Services
         public ServoManager(DataTransportFacade dataTransport, IConfigurationProvider mapperConfiguration)
         {
             this.dataTransport = dataTransport;
+            ServoInput = new ServoInput();
+            ServoOutput = new ServoOutput();
+            Fault = new Fault();
             mapper = mapperConfiguration.CreateMapper();
             dataTransport.IsOpenChanged += DataTransport_IsOpenChanged;
             dataTransport.DataReceived += DataTransport_DataReceived;
         }
 
-        private void DataTransport_DataReceived(object sender, Core.PacketReceivedEventArg e)
+        private void DataTransport_DataReceived(object sender, PacketReceivedEventArg e)
         {
             switch (e.Packet)
             {

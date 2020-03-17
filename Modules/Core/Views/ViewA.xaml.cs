@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace CoreModule.Views
+namespace Core.Views
 {
     public partial class ViewA : ContentPage
     {

@@ -3,7 +3,7 @@ using SharpCommunication.Base.Codec.Packets;
 using System;
 
 
-namespace Light.DataTrandferPackets
+namespace Communication.Codec
 {
     class LightCommand : IFunctionPacket
     {

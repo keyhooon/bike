@@ -1,10 +1,5 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Battery.Services;
-using Battery.DataSettings;
+﻿using Prism.Mvvm;
+using Services;
 
 namespace Battery.ViewModels
 {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Syncfusion.SfNavigationDrawer.XForms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,11 +13,6 @@ namespace bike.Views
         public MainPage()
         {
             InitializeComponent();
-        }
-
-        private void hamburgerButton_Clicked(object sender, EventArgs e)
-        {
-           navigationDrawer.ToggleDrawer();
         }
     }
 }

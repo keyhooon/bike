@@ -6,19 +6,19 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Battery.DataSettings
+namespace DataModels
 {
     public class BatteryConfiguration : BindableBase
     {
 
         private static ISettings AppSettings => CrossSettings.Current;
 
-        [Display(Name = "Over Current", Prompt = "Enter Over Current", Description = "Max threshold for Current")]
+        [Display(Name = "Over Current", Prompt = "Enter Over Current", Description = "Max threshold for Current" )]
         [Range(10, 60, ErrorMessage = "Maximum Threshold for Current not in range(10 - 60)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Over Current should not be empty")]
         public double OverCurrent
         {
-            get => AppSettings.GetValueOrDefault(nameof(OverCurrent), double.PositiveInfinity);
+            get => AppSettings.GetValueOrDefault(nameof(OverCurrent), 40.0d);
             set 
             { 
                 AppSettings.AddOrUpdateValue(nameof(OverCurrent), value);
@@ -26,12 +26,12 @@ namespace Battery.DataSettings
             }
         }
 
-        [Display(Name = "Over Voltage", Prompt = "Enter Over Voltage", Description = "Max threshold for Voltage")]
+        [Display(Name = "Over Voltage", Prompt = "Enter Over Voltage", Description = "Max threshold for Voltage") ]
         [Range(40, 80, ErrorMessage = "Maximum Threshold for Voltage not in range(40 - 80)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Over Voltage should not be empty")]
         public double OverVoltage
         {
-            get => AppSettings.GetValueOrDefault(nameof(OverVoltage), double.PositiveInfinity);
+            get => AppSettings.GetValueOrDefault(nameof(OverVoltage), 60.0d);
             set
             {
                 AppSettings.AddOrUpdateValue(nameof(OverVoltage), value);
@@ -39,12 +39,12 @@ namespace Battery.DataSettings
             }
         }
 
-        [Display(Name = "Under Voltage", Prompt = "Enter Under Voltage", Description = "Min threshold for Voltage")]
+        [Display(Name = "Under Voltage", Prompt = "Enter Under Voltage", Description = "Min threshold for Voltage" )]
         [Range(20, 50, ErrorMessage = "Minimum Threshold for Voltage not in range(20 - 50)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Under Voltage should not be empty")]
         public double UnderVoltage
         {
-            get => AppSettings.GetValueOrDefault(nameof(UnderVoltage), double.NegativeInfinity);
+            get => AppSettings.GetValueOrDefault(nameof(UnderVoltage), 30.0d);
             set
             {
                 AppSettings.AddOrUpdateValue(nameof(UnderVoltage), value);
@@ -53,12 +53,12 @@ namespace Battery.DataSettings
         }
 
 
-        [Display(Name = "Nominal Voltage", Prompt = "Enter Nominal Voltage", Description = "Nominal Voltage Value")]
+        [Display(Name = "Nominal Voltage", Prompt = "Enter Nominal Voltage", Description = "Nominal Voltage Value" )]
         [Range(30, 70, ErrorMessage = "Nominal Voltage not in range(30 - 70)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Nominal Voltage should not be empty")]
         public double NominalVoltage
         {
-            get => AppSettings.GetValueOrDefault(nameof(NominalVoltage), double.Epsilon);
+            get => AppSettings.GetValueOrDefault(nameof(NominalVoltage), 60.0d);
             set
             {
                 AppSettings.AddOrUpdateValue(nameof(NominalVoltage), value);
@@ -66,12 +66,12 @@ namespace Battery.DataSettings
             }
         }
 
-        [Display(Name = "Over Temprature", Prompt = "Enter Over Temprature", Description = "Maximum Threshold for Temprature")]
+        [Display(Name = "Over Temprature", Prompt = "Enter Over Temprature", Description = "Maximum Threshold for Temprature" )]
         [Range(50, 70, ErrorMessage = "Over Temprature not in range(50 - 70)")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Over Temprature should not be empty")]
         public double OverTemprature
         {
-            get => AppSettings.GetValueOrDefault(nameof(OverTemprature), double.PositiveInfinity);
+            get => AppSettings.GetValueOrDefault(nameof(OverTemprature), 60.0d);
             set
             {
                 AppSettings.AddOrUpdateValue(nameof(OverTemprature), value);

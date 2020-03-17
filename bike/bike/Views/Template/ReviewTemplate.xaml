@@ -161,14 +161,7 @@
         HeightRequest="48"
         Style="{StaticResource SfBorderStyle}"
         WidthRequest="48">
-        <Image BackgroundColor="{DynamicResource Gray-200}">
-            <Image.Source>
-                <UriImageSource
-                    CacheValidity="14"
-                    CachingEnabled="true"
-                    Uri="{Binding CustomerImage}" />
-            </Image.Source>
-        </Image>
+        <Image BackgroundColor="{DynamicResource Gray-200}" Source="{Binding CustomerImage}" />
     </border:SfBorder>
 
     <StackLayout
@@ -233,14 +226,8 @@
                     Aspect="AspectFill"
                     BackgroundColor="{DynamicResource Gray-200}"
                     HeightRequest="50"
-                    WidthRequest="60">
-                    <Image.Source>
-                        <UriImageSource
-                            CacheValidity="14"
-                            CachingEnabled="true"
-                            Uri="{Binding .}" />
-                    </Image.Source>
-                </Image>
+                    Source="{Binding .}"
+                    WidthRequest="60" />
             </DataTemplate>
         </BindableLayout.ItemTemplate>
     </StackLayout>

@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
 using Communication.Codec;
-using Communication.Service;
-using Core.DataModels;
+using DataModels;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Core.Services
+namespace Services
 {
     public class CoreManager : BindableBase
     {
@@ -19,11 +16,13 @@ namespace Core.Services
         {
             this.dataTransport = dataTransport;
             mapper = mapperConfiguration.CreateMapper();
+            CoreVersion = new CoreVersion();
+            CoreSituation = new CoreSituation();
             dataTransport.IsOpenChanged += DataTransport_IsOpenChanged;
             dataTransport.DataReceived += DataTransport_DataReceived;
         }
 
-        private void DataTransport_DataReceived(object sender, Core.PacketReceivedEventArg e)
+        private void DataTransport_DataReceived(object sender, PacketReceivedEventArg e)
         {
             switch (e.Packet)
             {

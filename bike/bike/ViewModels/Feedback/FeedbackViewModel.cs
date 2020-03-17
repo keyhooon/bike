@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
 using bike.Models.Feedback;
 using Prism.Mvvm;
 using Xamarin.Forms;
@@ -26,12 +27,12 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "Jessica Park",
                     Comment = "These boots are stunning and I look stunning in them.",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = "3.png",
+                    CustomerImage = ImageSource.FromResource("1.jpeg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(0, 5),
-                    Images = new List<string>
+                    Images = new List<ImageSource>
                     {
-                        "bike2.jpg",
-                        "bike.jpg",
+                        ImageSource.FromResource("bike2.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                        ImageSource.FromResource("bike.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     }
                 },
                 new Review
@@ -39,7 +40,7 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "Alice",
                     Comment = "Greatest purchase I have ever made in my life. No lie.",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = "1.jpeg",
+                    CustomerImage = ImageSource.FromResource("2.png", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(0, 5)
                 },
                 new Review
@@ -47,7 +48,7 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "John",
                     Comment = "Absolutely love them! Can’t stop wearing!",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = "2.png",
+                    CustomerImage = ImageSource.FromResource("3.png", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(0, 5)
                 },
                 new Review
@@ -55,13 +56,13 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "Lisa",
                     Comment = "These boots are very much comfortable for wearing.",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = "4.jpg",
+                    CustomerImage = ImageSource.FromResource("4.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(0, 5),
-                    Images = new List<string>
+                    Images = new List<ImageSource>
                     {
-                        "bike2.jpg",
-                        "bike3.jpg",
-                        "bike4.jpg",
+                        ImageSource.FromResource("bike2.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                        ImageSource.FromResource("bike3.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                        ImageSource.FromResource("bike4.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     }
                 },
                 new Review
@@ -69,7 +70,7 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "Rebacca",
                     Comment = "Absolutely love them! Can’t stop wearing!",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = "5.jpg",
+                    CustomerImage = ImageSource.FromResource("5.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(0, 5)
                 },
                 new Review
@@ -77,21 +78,9 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "Jessica Park",
                     Comment = "Happy purchasing!",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = "6.png",
+                    CustomerImage = ImageSource.FromResource("6.png", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(4, 5)
                 },
-                new Review
-                {
-                    CustomerName = "Alice",
-                    Comment = "Happy buying!",
-                    ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = "3.png",
-                    Rating = randomNum.Next(0, 5),
-                    Images = new List<string>
-                    {
-                        "bike2.jpg",
-                    }
-                }
             };
 
             this.FilterCommand = new Command(this.OnFilterTapped);

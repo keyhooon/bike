@@ -2,13 +2,11 @@
 using Prism.Modularity;
 using Throttle.Views;
 using Throttle.ViewModels;
-using Core;
 using Communication.Codec;
-using SharpCommunication.Base.Codec;
 using AutoMapper.Configuration;
-using Throttle.DataModels;
+using DataModels;
 
-namespace Throttle
+namespace Module
 {
     public class ThrottleModule : IModule
     {

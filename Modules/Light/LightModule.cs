@@ -2,14 +2,11 @@
 using Prism.Modularity;
 using Light.Views;
 using Light.ViewModels;
-using Core;
-using Light.DataTrandferPackets;
 using Communication.Codec;
-using SharpCommunication.Base.Codec;
-using Light.DataModels;
 using AutoMapper.Configuration;
+using DataModels;
 
-namespace Light
+namespace Module
 {
     public class LightModule : IModule
     {

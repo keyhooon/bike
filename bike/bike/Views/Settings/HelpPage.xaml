@@ -10,6 +10,7 @@
     xmlns:graphics="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com"
+    xmlns:control="clr-namespace:bike.Controls"
     xmlns:viewModel="clr-namespace:bike.ViewModels.Settings"
     x:Name="helpPage"
     prism:ViewModelLocator.AutowireViewModel="True"

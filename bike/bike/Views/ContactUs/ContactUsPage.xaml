@@ -5,6 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:control="clr-namespace:bike.Controls"
     xmlns:converter="clr-namespace:bike.Converters"
     xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
     xmlns:customControls="clr-namespace:bike.Controls"
@@ -18,85 +19,85 @@
     NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Resources>
-        <ResourceDictionary>
-
-            <converter:BooleanToColorConverter x:Key="BooleanToColorConverter" />
-            <converter:StringToBooleanConverter x:Key="StringToBooleanConverter" />
-            <!--  Common style for borders  -->
-            <Style x:Key="SfBorderStyle" TargetType="border:SfBorder">
-                <Setter Property="HeightRequest" Value="40" />
-                <Setter Property="BorderColor" Value="{DynamicResource Gray-300}" />
-                <Setter Property="CornerRadius" Value="3" />
-                <Setter Property="Padding" Value="8,0,0,0" />
-                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-
-            </Style>
 
 
-            <!--  Common style for buttons  -->
-            <Style x:Key="SfGradientButtonStyle" TargetType="buttons:SfButton">
-                <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
-                <Setter Property="FontFamily" Value="{StaticResource Montserrat-SemiBold}" />
-                <Setter Property="FontSize" Value="14" />
-                <Setter Property="HeightRequest" Value="40" />
-                <Setter Property="CornerRadius" Value="24" />
-                <Setter Property="HorizontalOptions" Value="Center" />
-                <Setter Property="WidthRequest" Value="150" />
-                <Setter Property="VerticalTextAlignment" Value="Center" />
+        <converter:BooleanToColorConverter x:Key="BooleanToColorConverter" />
+        <converter:StringToBooleanConverter x:Key="StringToBooleanConverter" />
+        <!--  Common style for borders  -->
+        <Style x:Key="SfBorderStyle" TargetType="border:SfBorder">
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="BorderColor" Value="{DynamicResource Gray-300}" />
+            <Setter Property="CornerRadius" Value="3" />
+            <Setter Property="Padding" Value="8,0,0,0" />
+            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
 
-                <Setter Property="VisualStateManager.VisualStateGroups">
-                    <VisualStateGroupList>
-                        <VisualStateGroup x:Name="CommonStates">
-                            <VisualState x:Name="Normal">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundGradient">
-                                        <Setter.Value>
-                                            <gradient:SfLinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
-                                                <gradient:SfLinearGradientBrush.GradientStops>
-                                                    <gradient:SfGradientStop Offset="0" Color="{DynamicResource PrimaryColor}" />
-                                                    <gradient:SfGradientStop Offset="1" Color="{DynamicResource PrimaryGradient}" />
-                                                </gradient:SfLinearGradientBrush.GradientStops>
-                                            </gradient:SfLinearGradientBrush>
-                                        </Setter.Value>
-                                    </Setter>
-                                </VisualState.Setters>
-                            </VisualState>
-                            <VisualState x:Name="Pressed">
-                                <VisualState.Setters>
-                                    <Setter Property="BackgroundGradient">
-                                        <Setter.Value>
-                                            <gradient:SfLinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
-                                                <gradient:SfLinearGradientBrush.GradientStops>
-                                                    <gradient:SfGradientStop Offset="0" Color="{DynamicResource PrimaryColor}" />
-                                                    <gradient:SfGradientStop Offset="1" Color="{DynamicResource PrimaryGradient}" />
-                                                </gradient:SfLinearGradientBrush.GradientStops>
-                                            </gradient:SfLinearGradientBrush>
-                                        </Setter.Value>
-                                    </Setter>
-                                </VisualState.Setters>
-                            </VisualState>
-                        </VisualStateGroup>
-                    </VisualStateGroupList>
-                </Setter>
-            </Style>
+        </Style>
 
-            <!--  Common borderless entry style  -->
-            <Style x:Key="BorderlessEntryStyle" TargetType="control:BorderlessEntry">
-                <Setter Property="PlaceholderColor" Value="{DynamicResource Gray-700}" />
-                <Setter Property="FontSize" Value="16" />
-                <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
-            </Style>
 
-            <!--  Common label style  -->
-            <Style x:Key="labelStyle" TargetType="Label">
-                <Setter Property="FontFamily" Value="{DynamicResource Montserrat-Regular}" />
-                <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
-                <Setter Property="FontSize" Value="12" />
-                <Setter Property="LineHeight" Value="{OnPlatform Android=1.25, Default=-1}" />
-                <Setter Property="Margin" Value="0,0,0,6" />
-            </Style>
+        <!--  Common style for buttons  -->
+        <Style x:Key="SfGradientButtonStyle" TargetType="buttons:SfButton">
+            <Setter Property="TextColor" Value="{DynamicResource Gray-White}" />
+            <Setter Property="FontFamily" Value="{StaticResource Montserrat-SemiBold}" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="CornerRadius" Value="24" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="WidthRequest" Value="150" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
 
-        </ResourceDictionary>
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundGradient">
+                                    <Setter.Value>
+                                        <gradient:SfLinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                                            <gradient:SfLinearGradientBrush.GradientStops>
+                                                <gradient:SfGradientStop Offset="0" Color="{DynamicResource PrimaryColor}" />
+                                                <gradient:SfGradientStop Offset="1" Color="{DynamicResource PrimaryGradient}" />
+                                            </gradient:SfLinearGradientBrush.GradientStops>
+                                        </gradient:SfLinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Pressed">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundGradient">
+                                    <Setter.Value>
+                                        <gradient:SfLinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                                            <gradient:SfLinearGradientBrush.GradientStops>
+                                                <gradient:SfGradientStop Offset="0" Color="{DynamicResource PrimaryColor}" />
+                                                <gradient:SfGradientStop Offset="1" Color="{DynamicResource PrimaryGradient}" />
+                                            </gradient:SfLinearGradientBrush.GradientStops>
+                                        </gradient:SfLinearGradientBrush>
+                                    </Setter.Value>
+                                </Setter>
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+
+        <!--  Common borderless entry style  -->
+        <Style x:Key="BorderlessEntryStyle" TargetType="control:BorderlessEntry">
+            <Setter Property="PlaceholderColor" Value="{DynamicResource Gray-700}" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
+        </Style>
+
+        <!--  Common label style  -->
+        <Style x:Key="labelStyle" TargetType="Label">
+            <Setter Property="FontFamily" Value="{DynamicResource Montserrat-Regular}" />
+            <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="LineHeight" Value="{OnPlatform Android=1.25, Default=-1}" />
+            <Setter Property="Margin" Value="0,0,0,6" />
+        </Style>
+
+
     </ContentPage.Resources>
 
     <ContentPage.Content>
@@ -119,7 +120,7 @@
                             Markers="{Binding CustomMarkers}"
                             ResetOnDoubleTap="False">
 
-                            <!--  Template for customizing the address popup  -->
+                              <!--Template for customizing the address popup-->
                             <maps:ImageryLayer.MarkerTemplate>
                                 <DataTemplate>
                                     <StackLayout>
@@ -140,7 +141,7 @@
                                                 VerticalOptions="Start">
 
 
-                                                <!--  Pin location header  -->
+                                                  <!--Pin location header-->
                                                 <Label
                                                     Margin="0,16,0,4"
                                                     FontFamily="{StaticResource Montserrat-SemiBold}"
@@ -150,19 +151,19 @@
                                                     Text="{Binding Header}"
                                                     TextColor="{DynamicResource Gray-900}" />
 
-                                                <!--  Pin location address  -->
+                                                  <!--Pin location address-->
                                                 <Label
                                                     FontSize="12"
                                                     Style="{StaticResource labelStyle}"
                                                     Text="{Binding Address}" />
 
-                                                <!--  Pin location email id  -->
+                                                  <!--Pin location email id-->
                                                 <Label
                                                     FontSize="12"
                                                     Style="{StaticResource labelStyle}"
                                                     Text="{Binding EmailId}" />
 
-                                                <!--  Pin location phone number  -->
+                                                  <!--Pin location phone number-->
                                                 <Label
                                                     Margin="0,0,0,16"
                                                     FontSize="12"
@@ -171,7 +172,7 @@
                                             </StackLayout>
                                         </Frame>
 
-                                        <!--  Set pin image  -->
+                                          <!--Set pin image-->
                                         <iconize:IconImage
                                             Margin="10,5,0,0"
                                             BackgroundColor="Transparent"
@@ -189,7 +190,7 @@
                     </maps:SfMaps.Layers>
                 </maps:SfMaps>
 
-                <!--  For getting the contact information  -->
+                  <!--For getting the contact information-->  
                 <Frame
                     x:Name="MainFrame"
                     Padding="0"
@@ -203,7 +204,9 @@
                         HorizontalOptions="FillAndExpand"
                         Spacing="16">
 
-                        <!--  Label to display title  -->
+                
+                  <!--Label to display title-->  
+                
                         <Label
                             Margin="{core:OnPlatformOrientationThickness Phone='0,16,0,16',
                                                                          TabletPortrait='0,32,0,16',
@@ -220,7 +223,9 @@
                             VerticalTextAlignment="Center" />
 
                         <border:SfBorder Style="{StaticResource SfBorderStyle}">
-                            <!--  Entry to get name from user  -->
+                
+                  <!--Entry to get name from user-->  
+                
                             <customControls:BorderlessEntry
                                 HeightRequest="40"
                                 Placeholder="Name"
@@ -234,7 +239,9 @@
                             Style="{x:StaticResource SfBorderStyle}">
                             <StackLayout Orientation="Horizontal" Spacing="0">
 
-                                <!--  Entry to get email id from user  -->
+                
+                  <!--Entry to get email id from user-->  
+                
                                 <customControls:BorderlessEntry
                                     x:Name="EmailEntry"
                                     HeightRequest="40"
@@ -268,7 +275,9 @@
                             TextColor="{DynamicResource Red}" />
 
                         <border:SfBorder HeightRequest="120" Style="{StaticResource SfBorderStyle}">
-                            <!--  Editor to get message from user  -->
+                
+                  <!--Editor to get message from user-->  
+                
                             <customControls:BorderlessEditor
                                 HeightRequest="120"
                                 Placeholder="Message"
@@ -285,7 +294,9 @@
 
                         </border:SfBorder>
 
-                        <!--  Send Button  -->
+                
+                  <!--Send Button-->  
+                
                         <buttons:SfButton
                             Command="{Binding SendCommand}"
                             Style="{StaticResource SfGradientButtonStyle}"

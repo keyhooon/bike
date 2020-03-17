@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using bike.Models.ContactUs;
+using Prism.Commands;
 using Prism.Mvvm;
 using Syncfusion.SfMaps.XForms;
 using Xamarin.Forms;
@@ -33,7 +34,6 @@ namespace bike.ViewModels.ContactUs
         /// </summary>
         public ContactUsViewModel()
         {
-            this.SendCommand = new Command(this.Send);
             this.CustomMarkers = new ObservableCollection<MapMarker>();
             this.GetPinLocation();
         }
@@ -42,10 +42,11 @@ namespace bike.ViewModels.ContactUs
 
         #region Commands
 
+        public DelegateCommand _sendCommand;
         /// <summary>
         /// Gets or sets the command that is executed when the Send button is clicked.
         /// </summary>
-        public ICommand SendCommand { get; set; }
+        public DelegateCommand SendCommand => _sendCommand ?? (_sendCommand = new DelegateCommand(Send));
 
         #endregion
 
@@ -90,8 +91,7 @@ namespace bike.ViewModels.ContactUs
         /// <summary>
         /// Invoked when the send button is clicked.
         /// </summary>
-        /// <param name="obj">The Object</param>
-        private void Send(object obj)
+        private void Send()
         {
             // Do something
         }
@@ -104,12 +104,10 @@ namespace bike.ViewModels.ContactUs
             this.CustomMarkers.Add(
                 new LocationMarker
                 {
-                    PinImage = "Pin.png",
                     Header = "Sipes Inc",
                     Address = "7654 Cleveland street, Phoenixville, PA 19460",
                     EmailId = "dopuyi@hostguru.info",
                     PhoneNumber = "+1-202-555-0101",
-                    CloseImage = "Close.png",
                     Latitude = "40.133808",
                     Longitude = "-75.516279"
                 });

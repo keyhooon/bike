@@ -8,7 +8,9 @@ using SharpCommunication.Base.Channels;
 using SharpCommunication.Base.Transport.SerialPort;
 using SharpCommunication.Base.Transport;
 
-namespace Communication
+using Services;
+
+namespace Module
 {
     public class CommunicationModule : IModule
     {
@@ -19,10 +21,12 @@ namespace Communication
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA, ViewAViewModel>();
+            containerRegistry.RegisterForNavigation< ViewA, ViewAViewModel >();
             containerRegistry.Register< ICodec<DevicePacket>, DevicePacketCodec >();
-            containerRegistry.RegisterSingleton< IChannelFactory<DevicePacket>, ChannelFactory<DevicePacket> >();
-            containerRegistry.RegisterSingleton< DataTransport<DevicePacket>, SerialPortDataTransport<DevicePacket> >();
+            containerRegistry.Register< IChannelFactory<DevicePacket>, ChannelFactory<DevicePacket> >();
+            containerRegistry.Register<DataTransport<DevicePacket>, SerialPortDataTransport<DevicePacket>>();
+            containerRegistry.RegisterInstance(new SerialPortDataTransportOption("com6",115200));
+            containerRegistry.RegisterSingleton< DataTransportFacade >();
         }
     }
 }

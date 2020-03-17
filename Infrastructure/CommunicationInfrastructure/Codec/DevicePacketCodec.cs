@@ -3,6 +3,8 @@
 using SharpCommunication.Base.Codec;
 using SharpCommunication.Base.Codec.Packets;
 using System.Linq;
+using System;
+
 namespace Communication.Codec
 {
     public class DevicePacketCodec : Codec<DevicePacket>
@@ -21,14 +23,17 @@ namespace Communication.Codec
         }
 
 
-        public DevicePacketCodec()
+        public DevicePacketCodec(IEnumerable<PacketEncodingBuilder> PacketEncodingBuilderList)
         {
-
+            var packetEncodingGroups = PacketEncodingBuilderList.Select(o => o.Build()).GroupBy((o) => o is IFunctionPacket);
             _encodingBuilder = PacketEncodingBuilder.CreateDefaultBuilder().WithHeader(DevicePacket.Header).WithDescendant<DevicePacket>(new[] {
-                PacketEncodingBuilder.CreateDefaultBuilder().CreateDataPacket(),
-                PacketEncodingBuilder.CreateDefaultBuilder().CreateCommandPacket(
-                                defaultCommandEncodingBuilder.Select(o=>o.Build())
+                PacketEncodingBuilder.CreateDefaultBuilder().CreateDataPacket(packetEncodingGroups.FirstOrDefault(o => o.Key)),
+                PacketEncodingBuilder.CreateDefaultBuilder().CreateCommandPacket(Enumerable.Concat(
+                                defaultCommandEncodingBuilder.Select(o=>o.Build()), packetEncodingGroups.FirstOrDefault((o) => o.Key))
                                 )});
+
+            //RegisterCommand(packetEncodingGroups.FirstOrDefault((o) => o.Key));
+            //RegisterData(packetEncodingGroups.FirstOrDefault(o => o.Key));
         }
 
 

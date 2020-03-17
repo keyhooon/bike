@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Servo.DataModels
+namespace DataModels
 {
     public class ServoInput :BindableBase
     {

@@ -17,7 +17,7 @@ namespace bike.Models.AboutUs
 
         private string designation;
 
-        private string image;
+        private ImageSource image;
 
         #endregion
 
@@ -61,7 +61,7 @@ namespace bike.Models.AboutUs
         /// Gets or sets the image of an employee.
         /// </summary>
         /// <value>The image.</value>
-        public string Image
+        public ImageSource Image
         {
             get
             {

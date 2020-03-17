@@ -2,7 +2,7 @@
 using System.IO;
 using SharpCommunication.Base.Codec.Packets;
 
-namespace Light.DataTrandferPackets
+namespace Communication.Codec
 {
     public class LightSettingPacket : IPacket, IAncestorPacket
     {

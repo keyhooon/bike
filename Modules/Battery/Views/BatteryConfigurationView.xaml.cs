@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Battery.ViewModels;
+using Syncfusion.XForms.DataForm;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;

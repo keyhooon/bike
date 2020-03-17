@@ -2,14 +2,13 @@
 using Prism.Modularity;
 using Servo.Views;
 using Servo.ViewModels;
-using Core;
-using Servo.DataTrandferPackets;
-using Communication.Codec;
-using SharpCommunication.Base.Codec;
-using AutoMapper.Configuration;
-using Servo.DataModels;
 
-namespace Servo
+using Communication.Codec;
+
+using AutoMapper.Configuration;
+using DataModels;
+
+namespace Module
 {
     public class ServoModule : IModule
     {

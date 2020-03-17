@@ -2,14 +2,11 @@
 using Prism.Modularity;
 using Pedal.Views;
 using Pedal.ViewModels;
-using Core;
-using Pedal.DataTrandferPackets;
 using Communication.Codec;
-using SharpCommunication.Base.Codec;
 using AutoMapper.Configuration;
-using Pedal.DataModels;
+using DataModels;
 
-namespace Pedal
+namespace Module
 {
     public class PedalModule : IModule
     {

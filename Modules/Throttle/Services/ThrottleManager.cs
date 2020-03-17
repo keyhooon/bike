@@ -1,16 +1,13 @@
 ﻿using AutoMapper;
 using Communication.Codec;
-using Communication.Service;
+using DataModels;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using Throttle.DataModels;
 
-namespace Throttle.Services
+namespace Services
 {
-    class ThrottleManager : BindableBase
+    public class ThrottleManager : BindableBase
     {
         private readonly DataTransportFacade dataTransport;
         private readonly IMapper mapper;
@@ -18,12 +15,13 @@ namespace Throttle.Services
         public ThrottleManager(DataTransportFacade dataTransport, IConfigurationProvider mapperConfiguration)
         {
             this.dataTransport = dataTransport;
+            ThrottleConfiguration = new ThrottleConfiguration();
             mapper = mapperConfiguration.CreateMapper();
             dataTransport.IsOpenChanged += DataTransport_IsOpenChanged;
             dataTransport.DataReceived += DataTransport_DataReceived;
         }
 
-        private void DataTransport_DataReceived(object sender, Core.PacketReceivedEventArg e)
+        private void DataTransport_DataReceived(object sender, PacketReceivedEventArg e)
         {
             switch (e.Packet)
             {

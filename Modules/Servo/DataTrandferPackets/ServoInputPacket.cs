@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using SharpCommunication.Base.Codec.Packets;
 
-namespace Servo.DataTrandferPackets
+namespace Communication.Codec
 {
     public class ServoInputPacket : IPacket, IAncestorPacket
     {

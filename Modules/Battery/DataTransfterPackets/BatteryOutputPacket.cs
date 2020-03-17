@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using SharpCommunication.Base.Codec.Packets;
 
-namespace Battery.DataTransfterPacket
+namespace Communication.Codec
 {
     public class BatteryOutputPacket : IPacket, IAncestorPacket
     {

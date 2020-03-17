@@ -1,17 +1,15 @@
 ﻿using AutoMapper;
 using Communication.Codec;
-using Communication.Service;
-using Pedal.DataModels;
-using Pedal.DataTrandferPackets;
+using DataModels;
+
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pedal.Services
+
+namespace Services
 {
-    class PedalManager : BindableBase
+    public class PedalManager : BindableBase
     {
         private readonly DataTransportFacade dataTransport;
         private readonly IMapper mapper;
@@ -19,12 +17,14 @@ namespace Pedal.Services
         public PedalManager(DataTransportFacade dataTransport, IConfigurationProvider mapperConfiguration)
         {
             this.dataTransport = dataTransport;
+            PedalConfiguration = new PedalConfiguration();
+            PedalSetting = new PedalSetting();
             mapper = mapperConfiguration.CreateMapper();
             dataTransport.IsOpenChanged += DataTransport_IsOpenChanged;
             dataTransport.DataReceived += DataTransport_DataReceived;
         }
 
-        private void DataTransport_DataReceived(object sender, Core.PacketReceivedEventArg e)
+        private void DataTransport_DataReceived(object sender, PacketReceivedEventArg e)
         {
             switch (e.Packet)
             {

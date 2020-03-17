@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
-using Battery.DataSettings;
 using Communication.Codec;
-using Communication.Service;
 using Prism.Commands;
 using Prism.Mvvm;
 using System;
-using Battery.DataTransfterPacket;
-using Battery.DataModel;
+using DataModels;
 
-namespace Battery.Services
+namespace Services
 {
     public class BatteryManager : BindableBase
     {
@@ -19,11 +16,13 @@ namespace Battery.Services
         {
             this.dataTransport = dataTransport;
             mapper = mapperConfiguration.CreateMapper();
+            BatteryConfiguration = new BatteryConfiguration();
+            BatteryOutput = new BatteryOutput();
             dataTransport.IsOpenChanged += DataTransport_IsOpenChanged;
             dataTransport.DataReceived += DataTransport_DataReceived;
         }
 
-        private void DataTransport_DataReceived(object sender, Core.PacketReceivedEventArg e)
+        private void DataTransport_DataReceived(object sender, PacketReceivedEventArg e)
         {
             switch (e.Packet)
             {

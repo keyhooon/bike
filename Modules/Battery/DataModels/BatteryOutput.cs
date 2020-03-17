@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Battery.DataModel
+namespace DataModels
 {
     public class BatteryOutput:BindableBase
     {

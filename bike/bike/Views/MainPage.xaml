@@ -3,14 +3,27 @@
     x:Class="bike.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:bike.Behaviors"
     xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:commands="clr-namespace:bike.Commands"
     xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
     xmlns:navigationdrawer="clr-namespace:Syncfusion.SfNavigationDrawer.XForms;assembly=Syncfusion.SfNavigationDrawer.XForms"
     xmlns:prism="http://prismlibrary.com"
     xmlns:sfavatar="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusion.Core.XForms"
     prism:ViewModelLocator.AutowireViewModel="True">
+    <ContentPage.Resources>
+        <commands:ToggleDrawerCommand x:Key="toggleDrawerCommand" />
+        <!--  Style for Images  -->
+        <Style TargetType="iconize:IconImage">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="IconSize" Value="28" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="WidthRequest" Value="48" />
+        </Style>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
-        <navigationdrawer:SfNavigationDrawer x:Name="navigationDrawer" DrawerHeaderHeight="160">
+        <navigationdrawer:SfNavigationDrawer x:Name="navigationDrawer" DrawerHeaderHeight="120">
             <navigationdrawer:SfNavigationDrawer.ContentView>
                 <Grid x:Name="mainContentView" BackgroundColor="White">
                     <Grid.RowDefinitions>
@@ -19,8 +32,10 @@
                     </Grid.RowDefinitions>
                     <StackLayout BackgroundColor="#1aa1d6" Orientation="Horizontal">
                         <button:SfButton
+                            x:Name="menuButton"
                             BackgroundColor="#1aa1d6"
-                            Clicked="hamburgerButton_Clicked"
+                            Command="{StaticResource toggleDrawerCommand}"
+                            CommandParameter="{x:Reference navigationDrawer}"
                             FontSize="20"
                             HeightRequest="50"
                             HorizontalOptions="Start"
@@ -45,6 +60,7 @@
                             TextColor="White"
                             VerticalTextAlignment="Center" />
                     </StackLayout>
+
                     <Label
                         x:Name="contentLabel"
                         Grid.Row="1"
@@ -53,16 +69,18 @@
                         Text="Content View"
                         TextColor="Black"
                         VerticalOptions="Center" />
+
                 </Grid>
             </navigationdrawer:SfNavigationDrawer.ContentView>
             <navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
                 <Grid BackgroundColor="#1aa1d6" WidthRequest="80">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="120" />
-                        <RowDefinition Height="40" />
+                        <RowDefinition Height="85" />
+                        <RowDefinition Height="35" />
                     </Grid.RowDefinitions>
 
                     <sfavatar:SfAvatarView
+                        Grid.RowSpan="2"
                         AvatarCharacter="Avatar10"
                         ContentType="AvatarCharacter"
                         CornerRadius="25"
@@ -80,86 +98,84 @@
                 </Grid>
             </navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
             <navigationdrawer:SfNavigationDrawer.DrawerContentView>
-                <StackLayout HeightRequest="40">
-
-                    <button:SfButton
-                        Margin="-35,0,0,0"
-                        BackgroundColor="Transparent"
-                        HorizontalOptions="CenterAndExpand">
+                <StackLayout Padding="0,50,0,60" HorizontalOptions="StartAndExpand">
+                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateDashboard}">
                         <button:SfButton.Content>
-                            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                <iconize:IconButton
-                                    BackgroundColor="Transparent"
-                                    FontSize="20"
-                                    Text="md-dashboard"
-                                    WidthRequest="48" />
+                            <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
+                                <iconize:IconImage Icon="md-dashboard" />
                                 <Label Text="Home" VerticalOptions="CenterAndExpand" />
                             </StackLayout>
                         </button:SfButton.Content>
                     </button:SfButton>
-                    <button:SfButton
-                        Margin="-35,0,0,0"
-                        BackgroundColor="Transparent"
-                        HorizontalOptions="CenterAndExpand">
+                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateSetting}">
                         <button:SfButton.Content>
-                            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                <iconize:IconButton
-                                    BackgroundColor="Transparent"
-                                    FontSize="20"
-                                    Text="md-settings"
-                                    WidthRequest="48" />
+                            <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
+                                <iconize:IconImage Icon="md-settings" />
                                 <Label Text="Settings" VerticalOptions="CenterAndExpand" />
                             </StackLayout>
                         </button:SfButton.Content>
                     </button:SfButton>
-                    <button:SfButton
-                        Margin="-35,0,0,0"
-                        BackgroundColor="Transparent"
-                        HorizontalOptions="CenterAndExpand">
+                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateConfiguration}">
                         <button:SfButton.Content>
-                            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                <iconize:IconButton
-                                    BackgroundColor="Transparent"
-                                    FontSize="20"
-                                    Text="md-tune"
-                                    WidthRequest="48" />
+                            <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
+                                <iconize:IconImage Icon="md-tune" />
                                 <Label Text="Configurations" VerticalOptions="CenterAndExpand" />
                             </StackLayout>
                         </button:SfButton.Content>
                     </button:SfButton>
-                    <button:SfButton
-                        Margin="-35,0,0,0"
-                        BackgroundColor="Transparent"
-                        HorizontalOptions="CenterAndExpand">
+                    <button:SfButton BackgroundColor="Transparent">
                         <button:SfButton.Content>
-                            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                <iconize:IconButton
-                                    BackgroundColor="Transparent"
-                                    FontSize="20"
-                                    Text="md-timeline"
-                                    WidthRequest="48" />
+                            <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
+                                <iconize:IconImage Icon="md-timeline" />
                                 <Label Text="Logs" VerticalOptions="CenterAndExpand" />
                             </StackLayout>
                         </button:SfButton.Content>
                     </button:SfButton>
-                    <button:SfButton
-                        Margin="-35,0,0,0"
-                        BackgroundColor="Transparent"
-                        HorizontalOptions="CenterAndExpand">
+                    <button:SfButton BackgroundColor="Transparent">
                         <button:SfButton.Content>
-                            <StackLayout HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                                <iconize:IconButton
-                                    BackgroundColor="Transparent"
-                                    FontSize="20"
-                                    Text="md-error"
-                                    WidthRequest="48" />
+                            <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
+                                <iconize:IconImage Icon="md-error" />
                                 <Label Text="Diagnostic" VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </button:SfButton.Content>
+                    </button:SfButton>
+                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateContactUs}">
+                        <button:SfButton.Content>
+                            <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
+                                <iconize:IconImage Icon="md-record-voice-over" />
+                                <Label Text="Contact Us" VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </button:SfButton.Content>
+                    </button:SfButton>
+                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateAboutUs}">
+                        <button:SfButton.Content>
+                            <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
+                                <iconize:IconImage Icon="md-record-voice-over" />
+                                <Label Text="About Us" VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </button:SfButton.Content>
+                    </button:SfButton>
+                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateFeedback}">
+                        <button:SfButton.Content>
+                            <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
+                                <iconize:IconImage Icon="md-record-voice-over" />
+                                <Label Text="Feedback" VerticalOptions="CenterAndExpand" />
+                            </StackLayout>
+                        </button:SfButton.Content>
+                    </button:SfButton>
+                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateHelp}">
+                        <button:SfButton.Content>
+                            <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
+                                <iconize:IconImage Icon="md-help" />
+                                <Label Text="Help" VerticalOptions="CenterAndExpand" />
                             </StackLayout>
                         </button:SfButton.Content>
                     </button:SfButton>
                 </StackLayout>
             </navigationdrawer:SfNavigationDrawer.DrawerContentView>
         </navigationdrawer:SfNavigationDrawer>
+
+
 
     </ContentPage.Content>
 

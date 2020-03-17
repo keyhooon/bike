@@ -1,18 +1,22 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <prism:PrismApplication
-    xmlns:themes = "clr-namespace:bike.Themes;assembly=bike"
-             x:Class="bike.App"
+    x:Class="bike.App"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:mtrl="clr-namespace:XF.Material.Forms.Resources;assembly=XF.Material"
-    xmlns:mtrltypo="clr-namespace:XF.Material.Forms.Resources.Typography;assembly=XF.Material"
-    xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms">
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms"
+    xmlns:syncTheme="clr-namespace:Syncfusion.XForms.Themes;assembly=Syncfusion.Core.XForms"
+    xmlns:themes="clr-namespace:bike.Themes;assembly=bike">
     <Application.Resources>
 
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <themes:LightTheme />
-            </ResourceDictionary.MergedDictionaries >
+                <!--  Theme resource dictionary  -->
+                <!--<syncTheme:DarkTheme />-->
+                <!--  Control style resource dictionaries  -->
+                <buttons:SfButtonStyles />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
 
     </Application.Resources>
