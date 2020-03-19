@@ -17,6 +17,8 @@ using bike.ViewModels.Feedback;
 using bike.ViewModels.ContactUs;
 using Services;
 using Module;
+using bike.ViewModels.Main;
+using bike.Views.Main;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace bike
@@ -54,6 +56,8 @@ namespace bike
             containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>();
             containerRegistry.RegisterForNavigation<SettingPage, SettingViewModel>();
             containerRegistry.RegisterForNavigation<ConfigurationPage, ConfigurationViewModel>();
+            containerRegistry.RegisterForNavigation<PrimaryPage, PrimaryPageViewModel>();
+            containerRegistry.RegisterForNavigation<DashboardPage, DashboardViewModel>();
         }
 
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)

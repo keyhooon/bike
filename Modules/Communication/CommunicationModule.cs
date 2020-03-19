@@ -1,7 +1,5 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
-using Communication.Views;
-using Communication.ViewModels;
 using SharpCommunication.Base.Codec;
 using Communication.Codec;
 using SharpCommunication.Base.Channels;
@@ -21,7 +19,6 @@ namespace Module
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation< ViewA, ViewAViewModel >();
             containerRegistry.Register< ICodec<DevicePacket>, DevicePacketCodec >();
             containerRegistry.Register< IChannelFactory<DevicePacket>, ChannelFactory<DevicePacket> >();
             containerRegistry.Register<DataTransport<DevicePacket>, SerialPortDataTransport<DevicePacket>>();

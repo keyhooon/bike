@@ -5,6 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:control="clr-namespace:bike.Controls"
+    xmlns:control1="clr-namespace:Controls;assembly=Light"
+    xmlns:controls="clr-namespace:Controls;assembly=Pedal"
+    xmlns:controls1="clr-namespace:Controls;assembly=Core"
     xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
     xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
     xmlns:prism="http://prismlibrary.com"
@@ -89,16 +92,14 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="md-battery-charging-full" Style="{StaticResource IconHeaderStyle}" />
+                    <iconize:IconImage Icon="md-device-hub" Style="{StaticResource IconHeaderStyle}" />
                     <Label
                         Grid.Column="1"
                         Style="{StaticResource LableHeaderStyle}"
-                        Text="Core" />
+                        Text="CORE" />
                 </Grid>
-                <dataform:SfDataForm
-                    ContainerType="Filled"
-                    DataObject="{Binding CoreVersion}"
-                    LayoutOptions="TextInputLayout" />
+                <controls1:CoreVersionDataForm DataObject="{Binding CoreVersion}" />
+
                 <!--  Pedal Setting  -->
                 <Grid Margin="5">
                     <Grid.Resources />
@@ -106,16 +107,13 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="md-device-hub" Style="{StaticResource IconHeaderStyle}" />
+                    <iconize:IconImage Icon="mdi-speedometer" Style="{StaticResource IconHeaderStyle}" />
                     <Label
                         Grid.Column="1"
                         Style="{StaticResource LableHeaderStyle}"
-                        Text="Pedal" />
+                        Text="PEDAL ASSIST" />
                 </Grid>
-                <dataform:SfDataForm
-                    ContainerType="Filled"
-                    DataObject="{Binding PedalSetting}"
-                    LayoutOptions="TextInputLayout" />
+                <controls:PedalSettingDataForm DataObject="{Binding PedalSetting}" />
                 <!--  Light Setting  -->
                 <Grid Margin="5">
                     <Grid.Resources />
@@ -123,16 +121,13 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="md-device-hub" Style="{StaticResource IconHeaderStyle}" />
+                    <iconize:IconImage Icon="md-highlight" Style="{StaticResource IconHeaderStyle}" />
                     <Label
                         Grid.Column="1"
                         Style="{StaticResource LableHeaderStyle}"
-                        Text="Pedal" />
+                        Text="LIGHT" />
                 </Grid>
-                <dataform:SfDataForm
-                    ContainerType="Filled"
-                    DataObject="{Binding LightSetting}"
-                    LayoutOptions="TextInputLayout" />
+                <control1:LightSettingDataForm DataObject="{Binding LightSetting}" />
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

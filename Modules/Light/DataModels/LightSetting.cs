@@ -1,13 +1,12 @@
-﻿using Plugin.Settings;
+﻿
+using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using Prism.Mvvm;
-using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 
 namespace DataModels
 {
+
     public class LightSetting : BindableBase
     {
 
@@ -22,7 +21,7 @@ namespace DataModels
                 RaisePropertyChanged();
             }
         }
-
+        
         public LightVolume Light2
         {
             get => (LightVolume)AppSettings.GetValueOrDefault(nameof(Light2), (byte)LightVolume.High);
@@ -32,7 +31,7 @@ namespace DataModels
                 RaisePropertyChanged();
             }
         }
-
+        
         public LightVolume Light3
         {
             get => (LightVolume)AppSettings.GetValueOrDefault(nameof(Light3), (byte)LightVolume.High);
@@ -42,7 +41,7 @@ namespace DataModels
                 RaisePropertyChanged();
             }
         }
-
+        
         public LightVolume Light4
         {
             get => (LightVolume)AppSettings.GetValueOrDefault(nameof(Light4), (byte)LightVolume.High);

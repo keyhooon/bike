@@ -1,10 +1,9 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
-using Throttle.Views;
-using Throttle.ViewModels;
 using Communication.Codec;
 using AutoMapper.Configuration;
 using DataModels;
+using Services;
 
 namespace Module
 {
@@ -18,9 +17,9 @@ namespace Module
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA, ViewAViewModel>();
             containerRegistry
                 .RegisterInstance(ThrottleConfigurationEncoding.CreateBuilder())
+                .RegisterSingleton<ThrottleManager>()
             ;
         }
     }

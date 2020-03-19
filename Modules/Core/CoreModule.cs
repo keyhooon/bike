@@ -3,8 +3,7 @@ using Prism.Modularity;
 using Communication.Codec;
 using AutoMapper.Configuration;
 using DataModels;
-using Core.Views;
-using Core.ViewModels;
+using Services;
 
 namespace Module
 {
@@ -19,10 +18,10 @@ namespace Module
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA, ViewAViewModel>();
             containerRegistry
                 .RegisterInstance(CoreSituationEncoding.CreateBuilder())
                 .RegisterInstance(CoreConfigurationEncoding.CreateBuilder())
+                                .RegisterSingleton<CoreManager>()
                 ;
         }
     }

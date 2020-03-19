@@ -20,7 +20,8 @@ namespace bike.ViewModels
 
         private DelegateCommand _navgateDashboard;
         public DelegateCommand NavgateDashboard =>
-            _navgateDashboard ?? (_navgateDashboard = new DelegateCommand(async () => await navigationService.NavigateAsync("/MainPage")));
+            _navgateDashboard ?? (_navgateDashboard = new DelegateCommand(async () => 
+            await navigationService.NavigateAsync("DashboardPage")));
 
         private DelegateCommand _navgateSetting;
         public DelegateCommand NavgateSetting =>
@@ -34,7 +35,8 @@ namespace bike.ViewModels
 
         private DelegateCommand _navgateHelp;
         public DelegateCommand NavgateHelp =>
-            _navgateHelp ?? (_navgateHelp = new DelegateCommand(async () => await navigationService.NavigateAsync("HelpPage")));
+            _navgateHelp ?? (_navgateHelp = new DelegateCommand(async () => 
+            await navigationService.NavigateAsync("HelpPage")));
 
         private DelegateCommand _navgateFeedback;
         public DelegateCommand NavgateFeedback =>
@@ -48,7 +50,7 @@ namespace bike.ViewModels
 
         private DelegateCommand _navgateAboutUs;
         public DelegateCommand NavgateAboutUs =>
-            _navgateAboutUs ?? (_navgateAboutUs = new DelegateCommand(async () => 
+            _navgateAboutUs ?? (_navgateAboutUs = new DelegateCommand(async () =>
             await navigationService.NavigateAsync("AboutUsSimplePage")));
 
 

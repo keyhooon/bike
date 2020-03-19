@@ -5,11 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:control="clr-namespace:bike.Controls"
+    xmlns:controls="clr-namespace:Controls;assembly=Throttle"
+    xmlns:controls1="clr-namespace:Controls;assembly=Pedal"
+    xmlns:controls2="clr-namespace:Battery.Controls;assembly=Battery"
+    xmlns:controls3="clr-namespace:Controls;assembly=Core"
     xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
     xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
     xmlns:prism="http://prismlibrary.com"
-    x:Name="settingPage"
-    Title="Settings"
+    Title="Configurations"
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource Gray-100}">
     <ContentPage.Resources>
@@ -66,6 +69,9 @@
             <StackLayout Spacing="0">
                 <!--  Title View  -->
                 <control:TitleView Title="{TemplateBinding Title}" BackgroundColor="{DynamicResource Gray-White}">
+                    <control:TitleView.Content>
+                        <Label Text="aa" />
+                    </control:TitleView.Content>
                     <control:TitleView.LeadingView>
                         <buttons:SfButton
                             x:Name="backButton"
@@ -89,33 +95,13 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="-device-hub" Style="{StaticResource IconHeaderStyle}" />
+                    <iconize:IconImage Icon="md-device-hub" Style="{StaticResource IconHeaderStyle}" />
                     <Label
                         Grid.Column="1"
                         Style="{StaticResource LableHeaderStyle}"
-                        Text="Core" />
+                        Text="VERSION" />
                 </Grid>
-                <dataform:SfDataForm
-                    ContainerType="Filled"
-                    DataObject="{Binding CoreVersion}"
-                    LayoutOptions="TextInputLayout" />
-                <!--  Battery Configuration  -->
-                <Grid Margin="5">
-                    <Grid.Resources />
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="md-battery-charging-full" Style="{StaticResource IconHeaderStyle}" />
-                    <Label
-                        Grid.Column="1"
-                        Style="{StaticResource LableHeaderStyle}"
-                        Text="Pedal" />
-                </Grid>
-                <dataform:SfDataForm
-                    ContainerType="Filled"
-                    DataObject="{Binding BatteryConfiguration}"
-                    LayoutOptions="TextInputLayout" />
+                <controls3:CoreVersionDataForm DataObject="{Binding CoreVersion}" />
                 <!--  Core Situation  -->
                 <Grid Margin="5">
                     <Grid.Resources />
@@ -127,12 +113,24 @@
                     <Label
                         Grid.Column="1"
                         Style="{StaticResource LableHeaderStyle}"
-                        Text="Pedal" />
+                        Text="CORE" />
                 </Grid>
-                <dataform:SfDataForm
-                    ContainerType="Filled"
-                    DataObject="{Binding CoreSituation}"
-                    LayoutOptions="TextInputLayout" />
+                <controls3:CoreSituationDataForm DataObject="{Binding CoreSituation}" />
+
+                <!--  Battery Configuration  -->
+                <Grid Margin="5">
+                    <Grid.Resources />
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <iconize:IconImage Icon="md-battery-charging-full" Style="{StaticResource IconHeaderStyle}" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource LableHeaderStyle}"
+                        Text="BATTERY" />
+                </Grid>
+                <controls2:BatteryConfigurationDataForm DataObject="{Binding BatteryConfiguration}" />
                 <!--  Pedal Configuration  -->
                 <Grid Margin="5">
                     <Grid.Resources />
@@ -140,16 +138,13 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="md-device-hub" Style="{StaticResource IconHeaderStyle}" />
+                    <iconize:IconImage Icon="mdi-speedometer" Style="{StaticResource IconHeaderStyle}" />
                     <Label
                         Grid.Column="1"
                         Style="{StaticResource LableHeaderStyle}"
-                        Text="Pedal" />
+                        Text="PEDAL" />
                 </Grid>
-                <dataform:SfDataForm
-                    ContainerType="Filled"
-                    DataObject="{Binding PedalConfiguration}"
-                    LayoutOptions="TextInputLayout" />
+                <controls1:PedalConfigurationDataForm DataObject="{Binding PedalConfiguration}" />
                 <!--  Throttle Configuration  -->
                 <Grid Margin="5">
                     <Grid.Resources />
@@ -157,16 +152,14 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="md-device-hub" Style="{StaticResource IconHeaderStyle}" />
+                    <iconize:IconImage Icon="mdi-speedometer" Style="{StaticResource IconHeaderStyle}" />
                     <Label
                         Grid.Column="1"
                         Style="{StaticResource LableHeaderStyle}"
-                        Text="Pedal" />
+                        Text="THROTTLE" />
                 </Grid>
-                <dataform:SfDataForm
-                    ContainerType="Filled"
-                    DataObject="{Binding ThrottleConfiguration}"
-                    LayoutOptions="TextInputLayout" />
+                <controls:ThrottleConfigurationDataForm DataObject="{Binding ThrottleConfiguration}" />
+
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

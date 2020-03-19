@@ -1,7 +1,6 @@
 ﻿using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
+using System.ComponentModel.DataAnnotations;
 
 namespace DataModels
 {
@@ -9,6 +8,8 @@ namespace DataModels
     {
 
         private string _uniqueId;
+        [Display(Name = "ID")] 
+        [Editable(false)]
         public string UniqueId
         {
             get { return _uniqueId; }
@@ -16,12 +17,16 @@ namespace DataModels
         }
 
         private string _firwareVersion;
-        public string PropertyName
+        [Display(Name = "Firmware Version")]
+        [Editable(false)]
+        public string FirmwareVersion
         {
             get { return _firwareVersion; }
             set { SetProperty(ref _firwareVersion, value); }
         }
         private string _modelVersion;
+        [Display(Name = "Model Number")]
+        [Editable(false)]
         public string ModelVersion
         {
             get { return _modelVersion; }

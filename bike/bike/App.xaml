@@ -13,7 +13,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <themes:LightTheme />
                 <!--  Theme resource dictionary  -->
-                <!--<syncTheme:DarkTheme />-->
+                <syncTheme:DarkTheme />
                 <!--  Control style resource dictionaries  -->
                 <buttons:SfButtonStyles />
             </ResourceDictionary.MergedDictionaries>

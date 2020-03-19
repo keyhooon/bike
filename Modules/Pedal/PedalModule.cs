@@ -1,10 +1,9 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
-using Pedal.Views;
-using Pedal.ViewModels;
 using Communication.Codec;
 using AutoMapper.Configuration;
 using DataModels;
+using Services;
 
 namespace Module
 {
@@ -19,10 +18,10 @@ namespace Module
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA, ViewAViewModel>();
             containerRegistry
                 .RegisterInstance(PedalConfigurationEncoding.CreateBuilder())
                 .RegisterInstance(PedalSettingEncoding.CreateBuilder())
+                                .RegisterSingleton<PedalManager>()
                 ;
         }
     }

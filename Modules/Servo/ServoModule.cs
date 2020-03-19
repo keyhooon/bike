@@ -1,12 +1,11 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
-using Servo.Views;
-using Servo.ViewModels;
 
 using Communication.Codec;
 
 using AutoMapper.Configuration;
 using DataModels;
+using Services;
 
 namespace Module
 {
@@ -22,11 +21,11 @@ namespace Module
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA, ViewAViewModel>();
             containerRegistry
                 .RegisterInstance(FaultEncoding.CreateBuilder())
                 .RegisterInstance(ServoInputEncoding.CreateBuilder())
                 .RegisterInstance(ServoOutputEncoding.CreateBuilder())
+                                .RegisterSingleton<ServoManager>()
             ;
         }
     }

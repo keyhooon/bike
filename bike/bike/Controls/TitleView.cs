@@ -68,9 +68,9 @@ namespace bike.Controls
             this.ColumnDefinitions = new ColumnDefinitionCollection
             {
                 new ColumnDefinition { Width = 8 },
+                new ColumnDefinition {Width =  GridLength.Auto},
                 new ColumnDefinition(),
-                new ColumnDefinition(),
-                new ColumnDefinition(),
+                new ColumnDefinition {Width =  GridLength.Auto },
                 new ColumnDefinition { Width = 8 },
             };
 

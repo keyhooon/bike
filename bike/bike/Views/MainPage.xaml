@@ -60,15 +60,16 @@
                             TextColor="White"
                             VerticalTextAlignment="Center" />
                     </StackLayout>
+                    <ContentView Grid.Row="1">
+                        <Label
+                            x:Name="contentLabel"
+                            FontSize="14"
+                            HorizontalOptions="Center"
+                            Text="Content View"
+                            TextColor="Black"
+                            VerticalOptions="Center"/>
+                    </ContentView>
 
-                    <Label
-                        x:Name="contentLabel"
-                        Grid.Row="1"
-                        FontSize="14"
-                        HorizontalOptions="Center"
-                        Text="Content View"
-                        TextColor="Black"
-                        VerticalOptions="Center" />
 
                 </Grid>
             </navigationdrawer:SfNavigationDrawer.ContentView>

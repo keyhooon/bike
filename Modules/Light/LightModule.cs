@@ -1,10 +1,9 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
-using Light.Views;
-using Light.ViewModels;
 using Communication.Codec;
 using AutoMapper.Configuration;
 using DataModels;
+using Services;
 
 namespace Module
 {
@@ -19,11 +18,11 @@ namespace Module
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA, ViewAViewModel>();
             containerRegistry
                 .RegisterInstance(LightSettingPacketEncoding.CreateBuilder())
                 .RegisterInstance(LightStatePacetEncoding.CreateBuilder())
                 .RegisterInstance(LightCommandEncoding.CreateBuilder())
+                                .RegisterSingleton<LightManager>()
                 ;
         }
     }

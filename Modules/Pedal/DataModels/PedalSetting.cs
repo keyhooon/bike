@@ -7,18 +7,38 @@ namespace DataModels
 {
     public class PedalSetting :BindableBase
     {
-        private int _assistLevel;
-        public int AssistLevel
+        private AssistLevelType _assistLevel;
+        public AssistLevelType AssistLevel
         {
             get { return _assistLevel; }
             set { SetProperty(ref _assistLevel, value); }
         }
 
-        private int _activationTime;
-        public int ActivationTime
+        private ActivationTimeType _activationTime;
+        public ActivationTimeType ActivationTime
         {
             get { return _activationTime; }
             set { SetProperty(ref _activationTime, value); }
+        }
+
+        public enum AssistLevelType
+        {
+            EightySevenPointFive,
+            SeventyFive,
+            SixtyTwoPointFive,
+            Fifty,
+            ThirtySevenPointFive,
+            ThrityOnePointTwentyFive,
+            TowentyFive,
+            Off,
+        }
+
+        public enum ActivationTimeType
+        {
+            ExtraSensitive,
+            VerySensitive,
+            Sensitive,
+            LowSensitive,
         }
     }
 }

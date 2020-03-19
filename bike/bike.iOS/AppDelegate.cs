@@ -1,3 +1,4 @@
+using Syncfusion.SfGauge.XForms.iOS;
 using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.SfRating.XForms.iOS;
 using Syncfusion.XForms.iOS.Core;
@@ -32,6 +33,7 @@ namespace bike.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
 global::Xamarin.Forms.Forms.Init();
+SfGaugeRenderer.Init();
             SfListViewRenderer.Init();
             SfRatingRenderer.Init();
             Core.Init();

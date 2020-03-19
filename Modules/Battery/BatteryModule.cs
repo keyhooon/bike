@@ -1,7 +1,6 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
-using Battery.Views;
-using Battery.ViewModels;
+
 using Communication.Codec;
 using AutoMapper.Configuration;
 using DataModels;
@@ -21,7 +20,7 @@ namespace Module
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterForNavigation<ViewA, BatteryOutputViewModel>();
+
             containerRegistry
                 .RegisterInstance(BatteryConfigurationEncoding.CreateBuilder())
                 .RegisterInstance(BatteryOutputEncoding.CreateBuilder())

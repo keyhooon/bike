@@ -1,0 +1,227 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="bike.Views.Main.DashboardPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
+    xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
+    xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
+    xmlns:pickers="clr-namespace:Syncfusion.XForms.Pickers;assembly=Syncfusion.SfPicker.XForms"
+    xmlns:prism="http://prismlibrary.com"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+
+        <gradient:SfGradientView Grid.RowSpan="2">
+            <gradient:SfGradientView.BackgroundBrush>
+                <gradient:SfLinearGradientBrush>
+                    <gradient:SfLinearGradientBrush.GradientStops>
+                        <gradient:SfGradientStop Offset="0.0" Color="white" />
+                        <gradient:SfGradientStop Offset="1.0" Color="white" />
+                    </gradient:SfLinearGradientBrush.GradientStops>
+                </gradient:SfLinearGradientBrush>
+            </gradient:SfGradientView.BackgroundBrush>
+        </gradient:SfGradientView>
+
+        <pickers:SfDatePicker x:Name="datepicker" ShowHeader="False" />
+
+        <gauge:SfCircularGauge Grid.Row="1" BackgroundColor="Aqua">
+            <gauge:SfCircularGauge.Annotations>
+                <gauge:GaugeAnnotation
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Angle="270"
+                    Offset=".4">
+                    <gauge:GaugeAnnotation.View>
+                        <iconize:IconImage
+                            Icon="md-warning"
+                            IconColor="LightGray"
+                            WidthRequest="40" />
+                    </gauge:GaugeAnnotation.View>
+                </gauge:GaugeAnnotation>
+                <gauge:GaugeAnnotation
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Angle="315"
+                    Offset="1">
+                    <gauge:GaugeAnnotation.View>
+                        <iconize:IconImage
+                            Icon="mdi-oil-temperature"
+                            IconColor="DarkRed"
+                            WidthRequest="24" />
+                    </gauge:GaugeAnnotation.View>
+                </gauge:GaugeAnnotation>
+                <gauge:GaugeAnnotation
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Angle="225"
+                    Offset="1">
+                    <gauge:GaugeAnnotation.View>
+                        <iconize:IconImage
+                            Icon="mdi-battery-charging"
+                            IconColor="DarkBlue"
+                            WidthRequest="24" />
+                    </gauge:GaugeAnnotation.View>
+                </gauge:GaugeAnnotation>
+                <gauge:GaugeAnnotation Angle="220" Offset="0.0">
+                    <gauge:GaugeAnnotation.View>
+                        <gauge:SfCircularGauge>
+                            <gauge:SfCircularGauge.Scales>
+                                <gauge:Scale
+                                    Direction="AntiClockwise"
+                                    EndValue="100"
+                                    Interval="25"
+                                    MinorTicksPerInterval="0"
+                                    RimColor="black"
+                                    RimThickness="10"
+                                    ScaleEndOffset="1"
+                                    ScaleStartOffset="1"
+                                    ShowLabels="false"
+                                    ShowRim="true"
+                                    StartAngle="290"
+                                    StartValue="0"
+                                    SweepAngle="50">
+                                    <gauge:Scale.Ranges>
+                                        <gauge:Range
+                                            EndValue="100"
+                                            StartValue="0"
+                                            Offset="1.05"
+                                            Color="Gray" />
+                                    </gauge:Scale.Ranges>
+                                    <gauge:Scale.Pointers>
+                                        <gauge:RangePointer
+                                            Thickness="10"
+                                            Offset="1.05"
+                                            Color="Blue"
+                                            Value="50" />
+                                    </gauge:Scale.Pointers>
+                                    <gauge:Scale.MajorTickSettings>
+                                        <gauge:TickSettings
+                                            EndOffset="1.05"
+                                            StartOffset=".985"
+                                            Thickness="3"
+                                            Color="Black" />
+                                    </gauge:Scale.MajorTickSettings>
+                                </gauge:Scale>
+                            </gauge:SfCircularGauge.Scales>
+                        </gauge:SfCircularGauge>
+                    </gauge:GaugeAnnotation.View>
+                </gauge:GaugeAnnotation>
+                <gauge:GaugeAnnotation Angle="300" Offset="0">
+                    <gauge:GaugeAnnotation.View>
+                        <gauge:SfCircularGauge>
+                            <gauge:SfCircularGauge.Scales>
+                                <gauge:Scale
+                                    EndValue="100"
+                                    Interval="25"
+                                    MinorTicksPerInterval="0"
+                                    RimColor="black"
+                                    RimThickness="10"
+                                    ScaleEndOffset="1"
+                                    ScaleStartOffset="1"
+                                    ShowLabels="false"
+                                    ShowRim="true"
+                                    StartAngle="200"
+                                    StartValue="0"
+                                    SweepAngle="50">
+                                    <gauge:Scale.Ranges>
+                                        <gauge:Range
+                                            EndValue="100"
+                                            StartValue="0"
+                                            Offset="1.05">
+                                            <gauge:Range.GradientStops>
+                                                <gauge:GaugeGradientStop Color="Blue" Value="0" />
+                                                <gauge:GaugeGradientStop Color="Blue" Value="50" />
+                                                <gauge:GaugeGradientStop Color="Gray" Value="49" />
+                                                <gauge:GaugeGradientStop Color="Gray" Value="80" />
+                                            </gauge:Range.GradientStops>
+                                        </gauge:Range>
+                                    </gauge:Scale.Ranges>
+                                    <gauge:Scale.MajorTickSettings>
+                                        <gauge:TickSettings
+                                            EndOffset="1.05"
+                                            StartOffset=".985"
+                                            Thickness="3"
+                                            Color="white" />
+                                    </gauge:Scale.MajorTickSettings>
+                                </gauge:Scale>
+                            </gauge:SfCircularGauge.Scales>
+                        </gauge:SfCircularGauge>
+                    </gauge:GaugeAnnotation.View>
+                </gauge:GaugeAnnotation>
+            </gauge:SfCircularGauge.Annotations>
+            <gauge:SfCircularGauge.Scales>
+
+                <gauge:Scale
+                    EndValue="80"
+                    Interval="10"
+                    LabelColor="#333333"
+                    LabelOffset="0.60"
+                    MinorTicksPerInterval="1"
+                    RimColor="#333333"
+                    ScaleEndOffset="0.74"
+                    ScaleStartOffset="0.75"
+                    StartAngle="150"
+                    StartValue="0"
+                    SweepAngle="239">
+                    <gauge:Scale.Ranges>
+                        <gauge:Range
+                            EndValue="80"
+                            InnerEndOffset=".68"
+                            InnerStartOffset="0.68"
+                            OuterEndOffset=".74"
+                            OuterStartOffset=".74"
+                            StartValue="0">
+                            <gauge:Range.GradientStops>
+                                <gauge:GaugeGradientStop Color="Transparent" Value="0" />
+                                <gauge:GaugeGradientStop Color="DarkGray" Value="50" />
+                                <gauge:GaugeGradientStop Color="DarkRed" Value="80" />
+                            </gauge:Range.GradientStops>
+                        </gauge:Range>
+                    </gauge:Scale.Ranges>
+                    <gauge:Scale.MajorTickSettings>
+                        <gauge:TickSettings
+                            EndOffset="0.68"
+                            StartOffset="0.75"
+                            Thickness="3"
+                            Color="#333333" />
+                    </gauge:Scale.MajorTickSettings>
+                    <gauge:Scale.Pointers>
+                        <gauge:RangePointer
+                            RangeCap="Both"
+                            Thickness="6"
+                            Offset=".80"
+                            Color="#01bdae"
+                            Value="30" />
+                        <gauge:MarkerPointer
+                            Offset=".74"
+                            Color="#083458"
+                            Value="60" />
+                        <gauge:NeedlePointer
+                            KnobColor="black"
+                            KnobRadius="15"
+                            KnobRadiusFactor="1"
+                            KnobStrokeColor="DarkGray"
+                            KnobStrokeWidth="1"
+                            LengthFactor=".6"
+                            TailLengthFactor=".13"
+                            Thickness="6"
+                            Value="10" />
+                    </gauge:Scale.Pointers>
+
+
+                    <gauge:Scale.MinorTickSettings>
+                        <gauge:TickSettings
+                            EndOffset="0.70"
+                            StartOffset="0.74"
+                            Thickness="2"
+                            Color="#333333" />
+                    </gauge:Scale.MinorTickSettings>
+                </gauge:Scale>
+            </gauge:SfCircularGauge.Scales>
+        </gauge:SfCircularGauge>
+    </Grid>
+</ContentPage>

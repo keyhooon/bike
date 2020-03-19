@@ -1,13 +1,13 @@
 ﻿using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace DataModels
 {
     public class CoreSituation : BindableBase
     {
         private double _temprature;
+        [Display(Name = "Core Temprature")]
+        [Editable(false)]
         public double Temprature
         {
             get { return _temprature; }
@@ -15,6 +15,8 @@ namespace DataModels
         }
 
         private double _voltage;
+        [Display(Name = "Core Voltage")]
+        [Editable(false)]
         public double Voltage
         {
             get { return _voltage; }
