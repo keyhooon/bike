@@ -1,8 +1,10 @@
 ﻿
+using Core.TypeConverters;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using Prism.Mvvm;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace DataModels
 {
@@ -52,7 +54,7 @@ namespace DataModels
             }
         }
     }
-
+    [TypeConverter(typeof(EnumDescriptionTypeConverter))]
     public enum LightVolume : byte
     {
         High = 3,

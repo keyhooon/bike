@@ -49,7 +49,7 @@ namespace Services
             if (IsConnect)
             {
                 dataTransport.DataTransmit(mapper.Map<PedalConfiguration, PedalConfigurationPacket>(PedalConfiguration));
-                dataTransport.CommandTransmit(new ReadCommand() { DataId = PedalSettingPacket.id });
+                dataTransport.DataTransmit(mapper.Map<PedalSetting, PedalSettingPacket>(PedalSetting));
             }
         }
 

@@ -9,15 +9,13 @@
     xmlns:themes="clr-namespace:bike.Themes;assembly=bike">
     <Application.Resources>
 
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
+        <syncTheme:SyncfusionThemeDictionary>
+            <syncTheme:SyncfusionThemeDictionary.MergedDictionaries>
                 <themes:LightTheme />
                 <!--  Theme resource dictionary  -->
                 <syncTheme:DarkTheme />
-                <!--  Control style resource dictionaries  -->
-                <buttons:SfButtonStyles />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+            </syncTheme:SyncfusionThemeDictionary.MergedDictionaries>
+        </syncTheme:SyncfusionThemeDictionary>
 
     </Application.Resources>
 </prism:PrismApplication>

@@ -67,7 +67,7 @@
                             HorizontalOptions="Center"
                             Text="Content View"
                             TextColor="Black"
-                            VerticalOptions="Center"/>
+                            VerticalOptions="Center" />
                     </ContentView>
 
 
@@ -103,6 +103,7 @@
                     <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateDashboard}">
                         <button:SfButton.Content>
                             <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
+
                                 <iconize:IconImage Icon="md-dashboard" />
                                 <Label Text="Home" VerticalOptions="CenterAndExpand" />
                             </StackLayout>
@@ -143,7 +144,7 @@
                     <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateContactUs}">
                         <button:SfButton.Content>
                             <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
-                                <iconize:IconImage Icon="md-record-voice-over" />
+                                <iconize:IconImage Icon="md-call" />
                                 <Label Text="Contact Us" VerticalOptions="CenterAndExpand" />
                             </StackLayout>
                         </button:SfButton.Content>
@@ -151,7 +152,7 @@
                     <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateAboutUs}">
                         <button:SfButton.Content>
                             <StackLayout Margin="20,0,0,0" Orientation="Horizontal">
-                                <iconize:IconImage Icon="md-record-voice-over" />
+                                <iconize:IconImage Icon="md-info" />
                                 <Label Text="About Us" VerticalOptions="CenterAndExpand" />
                             </StackLayout>
                         </button:SfButton.Content>

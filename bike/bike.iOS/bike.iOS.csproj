@@ -102,6 +102,8 @@
     <BundleResource Include="Resources\Montserrat-Medium.ttf" />
     <BundleResource Include="Resources\Montserrat-Regular.ttf" />
     <BundleResource Include="Resources\Montserrat-SemiBold.ttf" />
+    <BundleResource Include="Resources\iconize-material.ttf" />
+    <BundleResource Include="Resources\iconize-materialdesignicons.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\Contents.json">

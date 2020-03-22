@@ -3,82 +3,303 @@
     x:Class="bike.Views.Main.DashboardPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
+    xmlns:controls="clr-namespace:bike.Controls"
     xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
-    xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
     xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
-    xmlns:pickers="clr-namespace:Syncfusion.XForms.Pickers;assembly=Syncfusion.SfPicker.XForms"
+    xmlns:iconizeFont="clr-namespace:Plugin.Iconize.Fonts;assembly=Plugin.Iconize.MaterialDesignIcons"
+    xmlns:markupextension="clr-namespace:bike.Infrastructure.MarkupExtension"
+    xmlns:pedaldatamodel="clr-namespace:DataModels;assembly=Pedal"
     xmlns:prism="http://prismlibrary.com"
+    xmlns:tabview="clr-namespace:Syncfusion.XForms.TabView;assembly=Syncfusion.SfTabView.XForms"
+    xmlns:throttledatamodel="clr-namespace:DataModels;assembly=Throttle"
+    xmlns:valueConverter="clr-namespace:Core.ValueConverters;assembly=Infrastructure"
+    xmlns:xforms="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms"
+    xmlns:xforms1="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
+    Title="Dashboard"
     prism:ViewModelLocator.AutowireViewModel="True">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="auto" />
-        </Grid.RowDefinitions>
+    <ContentPage.Resources>
+        <Color x:Key="Transparent">Transparent</Color>
+        <x:String x:Key="Back">&#xe709;</x:String>
+        <valueConverter:EnumDescriptionValueConverter x:Key="enumValueConverter" />
+        <!--  Common style for icon buttons  -->
+        <Style x:Key="IconButtonStyle" TargetType="buttons:SfButton">
+            <Setter Property="TextColor" Value="{DynamicResource Gray-600}" />
+            <Setter Property="BackgroundColor" Value="{StaticResource Transparent}" />
+            <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="WidthRequest" Value="40" />
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.ControlTemplate>
+        <ControlTemplate>
+            <StackLayout Spacing="0">
+                <!--  Title View  -->
+                <controls:TitleView Title="{TemplateBinding Title}" BackgroundColor="{DynamicResource Gray-White}">
+                    <controls:TitleView.LeadingView>
+                        <buttons:SfButton
+                            Command="{prism:GoBack}"
+                            CornerRadius="4"
+                            Style="{StaticResource IconButtonStyle}"
+                            Text="{StaticResource Back}" />
+                    </controls:TitleView.LeadingView>
+                </controls:TitleView>
+                <ContentPresenter />
+            </StackLayout>
+        </ControlTemplate>
+    </ContentPage.ControlTemplate>
+    <ContentPage.Content>
+        <tabview:SfTabView
+            DisplayMode="ImageWithText"
+            EnableSwiping="False"
+            OverflowMode="Scroll"
+            VisibleHeaderCount="2">
+            <tabview:SfTabView.SelectionIndicatorSettings>
+                <tabview:SelectionIndicatorSettings Position="Bottom" StrokeThickness="3" />
+            </tabview:SfTabView.SelectionIndicatorSettings>
+            <tabview:SfTabItem
+                Title="Dashboard"
+                FontIconFontFamily="iconize-material.ttf"
+                IconFont=""
+                TitleFontSize="14">
+                <tabview:SfTabItem.Content>
+                    <StackLayout BackgroundColor="Black">
 
-        <gradient:SfGradientView Grid.RowSpan="2">
-            <gradient:SfGradientView.BackgroundBrush>
-                <gradient:SfLinearGradientBrush>
-                    <gradient:SfLinearGradientBrush.GradientStops>
-                        <gradient:SfGradientStop Offset="0.0" Color="white" />
-                        <gradient:SfGradientStop Offset="1.0" Color="white" />
-                    </gradient:SfLinearGradientBrush.GradientStops>
-                </gradient:SfLinearGradientBrush>
-            </gradient:SfGradientView.BackgroundBrush>
-        </gradient:SfGradientView>
+                        <Grid Margin="5" HeightRequest="60">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <buttons:SfButton
+                                x:Name="PedalAssistLevelButton"
+                                Padding="10"
+                                BackgroundColor="Red"
+                                Clicked="SfButton_Clicked"
+                                CornerRadius="5">
+                                <buttons:SfButton.Content>
+                                    <StackLayout Orientation="Vertical">
+                                        <Label HorizontalOptions="Center" Text="Pedal Assist" />
+                                        <gauge:SfDigitalGauge
+                                            CharacterHeight="20"
+                                            CharacterStrokeColor="Black"
+                                            CharacterType="EightCrossEightDotMatrix"
+                                            CharacterWidth="10"
+                                            DisabledSegmentAlpha="37"
+                                            DisabledSegmentColor="Green"
+                                            HorizontalOptions="Center"
+                                            SegmentStrokeWidth="3"
+                                            VerticalOptions="Fill"
+                                            Value="{Binding AssistLevel, Converter={StaticResource enumValueConverter}}" />
+                                    </StackLayout>
+                                </buttons:SfButton.Content>
+                            </buttons:SfButton>
+                            <buttons:SfButton
+                                x:Name="PedalActivationTimeButton"
+                                Grid.Column="1"
+                                Padding="10"
+                                BackgroundColor="Red"
+                                Clicked="SfButton_Clicked"
+                                CornerRadius="5">
+                                <buttons:SfButton.Content>
+                                    <StackLayout Orientation="Vertical">
+                                        <Label HorizontalOptions="Center" Text="Pedal Assist" />
+                                        <gauge:SfDigitalGauge
+                                            CharacterHeight="20"
+                                            CharacterStrokeColor="Black"
+                                            CharacterType="EightCrossEightDotMatrix"
+                                            CharacterWidth="10"
+                                            DisabledSegmentAlpha="37"
+                                            DisabledSegmentColor="Green"
+                                            HorizontalOptions="Center"
+                                            SegmentStrokeWidth="3"
+                                            VerticalOptions="Fill"
+                                            Value="{Binding ActivationTime, Converter={StaticResource enumValueConverter}}" />
+                                    </StackLayout>
+                                </buttons:SfButton.Content>
+                            </buttons:SfButton>
+                            <buttons:SfButton
+                                x:Name="ThrottleActivityButton"
+                                Grid.Column="2"
+                                Padding="10"
+                                BackgroundColor="Red"
+                                Clicked="SfButton_Clicked"
+                                CornerRadius="5">
+                                <buttons:SfButton.Content>
+                                    <StackLayout Orientation="Vertical">
+                                        <Label HorizontalOptions="Center" Text="Throttle" />
+                                        <gauge:SfDigitalGauge
+                                            CharacterHeight="20"
+                                            CharacterStrokeColor="Black"
+                                            CharacterType="EightCrossEightDotMatrix"
+                                            CharacterWidth="10"
+                                            DisabledSegmentAlpha="37"
+                                            DisabledSegmentColor="Green"
+                                            HorizontalOptions="Center"
+                                            SegmentStrokeWidth="3"
+                                            VerticalOptions="Fill"
+                                            Value="{Binding ThrottleActivity, Converter={StaticResource enumValueConverter}}" />
+                                    </StackLayout>
+                                </buttons:SfButton.Content>
+                            </buttons:SfButton>
+                            <xforms1:SfPicker
+                                x:Name="PedalAssistLevelPicker"
+                                ColumnHeaderHeight="46"
+                                HeaderHeight="40"
+                                HeaderText="Assist Level"
+                                HorizontalOptions="Center"
+                                ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type pedaldatamodel:AssistLevelType}}}"
+                                PickerMode="Dialog"
+                                PickerWidth="200"
+                                SelectedItem="{Binding AssistLevel, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                                SelectionChanged="Picker_SelectionChanged"
+                                ShowFooter="False"
+                                ShowHeader="False" />
 
-        <pickers:SfDatePicker x:Name="datepicker" ShowHeader="False" />
+                            <xforms1:SfPicker
+                                x:Name="PedalActivationTimePicker"
+                                ColumnHeaderHeight="46"
+                                HeaderHeight="40"
+                                HeaderText="Assist Level"
+                                HorizontalOptions="Center"
+                                ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type pedaldatamodel:ActivationTimeType}}}"
+                                PickerMode="Dialog"
+                                PickerWidth="200"
+                                SelectedItem="{Binding ActivationTime, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                                SelectionChanged="Picker_SelectionChanged"
+                                ShowFooter="False"
+                                ShowHeader="False" />
 
-        <gauge:SfCircularGauge Grid.Row="1" BackgroundColor="Aqua">
-            <gauge:SfCircularGauge.Annotations>
-                <gauge:GaugeAnnotation
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Angle="270"
-                    Offset=".4">
-                    <gauge:GaugeAnnotation.View>
-                        <iconize:IconImage
-                            Icon="md-warning"
-                            IconColor="LightGray"
-                            WidthRequest="40" />
-                    </gauge:GaugeAnnotation.View>
-                </gauge:GaugeAnnotation>
-                <gauge:GaugeAnnotation
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Angle="315"
-                    Offset="1">
-                    <gauge:GaugeAnnotation.View>
-                        <iconize:IconImage
-                            Icon="mdi-oil-temperature"
-                            IconColor="DarkRed"
-                            WidthRequest="24" />
-                    </gauge:GaugeAnnotation.View>
-                </gauge:GaugeAnnotation>
-                <gauge:GaugeAnnotation
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Angle="225"
-                    Offset="1">
-                    <gauge:GaugeAnnotation.View>
-                        <iconize:IconImage
-                            Icon="mdi-battery-charging"
-                            IconColor="DarkBlue"
-                            WidthRequest="24" />
-                    </gauge:GaugeAnnotation.View>
-                </gauge:GaugeAnnotation>
-                <gauge:GaugeAnnotation Angle="220" Offset="0.0">
-                    <gauge:GaugeAnnotation.View>
+                            <xforms1:SfPicker
+                                x:Name="ThrottleActivityPicker"
+                                ColumnHeaderHeight="46"
+                                HeaderHeight="40"
+                                HeaderText="Assist Level"
+                                HorizontalOptions="Center"
+                                ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type throttledatamodel:ThrottleActivityType}}}"
+                                PickerMode="Dialog"
+                                PickerWidth="200"
+                                SelectedItem="{Binding ThrottleActivity, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                                SelectionChanged="Picker_SelectionChanged"
+                                ShowFooter="False"
+                                ShowHeader="False" />
+                        </Grid>
+
+
                         <gauge:SfCircularGauge>
+                            <gauge:SfCircularGauge.Annotations>
+                                <gauge:GaugeAnnotation
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Angle="270"
+                                    Offset=".4">
+                                    <gauge:GaugeAnnotation.View>
+                                        <iconize:IconImage
+                                            Icon="md-warning"
+                                            IconColor="#141313"
+                                            WidthRequest="40" />
+                                    </gauge:GaugeAnnotation.View>
+                                </gauge:GaugeAnnotation>
+                                <gauge:GaugeAnnotation
+                                    HorizontalAlignment="Start"
+                                    VerticalAlignment="End"
+                                    Angle="315"
+                                    Offset="1">
+                                    <gauge:GaugeAnnotation.View>
+                                        <iconize:IconImage
+                                            Icon="mdi-oil-temperature"
+                                            IconColor="DarkRed"
+                                            WidthRequest="24" />
+                                    </gauge:GaugeAnnotation.View>
+                                </gauge:GaugeAnnotation>
+                                <gauge:GaugeAnnotation
+                                    HorizontalAlignment="End"
+                                    VerticalAlignment="End"
+                                    Angle="225"
+                                    Offset="1">
+                                    <gauge:GaugeAnnotation.View>
+                                        <iconize:IconImage
+                                            Icon="mdi-battery-charging"
+                                            IconColor="DarkBlue"
+                                            WidthRequest="24" />
+                                    </gauge:GaugeAnnotation.View>
+                                </gauge:GaugeAnnotation>
+                                <gauge:GaugeAnnotation
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Start"
+                                    Angle="90"
+                                    ViewMargin="0,0"
+                                    Offset=".3">
+                                    <gauge:GaugeAnnotation.View>
+                                        <border:SfBorder
+                                            BorderColor="Red"
+                                            BorderWidth="3"
+                                            CornerRadius="10"
+                                            HeightRequest="100"
+                                            WidthRequest="150">
+                                            <Grid BackgroundColor="Red">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="auto" />
+                                                    <RowDefinition Height="2" />
+                                                    <RowDefinition Height="auto" />
+                                                </Grid.RowDefinitions>
+                                                <gauge:SfDigitalGauge
+                                                    Margin="5"
+                                                    CharacterHeight="30"
+                                                    CharacterStrokeColor="Black"
+                                                    CharacterType="SegmentSeven"
+                                                    CharacterWidth="15"
+                                                    DisabledSegmentAlpha="37"
+                                                    DisabledSegmentColor="Green"
+                                                    HeightRequest="30"
+                                                    HorizontalOptions="EndAndExpand"
+                                                    SegmentStrokeWidth="3"
+                                                    VerticalOptions="Fill"
+                                                    WidthRequest="100"
+                                                    Value="100" />
+                                                <Frame
+                                                    Grid.Row="1"
+                                                    BackgroundColor="Black"
+                                                    HeightRequest="1"
+                                                    OutlineColor="Black" />
+                                                <gauge:SfDigitalGauge
+                                                    Grid.Row="2"
+                                                    Margin="5"
+                                                    CharacterHeight="30"
+                                                    CharacterStrokeColor="Black"
+                                                    CharacterType="SegmentSeven"
+                                                    CharacterWidth="15"
+                                                    DisabledSegmentAlpha="37"
+                                                    DisabledSegmentColor="Green"
+                                                    HeightRequest="30"
+                                                    HorizontalOptions="EndAndExpand"
+                                                    SegmentStrokeWidth="3"
+                                                    VerticalOptions="Fill"
+                                                    WidthRequest="100"
+                                                    Value="0100" />
+                                            </Grid>
+                                        </border:SfBorder>
+
+                                    </gauge:GaugeAnnotation.View>
+                                </gauge:GaugeAnnotation>
+                            </gauge:SfCircularGauge.Annotations>
                             <gauge:SfCircularGauge.Scales>
                                 <gauge:Scale
                                     Direction="AntiClockwise"
                                     EndValue="100"
                                     Interval="25"
                                     MinorTicksPerInterval="0"
-                                    RimColor="black"
+                                    RimColor="WhiteSmoke"
                                     RimThickness="10"
-                                    ScaleEndOffset="1"
-                                    ScaleStartOffset="1"
+                                    ScaleEndOffset=".95"
+                                    ScaleStartOffset=".84"
                                     ShowLabels="false"
                                     ShowRim="true"
                                     StartAngle="290"
@@ -86,42 +307,35 @@
                                     SweepAngle="50">
                                     <gauge:Scale.Ranges>
                                         <gauge:Range
-                                            EndValue="100"
-                                            StartValue="0"
-                                            Offset="1.05"
+                                            EndValue="98"
+                                            StartValue="2"
+                                            Thickness="12"
+                                            Offset=".93"
                                             Color="Gray" />
                                     </gauge:Scale.Ranges>
                                     <gauge:Scale.Pointers>
                                         <gauge:RangePointer
-                                            Thickness="10"
-                                            Offset="1.05"
+                                            Thickness="12"
+                                            Offset=".93"
                                             Color="Blue"
                                             Value="50" />
                                     </gauge:Scale.Pointers>
                                     <gauge:Scale.MajorTickSettings>
                                         <gauge:TickSettings
-                                            EndOffset="1.05"
-                                            StartOffset=".985"
+                                            EndOffset=".95"
+                                            StartOffset=".84"
                                             Thickness="3"
-                                            Color="Black" />
+                                            Color="WhiteSmoke" />
                                     </gauge:Scale.MajorTickSettings>
                                 </gauge:Scale>
-                            </gauge:SfCircularGauge.Scales>
-                        </gauge:SfCircularGauge>
-                    </gauge:GaugeAnnotation.View>
-                </gauge:GaugeAnnotation>
-                <gauge:GaugeAnnotation Angle="300" Offset="0">
-                    <gauge:GaugeAnnotation.View>
-                        <gauge:SfCircularGauge>
-                            <gauge:SfCircularGauge.Scales>
                                 <gauge:Scale
                                     EndValue="100"
                                     Interval="25"
                                     MinorTicksPerInterval="0"
-                                    RimColor="black"
+                                    RimColor="WhiteSmoke"
                                     RimThickness="10"
-                                    ScaleEndOffset="1"
-                                    ScaleStartOffset="1"
+                                    ScaleEndOffset=".95"
+                                    ScaleStartOffset=".84"
                                     ShowLabels="false"
                                     ShowRim="true"
                                     StartAngle="200"
@@ -129,99 +343,118 @@
                                     SweepAngle="50">
                                     <gauge:Scale.Ranges>
                                         <gauge:Range
-                                            EndValue="100"
-                                            StartValue="0"
-                                            Offset="1.05">
+                                            EndValue="98"
+                                            StartValue="2"
+                                            Thickness="12"
+                                            Offset=".93"
+                                            Color="Gray" />
+                                    </gauge:Scale.Ranges>
+                                    <gauge:Scale.Pointers>
+                                        <gauge:RangePointer
+                                            Thickness="12"
+                                            Offset=".93"
+                                            Color="Blue"
+                                            Value="50" />
+                                    </gauge:Scale.Pointers>
+                                    <gauge:Scale.MajorTickSettings>
+                                        <gauge:TickSettings
+                                            EndOffset=".95"
+                                            StartOffset=".84"
+                                            Thickness="3"
+                                            Color="WhiteSmoke" />
+                                    </gauge:Scale.MajorTickSettings>
+                                </gauge:Scale>
+                                <gauge:Scale
+                                    EndValue="80"
+                                    Interval="10"
+                                    LabelColor="WhiteSmoke"
+                                    LabelOffset="0.60"
+                                    MinorTicksPerInterval="5"
+                                    RimColor="WhiteSmoke"
+                                    ScaleEndOffset="0.74"
+                                    ScaleStartOffset="0.75"
+                                    StartAngle="150"
+                                    StartValue="0"
+                                    SweepAngle="239">
+                                    <gauge:Scale.Ranges>
+                                        <gauge:Range
+                                            EndValue="80"
+                                            InnerEndOffset=".68"
+                                            InnerStartOffset="0.68"
+                                            OuterEndOffset=".74"
+                                            OuterStartOffset=".74"
+                                            StartValue="0">
                                             <gauge:Range.GradientStops>
-                                                <gauge:GaugeGradientStop Color="Blue" Value="0" />
-                                                <gauge:GaugeGradientStop Color="Blue" Value="50" />
-                                                <gauge:GaugeGradientStop Color="Gray" Value="49" />
-                                                <gauge:GaugeGradientStop Color="Gray" Value="80" />
+                                                <gauge:GaugeGradientStop Color="DarkKhaki" Value="0" />
+                                                <gauge:GaugeGradientStop Color="DarkGray" Value="50" />
+                                                <gauge:GaugeGradientStop Color="DarkRed" Value="80" />
                                             </gauge:Range.GradientStops>
                                         </gauge:Range>
                                     </gauge:Scale.Ranges>
                                     <gauge:Scale.MajorTickSettings>
                                         <gauge:TickSettings
-                                            EndOffset="1.05"
-                                            StartOffset=".985"
+                                            EndOffset="0.65"
+                                            StartOffset="0.75"
                                             Thickness="3"
-                                            Color="white" />
+                                            Color="LightGray" />
                                     </gauge:Scale.MajorTickSettings>
+                                    <gauge:Scale.Pointers>
+                                        <gauge:RangePointer
+                                            RangeCap="End"
+                                            Thickness="10"
+                                            Offset=".83"
+                                            Color="cyan"
+                                            Value="30" />
+                                        <gauge:MarkerPointer
+                                            Offset=".74"
+                                            Color="WhiteSmoke"
+                                            Value="60" />
+                                        <gauge:NeedlePointer
+                                            KnobColor="black"
+                                            KnobRadius="15"
+                                            KnobRadiusFactor="1"
+                                            KnobStrokeColor="DarkGray"
+                                            KnobStrokeWidth="1"
+                                            LengthFactor=".6"
+                                            TailColor="DarkRed"
+                                            TailLengthFactor=".13"
+                                            Thickness="6"
+                                            Color="DarkRed"
+                                            Value="10" />
+                                    </gauge:Scale.Pointers>
+                                    <gauge:Scale.MinorTickSettings>
+                                        <gauge:TickSettings
+                                            EndOffset="0.70"
+                                            StartOffset="0.74"
+                                            Thickness="2"
+                                            Color="LightGray" />
+                                    </gauge:Scale.MinorTickSettings>
                                 </gauge:Scale>
                             </gauge:SfCircularGauge.Scales>
                         </gauge:SfCircularGauge>
-                    </gauge:GaugeAnnotation.View>
-                </gauge:GaugeAnnotation>
-            </gauge:SfCircularGauge.Annotations>
-            <gauge:SfCircularGauge.Scales>
 
-                <gauge:Scale
-                    EndValue="80"
-                    Interval="10"
-                    LabelColor="#333333"
-                    LabelOffset="0.60"
-                    MinorTicksPerInterval="1"
-                    RimColor="#333333"
-                    ScaleEndOffset="0.74"
-                    ScaleStartOffset="0.75"
-                    StartAngle="150"
-                    StartValue="0"
-                    SweepAngle="239">
-                    <gauge:Scale.Ranges>
-                        <gauge:Range
-                            EndValue="80"
-                            InnerEndOffset=".68"
-                            InnerStartOffset="0.68"
-                            OuterEndOffset=".74"
-                            OuterStartOffset=".74"
-                            StartValue="0">
-                            <gauge:Range.GradientStops>
-                                <gauge:GaugeGradientStop Color="Transparent" Value="0" />
-                                <gauge:GaugeGradientStop Color="DarkGray" Value="50" />
-                                <gauge:GaugeGradientStop Color="DarkRed" Value="80" />
-                            </gauge:Range.GradientStops>
-                        </gauge:Range>
-                    </gauge:Scale.Ranges>
-                    <gauge:Scale.MajorTickSettings>
-                        <gauge:TickSettings
-                            EndOffset="0.68"
-                            StartOffset="0.75"
-                            Thickness="3"
-                            Color="#333333" />
-                    </gauge:Scale.MajorTickSettings>
-                    <gauge:Scale.Pointers>
-                        <gauge:RangePointer
-                            RangeCap="Both"
-                            Thickness="6"
-                            Offset=".80"
-                            Color="#01bdae"
-                            Value="30" />
-                        <gauge:MarkerPointer
-                            Offset=".74"
-                            Color="#083458"
-                            Value="60" />
-                        <gauge:NeedlePointer
-                            KnobColor="black"
-                            KnobRadius="15"
-                            KnobRadiusFactor="1"
-                            KnobStrokeColor="DarkGray"
-                            KnobStrokeWidth="1"
-                            LengthFactor=".6"
-                            TailLengthFactor=".13"
-                            Thickness="6"
-                            Value="10" />
-                    </gauge:Scale.Pointers>
+                    </StackLayout>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+            <tabview:SfTabItem
+                Title="Navigation"
+                FontIconFontFamily="iconize-material.ttf"
+                IconFont=""
+                TitleFontSize="14">
+                <tabview:SfTabItem.Content>
+                    <xforms:SfMaps
+                        EnablePanning="True"
+                        EnableZooming="True"
+                        MaxZoom="18"
+                        MinZoom="10"
+                        ZoomLevel="13">
+                        <xforms:SfMaps.Layers>
+                            <xforms:ImageryLayer CanCacheTiles="True" GeoCoordinates="35.715298,51.4" />
+                        </xforms:SfMaps.Layers>
+                    </xforms:SfMaps>
+                </tabview:SfTabItem.Content>
+            </tabview:SfTabItem>
+        </tabview:SfTabView>
 
-
-                    <gauge:Scale.MinorTickSettings>
-                        <gauge:TickSettings
-                            EndOffset="0.70"
-                            StartOffset="0.74"
-                            Thickness="2"
-                            Color="#333333" />
-                    </gauge:Scale.MinorTickSettings>
-                </gauge:Scale>
-            </gauge:SfCircularGauge.Scales>
-        </gauge:SfCircularGauge>
-    </Grid>
+    </ContentPage.Content>
 </ContentPage>

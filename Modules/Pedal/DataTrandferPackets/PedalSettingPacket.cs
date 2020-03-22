@@ -68,14 +68,6 @@ namespace Communication.Codec
             }
 
         }
-        public enum ActivationLatency : byte
-        {
-            Soon = 0,
-            Early = 1,
-            Norm = 2,
-            Late = 3
-        }
-
     }
 
     public static class PedalSettingEncoding

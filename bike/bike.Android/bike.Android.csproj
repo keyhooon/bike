@@ -101,6 +101,9 @@
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\BorderlessEntryRenderer.cs" />
+    <AndroidResource Include="Resources\drawable\Splash.png" />
+    <Compile Include="SplashActivity.cs" />
+    <Content Include="Resources\drawable\splashscreen.xml" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -110,6 +113,8 @@
     <AndroidAsset Include="Assets\Montserrat-Medium.ttf" />
     <AndroidAsset Include="Assets\Montserrat-Regular.ttf" />
     <AndroidAsset Include="Assets\Montserrat-SemiBold.ttf" />
+    <AndroidAsset Include="Assets\iconize-material.ttf" />
+    <AndroidAsset Include="Assets\iconize-materialdesignicons.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
   </ItemGroup>

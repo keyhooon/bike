@@ -16,6 +16,7 @@ namespace Services
         {
             this.dataTransport = dataTransport;
             ThrottleConfiguration = new ThrottleConfiguration();
+            ThrottleSetting = new ThrottleSetting();
             mapper = mapperConfiguration.CreateMapper();
             dataTransport.IsOpenChanged += DataTransport_IsOpenChanged;
             dataTransport.DataReceived += DataTransport_DataReceived;
@@ -67,5 +68,14 @@ namespace Services
             protected set { SetProperty(ref _throttleConfiguration, value); }
         }
 
+        private ThrottleSetting _throttleSetting;
+        public ThrottleSetting ThrottleSetting
+        {
+            get { return _throttleSetting; }
+            protected set { SetProperty(ref _throttleSetting, value); }
+        }
+
+
+
     }
-}
+} 
