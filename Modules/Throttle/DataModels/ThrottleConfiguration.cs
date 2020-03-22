@@ -1,10 +1,7 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace DataModels
 {
@@ -20,6 +17,8 @@ namespace DataModels
             get => AppSettings.GetValueOrDefault(nameof(Min), double.Epsilon);
             set
             {
+                if (value == Min)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(Min), value);
                 RaisePropertyChanged();
             }
@@ -35,6 +34,8 @@ namespace DataModels
             get => AppSettings.GetValueOrDefault(nameof(Max), 5.0d);
             set
             {
+                if (value == Max)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(Max), value);
                 RaisePropertyChanged();
             }
@@ -48,6 +49,8 @@ namespace DataModels
             get => AppSettings.GetValueOrDefault(nameof(FaultThreshold), double.Epsilon);
             set
             {
+                if (value == FaultThreshold)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(FaultThreshold), value);
                 RaisePropertyChanged();
             }

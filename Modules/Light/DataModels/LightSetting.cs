@@ -3,7 +3,6 @@ using Core.TypeConverters;
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using Prism.Mvvm;
-using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace DataModels
@@ -19,6 +18,8 @@ namespace DataModels
             get => (LightVolume)AppSettings.GetValueOrDefault(nameof(Light1), (byte)LightVolume.High);
             set
             {
+                if (value == Light1)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(Light1), (byte)value);
                 RaisePropertyChanged();
             }
@@ -29,6 +30,8 @@ namespace DataModels
             get => (LightVolume)AppSettings.GetValueOrDefault(nameof(Light2), (byte)LightVolume.High);
             set
             {
+                if (value == Light2)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(Light2), (byte)value);
                 RaisePropertyChanged();
             }
@@ -39,6 +42,8 @@ namespace DataModels
             get => (LightVolume)AppSettings.GetValueOrDefault(nameof(Light3), (byte)LightVolume.High);
             set
             {
+                if (value == Light3)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(Light3), (byte)value);
                 RaisePropertyChanged();
             }
@@ -49,6 +54,8 @@ namespace DataModels
             get => (LightVolume)AppSettings.GetValueOrDefault(nameof(Light4), (byte)LightVolume.High);
             set
             {
+                if (value == Light4)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(Light4), (byte)value);
                 RaisePropertyChanged();
             }

@@ -17,6 +17,8 @@ namespace DataModels
             get => (AssistLevelType)AppSettings.GetValueOrDefault(nameof(AssistLevel), 4);
             set
             {
+                if (value == AssistLevel)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(AssistLevel), (int)value);
                 RaisePropertyChanged();
             }
@@ -27,6 +29,8 @@ namespace DataModels
             get => (ActivationTimeType) AppSettings.GetValueOrDefault(nameof(ActivationTime), 3);
             set
             {
+                if (value == ActivationTime)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(ActivationTime), (int)value);
                 RaisePropertyChanged();
             }

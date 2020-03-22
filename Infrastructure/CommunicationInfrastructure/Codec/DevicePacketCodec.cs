@@ -3,7 +3,6 @@
 using SharpCommunication.Base.Codec;
 using SharpCommunication.Base.Codec.Packets;
 using System.Linq;
-using System;
 
 namespace Communication.Codec
 {

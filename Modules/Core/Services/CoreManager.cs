@@ -2,45 +2,38 @@
 using Communication.Codec;
 using DataModels;
 using Prism.Commands;
-using Prism.Mvvm;
-using System;
+using SharpCommunication.Base.Codec.Packets;
 
 namespace Services
 {
-    public class CoreManager : BindableBase
+    public class CoreManager : HardwareService
     {
-        private readonly DataTransportFacade dataTransport;
-        private readonly IMapper mapper;
 
-        public CoreManager(DataTransportFacade dataTransport, IConfigurationProvider mapperConfiguration)
+        public CoreManager(DataTransportFacade dataTransport, IConfigurationProvider mapperConfiguration):base (dataTransport, mapperConfiguration)
         {
-            this.dataTransport = dataTransport;
-            mapper = mapperConfiguration.CreateMapper();
             CoreVersion = new CoreVersion();
             CoreSituation = new CoreSituation();
-            dataTransport.IsOpenChanged += DataTransport_IsOpenChanged;
-            dataTransport.DataReceived += DataTransport_DataReceived;
         }
 
-        private void DataTransport_DataReceived(object sender, PacketReceivedEventArg e)
+
+        protected override void DataReceivedHandle(IAncestorPacket packet)
         {
-            switch (e.Packet)
+            switch (packet)
             {
                 case CoreSituationPacket coreSituationPacket:
-                    CoreSituation = mapper.Map<CoreSituationPacket, CoreSituation>(coreSituationPacket);
+                    mapper.Map(coreSituationPacket, CoreSituation);
                     break;
                 case CoreConfigurationPacket coreConfigurationPacket:
-                    CoreVersion = mapper.Map<CoreConfigurationPacket, CoreVersion>(coreConfigurationPacket);
+                     mapper.Map(coreConfigurationPacket, CoreVersion);
                     break;
                 default:
                     break;
             }
         }
 
-        private void DataTransport_IsOpenChanged(object sender, EventArgs e)
+        protected override void IsConnectedChangedHandle()
         {
-            RaisePropertyChanged(nameof(IsConnect));
-            ConfigurationReceiveCommand.RaiseCanExecuteChanged();
+
             if (IsConnect)
                 dataTransport.CommandTransmit(new ReadCommand() { DataId = CoreConfigurationPacket.id });
         }
@@ -49,23 +42,16 @@ namespace Services
         public DelegateCommand ConfigurationReceiveCommand =>
             _configurationReceiveCommand ?? (_configurationReceiveCommand = new DelegateCommand(() => {
                 dataTransport.CommandTransmit(new ReadCommand() { DataId = CoreConfigurationPacket.id });
-            }, () => dataTransport.IsConnect));
+            }, () => IsConnect).ObservesProperty(() => nameof(IsConnect)));
 
-
-        public bool IsConnect => dataTransport.IsConnect;
-
-        private CoreSituation _coreSituation;
         public CoreSituation CoreSituation
         {
-            get { return _coreSituation; }
-            protected set { SetProperty(ref _coreSituation, value); }
+            get ;
         }
 
-        private CoreVersion _coreVersion;
         public CoreVersion CoreVersion
         {
-            get { return _coreVersion; }
-            protected set { SetProperty(ref _coreVersion, value); }
+            get;
         }
     }
 }
