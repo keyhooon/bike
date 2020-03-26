@@ -37,6 +37,45 @@
             <Setter Property="HeightRequest" Value="40" />
             <Setter Property="WidthRequest" Value="40" />
         </Style>
+        <Style x:Key="dashboardElementStyle" TargetType="border:SfBorder">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="BorderWidth" Value="3" />
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+        <Style x:Key="dashboardButtonStyle" TargetType="buttons:SfButton">
+            <Setter Property="BackgroundColor" Value="#44444444" />
+            <Setter Property="TextColor" Value="{DynamicResource PrimaryForeGroundnColor}" />
+            <Setter Property="Padding" Value="0,30" />
+            <Setter Property="Margin" Value="0,10" />
+        </Style>
+        <Style x:Key="dashboardDigitalGauge" TargetType="gauge:SfDigitalGauge">
+            <Setter Property="CharacterHeight" Value="30" />
+            <Setter Property="CharacterStrokeColor" Value="{DynamicResource PrimaryForeGroundColor}" />
+            <Setter Property="CharacterType" Value="EightCrossEightDotMatrix" />
+            <Setter Property="CharacterWidth" Value="10" />
+            <Setter Property="DisabledSegmentAlpha" Value="70" />
+            <Setter Property="DisabledSegmentColor" Value="{DynamicResource PrimaryLightColor}" />
+            <Setter Property="Margin" Value="10,0" />
+            <Setter Property="HeightRequest" Value="34" />
+            <Setter Property="WidthRequest" Value="100" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="SegmentStrokeWidth" Value="3" />
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+        </Style>
+        <Style x:Key="dashboardLabel" TargetType="Label">
+            <Setter Property="TextColor" Value="{DynamicResource PrimaryForeGroundColor}" />
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        </Style>
+        <Style x:Key="dashboardPicker" TargetType="xforms1:SfPicker">
+            <Setter Property="ColumnHeaderHeight" Value="40" />
+            <Setter Property="HeaderHeight" Value="40" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="PickerMode" Value="Dialog" />
+            <Setter Property="PickerWidth" Value="200" />
+            <Setter Property="ShowFooter" Value="False" />
+            <Setter Property="ShowHeader" Value="False" />
+        </Style>
     </ContentPage.Resources>
     <ContentPage.ControlTemplate>
         <ControlTemplate>
@@ -51,12 +90,13 @@
                             Text="{StaticResource Back}" />
                     </controls:TitleView.LeadingView>
                 </controls:TitleView>
-                <ContentPresenter />
+                <ContentPresenter VerticalOptions="FillAndExpand" />
             </StackLayout>
         </ControlTemplate>
     </ContentPage.ControlTemplate>
     <ContentPage.Content>
         <tabview:SfTabView
+            BackgroundColor="Cyan"
             DisplayMode="ImageWithText"
             EnableSwiping="False"
             OverflowMode="Scroll"
@@ -70,130 +110,24 @@
                 IconFont=""
                 TitleFontSize="14">
                 <tabview:SfTabItem.Content>
-                    <StackLayout BackgroundColor="Black">
-
-                        <Grid Margin="5" HeightRequest="60">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                                <ColumnDefinition Width="1*" />
-                            </Grid.ColumnDefinitions>
-                            <buttons:SfButton
-                                x:Name="PedalAssistLevelButton"
-                                Padding="10"
-                                BackgroundColor="Red"
-                                Clicked="SfButton_Clicked"
-                                CornerRadius="5">
-                                <buttons:SfButton.Content>
-                                    <StackLayout Orientation="Vertical">
-                                        <Label HorizontalOptions="Center" Text="Pedal Assist" />
-                                        <gauge:SfDigitalGauge
-                                            CharacterHeight="20"
-                                            CharacterStrokeColor="Black"
-                                            CharacterType="EightCrossEightDotMatrix"
-                                            CharacterWidth="10"
-                                            DisabledSegmentAlpha="37"
-                                            DisabledSegmentColor="Green"
-                                            HorizontalOptions="Center"
-                                            SegmentStrokeWidth="3"
-                                            VerticalOptions="Fill"
-                                            Value="{Binding AssistLevel, Converter={StaticResource enumValueConverter}}" />
-                                    </StackLayout>
-                                </buttons:SfButton.Content>
-                            </buttons:SfButton>
-                            <buttons:SfButton
-                                x:Name="PedalActivationTimeButton"
-                                Grid.Column="1"
-                                Padding="10"
-                                BackgroundColor="Red"
-                                Clicked="SfButton_Clicked"
-                                CornerRadius="5">
-                                <buttons:SfButton.Content>
-                                    <StackLayout Orientation="Vertical">
-                                        <Label HorizontalOptions="Center" Text="Pedal Assist" />
-                                        <gauge:SfDigitalGauge
-                                            CharacterHeight="20"
-                                            CharacterStrokeColor="Black"
-                                            CharacterType="EightCrossEightDotMatrix"
-                                            CharacterWidth="10"
-                                            DisabledSegmentAlpha="37"
-                                            DisabledSegmentColor="Green"
-                                            HorizontalOptions="Center"
-                                            SegmentStrokeWidth="3"
-                                            VerticalOptions="Fill"
-                                            Value="{Binding ActivationTime, Converter={StaticResource enumValueConverter}}" />
-                                    </StackLayout>
-                                </buttons:SfButton.Content>
-                            </buttons:SfButton>
-                            <buttons:SfButton
-                                x:Name="ThrottleActivityButton"
-                                Grid.Column="2"
-                                Padding="10"
-                                BackgroundColor="Red"
-                                Clicked="SfButton_Clicked"
-                                CornerRadius="5">
-                                <buttons:SfButton.Content>
-                                    <StackLayout Orientation="Vertical">
-                                        <Label HorizontalOptions="Center" Text="Throttle" />
-                                        <gauge:SfDigitalGauge
-                                            CharacterHeight="20"
-                                            CharacterStrokeColor="Black"
-                                            CharacterType="EightCrossEightDotMatrix"
-                                            CharacterWidth="10"
-                                            DisabledSegmentAlpha="37"
-                                            DisabledSegmentColor="Green"
-                                            HorizontalOptions="Center"
-                                            SegmentStrokeWidth="3"
-                                            VerticalOptions="Fill"
-                                            Value="{Binding ThrottleActivity, Converter={StaticResource enumValueConverter}}" />
-                                    </StackLayout>
-                                </buttons:SfButton.Content>
-                            </buttons:SfButton>
-                            <xforms1:SfPicker
-                                x:Name="PedalAssistLevelPicker"
-                                ColumnHeaderHeight="46"
-                                HeaderHeight="40"
-                                HeaderText="Assist Level"
-                                HorizontalOptions="Center"
-                                ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type pedaldatamodel:AssistLevelType}}}"
-                                PickerMode="Dialog"
-                                PickerWidth="200"
-                                SelectedItem="{Binding AssistLevel, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
-                                SelectionChanged="Picker_SelectionChanged"
-                                ShowFooter="False"
-                                ShowHeader="False" />
-
-                            <xforms1:SfPicker
-                                x:Name="PedalActivationTimePicker"
-                                ColumnHeaderHeight="46"
-                                HeaderHeight="40"
-                                HeaderText="Assist Level"
-                                HorizontalOptions="Center"
-                                ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type pedaldatamodel:ActivationTimeType}}}"
-                                PickerMode="Dialog"
-                                PickerWidth="200"
-                                SelectedItem="{Binding ActivationTime, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
-                                SelectionChanged="Picker_SelectionChanged"
-                                ShowFooter="False"
-                                ShowHeader="False" />
-
-                            <xforms1:SfPicker
-                                x:Name="ThrottleActivityPicker"
-                                ColumnHeaderHeight="46"
-                                HeaderHeight="40"
-                                HeaderText="Assist Level"
-                                HorizontalOptions="Center"
-                                ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type throttledatamodel:ThrottleActivityType}}}"
-                                PickerMode="Dialog"
-                                PickerWidth="200"
-                                SelectedItem="{Binding ThrottleActivity, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
-                                SelectionChanged="Picker_SelectionChanged"
-                                ShowFooter="False"
-                                ShowHeader="False" />
-                        </Grid>
-
-
-                        <gauge:SfCircularGauge>
+                    <Grid Padding="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="auto" />
+                            <RowDefinition Height="auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <gauge:SfCircularGauge
+                            Grid.Row="1"
+                            Grid.ColumnSpan="3"
+                            BackgroundColor="#44444444"
+                            HeightRequest="400"
+                            HorizontalOptions="Center"
+                            VerticalOptions="End">
                             <gauge:SfCircularGauge.Annotations>
                                 <gauge:GaugeAnnotation
                                     HorizontalAlignment="Center"
@@ -203,7 +137,8 @@
                                     <gauge:GaugeAnnotation.View>
                                         <iconize:IconImage
                                             Icon="md-warning"
-                                            IconColor="#141313"
+                                            IconColor="Red"
+                                            Opacity=".1"
                                             WidthRequest="40" />
                                     </gauge:GaugeAnnotation.View>
                                 </gauge:GaugeAnnotation>
@@ -215,7 +150,7 @@
                                     <gauge:GaugeAnnotation.View>
                                         <iconize:IconImage
                                             Icon="mdi-oil-temperature"
-                                            IconColor="DarkRed"
+                                            IconColor="{DynamicResource PrimaryForeGroundColor}"
                                             WidthRequest="24" />
                                     </gauge:GaugeAnnotation.View>
                                 </gauge:GaugeAnnotation>
@@ -227,7 +162,7 @@
                                     <gauge:GaugeAnnotation.View>
                                         <iconize:IconImage
                                             Icon="mdi-battery-charging"
-                                            IconColor="DarkBlue"
+                                            IconColor="{DynamicResource PrimaryForeGroundColor}"
                                             WidthRequest="24" />
                                     </gauge:GaugeAnnotation.View>
                                 </gauge:GaugeAnnotation>
@@ -238,54 +173,49 @@
                                     ViewMargin="0,0"
                                     Offset=".3">
                                     <gauge:GaugeAnnotation.View>
-                                        <border:SfBorder
-                                            BorderColor="Red"
-                                            BorderWidth="3"
-                                            CornerRadius="10"
-                                            HeightRequest="100"
-                                            WidthRequest="150">
-                                            <Grid BackgroundColor="Red">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="auto" />
-                                                    <RowDefinition Height="2" />
-                                                    <RowDefinition Height="auto" />
-                                                </Grid.RowDefinitions>
+
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="auto" />
+                                                <RowDefinition Height="auto" />
+                                            </Grid.RowDefinitions>
+                                            <StackLayout Orientation="Horizontal">
                                                 <gauge:SfDigitalGauge
-                                                    Margin="5"
+                                                    BackgroundColor="Transparent"
                                                     CharacterHeight="30"
-                                                    CharacterStrokeColor="Black"
+                                                    CharacterStrokeColor="{DynamicResource PrimaryForeGroundColor}"
                                                     CharacterType="SegmentSeven"
                                                     CharacterWidth="15"
                                                     DisabledSegmentAlpha="37"
                                                     DisabledSegmentColor="Green"
-                                                    HeightRequest="30"
-                                                    HorizontalOptions="EndAndExpand"
+                                                    HeightRequest="35"
+                                                    HorizontalOptions="End"
                                                     SegmentStrokeWidth="3"
-                                                    VerticalOptions="Fill"
+                                                    VerticalOptions="EndAndExpand"
                                                     WidthRequest="100"
-                                                    Value="100" />
-                                                <Frame
-                                                    Grid.Row="1"
-                                                    BackgroundColor="Black"
-                                                    HeightRequest="1"
-                                                    OutlineColor="Black" />
+                                                    Value=" 100" />
+                                                <Label BackgroundColor="Transparent" Text="Km" />
+                                            </StackLayout>
+                                            <StackLayout Grid.Row="1" Orientation="Horizontal">
                                                 <gauge:SfDigitalGauge
-                                                    Grid.Row="2"
-                                                    Margin="5"
+                                                    BackgroundColor="Transparent"
                                                     CharacterHeight="30"
-                                                    CharacterStrokeColor="Black"
+                                                    CharacterStrokeColor="{DynamicResource PrimaryForeGroundColor}"
                                                     CharacterType="SegmentSeven"
                                                     CharacterWidth="15"
                                                     DisabledSegmentAlpha="37"
                                                     DisabledSegmentColor="Green"
-                                                    HeightRequest="30"
-                                                    HorizontalOptions="EndAndExpand"
+                                                    HeightRequest="35"
+                                                    HorizontalOptions="End"
                                                     SegmentStrokeWidth="3"
-                                                    VerticalOptions="Fill"
+                                                    VerticalOptions="EndAndExpand"
                                                     WidthRequest="100"
-                                                    Value="0100" />
-                                            </Grid>
-                                        </border:SfBorder>
+                                                    Value="2100" />
+                                                <Label BackgroundColor="Transparent" Text="Km" />
+                                            </StackLayout>
+
+                                        </Grid>
+
 
                                     </gauge:GaugeAnnotation.View>
                                 </gauge:GaugeAnnotation>
@@ -296,7 +226,7 @@
                                     EndValue="100"
                                     Interval="25"
                                     MinorTicksPerInterval="0"
-                                    RimColor="WhiteSmoke"
+                                    RimColor="{DynamicResource Gray-500}"
                                     RimThickness="10"
                                     ScaleEndOffset=".95"
                                     ScaleStartOffset=".84"
@@ -311,7 +241,7 @@
                                             StartValue="2"
                                             Thickness="12"
                                             Offset=".93"
-                                            Color="Gray" />
+                                            Color="{DynamicResource Gray-900}" />
                                     </gauge:Scale.Ranges>
                                     <gauge:Scale.Pointers>
                                         <gauge:RangePointer
@@ -325,14 +255,14 @@
                                             EndOffset=".95"
                                             StartOffset=".84"
                                             Thickness="3"
-                                            Color="WhiteSmoke" />
+                                            Color="{DynamicResource Gray-500}" />
                                     </gauge:Scale.MajorTickSettings>
                                 </gauge:Scale>
                                 <gauge:Scale
                                     EndValue="100"
                                     Interval="25"
                                     MinorTicksPerInterval="0"
-                                    RimColor="WhiteSmoke"
+                                    RimColor="{DynamicResource Gray-500}"
                                     RimThickness="10"
                                     ScaleEndOffset=".95"
                                     ScaleStartOffset=".84"
@@ -345,13 +275,13 @@
                                         <gauge:Range
                                             EndValue="98"
                                             StartValue="2"
-                                            Thickness="12"
+                                            Thickness="14"
                                             Offset=".93"
-                                            Color="Gray" />
+                                            Color="{DynamicResource Gray-900}" />
                                     </gauge:Scale.Ranges>
                                     <gauge:Scale.Pointers>
                                         <gauge:RangePointer
-                                            Thickness="12"
+                                            Thickness="14"
                                             Offset=".93"
                                             Color="Blue"
                                             Value="50" />
@@ -361,16 +291,16 @@
                                             EndOffset=".95"
                                             StartOffset=".84"
                                             Thickness="3"
-                                            Color="WhiteSmoke" />
+                                            Color="{DynamicResource Gray-500}" />
                                     </gauge:Scale.MajorTickSettings>
                                 </gauge:Scale>
                                 <gauge:Scale
                                     EndValue="80"
                                     Interval="10"
-                                    LabelColor="WhiteSmoke"
+                                    LabelColor="White"
                                     LabelOffset="0.60"
                                     MinorTicksPerInterval="5"
-                                    RimColor="WhiteSmoke"
+                                    RimColor="White"
                                     ScaleEndOffset="0.74"
                                     ScaleStartOffset="0.75"
                                     StartAngle="150"
@@ -403,17 +333,17 @@
                                             RangeCap="End"
                                             Thickness="10"
                                             Offset=".83"
-                                            Color="cyan"
+                                            Color="{DynamicResource SecondaryColor}"
                                             Value="30" />
                                         <gauge:MarkerPointer
                                             Offset=".74"
-                                            Color="WhiteSmoke"
+                                            Color="{DynamicResource PrimaryForeGroundColor}"
                                             Value="60" />
                                         <gauge:NeedlePointer
-                                            KnobColor="black"
+                                            KnobColor="{DynamicResource PrimaryForeGroundColor}"
                                             KnobRadius="15"
                                             KnobRadiusFactor="1"
-                                            KnobStrokeColor="DarkGray"
+                                            KnobStrokeColor="{DynamicResource PrimaryDarkColor}"
                                             KnobStrokeWidth="1"
                                             LengthFactor=".6"
                                             TailColor="DarkRed"
@@ -432,8 +362,68 @@
                                 </gauge:Scale>
                             </gauge:SfCircularGauge.Scales>
                         </gauge:SfCircularGauge>
+                        <buttons:SfButton
+                            x:Name="PedalAssistLevelButton"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Clicked="SfButton_Clicked"
+                            Style="{DynamicResource dashboardButtonStyle}">
 
-                    </StackLayout>
+                            <buttons:SfButton.Content>
+                                <StackLayout Orientation="Vertical">
+                                    <gauge:SfDigitalGauge Style="{DynamicResource dashboardDigitalGauge}" Value="{Binding AssistLevel, Converter={StaticResource enumValueConverter}}" />
+                                    <Label Style="{DynamicResource dashboardLabel}" Text="Pedal Assist" />
+                                </StackLayout>
+                            </buttons:SfButton.Content>
+                        </buttons:SfButton>
+                        <buttons:SfButton
+                            x:Name="PedalActivationTimeButton"
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Clicked="SfButton_Clicked"
+                            Style="{DynamicResource dashboardButtonStyle}">
+                            <buttons:SfButton.Content>
+                                <StackLayout Orientation="Vertical">
+                                    <gauge:SfDigitalGauge Style="{DynamicResource dashboardDigitalGauge}" Value="{Binding ActivationTime, Converter={StaticResource enumValueConverter}}" />
+                                    <Label Style="{DynamicResource dashboardLabel}" Text="Pedal Assist" />
+                                </StackLayout>
+                            </buttons:SfButton.Content>
+                        </buttons:SfButton>
+                        <buttons:SfButton
+                            x:Name="ThrottleActivityButton"
+                            Grid.Row="2"
+                            Grid.Column="2"
+                            Clicked="SfButton_Clicked"
+                            Style="{DynamicResource dashboardButtonStyle}">
+                            <buttons:SfButton.Content>
+                                <StackLayout Orientation="Vertical">
+                                    <gauge:SfDigitalGauge Style="{DynamicResource dashboardDigitalGauge}" Value="{Binding ThrottleActivity, Converter={StaticResource enumValueConverter}}" />
+                                    <Label Style="{DynamicResource dashboardLabel}" Text="Throttle" />
+                                </StackLayout>
+                            </buttons:SfButton.Content>
+                        </buttons:SfButton>
+                        <xforms1:SfPicker
+                            x:Name="PedalAssistLevelPicker"
+                            HeaderText="Assist Level"
+                            ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type pedaldatamodel:AssistLevelType}}}"
+                            SelectedItem="{Binding AssistLevel, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                            SelectionChanged="Picker_SelectionChanged"
+                            Style="{DynamicResource dashboardPicker}" />
+                        <xforms1:SfPicker
+                            x:Name="PedalActivationTimePicker"
+                            HeaderText="Assist Level"
+                            ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type pedaldatamodel:ActivationTimeType}}}"
+                            SelectedItem="{Binding ActivationTime, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                            SelectionChanged="Picker_SelectionChanged"
+                            Style="{DynamicResource dashboardPicker}" />
+                        <xforms1:SfPicker
+                            x:Name="ThrottleActivityPicker"
+                            HeaderText="Assist Level"
+                            ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type throttledatamodel:ThrottleActivityType}}}"
+                            SelectedItem="{Binding ThrottleActivity, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                            SelectionChanged="Picker_SelectionChanged"
+                            Style="{DynamicResource dashboardPicker}" />
+                    </Grid>
                 </tabview:SfTabItem.Content>
             </tabview:SfTabItem>
             <tabview:SfTabItem

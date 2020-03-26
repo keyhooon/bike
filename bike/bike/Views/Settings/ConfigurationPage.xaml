@@ -14,20 +14,21 @@
     xmlns:prism="http://prismlibrary.com"
     Title="Configurations"
     prism:ViewModelLocator.AutowireViewModel="True"
-    BackgroundColor="{DynamicResource Gray-100}">
+    BackgroundColor="{DynamicResource Gray-White}">
     <ContentPage.Resources>
 
         <Color x:Key="Transparent">Transparent</Color>
         <x:String x:Key="Back">&#xe709;</x:String>
 
+
         <Style x:Key="IconHeaderStyle" TargetType="iconize:IconImage">
-            <Setter Property="Margin" Value="16,8" />
+            <Setter Property="Margin" Value="16,8,0,8" />
             <Setter Property="IconColor" Value="{DynamicResource Gray-600}" />
-            <Setter Property="IconSize" Value="42" />
+            <Setter Property="IconSize" Value="24" />
         </Style>
 
         <Style x:Key="LableHeaderStyle" TargetType="Label">
-            <Setter Property="BackgroundColor" Value="{DynamicResource Gray-100}" />
+            <Setter Property="BackgroundColor" Value="{DynamicResource Gray-White}" />
             <Setter Property="FontFamily" Value="{StaticResource Montserrat-SemiBold}" />
             <Setter Property="FontSize" Value="12" />
             <Setter Property="HeightRequest" Value="50" />

@@ -11,9 +11,10 @@
 
         <syncTheme:SyncfusionThemeDictionary>
             <syncTheme:SyncfusionThemeDictionary.MergedDictionaries>
-                <themes:LightTheme />
+
                 <!--  Theme resource dictionary  -->
-                <syncTheme:DarkTheme />
+                <syncTheme:LightTheme />
+                <themes:LightTheme />
             </syncTheme:SyncfusionThemeDictionary.MergedDictionaries>
         </syncTheme:SyncfusionThemeDictionary>
 

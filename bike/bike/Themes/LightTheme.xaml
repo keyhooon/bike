@@ -4,19 +4,26 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <Color x:Key="PrimaryColor">#f54e5e</Color>
-    <Color x:Key="PrimaryDarkColor">#d0424f</Color>
-    <Color x:Key="PrimaryDarkenColor">#ab3641</Color>
-    <Color x:Key="PrimaryLighterColor">#edcacd</Color>
+
+    <Color x:Key="PrimaryColor">#03A9F4</Color>
+    <Color x:Key="PrimaryDarkColor">#0288D1</Color>
+    <Color x:Key="PrimaryDarkenColor">#0167A8</Color>
+    <Color x:Key="PrimaryLightColor">#B3E5FC</Color>
+    <Color x:Key="PrimaryForeGroundColor">#212121</Color>
     <Color x:Key="PrimaryGradient">#e83f94</Color>
-    <Color x:Key="PrimaryLight">#ffe8f4</Color>
-    <Color x:Key="SecondaryGradient">#7644ad</Color>
-    <Color x:Key="Secondary">#d54381</Color>
+    <Color x:Key="SecondaryGradientColor">#7644ad</Color>
+    <Color x:Key="SecondaryColor">#CDDC39</Color>
+    <Color x:Key="SecondaryForeGroundColor">#757575</Color>
+    <Color x:Key="LightColor">#ffe8f4</Color>
     <Color x:Key="Green">#7ed321</Color>
     <Color x:Key="Red">#ff4a4a</Color>
     <Color x:Key="Orange">#ff844a</Color>
     <Color x:Key="Blue">#4acaff</Color>
     <Color x:Key="HyperLink">#567cd7</Color>
+
+    <Color x:Key="SyncPrimaryDarkColor">#0288D1</Color>
+    <Color x:Key="SyncPrimaryColor">#03A9F4</Color>
+    <Color x:Key="SyncPrimaryLightColor">#B3E5FC</Color>
 
     <Color x:Key="Gray-100">#f6f7f8</Color>
     <Color x:Key="Gray-200">#ebecef</Color>
