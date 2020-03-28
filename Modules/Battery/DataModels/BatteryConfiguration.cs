@@ -1,10 +1,7 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace DataModels
 {
@@ -19,8 +16,10 @@ namespace DataModels
         public double OverCurrent
         {
             get => AppSettings.GetValueOrDefault(nameof(OverCurrent), 40.0d);
-            set 
-            { 
+            set
+            {
+                if (value == OverCurrent)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(OverCurrent), value);
                 RaisePropertyChanged();
             }
@@ -34,6 +33,8 @@ namespace DataModels
             get => AppSettings.GetValueOrDefault(nameof(OverVoltage), 60.0d);
             set
             {
+                if (value == OverVoltage)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(OverVoltage), value);
                 RaisePropertyChanged();
             }
@@ -47,6 +48,8 @@ namespace DataModels
             get => AppSettings.GetValueOrDefault(nameof(UnderVoltage), 30.0d);
             set
             {
+                if (value == UnderVoltage)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(UnderVoltage), value);
                 RaisePropertyChanged();
             }
@@ -61,6 +64,8 @@ namespace DataModels
             get => AppSettings.GetValueOrDefault(nameof(NominalVoltage), 60.0d);
             set
             {
+                if (value == NominalVoltage)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(NominalVoltage), value);
                 RaisePropertyChanged();
             }
@@ -74,6 +79,8 @@ namespace DataModels
             get => AppSettings.GetValueOrDefault(nameof(OverTemprature), 60.0d);
             set
             {
+                if (value == OverTemprature)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(OverTemprature), value);
                 RaisePropertyChanged();
             }

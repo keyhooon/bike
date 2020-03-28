@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Globalization;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using bike.Models.ContactUs;
 using Prism.Commands;
 using Prism.Mvvm;

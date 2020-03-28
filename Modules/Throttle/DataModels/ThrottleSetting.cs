@@ -2,10 +2,7 @@
 using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 
 namespace DataModels
 {
@@ -19,6 +16,8 @@ namespace DataModels
             get => (ThrottleActivityType)AppSettings.GetValueOrDefault(nameof(ThrottleActivity), 3);
             set
             {
+                if (value == ThrottleActivity)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(ThrottleActivity), (int)value);
                 RaisePropertyChanged();
             }

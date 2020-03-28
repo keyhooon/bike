@@ -1,8 +1,5 @@
 ﻿using Prism.Commands;
 using Syncfusion.SfNavigationDrawer.XForms;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace bike
 {

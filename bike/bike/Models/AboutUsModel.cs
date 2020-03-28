@@ -1,5 +1,4 @@
 ﻿using Prism.Mvvm;
-using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 

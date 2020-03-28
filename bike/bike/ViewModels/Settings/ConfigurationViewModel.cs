@@ -1,10 +1,6 @@
 ﻿using DataModels;
-using Prism.Commands;
 using Prism.Mvvm;
 using Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace bike.ViewModels.Settings
 {

@@ -1,10 +1,7 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace DataModels
 {
@@ -20,6 +17,8 @@ namespace DataModels
             get => AppSettings.GetValueOrDefault(nameof(MagnetCount), 16);
             set
             {
+                if (value == MagnetCount)
+                    return;
                 AppSettings.AddOrUpdateValue(nameof(MagnetCount), value);
                 RaisePropertyChanged();
             }

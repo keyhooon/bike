@@ -1,7 +1,4 @@
-﻿
-using Prism.Commands;
-using Prism.Mvvm;
-using Services;
+﻿using Prism.Mvvm;
 using Xamarin.Forms.Internals;
 
 namespace bike.ViewModels.Settings

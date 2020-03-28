@@ -1,7 +1,5 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using bike.Models.AboutUs;
 using Prism.Mvvm;
 using Xamarin.Forms;
