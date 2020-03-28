@@ -27,12 +27,12 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "Jessica Park",
                     Comment = "These boots are stunning and I look stunning in them.",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = ImageSource.FromResource("1.jpeg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                    CustomerImage = ImageSource.FromResource("bike.Assets.Images.1.jpeg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(0, 5),
                     Images = new List<ImageSource>
                     {
-                        ImageSource.FromResource("bike2.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
-                        ImageSource.FromResource("bike.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                        ImageSource.FromResource("bike.Assets.Images.bike2.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                        ImageSource.FromResource("bike.Assets.Images.bike.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     }
                 },
                 new Review
@@ -40,7 +40,7 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "Alice",
                     Comment = "Greatest purchase I have ever made in my life. No lie.",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = ImageSource.FromResource("2.png", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                    CustomerImage = ImageSource.FromResource("bike.Assets.Images.2.png", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(0, 5)
                 },
                 new Review
@@ -48,7 +48,7 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "John",
                     Comment = "Absolutely love them! Can’t stop wearing!",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = ImageSource.FromResource("3.png", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                    CustomerImage = ImageSource.FromResource("bike.Assets.Images.3.png", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(0, 5)
                 },
                 new Review
@@ -56,13 +56,13 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "Lisa",
                     Comment = "These boots are very much comfortable for wearing.",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = ImageSource.FromResource("4.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                    CustomerImage = ImageSource.FromResource("bike.Assets.Images.4.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(0, 5),
                     Images = new List<ImageSource>
                     {
-                        ImageSource.FromResource("bike2.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
-                        ImageSource.FromResource("bike3.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
-                        ImageSource.FromResource("bike4.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                        ImageSource.FromResource("bike.Assets.Images.bike2.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                        ImageSource.FromResource("bike.Assets.Images.bike3.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                        ImageSource.FromResource("bike.Assets.Images.bike4.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     }
                 },
                 new Review
@@ -70,7 +70,7 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "Rebacca",
                     Comment = "Absolutely love them! Can’t stop wearing!",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = ImageSource.FromResource("5.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                    CustomerImage = ImageSource.FromResource("bike.Assets.Images.5.jpg", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(0, 5)
                 },
                 new Review
@@ -78,7 +78,7 @@ namespace bike.ViewModels.Feedback
                     CustomerName = "Jessica Park",
                     Comment = "Happy purchasing!",
                     ReviewedDate = DateTime.Now.AddDays(randomNum.Next(0, 1000)),
-                    CustomerImage = ImageSource.FromResource("6.png", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
+                    CustomerImage = ImageSource.FromResource("bike.Assets.Images.6.png", typeof(FeedbackViewModel).GetTypeInfo().Assembly),
                     Rating = randomNum.Next(4, 5)
                 },
             };

@@ -10,6 +10,7 @@
     xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
     xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
     xmlns:iconizeFont="clr-namespace:Plugin.Iconize.Fonts;assembly=Plugin.Iconize.MaterialDesignIcons"
+    xmlns:image="clr-namespace:bike.Assets.Images"
     xmlns:markupextension="clr-namespace:bike.Infrastructure.MarkupExtension"
     xmlns:pedaldatamodel="clr-namespace:DataModels;assembly=Pedal"
     xmlns:prism="http://prismlibrary.com"
@@ -43,10 +44,10 @@
             <Setter Property="CornerRadius" Value="10" />
         </Style>
         <Style x:Key="dashboardButtonStyle" TargetType="buttons:SfButton">
-            <Setter Property="BackgroundColor" Value="#44444444" />
+            <Setter Property="BackgroundColor" Value="#22222222" />
             <Setter Property="TextColor" Value="{DynamicResource PrimaryForeGroundnColor}" />
-            <Setter Property="Padding" Value="0,30" />
-            <Setter Property="Margin" Value="0,10" />
+            <Setter Property="Padding" Value="0,30,0,20" />
+            <Setter Property="Margin" Value="0,0,0,10" />
         </Style>
         <Style x:Key="dashboardDigitalGauge" TargetType="gauge:SfDigitalGauge">
             <Setter Property="CharacterHeight" Value="30" />
@@ -96,7 +97,6 @@
     </ContentPage.ControlTemplate>
     <ContentPage.Content>
         <tabview:SfTabView
-            BackgroundColor="Cyan"
             DisplayMode="ImageWithText"
             EnableSwiping="False"
             OverflowMode="Scroll"
@@ -110,7 +110,7 @@
                 IconFont=""
                 TitleFontSize="14">
                 <tabview:SfTabItem.Content>
-                    <Grid Padding="10">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*" />
                             <RowDefinition Height="auto" />
@@ -121,13 +121,19 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
+                        <Image
+                            Grid.RowSpan="3"
+                            Grid.ColumnSpan="3"
+                            Aspect="AspectFill"
+                            Source="{image:ImageResource bike.Assets.Images.LightSkyBlueGradient.jpg}" />
                         <gauge:SfCircularGauge
                             Grid.Row="1"
                             Grid.ColumnSpan="3"
+                            Margin="10,0"
                             BackgroundColor="#44444444"
                             HeightRequest="400"
                             HorizontalOptions="Center"
-                            VerticalOptions="End">
+                            VerticalOptions="Start">
                             <gauge:SfCircularGauge.Annotations>
                                 <gauge:GaugeAnnotation
                                     HorizontalAlignment="Center"
@@ -315,8 +321,11 @@
                                             OuterStartOffset=".74"
                                             StartValue="0">
                                             <gauge:Range.GradientStops>
-                                                <gauge:GaugeGradientStop Color="DarkKhaki" Value="0" />
-                                                <gauge:GaugeGradientStop Color="DarkGray" Value="50" />
+                                                <gauge:GaugeGradientStop Color="DarkBlue" Value="0" />
+                                                <gauge:GaugeGradientStop Color="DarkBlue" Value="10" />
+                                                <gauge:GaugeGradientStop Color="DarkGray" Value="20" />
+                                                <gauge:GaugeGradientStop Color="DarkGray" Value="60" />
+                                                <gauge:GaugeGradientStop Color="DarkRed" Value="70" />
                                                 <gauge:GaugeGradientStop Color="DarkRed" Value="80" />
                                             </gauge:Range.GradientStops>
                                         </gauge:Range>
@@ -333,17 +342,17 @@
                                             RangeCap="End"
                                             Thickness="10"
                                             Offset=".83"
-                                            Color="{DynamicResource SecondaryColor}"
+                                            Color="Cyan"
                                             Value="30" />
                                         <gauge:MarkerPointer
                                             Offset=".74"
                                             Color="{DynamicResource PrimaryForeGroundColor}"
                                             Value="60" />
                                         <gauge:NeedlePointer
-                                            KnobColor="{DynamicResource PrimaryForeGroundColor}"
+                                            KnobColor="{DynamicResource Gray-900}"
                                             KnobRadius="15"
                                             KnobRadiusFactor="1"
-                                            KnobStrokeColor="{DynamicResource PrimaryDarkColor}"
+                                            KnobStrokeColor="{DynamicResource Gray-600}"
                                             KnobStrokeWidth="1"
                                             LengthFactor=".6"
                                             TailColor="DarkRed"
@@ -362,10 +371,12 @@
                                 </gauge:Scale>
                             </gauge:SfCircularGauge.Scales>
                         </gauge:SfCircularGauge>
+
                         <buttons:SfButton
                             x:Name="PedalAssistLevelButton"
                             Grid.Row="2"
                             Grid.Column="0"
+                            Margin="10,0,0,10"
                             Clicked="SfButton_Clicked"
                             Style="{DynamicResource dashboardButtonStyle}">
 
@@ -393,6 +404,7 @@
                             x:Name="ThrottleActivityButton"
                             Grid.Row="2"
                             Grid.Column="2"
+                            Margin="0,0,10,10"
                             Clicked="SfButton_Clicked"
                             Style="{DynamicResource dashboardButtonStyle}">
                             <buttons:SfButton.Content>

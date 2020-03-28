@@ -45,37 +45,37 @@ namespace bike.ViewModels.AboutUs
                 new AboutUsModel
                 {
                     EmployeeName = "Alice",
-                    Image = ImageSource.FromResource("1.jpg", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
+                    Image = ImageSource.FromResource("bike.Assets.Images.1.jpg", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
                     Designation = "Project Manager"
                 },
                 new AboutUsModel
                 {
                     EmployeeName = "Jessica Park",
-                    Image = ImageSource.FromResource("2.png", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
+                    Image = ImageSource.FromResource("bike.Assets.Images.2.png", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
                     Designation = "Senior Manager"
                 },
                 new AboutUsModel
                 {
                     EmployeeName = "Lisa",
-                    Image = ImageSource.FromResource("3.png", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
+                    Image = ImageSource.FromResource("bike.Assets.Images.3.png", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
                     Designation = "Senior Developer"
                 },
                 new AboutUsModel
                 {
                     EmployeeName = "Rebecca",
-                    Image = ImageSource.FromResource("4.jpg", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
+                    Image = ImageSource.FromResource("bike.Assets.Images.4.jpg", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
                     Designation = "Senior Designer"
                 },
                 new AboutUsModel
                 {
                     EmployeeName = "Alexander",
-                    Image = ImageSource.FromResource("5.jpg", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
+                    Image = ImageSource.FromResource("bike.Assets.Images.5.jpg", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
                     Designation = "Senior Manager"
                 },
                 new AboutUsModel
                 {
                     EmployeeName = "Anthony",
-                    Image = ImageSource.FromResource("6.png", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
+                    Image = ImageSource.FromResource("bike.Assets.Images.6.png", typeof(AboutUsSimpleViewModel).GetTypeInfo().Assembly),
                     Designation = "Senior Developer"
                 }
             };

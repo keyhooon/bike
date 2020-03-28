@@ -74,8 +74,6 @@
                             TextColor="Black"
                             VerticalOptions="Center" />
                     </ContentView>
-
-
                 </Grid>
             </navigationdrawer:SfNavigationDrawer.ContentView>
             <navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
@@ -83,24 +81,25 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
                         <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
+                    <sfavatar:SfAvatarView
+                        Grid.Row="1"
+                        Margin="10,0"
+                        AvatarCharacter="Avatar10"
+                        ContentType="AvatarCharacter"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        HorizontalOptions="StartAndExpand"
+                        WidthRequest="50" />
+                    <Label
+                        Grid.Row="2"
+                        Margin="10,0"
+                        FontSize="40"
+                        HorizontalOptions="StartAndExpand"
+                        Text="EV-Tech"
+                        TextColor="White" />
 
-                    <StackLayout Grid.Row="1" WidthRequest="80">
-                        <sfavatar:SfAvatarView
-                            Margin="10,0"
-                            AvatarCharacter="Avatar10"
-                            ContentType="AvatarCharacter"
-                            CornerRadius="25"
-                            HeightRequest="50"
-                            HorizontalOptions="StartAndExpand"
-                            WidthRequest="50" />
-                        <Label
-                            Margin="10,0"
-                            FontSize="20"
-                            HorizontalOptions="StartAndExpand"
-                            Text="EV-Tech"
-                            TextColor="White" />
-                    </StackLayout>
                 </Grid>
             </navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
             <navigationdrawer:SfNavigationDrawer.DrawerContentView>

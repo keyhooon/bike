@@ -15,6 +15,8 @@
     <None Remove="Assets\Images\bike2.jpg" />
     <None Remove="Assets\Images\bike3.jpg" />
     <None Remove="Assets\Images\bike4.jpg" />
+    <None Remove="Assets\Images\LightSkyBlueGradient.jpg" />
+    <None Remove="Assets\Images\NavyBlueGradient.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -28,6 +30,8 @@
     <EmbeddedResource Include="Assets\Images\bike2.jpg" />
     <EmbeddedResource Include="Assets\Images\bike3.jpg" />
     <EmbeddedResource Include="Assets\Images\bike4.jpg" />
+    <EmbeddedResource Include="Assets\Images\LightSkyBlueGradient.jpg" />
+    <EmbeddedResource Include="Assets\Images\NavyBlueGradient.jpeg" />
   </ItemGroup>
 
   <ItemGroup>
