@@ -8,12 +8,22 @@ namespace Services
     public abstract class HardwareService : BindableBase
     {
         protected readonly DataTransportFacade dataTransport;
-        protected readonly IMapper mapper;
+        private readonly IConfigurationProvider _mapperConfiguration;
+        private IMapper _mapper;
+        protected IMapper mapper 
+        {
+            get
+            {
+                if (_mapper == null)
+                    return (_mapper = _mapperConfiguration.CreateMapper());
+                return _mapper;
+            }
+        }
 
         public HardwareService(DataTransportFacade dataTransport, IConfigurationProvider mapperConfiguration)
         {
+            _mapperConfiguration = mapperConfiguration;
             this.dataTransport = dataTransport;
-            mapper = mapperConfiguration.CreateMapper();
             dataTransport.IsOpenChanged += DataTransport_IsOpenChanged;
             dataTransport.DataReceived += DataTransport_DataReceived;
         }

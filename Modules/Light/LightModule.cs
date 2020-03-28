@@ -22,7 +22,7 @@ namespace Module
                 .RegisterInstance(LightSettingPacketEncoding.CreateBuilder())
                 .RegisterInstance(LightStatePacetEncoding.CreateBuilder())
                 .RegisterInstance(LightCommandEncoding.CreateBuilder())
-                                .RegisterSingleton<LightManager>()
+                .RegisterSingleton<LightManager>()
                 ;
         }
     }

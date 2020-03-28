@@ -18,7 +18,7 @@
     <ContentPage.Resources>
 
         <Color x:Key="Transparent">Transparent</Color>
-        <x:String x:Key="Back">&#xe709;</x:String>
+        <x:String x:Key="Back">&#xe314;</x:String>
 
         <Style x:Key="IconHeaderStyle" TargetType="iconize:IconImage">
             <Setter Property="Margin" Value="16,8,0,8" />
@@ -42,8 +42,8 @@
         <Style x:Key="IconButtonStyle" TargetType="buttons:SfButton">
             <Setter Property="TextColor" Value="{DynamicResource Gray-600}" />
             <Setter Property="BackgroundColor" Value="{StaticResource Transparent}" />
-            <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
-            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontFamily" Value="{StaticResource MaterialIcons}" />
+            <Setter Property="FontSize" Value="32" />
             <Setter Property="HorizontalTextAlignment" Value="Center" />
             <Setter Property="VerticalTextAlignment" Value="Center" />
             <Setter Property="HorizontalOptions" Value="Center" />
@@ -66,20 +66,36 @@
 
     <ContentPage.ControlTemplate>
         <ControlTemplate>
-            <StackLayout Spacing="0">
-                <!--  Title View  -->
-                <control:TitleView Title="{TemplateBinding Title}" BackgroundColor="{DynamicResource Gray-White}">
-                    <control:TitleView.LeadingView>
-                        <buttons:SfButton
-                            x:Name="backButton"
-                            Command="{prism:GoBack}"
-                            CornerRadius="4"
-                            Style="{StaticResource IconButtonStyle}"
-                            Text="{StaticResource Back}" />
-                    </control:TitleView.LeadingView>
-                </control:TitleView>
-                <ContentPresenter />
-            </StackLayout>
+            <!--  Title View  -->
+            <Grid RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="auto" />
+                </Grid.ColumnDefinitions>
+
+                <Label
+                    Grid.ColumnSpan="3"
+                    HorizontalOptions="FillAndExpand"
+                    Style="{StaticResource HeaderLabelStyle}"
+                    Text="{TemplateBinding Title}" />
+
+                <buttons:SfButton
+                    Command="{prism:GoBack}"
+                    CornerRadius="4"
+                    Style="{StaticResource HeaderIconButtonStyle}"
+                    Text="{StaticResource Back}" />
+                <BoxView
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    Style="{StaticResource HeaderSeparatorStyle}" />
+                <ContentPresenter Grid.Row="2" Grid.ColumnSpan="3" />
+            </Grid>
         </ControlTemplate>
     </ContentPage.ControlTemplate>
     <ContentPage.Content>

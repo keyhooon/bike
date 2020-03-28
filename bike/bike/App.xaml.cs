@@ -63,13 +63,49 @@ namespace bike
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             base.ConfigureModuleCatalog(moduleCatalog);
-            moduleCatalog.AddModule<CommunicationModule>();
-            moduleCatalog.AddModule<BatteryModule>();
-            moduleCatalog.AddModule<CoreModule>();
-            moduleCatalog.AddModule<PedalModule>();
-            moduleCatalog.AddModule<ThrottleModule>();
-            moduleCatalog.AddModule<LightModule>();
-            moduleCatalog.AddModule<ServoModule>();
+
+            moduleCatalog.AddModule(new ModuleInfo()
+            {
+                ModuleName = typeof(CommunicationModule).Name,
+                ModuleType = typeof(CommunicationModule),
+            });
+            moduleCatalog.AddModule(new ModuleInfo()
+            {
+                ModuleName = typeof(BatteryModule).Name,
+                ModuleType = typeof(BatteryModule),
+                DependsOn = { typeof(CommunicationModule).Name }
+            });
+            moduleCatalog.AddModule(new ModuleInfo()
+            {
+                ModuleName = typeof(CoreModule).Name,
+                ModuleType = typeof(CoreModule),
+                DependsOn = { typeof(CommunicationModule).Name } 
+            });
+            moduleCatalog.AddModule(new ModuleInfo()
+            {
+                ModuleName = typeof(PedalModule).Name,
+                ModuleType = typeof(PedalModule),
+                DependsOn = { typeof(CommunicationModule).Name }
+            });
+            moduleCatalog.AddModule(new ModuleInfo()
+            {
+                ModuleName = typeof(ThrottleModule).Name,
+                ModuleType = typeof(ThrottleModule),
+                DependsOn = { typeof(CommunicationModule).Name }
+            });
+            moduleCatalog.AddModule(new ModuleInfo()
+            {
+                ModuleName = typeof(LightModule).Name,
+                ModuleType = typeof(LightModule),
+                DependsOn = { typeof(CommunicationModule).Name }
+            });
+            moduleCatalog.AddModule(new ModuleInfo()
+            {
+                ModuleName = typeof(ServoModule).Name,
+                ModuleType = typeof(ServoModule),
+                DependsOn = { typeof(CommunicationModule).Name }
+            });
+
         }
 
     }

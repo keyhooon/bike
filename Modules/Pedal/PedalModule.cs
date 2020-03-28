@@ -21,7 +21,7 @@ namespace Module
             containerRegistry
                 .RegisterInstance(PedalConfigurationEncoding.CreateBuilder())
                 .RegisterInstance(PedalSettingEncoding.CreateBuilder())
-                                .RegisterSingleton<PedalManager>()
+                .RegisterSingleton<PedalManager>()
                 ;
         }
     }

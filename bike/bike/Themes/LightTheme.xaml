@@ -2,18 +2,20 @@
 <ResourceDictionary
     x:Class="bike.Themes.LightTheme"
     xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms">
 
 
-    <Color x:Key="PrimaryColor">#03A9F4</Color>
-    <Color x:Key="PrimaryDarkColor">#0288D1</Color>
-    <Color x:Key="PrimaryDarkenColor">#0167A8</Color>
-    <Color x:Key="PrimaryLightColor">#B3E5FC</Color>
-    <Color x:Key="PrimaryForeGroundColor">#212121</Color>
+    <Color x:Key="PrimaryColor">#5bb12f</Color>
+    <Color x:Key="PrimaryDarkColor">#238100</Color>
+    <Color x:Key="PrimaryLightColor">#8ee460</Color>
+    <Color x:Key="PrimaryForeGroundColor">#000000</Color>
     <Color x:Key="PrimaryGradient">#e83f94</Color>
+    <Color x:Key="SecondaryColor">#efbc1f</Color>
+    <Color x:Key="SecondaryDarkColor">#b88c00</Color>
+    <Color x:Key="SecondaryLightColor">#ffee59</Color>
+    <Color x:Key="SecondaryForeGroundColor">#000000</Color>
     <Color x:Key="SecondaryGradientColor">#7644ad</Color>
-    <Color x:Key="SecondaryColor">#CDDC39</Color>
-    <Color x:Key="SecondaryForeGroundColor">#757575</Color>
     <Color x:Key="LightColor">#ffe8f4</Color>
     <Color x:Key="Green">#7ed321</Color>
     <Color x:Key="Red">#ff4a4a</Color>
@@ -21,9 +23,9 @@
     <Color x:Key="Blue">#4acaff</Color>
     <Color x:Key="HyperLink">#567cd7</Color>
 
-    <Color x:Key="SyncPrimaryDarkColor">#0288D1</Color>
-    <Color x:Key="SyncPrimaryColor">#03A9F4</Color>
-    <Color x:Key="SyncPrimaryLightColor">#B3E5FC</Color>
+    <Color x:Key="SyncPrimaryDarkColor">#238100</Color>
+    <Color x:Key="SyncPrimaryColor">#5bb12f</Color>
+    <Color x:Key="SyncPrimaryLightColor">#8ee460</Color>
 
     <Color x:Key="Gray-100">#f6f7f8</Color>
     <Color x:Key="Gray-200">#ebecef</Color>
@@ -36,6 +38,14 @@
     <Color x:Key="Gray-900">#333942</Color>
     <Color x:Key="Gray-Black">#000000</Color>
     <Color x:Key="Gray-White">#ffffff</Color>
+
+    <OnPlatform x:Key="MaterialIcons" x:TypeArguments="x:String">
+        <OnPlatform.Platforms>
+            <On Platform="Android" Value="iconize-material.ttf#iconize-material" />
+            <On Platform="iOS" Value="iconize-material" />
+            <On Platform="UWP" Value="Assets/iconize-material.ttf#iconize-material" />
+        </OnPlatform.Platforms>
+    </OnPlatform>
 
     <OnPlatform x:Key="FontIcons" x:TypeArguments="x:String">
         <OnPlatform.Platforms>
@@ -76,5 +86,37 @@
             <On Platform="UWP" Value="Assets/Montserrat-Bold.ttf#Montserrat-Bold" />
         </OnPlatform.Platforms>
     </OnPlatform>
+
+
+    <Style x:Key="HeaderIconButtonStyle" TargetType="button:SfButton">
+        <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontFamily" Value="{StaticResource MaterialIcons}" />
+        <Setter Property="FontSize" Value="28" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HeightRequest" Value="48" />
+        <Setter Property="WidthRequest" Value="48" />
+    </Style>
+    <Style x:Key="HeaderLabelStyle" TargetType="Label">
+        <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontSize" Value="24" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="WidthRequest" Value="40" />
+    </Style>
+    <Style x:Key="HeaderSeparatorStyle" TargetType="BoxView">
+        <Setter Property="Color" Value="{DynamicResource Gray-900}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource Gray-900}" />
+        <Setter Property="HeightRequest" Value="1" />
+
+    </Style>
+
 
 </ResourceDictionary>
