@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <RootNamespace>Core</RootNamespace>
-    <AssemblyName>Infrastructure</AssemblyName>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <RootNamespace>Infrastructure</RootNamespace>
+    <AssemblyName>bike.Infrastructure</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,24 +14,33 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
-    <PackageReference Include="Prism.Forms" Version="7.2.0.1422" />
-    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.55" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.55" />
-    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="17.4.0.55" />
-    <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="17.4.0.55" />
-    <PackageReference Include="Syncfusion.Xamarin.SfMaps" Version="17.4.0.55" />
-    <PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="17.4.0.55" />
-    <PackageReference Include="Syncfusion.Xamarin.SfRating" Version="17.4.0.55" />
-    <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
-    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
-    <PackageReference Include="Xam.Plugin.Iconize" Version="3.5.0.129" />
-    <PackageReference Include="Xam.Plugin.Iconize.Material" Version="3.5.0.129" />
-    <PackageReference Include="Xam.Plugin.Iconize.MaterialDesignIcons" Version="3.5.0.129" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
+    <PackageReference Include="Prism.Forms" Version="7.2.0.1422" />
+
+    <PackageReference Include="Shiny.Prism" Version="7.2.0.1054" />
+    <PackageReference Include="Shiny.Beacons" Version="1.1.0.1449-beta" />
+    <PackageReference Include="Shiny.BluetoothLE" Version="1.1.0.1449-beta" />
+    <PackageReference Include="Shiny.Integrations.Sqlite" Version="1.1.0.1449-beta" />
+    <PackageReference Include="Shiny.Locations" Version="1.1.0.1473" />
+    <PackageReference Include="Shiny.Logging.AppCenter" Version="1.1.0.1473" />
+    <PackageReference Include="Shiny.Net.Http" Version="1.1.0.1473" />
+    <PackageReference Include="Shiny.Nfc" Version="1.1.0.1449-beta" />
+    <PackageReference Include="Shiny.Notifications" Version="1.1.0.1473" />
+    <PackageReference Include="Shiny.Push" Version="1.1.0.1449-beta" />
+    <PackageReference Include="Shiny.Push.AzureNotificationHubs" Version="1.1.0.1449-beta" />
+    <PackageReference Include="Shiny.Sensors" Version="1.1.0.1473" />
+    <PackageReference Include="Shiny.SpeechRecognition" Version="1.1.0.1473" />
+
+    <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
+
+    <PackageReference Include="Acr.UserDialogs.Forms" Version="1.0.0.7-beta" />
+    <PackageReference Include="ReactiveUI.Fody" Version="11.2.3" />
+    <PackageReference Include="Humanizer" Version="2.7.9" />
+
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CommunicationInfrastructure\CommunicationInfrastructure.csproj" />
+    <Folder Include="Commands\" />
   </ItemGroup>
 
 </Project>

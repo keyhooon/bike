@@ -19,11 +19,7 @@ namespace Module
 
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register< ICodec<DevicePacket>, DevicePacketCodec >();
-            containerRegistry.Register< IChannelFactory<DevicePacket>, ChannelFactory<DevicePacket> >();
-            containerRegistry.Register<DataTransport<DevicePacket>, SerialPortDataTransport<DevicePacket>>();
-            containerRegistry.RegisterInstance(new SerialPortDataTransportOption("com6",115200));
-            containerRegistry.RegisterSingleton< DataTransportFacade >();
+
         }
     }
 }

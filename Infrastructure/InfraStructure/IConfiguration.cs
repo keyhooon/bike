@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace Core
+namespace Infrastructure
 {
     public interface IConfiguration : INotifyPropertyChanged
     {

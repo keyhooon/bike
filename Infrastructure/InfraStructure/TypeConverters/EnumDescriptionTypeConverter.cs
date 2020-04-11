@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Reflection;
 
-namespace Core.TypeConverters
+namespace Infrastructure.TypeConverters
 {
     public class EnumDescriptionTypeConverter : EnumConverter
     {

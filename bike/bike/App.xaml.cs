@@ -15,11 +15,12 @@ using bike.Views.Settings;
 using bike.ViewModels.Settings;
 using bike.ViewModels.Feedback;
 using bike.ViewModels.ContactUs;
-using Services;
-using Module;
+
 using bike.ViewModels.Main;
 using bike.Views.Main;
-
+using Xamarin.Forms;
+using Communication;
+using Device;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace bike
 {
@@ -33,80 +34,33 @@ namespace bike
         public App() : this(null) { }
 
         public App(IPlatformInitializer initializer) : base(initializer) { }
-        DataTransportFacade transportFacade;
         protected override async void OnInitialized()
         {
             InitializeComponent();
             SyncfusionLicenseProvider.RegisterLicense("NzM3NEAzMTM3MmUzNDJlMzBPRm41TTBEL2hiZ0pjbG93dDZPQ0VocmRCWkJHSXlzWFgrUkxrZVlDaUpzPQ==");
-            transportFacade = Container.Resolve<DataTransportFacade>();
-            Plugin.Iconize.Iconize
-                .With(new Plugin.Iconize.Fonts.MaterialModule())
-                .With(new Plugin.Iconize.Fonts.MaterialDesignIconsModule());
-            await NavigationService.NavigateAsync("MainPage");
+            await NavigationService.NavigateAsync("Main/Nav/Welcome");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterSingleton<MapperConfigurationExpression>();
-            containerRegistry.RegisterSingleton<IConfigurationProvider, MapperConfiguration>();
+            
+            containerRegistry
+                .RegisterSingleton<MapperConfigurationExpression>()
+                .RegisterSingleton<IConfigurationProvider, MapperConfiguration>()
+                .UseCommunication()
+                .UseServoDrive();
+            containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
+            containerRegistry.RegisterForNavigation<MainPage>("Main");
+            containerRegistry.RegisterForNavigation<WelcomePage>("Welcome");
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<AboutUsSimplePage, AboutUsSimpleViewModel>();
-            containerRegistry.RegisterForNavigation<ContactUsPage, ContactUsViewModel>();
+            containerRegistry.RegisterForNavigation<ContactUsPage, ContactUsViewModel>("ContactUs");
             containerRegistry.RegisterForNavigation<FeedbackPage, FeedbackViewModel>();
-            containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>();
-            containerRegistry.RegisterForNavigation<SettingPage, SettingViewModel>();
-            containerRegistry.RegisterForNavigation<ConfigurationPage, ConfigurationViewModel>();
+            containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
+            containerRegistry.RegisterForNavigation<SettingPage, SettingViewModel>("Settings");
+            containerRegistry.RegisterForNavigation<ConfigurationPage, ConfigurationViewModel>("Configurations");
             containerRegistry.RegisterForNavigation<PrimaryPage, PrimaryPageViewModel>();
-            containerRegistry.RegisterForNavigation<DashboardPage, DashboardViewModel>();
+            containerRegistry.RegisterForNavigation<DashboardPage, DashboardViewModel>("Dashboard");
         }
-
-        protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
-        {
-            base.ConfigureModuleCatalog(moduleCatalog);
-
-            moduleCatalog.AddModule(new ModuleInfo()
-            {
-                ModuleName = typeof(CommunicationModule).Name,
-                ModuleType = typeof(CommunicationModule),
-            });
-            moduleCatalog.AddModule(new ModuleInfo()
-            {
-                ModuleName = typeof(BatteryModule).Name,
-                ModuleType = typeof(BatteryModule),
-                DependsOn = { typeof(CommunicationModule).Name }
-            });
-            moduleCatalog.AddModule(new ModuleInfo()
-            {
-                ModuleName = typeof(CoreModule).Name,
-                ModuleType = typeof(CoreModule),
-                DependsOn = { typeof(CommunicationModule).Name } 
-            });
-            moduleCatalog.AddModule(new ModuleInfo()
-            {
-                ModuleName = typeof(PedalModule).Name,
-                ModuleType = typeof(PedalModule),
-                DependsOn = { typeof(CommunicationModule).Name }
-            });
-            moduleCatalog.AddModule(new ModuleInfo()
-            {
-                ModuleName = typeof(ThrottleModule).Name,
-                ModuleType = typeof(ThrottleModule),
-                DependsOn = { typeof(CommunicationModule).Name }
-            });
-            moduleCatalog.AddModule(new ModuleInfo()
-            {
-                ModuleName = typeof(LightModule).Name,
-                ModuleType = typeof(LightModule),
-                DependsOn = { typeof(CommunicationModule).Name }
-            });
-            moduleCatalog.AddModule(new ModuleInfo()
-            {
-                ModuleName = typeof(ServoModule).Name,
-                ModuleType = typeof(ServoModule),
-                DependsOn = { typeof(CommunicationModule).Name }
-            });
-
-        }
-
     }
 }

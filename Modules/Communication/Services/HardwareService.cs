@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Prism.Mvvm;
-using SharpCommunication.Base.Codec.Packets;
 using System;
 
 namespace Services

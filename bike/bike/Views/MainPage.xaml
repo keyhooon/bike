@@ -1,171 +1,110 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
+<MasterDetailPage
     x:Class="bike.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:commands="clr-namespace:bike.Commands"
     xmlns:image="clr-namespace:bike.Assets.Images"
-    xmlns:navigationdrawer="clr-namespace:Syncfusion.SfNavigationDrawer.XForms;assembly=Syncfusion.SfNavigationDrawer.XForms"
     xmlns:prism="http://prismlibrary.com"
     prism:ViewModelLocator.AutowireViewModel="True">
-    <ContentPage.Resources>
-        <commands:ToggleDrawerCommand x:Key="toggleDrawerCommand" />
+    <MasterDetailPage.Resources>
         <Color x:Key="Transparent">Transparent</Color>
         <x:String x:Key="hum">&#xe5d2;</x:String>
         <!--  Style for Images  -->
         <Style x:Key="menuIconStyle" TargetType="Label">
             <Setter Property="BackgroundColor" Value="Transparent" />
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="Large" />
             <Setter Property="TextColor" Value="Black" />
             <Setter Property="VerticalOptions" Value="CenterAndExpand" />
             <Setter Property="FontFamily" Value="{StaticResource MaterialIcons}" />
-            <Setter Property="Margin" Value="10,0,0,0" />
+            <Setter Property="Margin" Value="10,0,5,0" />
             <Setter Property="HeightRequest" Value="28" />
         </Style>
         <Style x:Key="menuLableStyle" TargetType="Label">
-            <Setter Property="FontSize" Value="Medium" />
+            <Setter Property="FontSize" Value="Large" />
             <Setter Property="TextColor" Value="Black" />
             <Setter Property="HeightRequest" Value="32" />
             <Setter Property="VerticalOptions" Value="CenterAndExpand" />
         </Style>
 
-    </ContentPage.Resources>
+    </MasterDetailPage.Resources>
 
-    <ContentPage.Content>
-        <navigationdrawer:SfNavigationDrawer IsOpen="{Binding NavigationDrawerIsOpen}">
-            <navigationdrawer:SfNavigationDrawer.ContentView>
-                <Grid RowSpacing="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="1*" />
-                        <ColumnDefinition Width="auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <Label
-                        Grid.ColumnSpan="3"
-                        HorizontalOptions="FillAndExpand"
-                        Style="{StaticResource HeaderLabelStyle}"
-                        Text="Main" />
-
-                    <button:SfButton
-                        CornerRadius="4"
-                        IsCheckable="True"
-                        IsChecked="{Binding NavigationDrawerIsOpen}"
-                        Style="{StaticResource HeaderIconButtonStyle}"
-                        Text="{StaticResource hum}" />
-                    <BoxView
-                        Grid.Row="1"
-                        Grid.ColumnSpan="3"
-                        Style="{StaticResource HeaderSeparatorStyle}" />
-                    <ContentView Grid.Row="2" Grid.ColumnSpan="3">
-                        <Label
-                            FontSize="14"
-                            HorizontalOptions="Center"
-                            Text="Content View"
-                            TextColor="Black"
-                            VerticalOptions="Center" />
-                    </ContentView>
-
-
-                </Grid>
-            </navigationdrawer:SfNavigationDrawer.ContentView>
-            <navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
-                <Grid BackgroundColor="{StaticResource SecondaryColor}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
+    <MasterDetailPage.Master>
+        <ContentPage Title="Menu">
+            <StackLayout HorizontalOptions="StartAndExpand">
+                <Grid>
                     <Image
-                        Grid.Row="1"
-                        Margin="10,0"
+                        Aspect="Fill"
+                        HeightRequest="150"
+                        Source="{image:ImageResource bike.Assets.Images.NavyBlueGradient.jpeg}" />
+                    <Image
+                        Margin="10,5"
                         Aspect="AspectFit"
-                        HorizontalOptions="Start"
-                        Source="{image:ImageResource bike.Assets.Images.logo.png}" />
+                        HorizontalOptions="FillAndExpand"
+                        Source="{image:ImageResource bike.Assets.Images.logo.png}"
+                        VerticalOptions="End" />
                 </Grid>
-            </navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
-            <navigationdrawer:SfNavigationDrawer.DrawerContentView>
-                <StackLayout Padding="0,10,0,20" HorizontalOptions="StartAndExpand">
-                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateDashboard}">
-                        <button:SfButton.Content>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Style="{StaticResource menuIconStyle}" Text="&#xe871;" />
-                                <Label Style="{StaticResource menuLableStyle}" Text="Home" />
-                            </StackLayout>
-                        </button:SfButton.Content>
-                    </button:SfButton>
-                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateSetting}">
-                        <button:SfButton.Content>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Style="{StaticResource menuIconStyle}" Text="&#xe429;" />
-                                <Label Style="{StaticResource menuLableStyle}" Text="Settings" />
-                            </StackLayout>
-                        </button:SfButton.Content>
-                    </button:SfButton>
-                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateConfiguration}">
-                        <button:SfButton.Content>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Style="{StaticResource menuIconStyle}" Text="&#xe8b8;" />
-                                <Label Style="{StaticResource menuLableStyle}" Text="Configurations" />
-                            </StackLayout>
-                        </button:SfButton.Content>
-                    </button:SfButton>
-                    <button:SfButton BackgroundColor="Transparent">
-                        <button:SfButton.Content>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Style="{StaticResource menuIconStyle}" Text="&#xe922;" />
-                                <Label Style="{StaticResource menuLableStyle}" Text="Logs" />
-                            </StackLayout>
-                        </button:SfButton.Content>
-                    </button:SfButton>
-                    <button:SfButton BackgroundColor="Transparent">
-                        <button:SfButton.Content>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Style="{StaticResource menuIconStyle}" Text="&#xe869;" />
-                                <Label Style="{StaticResource menuLableStyle}" Text="Diagnostic" />
-                            </StackLayout>
-                        </button:SfButton.Content>
-                    </button:SfButton>
-                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateContactUs}">
-                        <button:SfButton.Content>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Style="{StaticResource menuIconStyle}" Text="&#xe0b0;" />
-                                <Label Style="{StaticResource menuLableStyle}" Text="Contact Us" />
-                            </StackLayout>
-                        </button:SfButton.Content>
-                    </button:SfButton>
-                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateAboutUs}">
-                        <button:SfButton.Content>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Style="{StaticResource menuIconStyle}" Text="&#xe000;" />
-                                <Label Style="{StaticResource menuLableStyle}" Text="About Us" />
-                            </StackLayout>
-                        </button:SfButton.Content>
-                    </button:SfButton>
-                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateFeedback}">
-                        <button:SfButton.Content>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Style="{StaticResource menuIconStyle}" Text="&#xe813;" />
-                                <Label Style="{StaticResource menuLableStyle}" Text="Feedback" />
-                            </StackLayout>
-                        </button:SfButton.Content>
-                    </button:SfButton>
-                    <button:SfButton BackgroundColor="Transparent" Command="{Binding NavgateHelp}">
-                        <button:SfButton.Content>
-                            <StackLayout Orientation="Horizontal">
-                                <Label Style="{StaticResource menuIconStyle}" Text="&#xe887;" />
-                                <Label Style="{StaticResource menuLableStyle}" Text="Help" />
-                            </StackLayout>
-                        </button:SfButton.Content>
-                    </button:SfButton>
-                </StackLayout>
-            </navigationdrawer:SfNavigationDrawer.DrawerContentView>
-        </navigationdrawer:SfNavigationDrawer>
-    </ContentPage.Content>
-</ContentPage>
+
+                <Button
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="Nav/Dashboard"
+                    ImageSource="{image:ImageResource bike.Assets.Images.dashboard.png}"
+                    Text="Dashboard" />
+                <Button
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="Nav/Dashboard"
+                    ImageSource="{image:ImageResource bike.Assets.Images.pin.png}"
+                    Text="Map" />
+                <Button
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="Nav/Settings"
+                    ImageSource="{image:ImageResource bike.Assets.Images.tools.png}"
+                    Text="diagnostic" />
+                <Button
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="Nav/Settings"
+                    ImageSource="{image:ImageResource bike.Assets.Images.analysis.png}"
+                    Text="Logs" />
+                <Button
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="Nav/Settings"
+                    ImageSource="{image:ImageResource bike.Assets.Images.bars.png}"
+                    Text="Reports" />
+                <Button
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="Nav/Settings"
+                    ImageSource="{image:ImageResource bike.Assets.Images.settings.png}"
+                    Text="Settings" />
+                <Button
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="Nav/Configurations"
+                    ImageSource="{image:ImageResource bike.Assets.Images.gears.png}"
+                    Text="Configurations" />
+                <Button
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="Nav/Settings"
+                    ImageSource="{image:ImageResource bike.Assets.Images.analysis.png}"
+                    Text="Logs" />
+
+                <Button
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="Nav/ContactUs"
+                    ImageSource="{image:ImageResource bike.Assets.Images.about.png}"
+                    Text="Contact Us" />
+                <Button
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="Nav/AboutUs"
+                    ImageSource="{image:ImageResource bike.Assets.Images.about.png}"
+                    Text="About Us" />
+                <Button
+                    Command="{Binding NavigateCommand}"
+                    CommandParameter="Nav/Help"
+                    ImageSource="{image:ImageResource Ebike.Assets.Images.question.png}"
+                    Text="Help" />
+
+            </StackLayout>
+
+        </ContentPage>
+    </MasterDetailPage.Master>
+</MasterDetailPage>

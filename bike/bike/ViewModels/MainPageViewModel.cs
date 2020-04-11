@@ -11,68 +11,16 @@ namespace bike.ViewModels
         {
             this.navigationService = navigationService;
         }
-
-        private bool _navigationDrawerIsOpen;
-        public bool NavigationDrawerIsOpen
+        DelegateCommand<string> _navigateCommand;
+        public DelegateCommand<string> NavigateCommand => _navigateCommand ?? (_navigateCommand = new DelegateCommand<string>(async (x) =>
         {
-            get { return _navigationDrawerIsOpen; }
-            set { SetProperty(ref _navigationDrawerIsOpen, value); }
-        }
+            DrawerIsOpen = false;
+            await navigationService.NavigateAsync(x);
+        }));
 
-        private DelegateCommand _navgateDashboard;
-        public DelegateCommand NavgateDashboard =>
-            _navgateDashboard ?? (_navgateDashboard = new DelegateCommand(async () => 
-            await navigationService.NavigateAsync("DashboardPage")));
 
-        private DelegateCommand _navgateSetting;
-        public DelegateCommand NavgateSetting =>
-            _navgateSetting ?? (_navgateSetting = new DelegateCommand(async () =>
-            {
-                NavigationDrawerIsOpen = false;
-                await navigationService.NavigateAsync("SettingPage");
-            }
-            ));
-
-        private DelegateCommand _navgateConfiguration;
-        public DelegateCommand NavgateConfiguration =>
-            _navgateConfiguration ?? (_navgateConfiguration = new DelegateCommand(async () =>
-            {
-            NavigationDrawerIsOpen = false;
-            await navigationService.NavigateAsync("ConfigurationPage");
-            }));
-
-        private DelegateCommand _navgateHelp;
-        public DelegateCommand NavgateHelp =>
-            _navgateHelp ?? (_navgateHelp = new DelegateCommand(async () =>
-            {
-            NavigationDrawerIsOpen = false;
-            await navigationService.NavigateAsync("HelpPage");
-            }));
-
-        private DelegateCommand _navgateFeedback;
-        public DelegateCommand NavgateFeedback =>
-            _navgateFeedback ?? (_navgateFeedback = new DelegateCommand(async () =>
-            {
-            NavigationDrawerIsOpen = false;
-            await navigationService.NavigateAsync("FeedbackPage");
-            }));
-
-        private DelegateCommand _navgateReview;
-        public DelegateCommand NavgateReview =>
-            _navgateReview ?? (_navgateReview = new DelegateCommand(async () =>
-            {
-            NavigationDrawerIsOpen = false;
-            await navigationService.NavigateAsync("ContactUsPage");
-            }));
-
-        private DelegateCommand _navgateAboutUs;
-        public DelegateCommand NavgateAboutUs =>
-            _navgateAboutUs ?? (_navgateAboutUs = new DelegateCommand(async () =>
-            {
-            NavigationDrawerIsOpen = false;
-            await navigationService.NavigateAsync("AboutUsSimplePage");
-            }));
-
+        bool _drawerIsOpen;
+        public bool DrawerIsOpen { get => _drawerIsOpen; set => SetProperty(ref _drawerIsOpen, value); }
 
     }
 }
