@@ -14,12 +14,14 @@ namespace bike
         {
             var conn = this.GetConnection();
             conn.CreateTable<AppStateEvent>();
-            conn.CreateTable<BleEvent>();
-            conn.CreateTable<GpsEvent>();
+            conn.CreateTable<BleAdapterState>();
+            conn.CreateTable<BleConnectedPeripheral>();
+            conn.CreateTable<GpsData>();
         }
 
-        public AsyncTableQuery<AppStateEvent> AppStateEvents => this.Table<AppStateEvent>();
-        public AsyncTableQuery<BleEvent> BleEvents => this.Table<BleEvent>();
-        public AsyncTableQuery<GpsEvent> GpsEvents => this.Table<GpsEvent>();
+        public AsyncTableQuery<AppStateEvent> AppStateEvent => Table<AppStateEvent>();
+        public AsyncTableQuery<BleAdapterState> BleAdapterState => Table<BleAdapterState>();
+        public AsyncTableQuery<BleConnectedPeripheral> BleConnectedPeripheral => Table<BleConnectedPeripheral>();
+        public AsyncTableQuery<GpsData> GpsData => Table<GpsData>();
     }
 }

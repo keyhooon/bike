@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Compile Remove="Attributes\**" />
+    <Compile Remove="Commands\**" />
     <EmbeddedResource Remove="Attributes\**" />
+    <EmbeddedResource Remove="Commands\**" />
     <None Remove="Attributes\**" />
+    <None Remove="Commands\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,10 +40,6 @@
     <PackageReference Include="ReactiveUI.Fody" Version="11.2.3" />
     <PackageReference Include="Humanizer" Version="2.7.9" />
 
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Commands\" />
   </ItemGroup>
 
 </Project>

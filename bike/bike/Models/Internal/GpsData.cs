@@ -5,7 +5,7 @@ using System.Text;
 
 namespace bike.Models.Logging
 {
-    public class GpsEvent
+    public class GpsData
     {
         [PrimaryKey]
         [AutoIncrement]
