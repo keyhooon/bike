@@ -3,8 +3,6 @@
     x:Class="bike.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-    xmlns:commands="clr-namespace:bike.Commands"
     xmlns:image="clr-namespace:bike.Assets.Images"
     xmlns:prism="http://prismlibrary.com"
     prism:ViewModelLocator.AutowireViewModel="True">
@@ -32,12 +30,9 @@
 
     <MasterDetailPage.Master>
         <ContentPage Title="Menu">
-            <StackLayout HorizontalOptions="StartAndExpand">
-                <Grid>
-                    <Image
-                        Aspect="Fill"
-                        HeightRequest="150"
-                        Source="{image:ImageResource bike.Assets.Images.NavyBlueGradient.jpeg}" />
+            <StackLayout Spacing="0">
+                <Grid HeightRequest="150">
+                    <Image Aspect="Fill" Source="{image:ImageResource bike.Assets.Images.NavyBlueGradient.jpeg}" />
                     <Image
                         Margin="10,5"
                         Aspect="AspectFit"
@@ -47,13 +42,14 @@
                 </Grid>
 
                 <Button
+                    x:Name="button"
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/Dashboard"
+                    CommandParameter="Nav/TabbedPage?createTab=Dashboard&amp;createTab=Map?selectedTab=Dashboard"
                     ImageSource="{image:ImageResource bike.Assets.Images.dashboard.png}"
                     Text="Dashboard" />
                 <Button
                     Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/Dashboard"
+                    CommandParameter="Nav/TabbedPage?createTab=Dashboard&amp;createTab=Map?selectedTab=Map"
                     ImageSource="{image:ImageResource bike.Assets.Images.pin.png}"
                     Text="Map" />
                 <Button
@@ -81,16 +77,11 @@
                     CommandParameter="Nav/Configurations"
                     ImageSource="{image:ImageResource bike.Assets.Images.gears.png}"
                     Text="Configurations" />
-                <Button
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/Settings"
-                    ImageSource="{image:ImageResource bike.Assets.Images.analysis.png}"
-                    Text="Logs" />
 
                 <Button
                     Command="{Binding NavigateCommand}"
                     CommandParameter="Nav/ContactUs"
-                    ImageSource="{image:ImageResource bike.Assets.Images.about.png}"
+                    ImageSource="{image:ImageResource bike.Assets.Images.phone.png}"
                     Text="Contact Us" />
                 <Button
                     Command="{Binding NavigateCommand}"
@@ -100,7 +91,7 @@
                 <Button
                     Command="{Binding NavigateCommand}"
                     CommandParameter="Nav/Help"
-                    ImageSource="{image:ImageResource Ebike.Assets.Images.question.png}"
+                    ImageSource="{image:ImageResource bike.Assets.Images.question.png}"
                     Text="Help" />
 
             </StackLayout>

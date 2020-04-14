@@ -13,7 +13,7 @@ namespace Communication.Codec
 
         private PacketEncoding _encoding;
 
-        private PacketEncodingBuilder[] defaultCommandEncodingBuilder = { PacketEncodingBuilder.CreateDefaultBuilder().CreateReadCommand() };
+        private PacketEncodingBuilder[] defaultCommandEncodingBuilder = { ReadCommandEncoding.CreateBuilder() };
         private PacketEncodingBuilder[] defaultPacketEncodingBuilder = {  };
 
         public override PacketEncoding Encoding

@@ -13,9 +13,9 @@ namespace DataModels
 
         private static ISettings AppSettings => CrossSettings.Current;
 
-        public AssistLevelType AssistLevel
+        public PedalAssistLevelType AssistLevel
         {
-            get => (AssistLevelType)AppSettings.GetValueOrDefault(nameof(AssistLevel), 4);
+            get => (PedalAssistLevelType)AppSettings.GetValueOrDefault(nameof(AssistLevel), 4);
             set
             {
                 if (value == AssistLevel)
@@ -25,9 +25,9 @@ namespace DataModels
             }
         }
 
-        public ActivationTimeType ActivationTime
+        public PedalActivationTimeType ActivationTime
         {
-            get => (ActivationTimeType) AppSettings.GetValueOrDefault(nameof(ActivationTime), 3);
+            get => (PedalActivationTimeType) AppSettings.GetValueOrDefault(nameof(ActivationTime), 3);
             set
             {
                 if (value == ActivationTime)
@@ -40,7 +40,7 @@ namespace DataModels
      
     }
     [Xamarin.Forms.TypeConverter(typeof(EnumDescriptionTypeConverter))]
-    public enum AssistLevelType : int
+    public enum PedalAssistLevelType : int
     {
         [Description("87.5%")]
         EightySevenPointFive = 0,
@@ -60,7 +60,7 @@ namespace DataModels
         Off = 7,
     }
     [Xamarin.Forms.TypeConverter(typeof(EnumDescriptionTypeConverter))]
-    public enum ActivationTimeType : int
+    public enum PedalActivationTimeType : int
     {
         [Description("EXTRA")]
         ExteraSensitive = 0,

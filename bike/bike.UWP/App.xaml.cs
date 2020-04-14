@@ -1,3 +1,4 @@
+using Syncfusion.SfMaps.XForms.UWP;
 using Syncfusion.SfGauge.XForms.UWP;
 using Syncfusion.XForms.UWP.ComboBox;
 using Syncfusion.XForms.UWP.DataForm;
@@ -58,6 +59,7 @@ namespace bike.UWP
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
 List<Assembly> assembliesToInclude = new List<Assembly>();
+assembliesToInclude.Add(typeof(SfMapsRenderer).GetTypeInfo().Assembly);
 assembliesToInclude.Add(typeof(SfGaugeRenderer).GetTypeInfo().Assembly);
 assembliesToInclude.Add(typeof(SfComboBoxRenderer).GetTypeInfo().Assembly);
 assembliesToInclude.Add(typeof(SfDataFormRenderer).GetTypeInfo().Assembly);

@@ -12,6 +12,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{FA0F91DE-B64A-40F4-B233-5125137B9817}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{064A375E-1595-4523-99E6-FBCD1B9AD83A}"
+	ProjectSection(SolutionItems) = preProject
+		bike\bike.Android\Assets\splashpattern.json = bike\bike.Android\Assets\splashpattern.json
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Device", "Infrastructure\CommunicationInfrastructure\Device.csproj", "{F3C999E2-893F-4A1C-9188-006AAE16F1AB}"
 EndProject

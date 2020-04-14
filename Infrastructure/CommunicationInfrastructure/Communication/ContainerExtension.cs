@@ -17,6 +17,24 @@ namespace Communication
             .RegisterInstance(new SerialPortDataTransportOption("com6", 115200))
             .RegisterSingleton<DataTransportFacade>();
         }
-
+        public static IContainerRegistry UseCodec(this IContainerRegistry containerRegistry)
+        {
+            return containerRegistry
+                 .RegisterInstance(BatteryConfigurationEncoding.CreateBuilder())
+                 .RegisterInstance(BatteryOutputEncoding.CreateBuilder())
+                 .RegisterInstance(CoreConfigurationEncoding.CreateBuilder())
+                 .RegisterInstance(CoreSituationEncoding.CreateBuilder())
+                 .RegisterInstance(CruiseCommandEncoding.CreateBuilder())
+                 .RegisterInstance(FaultEncoding.CreateBuilder())
+                 .RegisterInstance(LightCommandEncoding.CreateBuilder())
+                 .RegisterInstance(LightSettingPacketEncoding.CreateBuilder())
+                 .RegisterInstance(LightStatePacetEncoding.CreateBuilder())
+                 .RegisterInstance(PedalConfigurationEncoding.CreateBuilder())
+                 .RegisterInstance(PedalSettingEncoding.CreateBuilder())
+                 .RegisterInstance(ServoInputEncoding.CreateBuilder())
+                 .RegisterInstance(ServoOutputEncoding.CreateBuilder())
+                 .RegisterInstance(ThrottleConfigurationEncoding.CreateBuilder())
+                 ;
+        }
     }
 }

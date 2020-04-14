@@ -14,22 +14,28 @@
     <None Remove="Assets\Images\about.png" />
     <None Remove="Assets\Images\analysis.png" />
     <None Remove="Assets\Images\bars.png" />
+    <None Remove="Assets\Images\battery.png" />
     <None Remove="Assets\Images\bike.jpg" />
     <None Remove="Assets\Images\bike2.jpg" />
     <None Remove="Assets\Images\bike3.jpg" />
     <None Remove="Assets\Images\bike4.jpg" />
     <None Remove="Assets\Images\dashboard.png" />
+    <None Remove="Assets\Images\engine.png" />
     <None Remove="Assets\Images\gears.png" />
     <None Remove="Assets\Images\house.png" />
     <None Remove="Assets\Images\LightSkyBlueGradient.jpg" />
     <None Remove="Assets\Images\logo.png" />
+    <None Remove="Assets\Images\low-beam.png" />
     <None Remove="Assets\Images\NavyBlueGradient.jpeg" />
     <None Remove="Assets\Images\pedal.png" />
     <None Remove="Assets\Images\phone.png" />
     <None Remove="Assets\Images\pin.png" />
     <None Remove="Assets\Images\question.png" />
     <None Remove="Assets\Images\settings.png" />
+    <None Remove="Assets\Images\snow.png" />
+    <None Remove="Assets\Images\thermometer.png" />
     <None Remove="Assets\Images\tools.png" />
+    <None Remove="Assets\Images\warning.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -42,25 +48,32 @@
     <EmbeddedResource Include="Assets\Images\about.png" />
     <EmbeddedResource Include="Assets\Images\analysis.png" />
     <EmbeddedResource Include="Assets\Images\bars.png" />
+    <EmbeddedResource Include="Assets\Images\battery.png" />
     <EmbeddedResource Include="Assets\Images\bike.jpg" />
     <EmbeddedResource Include="Assets\Images\bike2.jpg" />
     <EmbeddedResource Include="Assets\Images\bike3.jpg" />
     <EmbeddedResource Include="Assets\Images\bike4.jpg" />
     <EmbeddedResource Include="Assets\Images\dashboard.png" />
+    <EmbeddedResource Include="Assets\Images\engine.png" />
     <EmbeddedResource Include="Assets\Images\gears.png" />
     <EmbeddedResource Include="Assets\Images\house.png" />
     <EmbeddedResource Include="Assets\Images\LightSkyBlueGradient.jpg" />
     <EmbeddedResource Include="Assets\Images\logo.png" />
+    <EmbeddedResource Include="Assets\Images\low-beam.png" />
     <EmbeddedResource Include="Assets\Images\NavyBlueGradient.jpeg" />
     <EmbeddedResource Include="Assets\Images\pedal.png" />
     <EmbeddedResource Include="Assets\Images\phone.png" />
     <EmbeddedResource Include="Assets\Images\pin.png" />
     <EmbeddedResource Include="Assets\Images\question.png" />
     <EmbeddedResource Include="Assets\Images\settings.png" />
+    <EmbeddedResource Include="Assets\Images\snow.png" />
+    <EmbeddedResource Include="Assets\Images\thermometer.png" />
     <EmbeddedResource Include="Assets\Images\tools.png" />
+    <EmbeddedResource Include="Assets\Images\warning.png" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="3.0.4" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.55" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.55" />
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="17.4.0.55" />
@@ -100,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Views\HelpPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MapPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\SettingPage.xaml">
       <Generator>MSBuild:Compile</Generator>

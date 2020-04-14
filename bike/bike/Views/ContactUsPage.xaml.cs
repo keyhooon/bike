@@ -29,32 +29,7 @@ namespace bike.Views.ContactUs
         protected override void OnSizeAllocated(double width, double height)
         {
             base.OnSizeAllocated(width, height);
-            if (width > height)
-            {
-                if (Device.Idiom == TargetIdiom.Desktop || Device.Idiom == TargetIdiom.Tablet)
-                {
-                    this.frameWidth = width / 2;
-                    MainStack.Orientation = StackOrientation.Horizontal;
-                    MainFrame.VerticalOptions = LayoutOptions.FillAndExpand;
-                    MainFrame.Margin = new Thickness(0);
-                    MainFrame.CornerRadius = 0;
-                    MainFrame.HasShadow = false;
-                    MainFrameStack.VerticalOptions = LayoutOptions.StartAndExpand;
-                    if (this.frameWidth > 0)
-                    {
-                        MainFrame.WidthRequest = this.frameWidth;
-                        Map.WidthRequest = this.frameWidth;
-                    }
-                }
-                else
-                {
-                    this.DefaultStyle(height);
-                }
-            }
-            else
-            {
-                this.DefaultStyle(height);
-            }
+                DefaultStyle(height);
         }
 
         /// <summary>
@@ -64,20 +39,6 @@ namespace bike.Views.ContactUs
         /// <param name="height">The height</param>
         private void DefaultStyle(double height)
         {
-            if (Device.Idiom == TargetIdiom.Tablet)
-            {
-                MainFrame.HeightRequest = height / 2;
-                Map.HeightRequest = height / 2;
-                MainStack.Orientation = StackOrientation.Vertical;
-                MainFrame.VerticalOptions = LayoutOptions.End;
-                MainFrame.Margin = new Thickness(0);
-                MainFrame.CornerRadius = 0;
-                MainFrame.HasShadow = false;
-                MainFrameStack.VerticalOptions = LayoutOptions.StartAndExpand;
-                MainFrameStack.Margin = new Thickness(20, 0, 20, 0);
-            }
-            else
-            {
                 MainStack.Orientation = StackOrientation.Vertical;
                 MainFrame.VerticalOptions = LayoutOptions.End;
                 MainFrame.Margin = new Thickness(15, -50, 15, 15);
@@ -85,7 +46,6 @@ namespace bike.Views.ContactUs
                 MainFrame.CornerRadius = 5;
                 MainFrame.HasShadow = true;
                 MainFrameStack.Margin = new Thickness(0);
-            }
         }
     }
 }

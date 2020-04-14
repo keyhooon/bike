@@ -3,124 +3,36 @@
     x:Class="bike.Views.Settings.ConfigurationPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-    xmlns:control="clr-namespace:bike.Controls"
-    xmlns:controls="clr-namespace:Controls;assembly=Throttle"
-    xmlns:controls1="clr-namespace:Controls;assembly=Pedal"
-    xmlns:controls2="clr-namespace:Battery.Controls;assembly=Battery"
-    xmlns:controls3="clr-namespace:Controls;assembly=Core"
-    xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
-    xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize"
     xmlns:prism="http://prismlibrary.com"
     Title="Configurations"
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource Gray-White}">
-    <ContentPage.Resources>
-
-        <Color x:Key="Transparent">Transparent</Color>
-        <x:String x:Key="Back">&#xe314;</x:String>
-
-
-        <Style x:Key="IconHeaderStyle" TargetType="iconize:IconImage">
-            <Setter Property="Margin" Value="16,8,0,8" />
-            <Setter Property="IconColor" Value="{DynamicResource Gray-600}" />
-            <Setter Property="IconSize" Value="24" />
-        </Style>
-
-        <Style x:Key="LableHeaderStyle" TargetType="Label">
-            <Setter Property="BackgroundColor" Value="{DynamicResource Gray-White}" />
-            <Setter Property="FontFamily" Value="{StaticResource Montserrat-SemiBold}" />
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="HeightRequest" Value="50" />
-            <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-            <Setter Property="LineHeight" Value="{OnPlatform Default=-1, Android=1.25}" />
-            <Setter Property="VerticalOptions" Value="Center" />
-            <Setter Property="VerticalTextAlignment" Value="Center" />
-            <Setter Property="TextColor" Value="{DynamicResource Gray-800}" />
-        </Style>
-    </ContentPage.Resources>
-
     <ContentPage.Content>
-        <ScrollView>
-            <TableView>
-                <TableRoot>
-                    <TableSection />
-                </TableRoot>
-            </TableView>
-            <StackLayout Spacing="0">
-                <!--  Core Version  -->
-                <Grid Margin="5">
-                    <Grid.Resources />
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="md-device-hub" Style="{StaticResource IconHeaderStyle}" />
-                    <Label
-                        Grid.Column="1"
-                        Style="{StaticResource LableHeaderStyle}"
-                        Text="VERSION" />
-                </Grid>
-                <controls3:CoreVersionDataForm DataObject="{Binding CoreVersion}" />
-                <!--  Core Situation  -->
-                <Grid Margin="5">
-                    <Grid.Resources />
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="md-device-hub" Style="{StaticResource IconHeaderStyle}" />
-                    <Label
-                        Grid.Column="1"
-                        Style="{StaticResource LableHeaderStyle}"
-                        Text="CORE" />
-                </Grid>
-                <controls3:CoreSituationDataForm DataObject="{Binding CoreSituation}" />
-
-                <!--  Battery Configuration  -->
-                <Grid Margin="5">
-                    <Grid.Resources />
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="md-battery-charging-full" Style="{StaticResource IconHeaderStyle}" />
-                    <Label
-                        Grid.Column="1"
-                        Style="{StaticResource LableHeaderStyle}"
-                        Text="BATTERY" />
-                </Grid>
-                <controls2:BatteryConfigurationDataForm DataObject="{Binding BatteryConfiguration}" />
-                <!--  Pedal Configuration  -->
-                <Grid Margin="5">
-                    <Grid.Resources />
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="mdi-speedometer" Style="{StaticResource IconHeaderStyle}" />
-                    <Label
-                        Grid.Column="1"
-                        Style="{StaticResource LableHeaderStyle}"
-                        Text="PEDAL" />
-                </Grid>
-                <controls1:PedalConfigurationDataForm DataObject="{Binding PedalConfiguration}" />
-                <!--  Throttle Configuration  -->
-                <Grid Margin="5">
-                    <Grid.Resources />
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <iconize:IconImage Icon="mdi-speedometer" Style="{StaticResource IconHeaderStyle}" />
-                    <Label
-                        Grid.Column="1"
-                        Style="{StaticResource LableHeaderStyle}"
-                        Text="THROTTLE" />
-                </Grid>
-                <controls:ThrottleConfigurationDataForm DataObject="{Binding ThrottleConfiguration}" />
-
-            </StackLayout>
-        </ScrollView>
+        <TableView BackgroundColor="Transparent" Intent="Settings">
+            <TableView.Margin>
+                <OnPlatform x:TypeArguments="Thickness" Android="16" />
+            </TableView.Margin>
+            <TableSection Title="Core">
+                <TextCell Detail="Unique Id" Text="{Binding Core.UniqueId}" />
+                <TextCell Detail="Firmware Version" Text="{Binding Core.FirmwareVersion}" />
+                <TextCell Detail="Bike Model" Text="{Binding Core.ModelVersion}" />
+            </TableSection>
+            <TableSection Title="Battery">
+                <TextCell Text="{Binding Battery.OverCurrent}" />
+                <TextCell Detail="Over Voltage" Text="{Binding Battery.OverVoltage}" />
+                <TextCell Detail="Under Voltage" Text="{Binding Battery.UnedrVoltage}" />
+                <TextCell Detail="Nominal Voltage" Text="{Binding Battery.NominalVoltage}" />
+                <TextCell Detail="Over Temprature" Text="{Binding Battery.OverTemprature}" />
+            </TableSection>
+            <TableSection Title="Throttle">
+                <TextCell Detail="Min Voltage" Text="{Binding Throttle.Min}" />
+                <TextCell Detail="Max Voltage" Text="{Binding Throttle.Max}" />
+                <TextCell Detail="Fault Voltage" Text="{Binding Throttle.FaultThreshold}" />
+            </TableSection>
+            <TableSection Title="General">
+                <TextCell Detail="Magnet Count" Text="{Binding Pedal.MagnetCount}" />
+                <TextCell Detail="Wheel Radius" Text="{Binding Servo.WheelRadius}" />
+            </TableSection>
+        </TableView>
     </ContentPage.Content>
 </ContentPage>

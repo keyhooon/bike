@@ -26,7 +26,8 @@ namespace bike.ViewModels.Settings
 
         #endregion
 
-        public LightSetting LightSetting => _servoDriveService.LightSetting; 
+        public LightSetting LightSetting => _servoDriveService.LightSetting;
+        public ThrottleSetting ThrottleSetting=> _servoDriveService.ThrottleSetting;
         public PedalSetting PedalSetting => _servoDriveService.PedalSetting;
     }
 }

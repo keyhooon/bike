@@ -27,11 +27,11 @@ namespace Communication.Codec
         public const byte id = 1;
         public byte Id => id;
     }
-    public static class ReadCommandEncodingHelper
+    public static class ReadCommandEncoding
     {
-        public static PacketEncodingBuilder CreateReadCommand(this PacketEncodingBuilder packetEncodingBuilder)
+        public static PacketEncodingBuilder CreateBuilder()
         {
-            return packetEncodingBuilder.WithFunction<ReadCommand>(ReadCommand.ParamByteCount, ReadCommand.id);
+            return PacketEncodingBuilder.CreateDefaultBuilder().WithFunction<ReadCommand>(ReadCommand.ParamByteCount, ReadCommand.id);
         }
     }
 }

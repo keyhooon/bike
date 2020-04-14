@@ -5,15 +5,12 @@ using bike.Views;
 using Xamarin.Forms.Xaml;
 using AutoMapper;
 using AutoMapper.Configuration;
-using Prism.Modularity;
 using Syncfusion.Licensing;
 using bike.Views.AboutUs;
 using bike.ViewModels.AboutUs;
 using bike.Views.ContactUs;
-using bike.Views.Feedback;
 using bike.Views.Settings;
 using bike.ViewModels.Settings;
-using bike.ViewModels.Feedback;
 using bike.ViewModels.ContactUs;
 
 using bike.ViewModels.Main;
@@ -37,30 +34,31 @@ namespace bike
         protected override async void OnInitialized()
         {
             InitializeComponent();
+            
             SyncfusionLicenseProvider.RegisterLicense("NzM3NEAzMTM3MmUzNDJlMzBPRm41TTBEL2hiZ0pjbG93dDZPQ0VocmRCWkJHSXlzWFgrUkxrZVlDaUpzPQ==");
             await NavigationService.NavigateAsync("Main/Nav/Welcome");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            
+
             containerRegistry
                 .RegisterSingleton<MapperConfigurationExpression>()
                 .RegisterSingleton<IConfigurationProvider, MapperConfiguration>()
-                .UseCommunication()
-                .UseServoDrive();
+                .UseServoDrive()
+                ;
             containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
+            containerRegistry.RegisterForNavigation<TabbedPage>("TabbedPage");
             containerRegistry.RegisterForNavigation<MainPage>("Main");
             containerRegistry.RegisterForNavigation<WelcomePage>("Welcome");
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<AboutUsSimplePage, AboutUsSimpleViewModel>();
             containerRegistry.RegisterForNavigation<ContactUsPage, ContactUsViewModel>("ContactUs");
-            containerRegistry.RegisterForNavigation<FeedbackPage, FeedbackViewModel>();
             containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
             containerRegistry.RegisterForNavigation<SettingPage, SettingViewModel>("Settings");
             containerRegistry.RegisterForNavigation<ConfigurationPage, ConfigurationViewModel>("Configurations");
-            containerRegistry.RegisterForNavigation<PrimaryPage, PrimaryPageViewModel>();
             containerRegistry.RegisterForNavigation<DashboardPage, DashboardViewModel>("Dashboard");
+            containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>("Map");
         }
     }
 }

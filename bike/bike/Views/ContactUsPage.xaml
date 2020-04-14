@@ -14,6 +14,7 @@
     xmlns:maps="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms"
     xmlns:prism="http://prismlibrary.com"
     xmlns:viewModel="clr-namespace:bike.ViewModels.ContactUs"
+    xmlns:converter1="clr-namespace:Infrastructure.Converters;assembly=bike.Infrastructure"
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource Gray-White}"
     NavigationPage.HasNavigationBar="False">
@@ -21,8 +22,7 @@
     <ContentPage.Resources>
 
 
-        <converter:BooleanToColorConverter x:Key="BooleanToColorConverter" />
-        <converter:StringToBooleanConverter x:Key="StringToBooleanConverter" />
+        <converter1:BooleanToColorConverter x:Key="BooleanToColorConverter" />
         <!--  Common style for borders  -->
         <Style x:Key="SfBorderStyle" TargetType="border:SfBorder">
             <Setter Property="HeightRequest" Value="40" />
@@ -171,17 +171,6 @@
                                                     Text="{Binding PhoneNumber}" />
                                             </StackLayout>
                                         </Frame>
-
-                                          <!--Set pin image-->
-                                        <iconize:IconImage
-                                            Margin="10,5,0,0"
-                                            BackgroundColor="Transparent"
-                                            HeightRequest="25"
-                                            HorizontalOptions="StartAndExpand"
-                                            Icon="md-room"
-                                            IconColor="Black"
-                                            IconSize="10"
-                                            WidthRequest="25" />
 
                                     </StackLayout>
                                 </DataTemplate>

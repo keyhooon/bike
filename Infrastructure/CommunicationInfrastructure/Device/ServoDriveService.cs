@@ -10,16 +10,6 @@ namespace Device
 {
     public class ServoDriveService : HardwareService
     {
-        private BatteryOutput battery;
-        private CoreSituation core;
-        private Fault fault;
-        private LightState light;
-        private ServoInput servoInput;
-        private ServoOutput servo;
-
-        private ThrottleSetting throttleSetting;
-        private PedalSetting pedalSetting;
-        private LightSetting lightSetting;
 
         public event EventHandler BatteryChanged;
         public event EventHandler CoreChanged;
@@ -59,13 +49,13 @@ namespace Device
 
             ServoInput = new ServoInput();
 
-            PedalSetting.PropertyChanged += (sender, e) => dataTransport.DataTransmit(mapper.Map<PedalSettingPacket>(PedalSetting));
+            PedalSetting.PropertyChanged += (sender, e) => { if (IsConnect) dataTransport.DataTransmit(mapper.Map<PedalSettingPacket>(PedalSetting)); };
 
-            LightSetting.PropertyChanged += (sender, e) => dataTransport.DataTransmit(mapper.Map<LightSettingPacket>(LightSetting));
+            LightSetting.PropertyChanged += (sender, e) => { if (IsConnect) dataTransport.DataTransmit(mapper.Map<LightSettingPacket>(LightSetting)); };
 
-//            ThrottleSetting.PropertyChanged += (sender, e) => dataTransport.DataTransmit(mapper.Map<ThrottleSettingPacket>(ThrottleSetting));
+            //ThrottleSetting.PropertyChanged += (sender, e) =>{ if (IsConnect)  dataTransport.DataTransmit(mapper.Map<ThrottleSettingPacket>(ThrottleSetting)); };
 
-            Light.PropertyChanged += (sender, e) => dataTransport.DataTransmit(mapper.Map<LightSettingPacket>(Light));
+            Light.PropertyChanged += (sender, e) => { if (IsConnect) dataTransport.DataTransmit(mapper.Map<LightSettingPacket>(Light)); };
         }
 
         protected override void OnDataReceived(object sender, PacketReceivedEventArg e)

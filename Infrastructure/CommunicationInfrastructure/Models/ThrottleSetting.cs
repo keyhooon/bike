@@ -11,14 +11,14 @@ namespace DataModels
 
         private static ISettings AppSettings => CrossSettings.Current;
 
-        public ThrottleActivityType ThrottleActivity
+        public ThrottleActivityType ActivityType
         {
-            get => (ThrottleActivityType)AppSettings.GetValueOrDefault(nameof(ThrottleActivity), 3);
+            get => (ThrottleActivityType)AppSettings.GetValueOrDefault(nameof(ActivityType), 3);
             set
             {
-                if (value == ThrottleActivity)
+                if (value == ActivityType)
                     return;
-                AppSettings.AddOrUpdateValue(nameof(ThrottleActivity), (int)value);
+                AppSettings.AddOrUpdateValue(nameof(ActivityType), (int)value);
                 RaisePropertyChanged();
             }
 

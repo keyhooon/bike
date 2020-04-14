@@ -30,7 +30,7 @@ namespace Communication.Codec
     }
     public static class CruiseCommandEncoding
     {
-        public static PacketEncodingBuilder CreateBuilder(this PacketEncodingBuilder packetEncodingBuilder)
+        public static PacketEncodingBuilder CreateBuilder()
         {
             return PacketEncodingBuilder.CreateDefaultBuilder().WithFunction<CruiseCommand>(CruiseCommand.ParamByteCount, CruiseCommand.ID);
         }

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <color name="launcher_background">#FFFFFF</color>
+  <color  name="colorPrimary">#5bb12f</color >
+  <!-- colorPrimaryDark is used for the status bar -->
+  <color  name="colorPrimaryDark">#238100</color >
+  <!-- colorAccent is used as the default value for colorControlActivated
+         which is used to tint widgets -->
+  <color  name="colorAccent">#efbc1f</color >
+</resources>

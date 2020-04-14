@@ -20,11 +20,11 @@ namespace bike.ViewModels.Settings
 
         #endregion
 
-        public BatteryConfiguration BatteryConfiguration => _servoDriveService.BatteryConfiguration;
-        public CoreVersion CoreConfiguration => _servoDriveService.CoreConfiguration;
-        public PedalConfiguration PedalConfiguration => _servoDriveService.PedalConfiguration;
-        public ServoConfiguration ServoConfiguration => _servoDriveService.ServoConfiguration;
-        public ThrottleConfiguration ThrottleConfiguration => _servoDriveService.ThrottleConfiguration;
+        public BatteryConfiguration Battery => _servoDriveService.BatteryConfiguration;
+        public CoreVersion Core => _servoDriveService.CoreConfiguration;
+        public PedalConfiguration Pedal => _servoDriveService.PedalConfiguration;
+        public ServoConfiguration Servo => _servoDriveService.ServoConfiguration;
+        public ThrottleConfiguration Throttle => _servoDriveService.ThrottleConfiguration;
 
     }
 }
