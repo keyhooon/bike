@@ -21,12 +21,12 @@ namespace bike.Shiny
             services.UseMemoryCache();
             services.UseSqliteLogging(true, true);
 
-            services.RegisterModule(new AutoRegisterModule());
 
             services.AddSingleton<SqliteConnection>();
             services.AddSingleton<CoreDelegateServices>();
             services.AddSingleton<IUserDialogs, UserDialogs>();
             services.UseGps<GpsDelegate>();
+            services.UseBleCentral();
             services.UseSqliteLogging(true, true);
             // Register Stuff
         }

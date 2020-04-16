@@ -36,6 +36,31 @@
     <None Remove="Assets\Images\thermometer.png" />
     <None Remove="Assets\Images\tools.png" />
     <None Remove="Assets\Images\warning.png" />
+    <None Remove="Assets\Menu\bar.png" />
+    <None Remove="Assets\Menu\battery.png" />
+    <None Remove="Assets\Menu\carbattery.png" />
+    <None Remove="Assets\Menu\circulargauge.png" />
+    <None Remove="Assets\Menu\compass.png" />
+    <None Remove="Assets\Menu\dashboard.png" />
+    <None Remove="Assets\Menu\gear.png" />
+    <None Remove="Assets\Menu\gears.png" />
+    <None Remove="Assets\Menu\handlebar.png" />
+    <None Remove="Assets\Menu\help.png" />
+    <None Remove="Assets\Menu\home.png" />
+    <None Remove="Assets\Menu\list.png" />
+    <None Remove="Assets\Menu\map.png" />
+    <None Remove="Assets\Menu\monitor.png" />
+    <None Remove="Assets\Menu\pedal.png" />
+    <None Remove="Assets\Menu\people.png" />
+    <None Remove="Assets\Menu\phone.png" />
+    <None Remove="Assets\Menu\pin.png" />
+    <None Remove="Assets\Menu\setting.png" />
+    <None Remove="Assets\Menu\sim.png" />
+    <None Remove="Assets\Menu\thermometer.png" />
+    <None Remove="Assets\Menu\thruttle.png" />
+    <None Remove="Assets\Menu\tools.png" />
+    <None Remove="Assets\Menu\usb.png" />
+    <None Remove="Assets\Menu\warning.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -70,6 +95,31 @@
     <EmbeddedResource Include="Assets\Images\thermometer.png" />
     <EmbeddedResource Include="Assets\Images\tools.png" />
     <EmbeddedResource Include="Assets\Images\warning.png" />
+    <EmbeddedResource Include="Assets\Menu\bar.png" />
+    <EmbeddedResource Include="Assets\Menu\battery.png" />
+    <EmbeddedResource Include="Assets\Menu\carbattery.png" />
+    <EmbeddedResource Include="Assets\Menu\circulargauge.png" />
+    <EmbeddedResource Include="Assets\Menu\compass.png" />
+    <EmbeddedResource Include="Assets\Menu\dashboard.png" />
+    <EmbeddedResource Include="Assets\Menu\gear.png" />
+    <EmbeddedResource Include="Assets\Menu\gears.png" />
+    <EmbeddedResource Include="Assets\Menu\handlebar.png" />
+    <EmbeddedResource Include="Assets\Menu\help.png" />
+    <EmbeddedResource Include="Assets\Menu\home.png" />
+    <EmbeddedResource Include="Assets\Menu\list.png" />
+    <EmbeddedResource Include="Assets\Menu\map.png" />
+    <EmbeddedResource Include="Assets\Menu\monitor.png" />
+    <EmbeddedResource Include="Assets\Menu\pedal.png" />
+    <EmbeddedResource Include="Assets\Menu\people.png" />
+    <EmbeddedResource Include="Assets\Menu\phone.png" />
+    <EmbeddedResource Include="Assets\Menu\pin.png" />
+    <EmbeddedResource Include="Assets\Menu\setting.png" />
+    <EmbeddedResource Include="Assets\Menu\sim.png" />
+    <EmbeddedResource Include="Assets\Menu\thermometer.png" />
+    <EmbeddedResource Include="Assets\Menu\thruttle.png" />
+    <EmbeddedResource Include="Assets\Menu\tools.png" />
+    <EmbeddedResource Include="Assets\Menu\usb.png" />
+    <EmbeddedResource Include="Assets\Menu\warning.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -111,8 +161,20 @@
     <EmbeddedResource Update="Views\ConfigurationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\ErrorLogPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\EventsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\HelpPage.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\LoggingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\MainTabbedPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MapPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>

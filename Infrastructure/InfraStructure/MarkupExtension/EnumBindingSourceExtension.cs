@@ -1,4 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -10,10 +13,10 @@ namespace Infrastructure.MarkupExtension
         private Type _enumType;
         public Type EnumType
         {
-            get { return this._enumType; }
+            get { return _enumType; }
             set
             {
-                if (value != this._enumType)
+                if (value != _enumType)
                 {
                     if (null != value)
                     {
@@ -23,7 +26,7 @@ namespace Infrastructure.MarkupExtension
                             throw new ArgumentException("Type must be for an Enum.");
                     }
 
-                    this._enumType = value;
+                    _enumType = value;
                 }
             }
         }
@@ -32,18 +35,21 @@ namespace Infrastructure.MarkupExtension
 
         public EnumBindingSourceExtension(Type enumType)
         {
-            this.EnumType = enumType;
+            EnumType = enumType;
         }
 
         public object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (null == this._enumType)
+
+            if (null == _enumType)
                 throw new InvalidOperationException("The EnumType must be specified.");
 
-            Type actualEnumType = Nullable.GetUnderlyingType(this._enumType) ?? this._enumType;
-            Array enumValues = Enum.GetValues(actualEnumType);
+            Type actualEnumType = Nullable.GetUnderlyingType(_enumType) ?? _enumType;
 
-            if (actualEnumType == this._enumType)
+            Array enumValues = actualEnumType.GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToArray();
+
+
+            if (actualEnumType == _enumType)
                 return enumValues;
 
             Array tempArray = Array.CreateInstance(actualEnumType, enumValues.Length + 1);

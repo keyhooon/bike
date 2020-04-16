@@ -6,7 +6,7 @@
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Unity.Forms"
     xmlns:syncTheme="clr-namespace:Syncfusion.XForms.Themes;assembly=Syncfusion.Core.XForms"
-    xmlns:themes="clr-namespace:bike.Themes;assembly=bike">
+    xmlns:themes="clr-namespace:bike.Themes;assembly=bike" xmlns:converters="clr-namespace:Infrastructure.Converters;assembly=bike.Infrastructure">
     <Application.Resources>
 
         <syncTheme:SyncfusionThemeDictionary>
@@ -15,7 +15,9 @@
                 <!--  Theme resource dictionary  -->
                 <syncTheme:LightTheme />
                 <themes:LightTheme />
+
             </syncTheme:SyncfusionThemeDictionary.MergedDictionaries>
+            <converters:InverseBooleanConverter x:Key="Not" />
         </syncTheme:SyncfusionThemeDictionary>
 
     </Application.Resources>

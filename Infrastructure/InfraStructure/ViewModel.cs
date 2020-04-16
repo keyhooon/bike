@@ -20,6 +20,9 @@ namespace Infrastructure
         private CompositeDisposable _deactivateWith;
         protected CompositeDisposable DeactivateWith => _deactivateWith ??= new CompositeDisposable();
 
+
+
+
         private CancellationTokenSource _cancellationTokenSource;
         protected CancellationTokenSource CancellationTokenSource => _cancellationTokenSource ??= new CancellationTokenSource();
 
@@ -38,7 +41,7 @@ namespace Infrastructure
         public virtual void OnNavigatedTo(INavigationParameters parameters) { }
         public virtual void OnAppearing() { }
         public virtual void OnDisappearing() { }
-        public virtual void Destroy() { }
+        public virtual void Destroy() { DeactivateWith.Dispose(); }
         public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters) => Task.FromResult(true);
 
         bool _isBusy;

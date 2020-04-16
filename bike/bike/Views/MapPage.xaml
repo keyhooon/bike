@@ -3,12 +3,12 @@
     x:Class="bike.Views.MapPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:image="clr-namespace:bike.Assets.Images"
+    xmlns:image="clr-namespace:bike.Assets"
     xmlns:maps="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms"
     xmlns:prism="http://prismlibrary.com"
-    Title="Navigation"
+    Title="Map"
     prism:ViewModelLocator.AutowireViewModel="True"
-    IconImageSource="{image:ImageResource bike.Assets.Images.pin.png}">
+    IconImageSource="{image:ImageResource bike.Assets.Menu.map.png}">
 
     <ContentPage.Content>
         <maps:SfMaps

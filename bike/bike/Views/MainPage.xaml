@@ -3,7 +3,7 @@
     x:Class="bike.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:image="clr-namespace:bike.Assets.Images"
+    xmlns:image="clr-namespace:bike.Assets"
     xmlns:prism="http://prismlibrary.com"
     prism:ViewModelLocator.AutowireViewModel="True">
     <MasterDetailPage.Resources>
@@ -30,71 +30,76 @@
 
     <MasterDetailPage.Master>
         <ContentPage Title="Menu">
-            <StackLayout Spacing="0">
                 <Grid HeightRequest="150">
-                    <Image Aspect="Fill" Source="{image:ImageResource bike.Assets.Images.NavyBlueGradient.jpeg}" />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Image Aspect="Fill" HeightRequest="200" Source="{image:ImageResource bike.Assets.Images.NavyBlueGradient.jpeg}" />
                     <Image
                         Margin="10,5"
                         Aspect="AspectFit"
                         HorizontalOptions="FillAndExpand"
                         Source="{image:ImageResource bike.Assets.Images.logo.png}"
                         VerticalOptions="End" />
+                <ScrollView Grid.Row="1">
+                    <StackLayout Spacing="0">
+                        <Button  HeightRequest="48"
+                            x:Name="button" 
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/Dashboard"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.circulargauge.png}"
+                            Text="Dashboard" />
+                        <Button  HeightRequest="48"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/Map"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.map.png}"
+                            Text="Map" />
+                        <Button HeightRequest="48"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/Settings"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.tools.png}"
+                            Text="diagnostic" />
+                        <Button HeightRequest="48"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/Logs"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.list.png}"
+                            Text="Logs" />
+                        <Button HeightRequest="48"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/Settings"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.bar.png}"
+                            Text="Reports" />
+                        <Button HeightRequest="48"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/Settings"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.setting.png}"
+                            Text="Settings" />
+                        <Button HeightRequest="48"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/Configurations"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.gears.png}"
+                            Text="Configurations" />
+                        <Button HeightRequest="48"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/ContactUs"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.phone.png}"
+                            Text="Contact Us" />
+                        <Button HeightRequest="48"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/AboutUs"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.people.png}"
+                            Text="About Us" />
+                        <Button HeightRequest="48"
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/Help"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.help.png}"
+                            Text="Help" />
+                    </StackLayout>
+                </ScrollView>
                 </Grid>
 
-                <Button
-                    x:Name="button"
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/TabbedPage?createTab=Dashboard&amp;createTab=Map?selectedTab=Dashboard"
-                    ImageSource="{image:ImageResource bike.Assets.Images.dashboard.png}"
-                    Text="Dashboard" />
-                <Button
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/TabbedPage?createTab=Dashboard&amp;createTab=Map?selectedTab=Map"
-                    ImageSource="{image:ImageResource bike.Assets.Images.pin.png}"
-                    Text="Map" />
-                <Button
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/Settings"
-                    ImageSource="{image:ImageResource bike.Assets.Images.tools.png}"
-                    Text="diagnostic" />
-                <Button
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/Settings"
-                    ImageSource="{image:ImageResource bike.Assets.Images.analysis.png}"
-                    Text="Logs" />
-                <Button
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/Settings"
-                    ImageSource="{image:ImageResource bike.Assets.Images.bars.png}"
-                    Text="Reports" />
-                <Button
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/Settings"
-                    ImageSource="{image:ImageResource bike.Assets.Images.settings.png}"
-                    Text="Settings" />
-                <Button
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/Configurations"
-                    ImageSource="{image:ImageResource bike.Assets.Images.gears.png}"
-                    Text="Configurations" />
 
-                <Button
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/ContactUs"
-                    ImageSource="{image:ImageResource bike.Assets.Images.phone.png}"
-                    Text="Contact Us" />
-                <Button
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/AboutUs"
-                    ImageSource="{image:ImageResource bike.Assets.Images.about.png}"
-                    Text="About Us" />
-                <Button
-                    Command="{Binding NavigateCommand}"
-                    CommandParameter="Nav/Help"
-                    ImageSource="{image:ImageResource bike.Assets.Images.question.png}"
-                    Text="Help" />
-
-            </StackLayout>
 
         </ContentPage>
     </MasterDetailPage.Master>

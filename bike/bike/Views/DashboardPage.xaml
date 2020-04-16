@@ -5,14 +5,14 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:dataModel="clr-namespace:DataModels;assembly=Device"
     xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
-    xmlns:image="clr-namespace:bike.Assets.Images"
+    xmlns:image="clr-namespace:bike.Assets"
     xmlns:markupextension="clr-namespace:Infrastructure.MarkupExtension;assembly=bike.Infrastructure"
     xmlns:prism="http://prismlibrary.com"
     xmlns:valueConverter="clr-namespace:Infrastructure.ValueConverters;assembly=bike.Infrastructure"
-    xmlns:xforms="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms"
+    xmlns:xforms="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms" xmlns:xforms1="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
     Title="Dashboard"
     prism:ViewModelLocator.AutowireViewModel="True"
-    IconImageSource="{image:ImageResource bike.Assets.Images.dashboard.png}">
+    IconImageSource="{image:ImageResource bike.Assets.Menu.dashboard.png}">
     <ContentPage.Resources>
         <!--  Common style for icon buttons  -->
     </ContentPage.Resources>
@@ -20,22 +20,14 @@
         <Grid>
             <Image Aspect="Fill" Source="{image:ImageResource bike.Assets.Images.NavyBlueGradient.jpeg}" />
 
-            <Grid Margin="5">
+            <Grid Margin="15" ColumnSpacing="15" RowSpacing="15">
                 <Grid.RowDefinitions>
 
-                    <RowDefinition Height="auto" />
-                    <RowDefinition Height="3*" />
                     <RowDefinition Height="1*" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="140" />
                 </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-
-                <gauge:SfCircularGauge
-                    Grid.Row="0"
-                    Grid.ColumnSpan="3"
+                <gauge:SfCircularGauge Grid.Row="1" Grid.ColumnSpan="3"
                     BackgroundColor="#44444444"
                     HeightRequest="400"
                     HorizontalOptions="Center"
@@ -51,7 +43,7 @@
                                     BackgroundColor="yellow"
                                     HeightRequest="28"
                                     Opacity=".3"
-                                    Source="{image:ImageResource bike.Assets.Images.warning.png}"
+                                    Source="{image:ImageResource bike.Assets.Menu.warning.png}"
                                     WidthRequest="68" />
                             </gauge:GaugeAnnotation.View>
                         </gauge:GaugeAnnotation>
@@ -63,7 +55,7 @@
                             <gauge:GaugeAnnotation.View>
                                 <Image
                                     HeightRequest="24"
-                                    Source="{image:ImageResource bike.Assets.Images.thermometer.png}"
+                                    Source="{image:ImageResource bike.Assets.Menu.thermometer.png}"
                                     WidthRequest="24" />
                             </gauge:GaugeAnnotation.View>
                         </gauge:GaugeAnnotation>
@@ -75,7 +67,7 @@
                             <gauge:GaugeAnnotation.View>
                                 <Image
                                     HeightRequest="24"
-                                    Source="{image:ImageResource bike.Assets.Images.battery.png}"
+                                    Source="{image:ImageResource bike.Assets.Menu.battery.png}"
                                     WidthRequest="24" />
                             </gauge:GaugeAnnotation.View>
                         </gauge:GaugeAnnotation>
@@ -284,71 +276,79 @@
                         </gauge:Scale>
                     </gauge:SfCircularGauge.Scales>
                 </gauge:SfCircularGauge>
-                <BoxView
-                    Grid.Row="1"
-                    Grid.RowSpan="2"
-                    Grid.Column="0"
-                    BackgroundColor="#44444444" />
+                <Grid Grid.Row="2" Grid.Column="0">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ClickGestureRecognizer_Clicked"/>
+                        </Grid.GestureRecognizers>
+                        <BoxView
+                            BackgroundColor="#44444444">
 
-                <Picker
-                    Title=" Pedal Assist Level"
-                    Grid.Row="1"
-                    HorizontalOptions="Center"
-                    ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:PedalAssistLevelType}}}"
-                    SelectedItem="{Binding AssistLevel, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
-                    TextColor="LightBlue"
-                    TitleColor="gray"
-                    VerticalOptions="End" />
-                <Label
-                    Grid.Row="2"
-                    HorizontalOptions="Center"
-                    Text="Assist Level"
-                    TextColor="LightBlue" />
-                <BoxView
-                    Grid.Row="1"
-                    Grid.RowSpan="2"
-                    Grid.Column="1"
-                    BackgroundColor="#44444444" />
+                        </BoxView>
+                        <Picker
+                            SelectedIndexChanged="Picker_SelectedIndexChanged"
+                            HorizontalOptions="Center"
+                            ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:PedalAssistLevelType}}}"
+                            SelectedItem="{Binding AssistLevel, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                            TextColor="LightBlue"
+                            TitleColor="gray"
+                            VerticalOptions="Center" />
+                        <Label
+                            HorizontalOptions="Center" 
+                            Margin="0,20"
+                            Text="Assist Level" 
+                            VerticalOptions="End"
+                            TextColor="LightBlue" />
+                    </Grid>
+                <Grid Grid.Row="2" Grid.Column="1" >
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ClickGestureRecognizer_Clicked"/>
+                        </Grid.GestureRecognizers>
+                        <BoxView
+                            BackgroundColor="#44444444" >
 
+                        </BoxView>
+                        <Picker
+                            SelectedIndexChanged="Picker_SelectedIndexChanged"
+                            BackgroundColor="Default"
+                            HorizontalOptions="Center"
+                            ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:PedalActivationTimeType}}}"
+                            SelectedItem="{Binding ActivationTime, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                            TextColor="LightBlue"
+                            TitleColor="gray"
+                            VerticalOptions="Center" />
+                        <Label
+                            Margin="0,20"
+                            VerticalOptions="End"
+                            HorizontalOptions="Center"
+                            Text="Pedal Sensivity"
+                            TextColor="LightBlue" />
+                    </Grid>
+                <Grid  Grid.Row="2"
+                        Grid.Column="2">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ClickGestureRecognizer_Clicked"/>
+                        </Grid.GestureRecognizers>
+                        <BoxView
+                            HeightRequest="200"
+                            BackgroundColor="#44444444" >
 
-                <Picker
-                    Title="Pedal Assist Sensivity"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    HorizontalOptions="Center"
-                    ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:PedalActivationTimeType}}}"
-                    SelectedItem="{Binding ActivationTime, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
-                    TextColor="LightBlue"
-                    TitleColor="gray"
-                    VerticalOptions="End" />
-                <Label
-                    Grid.Row="2"
-                    Grid.Column="1"
-                    HorizontalOptions="Center"
-                    Text="Pedal Sensivity"
-                    TextColor="LightBlue" />
-                <BoxView
-                    Grid.Row="1"
-                    Grid.RowSpan="2"
-                    Grid.Column="2"
-                    BackgroundColor="#44444444" />
-                <Picker
-                    Title="Mode"
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    HorizontalOptions="Center"
-                    ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:ThrottleActivityType}}}"
-                    SelectedItem="{Binding ThrottleActivity, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
-                    TextColor="LightBlue"
-                    TitleColor="gray"
-                    VerticalOptions="End" />
-                <Label
-                    Grid.Row="2"
-                    Grid.Column="2"
-                    HorizontalOptions="Center"
-                    Text="Throttle"
-                    TextColor="LightBlue" />
-
+                        </BoxView>
+                        <Picker
+                            SelectedIndexChanged="Picker_SelectedIndexChanged"
+                            BackgroundColor="Default"                     
+                            TextColor="LightBlue"
+                            TitleColor="gray"
+                            HorizontalOptions="Center"                    
+                            ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:ThrottleActivityType}}}"
+                            SelectedItem="{Binding ThrottleSetting.ActivityType, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                            VerticalOptions="Center" />
+                        <Label
+                                                    Margin="0,20"
+                            VerticalOptions="End"
+                            HorizontalOptions="Center"
+                            Text="Throttle"
+                            TextColor="LightBlue" />
+                    </Grid>
             </Grid>
         </Grid>
     </ContentPage.Content>
