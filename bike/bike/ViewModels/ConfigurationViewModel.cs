@@ -2,7 +2,7 @@
 using Device;
 using Prism.Mvvm;
 
-namespace bike.ViewModels.Settings
+namespace bike.ViewModels
 {
     public class ConfigurationViewModel : BindableBase
     {

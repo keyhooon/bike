@@ -14,7 +14,7 @@
         <maps:SfMaps
             EnableZooming="True"
             MaxZoom="10"
-            MinZoom="1"
+            MinZoom="1" 
             ZoomLevel="2">
 
             <maps:SfMaps.Layers>

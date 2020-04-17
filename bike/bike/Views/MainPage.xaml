@@ -29,75 +29,80 @@
     </MasterDetailPage.Resources>
 
     <MasterDetailPage.Master>
-        <ContentPage Title="Menu">
-                <Grid HeightRequest="150">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
-                    <Image Aspect="Fill" HeightRequest="200" Source="{image:ImageResource bike.Assets.Images.NavyBlueGradient.jpeg}" />
-                    <Image
-                        Margin="10,5"
-                        Aspect="AspectFit"
-                        HorizontalOptions="FillAndExpand"
-                        Source="{image:ImageResource bike.Assets.Images.logo.png}"
-                        VerticalOptions="End" />
+        <ContentPage Title="Menu" BackgroundColor="LightGray">
+            <Grid HeightRequest="150">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Image
+                    Aspect="Fill"
+                    HeightRequest="200"
+                    Source="NavyBlueGradient.jpeg" />
+                <Image
+                    Margin="10,5"
+                    Aspect="AspectFit"
+                    HorizontalOptions="FillAndExpand"
+                    Source="{image:ImageResource bike.Assets.Images.logo.png}"
+                    VerticalOptions="End" />
                 <ScrollView Grid.Row="1">
                     <StackLayout Spacing="0">
-                        <Button  HeightRequest="48"
-                            x:Name="button" 
+                        <StackLayout.Resources>
+                            <Style TargetType="Button">
+                                <Setter Property="Padding" Value="30,0" />
+                                <Setter Property="HeightRequest" Value="60" />
+                            </Style>
+                        </StackLayout.Resources>
+                        <Button
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Dashboard"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.circulargauge.png}"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.dashboard.png}"
                             Text="Dashboard" />
-                        <Button  HeightRequest="48"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Nav/Map"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.map.png}"
-                            Text="Map" />
-                        <Button HeightRequest="48"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Nav/Settings"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.tools.png}"
-                            Text="diagnostic" />
-                        <Button HeightRequest="48"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Nav/Logs"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.list.png}"
-                            Text="Logs" />
-                        <Button HeightRequest="48"
-                            Command="{Binding NavigateCommand}"
-                            CommandParameter="Nav/Settings"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.bar.png}"
-                            Text="Reports" />
-                        <Button HeightRequest="48"
+                        <Button
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Settings"
                             ImageSource="{image:ImageResource bike.Assets.Menu.setting.png}"
                             Text="Settings" />
-                        <Button HeightRequest="48"
+
+                        <Button
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/Settings"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.bar.png}"
+                            Text="Reports" />
+
+                        <Button
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/Settings"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.tools.png}"
+                            Text="diagnostic" />
+                        <Button
+                            Command="{Binding NavigateCommand}"
+                            CommandParameter="Nav/Logs?selectedTab=EventsPage"
+                            ImageSource="{image:ImageResource bike.Assets.Menu.list.png}"
+                            Text="Logs" />
+                        <Button
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Configurations"
                             ImageSource="{image:ImageResource bike.Assets.Menu.gears.png}"
                             Text="Configurations" />
-                        <Button HeightRequest="48"
+                        <Button
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/ContactUs"
                             ImageSource="{image:ImageResource bike.Assets.Menu.phone.png}"
                             Text="Contact Us" />
-                        <Button HeightRequest="48"
+                        <Button
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/AboutUs"
                             ImageSource="{image:ImageResource bike.Assets.Menu.people.png}"
                             Text="About Us" />
-                        <Button HeightRequest="48"
+                        <Button
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Help"
                             ImageSource="{image:ImageResource bike.Assets.Menu.help.png}"
                             Text="Help" />
                     </StackLayout>
                 </ScrollView>
-                </Grid>
+            </Grid>
 
 
 

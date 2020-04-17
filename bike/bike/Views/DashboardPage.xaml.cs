@@ -5,7 +5,7 @@ using Xamarin.Forms.Internals;
 using Infrastructure;
 using System.Linq;
 
-namespace bike.Views.Main
+namespace bike.Views
 {
     public partial class DashboardPage 
     {

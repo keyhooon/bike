@@ -1,0 +1,347 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="bike.Views.GaugePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:dataModel="clr-namespace:DataModels;assembly=Device"
+    xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
+    xmlns:image="clr-namespace:bike.Assets"
+    xmlns:markupextension="clr-namespace:Infrastructure.MarkupExtension;assembly=bike.Infrastructure"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:valueConverter="clr-namespace:Infrastructure.ValueConverters;assembly=bike.Infrastructure"
+    xmlns:xforms="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms"
+    xmlns:xforms1="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
+    Title="Dashboard"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    IconImageSource="{image:ImageResource bike.Assets.Menu.circulargauge.png}">
+    <ContentPage.Content>
+        <Grid>
+            <Image Aspect="Fill" Source="NavyBlueGradient.jpeg" />
+
+            <Grid
+                Margin="15"
+                ColumnSpacing="15"
+                RowSpacing="15">
+                <Grid.RowDefinitions>
+
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="140" />
+                </Grid.RowDefinitions>
+                <gauge:SfCircularGauge
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3"
+                    BackgroundColor="#44444444"
+                    HeightRequest="400"
+                    HorizontalOptions="Center"
+                    VerticalOptions="StartAndExpand">
+                    <gauge:SfCircularGauge.Annotations>
+                        <gauge:GaugeAnnotation
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Angle="270"
+                            Offset=".3">
+                            <gauge:GaugeAnnotation.View>
+                                <Image
+                                    BackgroundColor="yellow"
+                                    HeightRequest="28"
+                                    Opacity=".3"
+                                    Source="{image:ImageResource bike.Assets.Menu.warning.png}"
+                                    WidthRequest="68" />
+                            </gauge:GaugeAnnotation.View>
+                        </gauge:GaugeAnnotation>
+                        <gauge:GaugeAnnotation
+                            HorizontalAlignment="Start"
+                            VerticalAlignment="End"
+                            Angle="315"
+                            Offset="1">
+                            <gauge:GaugeAnnotation.View>
+                                <Image
+                                    HeightRequest="24"
+                                    Source="{image:ImageResource bike.Assets.Menu.thermometer.png}"
+                                    WidthRequest="24" />
+                            </gauge:GaugeAnnotation.View>
+                        </gauge:GaugeAnnotation>
+                        <gauge:GaugeAnnotation
+                            HorizontalAlignment="End"
+                            VerticalAlignment="End"
+                            Angle="225"
+                            Offset="1">
+                            <gauge:GaugeAnnotation.View>
+                                <Image
+                                    HeightRequest="24"
+                                    Source="{image:ImageResource bike.Assets.Menu.battery.png}"
+                                    WidthRequest="24" />
+                            </gauge:GaugeAnnotation.View>
+                        </gauge:GaugeAnnotation>
+                        <gauge:GaugeAnnotation
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Start"
+                            Angle="90"
+                            ViewMargin="0,0"
+                            Offset=".3">
+                            <gauge:GaugeAnnotation.View>
+
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+                                    <StackLayout Orientation="Horizontal">
+                                        <gauge:SfDigitalGauge
+                                            BackgroundColor="Transparent"
+                                            CharacterHeight="30"
+                                            CharacterStrokeColor="LightBlue"
+                                            CharacterType="SegmentSeven"
+                                            CharacterWidth="15"
+                                            DisabledSegmentAlpha="20"
+                                            DisabledSegmentColor="yellow"
+                                            HeightRequest="35"
+                                            HorizontalOptions="End"
+                                            SegmentStrokeWidth="3"
+                                            VerticalOptions="EndAndExpand"
+                                            WidthRequest="100"
+                                            Value=" 100" />
+                                        <Label
+                                            BackgroundColor="Transparent"
+                                            Text="Km"
+                                            TextColor="LightBlue" />
+                                    </StackLayout>
+                                    <StackLayout Grid.Row="1" Orientation="Horizontal">
+                                        <gauge:SfDigitalGauge
+                                            BackgroundColor="Transparent"
+                                            CharacterHeight="30"
+                                            CharacterStrokeColor="LightBlue"
+                                            CharacterType="SegmentSeven"
+                                            CharacterWidth="15"
+                                            DisabledSegmentAlpha="20"
+                                            DisabledSegmentColor="yellow"
+                                            HeightRequest="35"
+                                            HorizontalOptions="End"
+                                            SegmentStrokeWidth="3"
+                                            VerticalOptions="EndAndExpand"
+                                            WidthRequest="100"
+                                            Value="2100" />
+                                        <Label
+                                            BackgroundColor="Transparent"
+                                            Text="Km"
+                                            TextColor="LightBlue" />
+                                    </StackLayout>
+
+                                </Grid>
+
+
+                            </gauge:GaugeAnnotation.View>
+                        </gauge:GaugeAnnotation>
+                    </gauge:SfCircularGauge.Annotations>
+                    <gauge:SfCircularGauge.Scales>
+                        <gauge:Scale
+                            Direction="AntiClockwise"
+                            EndValue="100"
+                            Interval="25"
+                            MinorTicksPerInterval="0"
+                            RimColor="{DynamicResource Gray-500}"
+                            RimThickness="10"
+                            ScaleEndOffset=".95"
+                            ScaleStartOffset=".84"
+                            ShowLabels="false"
+                            ShowRim="true"
+                            StartAngle="290"
+                            StartValue="0"
+                            SweepAngle="50">
+                            <gauge:Scale.Ranges>
+                                <gauge:Range
+                                    EndValue="98"
+                                    StartValue="2"
+                                    Thickness="12"
+                                    Offset=".93"
+                                    Color="{DynamicResource Gray-900}" />
+                            </gauge:Scale.Ranges>
+                            <gauge:Scale.Pointers>
+                                <gauge:RangePointer
+                                    Thickness="12"
+                                    Offset=".93"
+                                    Color="Blue"
+                                    Value="50" />
+                            </gauge:Scale.Pointers>
+                            <gauge:Scale.MajorTickSettings>
+                                <gauge:TickSettings
+                                    EndOffset=".95"
+                                    StartOffset=".84"
+                                    Thickness="3"
+                                    Color="{DynamicResource Gray-500}" />
+                            </gauge:Scale.MajorTickSettings>
+                        </gauge:Scale>
+                        <gauge:Scale
+                            EndValue="100"
+                            Interval="25"
+                            MinorTicksPerInterval="0"
+                            RimColor="{DynamicResource Gray-500}"
+                            RimThickness="10"
+                            ScaleEndOffset=".95"
+                            ScaleStartOffset=".84"
+                            ShowLabels="false"
+                            ShowRim="true"
+                            StartAngle="200"
+                            StartValue="0"
+                            SweepAngle="50">
+                            <gauge:Scale.Ranges>
+                                <gauge:Range
+                                    EndValue="98"
+                                    StartValue="2"
+                                    Thickness="14"
+                                    Offset=".93"
+                                    Color="{DynamicResource Gray-900}" />
+                            </gauge:Scale.Ranges>
+                            <gauge:Scale.Pointers>
+                                <gauge:RangePointer
+                                    Thickness="14"
+                                    Offset=".93"
+                                    Color="Blue"
+                                    Value="50" />
+                            </gauge:Scale.Pointers>
+                            <gauge:Scale.MajorTickSettings>
+                                <gauge:TickSettings
+                                    EndOffset=".95"
+                                    StartOffset=".84"
+                                    Thickness="3"
+                                    Color="{DynamicResource Gray-500}" />
+                            </gauge:Scale.MajorTickSettings>
+                        </gauge:Scale>
+                        <gauge:Scale
+                            EndValue="80"
+                            Interval="10"
+                            LabelColor="White"
+                            LabelOffset="0.60"
+                            MinorTicksPerInterval="5"
+                            RimColor="White"
+                            ScaleEndOffset="0.74"
+                            ScaleStartOffset="0.75"
+                            StartAngle="150"
+                            StartValue="0"
+                            SweepAngle="239">
+                            <gauge:Scale.Ranges>
+                                <gauge:Range
+                                    EndValue="80"
+                                    InnerEndOffset=".68"
+                                    InnerStartOffset="0.68"
+                                    OuterEndOffset=".74"
+                                    OuterStartOffset=".74"
+                                    StartValue="0">
+                                    <gauge:Range.GradientStops>
+                                        <gauge:GaugeGradientStop Color="DarkBlue" Value="0" />
+                                        <gauge:GaugeGradientStop Color="DarkBlue" Value="10" />
+                                        <gauge:GaugeGradientStop Color="DarkGray" Value="20" />
+                                        <gauge:GaugeGradientStop Color="DarkGray" Value="60" />
+                                        <gauge:GaugeGradientStop Color="DarkRed" Value="70" />
+                                        <gauge:GaugeGradientStop Color="DarkRed" Value="80" />
+                                    </gauge:Range.GradientStops>
+                                </gauge:Range>
+                            </gauge:Scale.Ranges>
+                            <gauge:Scale.MajorTickSettings>
+                                <gauge:TickSettings
+                                    EndOffset="0.65"
+                                    StartOffset="0.75"
+                                    Thickness="3"
+                                    Color="LightGray" />
+                            </gauge:Scale.MajorTickSettings>
+                            <gauge:Scale.Pointers>
+                                <gauge:RangePointer
+                                    RangeCap="End"
+                                    Thickness="10"
+                                    Offset=".83"
+                                    Color="Cyan"
+                                    Value="30" />
+                                <gauge:MarkerPointer
+                                    Offset=".74"
+                                    Color="{DynamicResource PrimaryForeGroundColor}"
+                                    Value="60" />
+                                <gauge:NeedlePointer
+                                    KnobColor="{DynamicResource Gray-900}"
+                                    KnobRadius="15"
+                                    KnobRadiusFactor="1"
+                                    KnobStrokeColor="{DynamicResource Gray-600}"
+                                    KnobStrokeWidth="1"
+                                    LengthFactor=".6"
+                                    TailColor="DarkRed"
+                                    TailLengthFactor=".13"
+                                    Thickness="6"
+                                    Color="DarkRed"
+                                    Value="10" />
+                            </gauge:Scale.Pointers>
+                            <gauge:Scale.MinorTickSettings>
+                                <gauge:TickSettings
+                                    EndOffset="0.70"
+                                    StartOffset="0.74"
+                                    Thickness="2"
+                                    Color="LightGray" />
+                            </gauge:Scale.MinorTickSettings>
+                        </gauge:Scale>
+                    </gauge:SfCircularGauge.Scales>
+                </gauge:SfCircularGauge>
+                <Grid Grid.Row="2" Grid.Column="0">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                    </Grid.GestureRecognizers>
+                    <BoxView BackgroundColor="#44444444" />
+                    <Picker
+                        HorizontalOptions="Center"
+                        ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:PedalAssistLevelType}}}"
+                        SelectedIndexChanged="Picker_SelectedIndexChanged"
+                        SelectedItem="{Binding AssistLevel, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                        TextColor="LightBlue"
+                        TitleColor="gray"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="0,20"
+                        HorizontalOptions="Center"
+                        Text="Assist Level"
+                        TextColor="LightBlue"
+                        VerticalOptions="End" />
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="1">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                    </Grid.GestureRecognizers>
+                    <BoxView BackgroundColor="#44444444" />
+                    <Picker
+                        BackgroundColor="Default"
+                        HorizontalOptions="Center"
+                        ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:PedalActivationTimeType}}}"
+                        SelectedIndexChanged="Picker_SelectedIndexChanged"
+                        SelectedItem="{Binding ActivationTime, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                        TextColor="LightBlue"
+                        TitleColor="gray"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="0,20"
+                        HorizontalOptions="Center"
+                        Text="Pedal Sensivity"
+                        TextColor="LightBlue"
+                        VerticalOptions="End" />
+                </Grid>
+                <Grid Grid.Row="2" Grid.Column="2">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                    </Grid.GestureRecognizers>
+                    <BoxView BackgroundColor="#44444444" HeightRequest="200" />
+                    <Picker
+                        BackgroundColor="Default"
+                        HorizontalOptions="Center"
+                        ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:ThrottleActivityType}}}"
+                        SelectedIndexChanged="Picker_SelectedIndexChanged"
+                        SelectedItem="{Binding ThrottleSetting.ActivityType, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                        TextColor="LightBlue"
+                        TitleColor="gray"
+                        VerticalOptions="Center" />
+                    <Label
+                        Margin="0,20"
+                        HorizontalOptions="Center"
+                        Text="Throttle"
+                        TextColor="LightBlue"
+                        VerticalOptions="End" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

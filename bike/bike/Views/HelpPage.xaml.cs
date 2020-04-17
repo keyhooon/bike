@@ -3,11 +3,11 @@ using Xamarin.Forms.Internals;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace bike.Views.Settings
+namespace bike.Views
 {
     [Preserve(AllMembers = true)]
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class HelpPage : ContentPage
+    public partial class HelpPage 
     {
         public HelpPage()
         {

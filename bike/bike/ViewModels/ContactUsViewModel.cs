@@ -8,7 +8,7 @@ using Syncfusion.SfMaps.XForms;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
-namespace bike.ViewModels.ContactUs
+namespace bike.ViewModels
 {
     /// <summary>
     /// ViewModel for contact us page.

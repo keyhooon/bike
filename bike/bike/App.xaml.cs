@@ -10,11 +10,6 @@ using bike.Views.AboutUs;
 using bike.ViewModels.AboutUs;
 using bike.Views.ContactUs;
 using bike.Views.Settings;
-using bike.ViewModels.Settings;
-using bike.ViewModels.ContactUs;
-
-using bike.ViewModels.Main;
-using bike.Views.Main;
 using Xamarin.Forms;
 using Communication;
 using Device;
@@ -60,6 +55,7 @@ namespace bike
             containerRegistry.RegisterForNavigation<DashboardPage, DashboardViewModel>("Dashboard");
             containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>("Map");
             containerRegistry.RegisterForNavigation<LoggingPage>("Logs");
+            containerRegistry.RegisterForNavigation<GaugePage, GaugePageViewModel>();
         }
     }
 }

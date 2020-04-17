@@ -3,22 +3,27 @@
     x:Class="bike.Views.WelcomePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
     xmlns:image="clr-namespace:bike.Assets"
     Title="Shiny">
 
     <ContentPage.Content>
-        <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
-
+        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <Image
                 HorizontalOptions="Center"
-                Source="{image:ImageResource bike.Assets.Images.logo.png}"
-                VerticalOptions="Center" />
+                Source="logo.png"
+                VerticalOptions="Start" />
+            <forms:AnimationView
+                x:Name="AnimationView"
+                Animation="splashpattern.json"
+                AutoPlay="True"
+                HorizontalOptions="FillAndExpand"
+                Loop="True"
+                Rotation="90"
+                VerticalOptions="Start" />
 
-            <Label
-                FontSize="Large"
-                HorizontalTextAlignment="Center"
-                Text="EV Tech" />
 
-        </StackLayout>
+
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

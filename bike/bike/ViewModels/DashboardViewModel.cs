@@ -10,7 +10,7 @@ using System.ComponentModel;
 using System.Reflection;
 using Prism.Commands;
 
-namespace bike.ViewModels.Main
+namespace bike.ViewModels
 {
     public class DashboardViewModel : BindableBase
     {

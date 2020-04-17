@@ -3,7 +3,7 @@ using Device;
 using Prism.Mvvm;
 using Xamarin.Forms.Internals;
 
-namespace bike.ViewModels.Settings
+namespace bike.ViewModels
 {
     /// <summary>
     /// ViewModel for Setting page 
