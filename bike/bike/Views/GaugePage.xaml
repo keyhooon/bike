@@ -13,7 +13,7 @@
     xmlns:xforms1="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
     Title="Dashboard"
     prism:ViewModelLocator.AutowireViewModel="True"
-    IconImageSource="{image:ImageResource bike.Assets.Menu.circulargauge.png}">
+    IconImageSource="{image:ImageResource bike.Assets.low.014-dashboard.png}">
     <ContentPage.Content>
         <Grid>
             <Image Aspect="Fill" Source="NavyBlueGradient.jpeg" />
@@ -24,9 +24,9 @@
                 RowSpacing="15">
                 <Grid.RowDefinitions>
 
-                    <RowDefinition Height="1*" />
                     <RowDefinition Height="auto" />
-                    <RowDefinition Height="140" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
                 <gauge:SfCircularGauge
                     Grid.Row="1"
@@ -44,9 +44,9 @@
                             <gauge:GaugeAnnotation.View>
                                 <Image
                                     BackgroundColor="yellow"
-                                    HeightRequest="28"
+                                    HeightRequest="36"
                                     Opacity=".3"
-                                    Source="{image:ImageResource bike.Assets.Menu.warning.png}"
+                                    Source="{image:ImageResource bike.Assets.128.021-warning.png}"
                                     WidthRequest="68" />
                             </gauge:GaugeAnnotation.View>
                         </gauge:GaugeAnnotation>
@@ -57,9 +57,9 @@
                             Offset="1">
                             <gauge:GaugeAnnotation.View>
                                 <Image
-                                    HeightRequest="24"
-                                    Source="{image:ImageResource bike.Assets.Menu.thermometer.png}"
-                                    WidthRequest="24" />
+                                    HeightRequest="36"
+                                    Source="{image:ImageResource bike.Assets.128.011-thermometer-1.png}"
+                                    WidthRequest="36" />
                             </gauge:GaugeAnnotation.View>
                         </gauge:GaugeAnnotation>
                         <gauge:GaugeAnnotation
@@ -69,9 +69,9 @@
                             Offset="1">
                             <gauge:GaugeAnnotation.View>
                                 <Image
-                                    HeightRequest="24"
-                                    Source="{image:ImageResource bike.Assets.Menu.battery.png}"
-                                    WidthRequest="24" />
+                                    HeightRequest="36"
+                                    Source="{image:ImageResource bike.Assets.128.017-battery.png}"
+                                    WidthRequest="36" />
                             </gauge:GaugeAnnotation.View>
                         </gauge:GaugeAnnotation>
                         <gauge:GaugeAnnotation
@@ -291,9 +291,9 @@
                         SelectedItem="{Binding AssistLevel, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                         TextColor="LightBlue"
                         TitleColor="gray"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Start" />
                     <Label
-                        Margin="0,20"
+                        Margin="0,10"
                         HorizontalOptions="Center"
                         Text="Assist Level"
                         TextColor="LightBlue"
@@ -312,9 +312,9 @@
                         SelectedItem="{Binding ActivationTime, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                         TextColor="LightBlue"
                         TitleColor="gray"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Start" />
                     <Label
-                        Margin="0,20"
+                        Margin="0,10"
                         HorizontalOptions="Center"
                         Text="Pedal Sensivity"
                         TextColor="LightBlue"
@@ -333,9 +333,9 @@
                         SelectedItem="{Binding ThrottleSetting.ActivityType, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                         TextColor="LightBlue"
                         TitleColor="gray"
-                        VerticalOptions="Center" />
+                        VerticalOptions="Start" />
                     <Label
-                        Margin="0,20"
+                        Margin="0,10"
                         HorizontalOptions="Center"
                         Text="Throttle"
                         TextColor="LightBlue"

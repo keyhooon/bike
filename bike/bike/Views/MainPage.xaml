@@ -3,6 +3,7 @@
     x:Class="bike.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
     xmlns:image="clr-namespace:bike.Assets"
     xmlns:prism="http://prismlibrary.com"
     prism:ViewModelLocator.AutowireViewModel="True">
@@ -43,7 +44,7 @@
                     Margin="10,5"
                     Aspect="AspectFit"
                     HorizontalOptions="FillAndExpand"
-                    Source="{image:ImageResource bike.Assets.Images.logo.png}"
+                    Source="logo.png"
                     VerticalOptions="End" />
                 <ScrollView Grid.Row="1">
                     <StackLayout Spacing="0">
@@ -54,51 +55,60 @@
                             </Style>
                         </StackLayout.Resources>
                         <Button
+                            ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Dashboard"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.dashboard.png}"
+                            ImageSource="{image:ImageResource bike.Assets.low.map.png}"
                             Text="Dashboard" />
                         <Button
+                            ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Settings"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.setting.png}"
+                            ImageSource="{image:ImageResource bike.Assets.low.026-slider.png}"
                             Text="Settings" />
 
                         <Button
+                            ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Settings"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.bar.png}"
+                            ImageSource="{image:ImageResource bike.Assets.low.020-bar-graph.png}"
                             Text="Reports" />
 
                         <Button
+                            ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Settings"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.tools.png}"
+                            ImageSource="{image:ImageResource bike.Assets.low.018-wrench.png}"
                             Text="diagnostic" />
                         <Button
+                            ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Logs?selectedTab=EventsPage"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.list.png}"
+                            ImageSource="{image:ImageResource bike.Assets.low.003-technology.png}"
                             Text="Logs" />
                         <Button
+                            ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Configurations"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.gears.png}"
+                            ImageSource="{image:ImageResource bike.Assets.low.005-mechanic.png}"
                             Text="Configurations" />
                         <Button
+                            ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/ContactUs"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.phone.png}"
+                            ImageSource="{image:ImageResource bike.Assets.low.013-call.png}"
                             Text="Contact Us" />
                         <Button
+                            ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/AboutUs"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.people.png}"
+                            ImageSource="{image:ImageResource bike.Assets.low.027-user.png}"
                             Text="About Us" />
                         <Button
+                            ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Help"
-                            ImageSource="{image:ImageResource bike.Assets.Menu.help.png}"
+                            ImageSource="{image:ImageResource bike.Assets.low.009-information.png}"
                             Text="Help" />
                     </StackLayout>
                 </ScrollView>

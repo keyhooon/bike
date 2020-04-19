@@ -6,71 +6,81 @@
     xmlns:Markup="clr-namespace:Infrastructure.MarkupExtension;assembly=bike.Infrastructure"
     xmlns:dataModel="clr-namespace:DataModels;assembly=Device"
     xmlns:prism="http://prismlibrary.com"
+    xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
     Title="Settings"
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource Gray-White}">
     <ContentPage.Resources />
 
     <ContentPage.Content>
-        <TableView HasUnevenRows="True" Intent="Settings">
-            <TableView.Resources />
-            <TableSection Title="Pedal">
-                <SwitchCell Text="Active" />
-                <ViewCell>
-                    <AbsoluteLayout Margin="16,0">
-                        <Label
-                            AbsoluteLayout.LayoutBounds="0,0,.3,1"
-                            AbsoluteLayout.LayoutFlags="All"
-                            Text="Activity"
-                            VerticalTextAlignment="Center" />
-                        <Label
-                            AbsoluteLayout.LayoutBounds=".3,0,.3,1"
-                            AbsoluteLayout.LayoutFlags="All"
-                            FontAttributes="Bold"
-                            FontSize="Medium"
-                            HorizontalTextAlignment="Center"
-                            Text="25 %"
-                            VerticalTextAlignment="Center" />
-                        <Stepper
-                            AbsoluteLayout.LayoutBounds="1,0,.5,1"
-                            AbsoluteLayout.LayoutFlags="All"
-                            HorizontalOptions="Center"
-                            Increment="1"
-                            Maximum="7"
-                            Minimum="0"
-                            VerticalOptions="End" />
-                    </AbsoluteLayout>
-                </ViewCell>
+        <sv:SettingsView HasUnevenRows="True">
+            <sv:SettingsView.Resources />
+            <sv:Section Title="Pedal">
 
-                <ViewCell>
-                    <ViewCell.View>
-                        <AbsoluteLayout Margin="16,0">
-                            <Label
-                                AbsoluteLayout.LayoutBounds="0,0,.5,1"
-                                AbsoluteLayout.LayoutFlags="All"
-                                Text="Assist Sensivity"
-                                VerticalTextAlignment="Center" />
-                            <Picker
-                                Title="Pedal Assist Sensivity"
-                                AbsoluteLayout.LayoutBounds="1,0,.5,1"
-                                AbsoluteLayout.LayoutFlags="All"
-                                ItemsSource="{Markup:EnumBindingSource {x:Type dataModel:PedalActivationTimeType}}"
-                                SelectedItem="{Binding PedalSetting.ActivationTime}" />
-                        </AbsoluteLayout>
-                    </ViewCell.View>
-                </ViewCell>
-            </TableSection>
-            <TableSection Title="Throttle">
-                <SwitchCell Text="Active" />
-                <SwitchCell Text="Sport Mode" />
-            </TableSection>
-            <TableSection Title="Light">
-                <ViewCell>
-                    <AbsoluteLayout Margin="16,0">
+                <sv:SwitchCell Title="Active" On="{Binding PedalActive}" />
+                <sv:CustomCell IsEnabled="{Binding PedalActive}">
+                    <AbsoluteLayout>
                         <Label
                             AbsoluteLayout.LayoutBounds="0,0,.3,1"
                             AbsoluteLayout.LayoutFlags="All"
+                            FontSize="{StaticResource BaseFontSize++}"
+                            Text="Activity"
+                            TextColor="{StaticResource Gray-800}"
+                            VerticalTextAlignment="Center" />
+                        <Label
+                            AbsoluteLayout.LayoutBounds=".3,0,.3,1"
+                            AbsoluteLayout.LayoutFlags="All"
+                            FontSize="{StaticResource BaseFontSize++}"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding PedalAssistActivityPercentText}"
+                            TextColor="{StaticResource Gray-800}"
+                            VerticalTextAlignment="Center" />
+                        <Stepper
+                            AbsoluteLayout.LayoutBounds="1,0,.5,1"
+                            AbsoluteLayout.LayoutFlags="All"
+                            Increment="1"
+                            IsEnabled="{Binding PedalActive}"
+                            Maximum="7"
+                            Minimum="1"
+                            Value="{Binding PedalAssistActivityPercentIndex}" />
+                    </AbsoluteLayout>
+                </sv:CustomCell>
+
+                <sv:CustomCell IsEnabled="{Binding PedalActive}">
+                    <AbsoluteLayout>
+                        <Label
+                            AbsoluteLayout.LayoutBounds="0,0,.5,1"
+                            AbsoluteLayout.LayoutFlags="All"
+                            FontSize="{StaticResource BaseFontSize++}"
+                            Text="Assist Sensivity"
+                            TextColor="{StaticResource Gray-800}"
+                            VerticalTextAlignment="Center" />
+                        <Picker
+                            Title="Pedal Assist Sensivity"
+                            AbsoluteLayout.LayoutBounds="1,0,.5,1"
+                            AbsoluteLayout.LayoutFlags="All"
+                            IsEnabled="{Binding PedalActive}"
+                            ItemsSource="{Binding PedalAssistSensivityStringList}"
+                            SelectedIndex="{Binding PedalAssistSensivityIndex}" />
+                    </AbsoluteLayout>
+                </sv:CustomCell>
+            </sv:Section>
+            <sv:Section Title="Throttle">
+                <sv:SwitchCell Title="Active" On="{Binding ThrottleActive}" />
+                <sv:SwitchCell
+                    Title="Sport Mode"
+                    IsEnabled="{Binding ThrottleActive}"
+                    On="{Binding ThrottleSport, Mode=TwoWay}" />
+            </sv:Section>
+            <sv:Section Title="Light">
+                <sv:CustomCell>
+                    <AbsoluteLayout>
+                        <Label
+                            AbsoluteLayout.LayoutBounds="0,0,.3,1"
+                            AbsoluteLayout.LayoutFlags="All"
+                            FontSize="{StaticResource BaseFontSize++}"
                             Text="Front Light"
+                            TextColor="{StaticResource Gray-800}"
                             VerticalTextAlignment="Center" />
                         <Label
                             AbsoluteLayout.LayoutBounds=".3,0,.3,1"
@@ -78,24 +88,27 @@
                             FontAttributes="Bold"
                             FontSize="Medium"
                             HorizontalTextAlignment="Center"
-                            Text="25 %"
+                            Text="{Binding FrontLightText}"
                             VerticalTextAlignment="Center" />
                         <Stepper
                             AbsoluteLayout.LayoutBounds="1,0,.5,1"
                             AbsoluteLayout.LayoutFlags="All"
                             HorizontalOptions="Center"
                             Increment="1"
-                            Maximum="7"
+                            Maximum="3"
                             Minimum="0"
-                            VerticalOptions="End" />
+                            VerticalOptions="End"
+                            Value="{Binding FrontLightIndex}" />
                     </AbsoluteLayout>
-                </ViewCell>
-                <ViewCell>
-                    <AbsoluteLayout Margin="16,0">
+                </sv:CustomCell>
+                <sv:CustomCell>
+                    <AbsoluteLayout>
                         <Label
                             AbsoluteLayout.LayoutBounds="0,0,.3,1"
                             AbsoluteLayout.LayoutFlags="All"
+                            FontSize="{StaticResource BaseFontSize++}"
                             Text="Back Light"
+                            TextColor="{StaticResource Gray-800}"
                             VerticalTextAlignment="Center" />
                         <Label
                             AbsoluteLayout.LayoutBounds=".3,0,.3,1"
@@ -103,19 +116,20 @@
                             FontAttributes="Bold"
                             FontSize="Medium"
                             HorizontalTextAlignment="Center"
-                            Text="25 %"
+                            Text="{Binding BackLightText}"
                             VerticalTextAlignment="Center" />
                         <Stepper
                             AbsoluteLayout.LayoutBounds="1,0,.5,1"
                             AbsoluteLayout.LayoutFlags="All"
                             HorizontalOptions="Center"
                             Increment="1"
-                            Maximum="7"
+                            Maximum="3"
                             Minimum="0"
-                            VerticalOptions="End" />
+                            VerticalOptions="End"
+                            Value="{Binding BackLightIndex}" />
                     </AbsoluteLayout>
-                </ViewCell>
-            </TableSection>
-        </TableView>
+                </sv:CustomCell>
+            </sv:Section>
+        </sv:SettingsView>
     </ContentPage.Content>
 </ContentPage>

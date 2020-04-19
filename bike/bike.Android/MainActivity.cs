@@ -21,6 +21,8 @@ namespace bike.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+            AiForms.Renderers.Droid.SettingsViewInit.Init(); // need to write here
+            AiForms.Effects.Droid.Effects.Init(); //need to write here
             LoadApplication(new App());
         }
     }

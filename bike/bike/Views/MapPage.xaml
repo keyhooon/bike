@@ -8,17 +8,18 @@
     xmlns:prism="http://prismlibrary.com"
     Title="Map"
     prism:ViewModelLocator.AutowireViewModel="True"
-    IconImageSource="{image:ImageResource bike.Assets.Menu.map.png}">
+    IconImageSource="{image:ImageResource bike.Assets.low.map.png}">
+
 
     <ContentPage.Content>
         <maps:SfMaps
             EnableZooming="True"
             MaxZoom="10"
-            MinZoom="1" 
+            MinZoom="1"
             ZoomLevel="2">
 
             <maps:SfMaps.Layers>
-                <maps:ImageryLayer CanCacheTiles="true"  />
+                <maps:ImageryLayer CanCacheTiles="true" />
             </maps:SfMaps.Layers>
         </maps:SfMaps>
     </ContentPage.Content>

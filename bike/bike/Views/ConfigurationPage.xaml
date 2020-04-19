@@ -4,35 +4,74 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
+    xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
     Title="Configurations"
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource Gray-White}">
     <ContentPage.Content>
-        <TableView BackgroundColor="Transparent" Intent="Settings">
-            <TableView.Margin>
+        <sv:SettingsView BackgroundColor="Transparent" HasUnevenRows="True">
+            <sv:SettingsView.Margin>
                 <OnPlatform x:TypeArguments="Thickness" Android="16" />
-            </TableView.Margin>
-            <TableSection Title="Core">
-                <TextCell Detail="Unique Id" Text="{Binding Core.UniqueId}" />
-                <TextCell Detail="Firmware Version" Text="{Binding Core.FirmwareVersion}" />
-                <TextCell Detail="Bike Model" Text="{Binding Core.ModelVersion}" />
-            </TableSection>
-            <TableSection Title="Battery">
-                <TextCell Text="{Binding Battery.OverCurrent}" />
-                <TextCell Detail="Over Voltage" Text="{Binding Battery.OverVoltage}" />
-                <TextCell Detail="Under Voltage" Text="{Binding Battery.UnedrVoltage}" />
-                <TextCell Detail="Nominal Voltage" Text="{Binding Battery.NominalVoltage}" />
-                <TextCell Detail="Over Temprature" Text="{Binding Battery.OverTemprature}" />
-            </TableSection>
-            <TableSection Title="Throttle">
-                <TextCell Detail="Min Voltage" Text="{Binding Throttle.Min}" />
-                <TextCell Detail="Max Voltage" Text="{Binding Throttle.Max}" />
-                <TextCell Detail="Fault Voltage" Text="{Binding Throttle.FaultThreshold}" />
-            </TableSection>
-            <TableSection Title="General">
-                <TextCell Detail="Magnet Count" Text="{Binding Pedal.MagnetCount}" />
-                <TextCell Detail="Wheel Radius" Text="{Binding Servo.WheelRadius}" />
-            </TableSection>
-        </TableView>
+            </sv:SettingsView.Margin>
+            <sv:Section Title="Core">
+                <sv:LabelCell
+                    Title="Unique Id"
+                    Description="This ID Is Unique and represent You"
+                    ValueText="{Binding Core.UniqueId}" />
+                <sv:LabelCell
+                    Title="Firmware Version"
+                    Description="This Number Shows Version of Firmware Installed on your Driver"
+                    ValueText="{Binding Core.FirmwareVersion}" />
+
+
+                <sv:LabelCell Description="Bike Model, This Number Represent your Bike Model" ValueText="{Binding Core.ModelVersion}" />
+            </sv:Section>
+            <sv:Section Title="Battery">
+                <sv:LabelCell
+                    Title="Over Current"
+                    Description="Current Exceeded from this Lead to Failure"
+                    ValueText="{Binding Battery.OverCurrent}" />
+                <sv:LabelCell
+                    Title="Over Voltage"
+                    Description="Voltage Exceeded from this Lead to Failure"
+                    ValueText="{Binding Battery.OverVoltage}" />
+                <sv:LabelCell
+                    Title="Under Voltage"
+                    Description="Voltage Less than this Lead to Failure"
+                    ValueText="{Binding Battery.UnedrVoltage}" />
+                <sv:LabelCell
+                    Title="Nominal Voltage"
+                    Description="The most Suitable Voltage"
+                    ValueText="{Binding Battery.NominalVoltage}" />
+                <sv:LabelCell
+                    Title="Over Temprature"
+                    Description="Temprature more than this cause Failure"
+                    ValueText="{Binding Battery.OverTemprature}" />
+            </sv:Section>
+            <sv:Section Title="Throttle">
+                <sv:LabelCell
+                    Title="Min Voltage"
+                    Description="Voltage of Throttle when leaving this"
+                    ValueText="{Binding Throttle.Min, StringFormat='{0:F2}'}" />
+                <sv:LabelCell
+                    Title="Max Voltage"
+                    Description="Voltage of Throttle when hold this tight"
+                    ValueText="{Binding Throttle.Max, StringFormat='{0:F2}'}" />
+                <sv:LabelCell
+                    Title="Fault Voltage"
+                    Description="Threshold Voltage That shows Proper Performance"
+                    ValueText="{Binding Throttle.FaultThreshold, StringFormat='{0:F2}'}" />
+            </sv:Section>
+            <sv:Section Title="General">
+                <sv:LabelCell
+                    Title="Magnet Count"
+                    Description="Magnet Count in One Rotation"
+                    ValueText="{Binding Pedal.MagnetCount}" />
+                <sv:LabelCell
+                    Title="Wheel Radius"
+                    Description="Used for Caulculate Speed"
+                    ValueText="{Binding Servo.WheelRadius}" />
+            </sv:Section>
+        </sv:SettingsView>
     </ContentPage.Content>
 </ContentPage>

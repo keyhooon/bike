@@ -3,7 +3,8 @@
     x:Class="bike.Themes.LightTheme"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms">
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView">
 
 
     <Color x:Key="PrimaryColor">#5bb12f</Color>
@@ -16,6 +17,7 @@
     <Color x:Key="SecondaryLightColor">#ffee59</Color>
     <Color x:Key="SecondaryForeGroundColor">#000000</Color>
     <Color x:Key="SecondaryGradientColor">#7644ad</Color>
+    <Color x:Key="DisabledColor">#E6DAB9</Color>
     <Color x:Key="LightColor">#ffe8f4</Color>
     <Color x:Key="Green">#7ed321</Color>
     <Color x:Key="Red">#ff4a4a</Color>
@@ -38,6 +40,32 @@
     <Color x:Key="Gray-900">#333942</Color>
     <Color x:Key="Gray-Black">#000000</Color>
     <Color x:Key="Gray-White">#ffffff</Color>
+
+
+
+    <Color x:Key="TitleTextColor">#CC9900</Color>
+    <Color x:Key="PaleBackColorPrimary">#F2EFE6</Color>
+    <Color x:Key="PaleBackColorSecondary">#F2EDDA</Color>
+    <x:Double x:Key="BaseFontSize">12</x:Double>
+    <x:Double x:Key="BaseFontSize+">14</x:Double>
+    <x:Double x:Key="BaseFontSize++">17</x:Double>
+    <x:Double x:Key="BaseFontSize-">11</x:Double>
+
+    <Style TargetType="sv:SettingsView">
+        <Setter Property="SeparatorColor" Value="{StaticResource DisabledColor}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource PaleBackColorPrimary}" />
+        <Setter Property="HeaderBackgroundColor" Value="{StaticResource PaleBackColorPrimary}" />
+        <Setter Property="CellTitleColor" Value="{StaticResource Gray-800}" />
+        <Setter Property="CellTitleFontSize" Value="{StaticResource BaseFontSize++}" />
+        <Setter Property="CellValueTextFontSize" Value="{StaticResource BaseFontSize}" />
+        <Setter Property="CellDescriptionColor" Value="{StaticResource Gray-700}" />
+        <Setter Property="CellDescriptionFontSize" Value="{StaticResource BaseFontSize-}" />
+        <Setter Property="CellAccentColor" Value="{StaticResource SecondaryColor}" />
+        <Setter Property="SelectedColor" Value="#50FFBF00" />
+        <Setter Property="HeaderTextColor" Value="{StaticResource TitleTextColor}" />
+        <Setter Property="FooterFontSize" Value="{StaticResource BaseFontSize-}" />
+        <Setter Property="FooterTextColor" Value="{StaticResource Gray-500}" />
+    </Style>
 
     <OnPlatform x:Key="MaterialIcons" x:TypeArguments="x:String">
         <OnPlatform.Platforms>
