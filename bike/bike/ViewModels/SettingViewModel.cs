@@ -1,12 +1,16 @@
 ﻿using DataModels;
 using Device;
+using Infrastructure;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
 
 namespace bike.ViewModels
@@ -15,15 +19,13 @@ namespace bike.ViewModels
     /// ViewModel for Setting page 
     /// </summary> 
     [Preserve(AllMembers = true)]
-    public class SettingViewModel : BindableBase
+    public class SettingViewModel : ViewModel
     {
 
         private readonly ServoDriveService _servoDriveService;
 
         private string[] pedalAssistLevelTypeStringList;
         private string[] lightStringList;
-        List<string> _pedalAssistSensivityStringList;
-        public List<string> PedalAssistSensivityStringList { get => _pedalAssistSensivityStringList; set { SetProperty(ref _pedalAssistSensivityStringList, value); } }
         #region Constructor
 
         /// <summary>
@@ -32,9 +34,6 @@ namespace bike.ViewModels
         public SettingViewModel(ServoDriveService servoDriveService) 
         {
             _servoDriveService = servoDriveService;
-            pedalAssistLevelTypeStringList = typeof(PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToArray();
-            lightStringList = new[] { "25 %", "50 %", "75 %", "100 %" };
-            PedalAssistSensivityStringList = typeof(PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToList<string>();
             PedalSetting.PropertyChanged += (sender, e) =>
             {
                 if (e.PropertyName == nameof(PedalSetting.AssistLevel))
@@ -55,73 +54,101 @@ namespace bike.ViewModels
                 RaisePropertyChanged(nameof(FrontLightIndex));
                 RaisePropertyChanged(nameof(BackLightText));
                 RaisePropertyChanged(nameof(FrontLightText));
-
             };
         }
-
         #endregion
 
         public LightSetting LightSetting => _servoDriveService.LightSetting;
         public ThrottleSetting ThrottleSetting=> _servoDriveService.ThrottleSetting;
         public PedalSetting PedalSetting => _servoDriveService.PedalSetting;
 
+        protected override async Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation)
+        {
+            pedalAssistLevelTypeStringList = typeof(PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToArray();
+            lightStringList = new[] { "25 %", "50 %", "75 %", "100 %" };
+            PedalAssistSensivityStringList = typeof(PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToList<string>();
 
+            PedalActive = PedalSetting.AssistLevel != PedalAssistLevelType.Off;
+            PedalAssistActivityPercentIndex = PedalAssistLevelType.Off - PedalSetting.AssistLevel;
+            PedalAssistSensivityIndex = (int) PedalSetting.ActivationTime;
+            ThrottleActive = ThrottleSetting.ActivityType != ThrottleActivityType.Off;
+            ThrottleSport = ThrottleSetting.ActivityType == ThrottleActivityType.Sport;
 
+            FrontLightIndex = (int) LightSetting.Light1;
+            BackLightIndex = (int)LightSetting.Light2;
+
+            await Task.CompletedTask;
+        }
+        private bool _pedalActive;
         public bool PedalActive
         {
-            get { return PedalSetting.AssistLevel != PedalAssistLevelType.Off; }
-            set { PedalSetting.AssistLevel = (value?PedalAssistLevelType.ThirtySevenPointFive:PedalAssistLevelType.Off); }
+            get => _pedalActive;
+            set => SetProperty(ref _pedalActive, value);
         }
+
 
         public string PedalAssistActivityPercentText
         {
-            get { return pedalAssistLevelTypeStringList[(int)PedalSetting.AssistLevel]; }
+            get { return pedalAssistLevelTypeStringList[PedalAssistActivityPercentIndex]; }
         }
 
+        private int _pedalAssistActivityPercentIndex;
         public int PedalAssistActivityPercentIndex
         {
-            get { return (int)PedalAssistLevelType.Off - (int)PedalSetting.AssistLevel; }
-            set { if (!PedalActive) return; PedalSetting.AssistLevel = (PedalAssistLevelType.Off - value); }
+            get => _pedalAssistActivityPercentIndex;
+            set => SetProperty(ref _pedalAssistActivityPercentIndex, value);
         }
 
+
+        private int _pedalAssistSensivityIndex;
         public int PedalAssistSensivityIndex
         {
-            get { return (int) PedalSetting.ActivationTime; }
-            set { if (!PedalActive) return; PedalSetting.ActivationTime = (PedalActivationTimeType)value; }
+            get => _pedalAssistSensivityIndex;
+            set => SetProperty(ref _pedalAssistSensivityIndex, value);
         }
 
+        private bool _throttleActive;
         public bool ThrottleActive
         {
-            get { return ThrottleSetting.ActivityType != ThrottleActivityType.Off; }
-            set { ThrottleSetting.ActivityType = (value ? ThrottleActivityType.Normal : ThrottleActivityType.Off); }
+            get => _throttleActive;
+            set => SetProperty(ref _throttleActive, value);
         }
 
+        private bool _throttleSport;
         public bool ThrottleSport
         {
-            get { return ThrottleSetting.ActivityType==ThrottleActivityType.Sport; }
-            set { if (!ThrottleActive) return; ThrottleSetting.ActivityType = value ? ThrottleActivityType.Sport : ThrottleActivityType.Off; }
+            get => _throttleSport;
+            set => SetProperty(ref _throttleSport, value);
+        }
+
+        private List<string> _pedalAssistSensivityStringList;
+        public List<string> PedalAssistSensivityStringList { 
+            get => _pedalAssistSensivityStringList; 
+            set => SetProperty(ref _pedalAssistSensivityStringList, value); 
         }
 
         public string FrontLightText
         {
-            get { return lightStringList[(int)LightSetting.Light1]; }
+            get => lightStringList[FrontLightIndex]; 
         }
 
+        private int _frontLightIndex;
         public int FrontLightIndex
         {
-            get { return (int)LightSetting.Light1 ; }
-            set { LightSetting.Light1 = (LightVolume)value; }
+            get => _frontLightIndex;
+            set => SetProperty(ref _frontLightIndex, value);
         }
 
         public string BackLightText
         {
-            get { return lightStringList[(int)LightSetting.Light2]; }
+            get => lightStringList[BackLightIndex]; 
         }
 
+        private int _backLightIndex;
         public int BackLightIndex
         {
-            get { return (int)LightSetting.Light2; }
-            set { LightSetting.Light2 = (LightVolume)value; }
+            get => _backLightIndex;
+            set => SetProperty(ref _backLightIndex, value);
         }
     }
 }
