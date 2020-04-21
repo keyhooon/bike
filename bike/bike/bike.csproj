@@ -123,9 +123,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AiForms.Effects" Version="1.6.7" />
-    <PackageReference Include="AiForms.SettingsView" Version="1.1.4-pre" />
-    <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="3.0.4" />
+
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.55" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.55" />
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="17.4.0.55" />
@@ -141,8 +139,6 @@
 
 
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1422" />
-    <PackageReference Include="Xamarin.Forms" Version="4.5.0.617" />
-    <PackageReference Include="Xamarin.Forms.Maps" Version="4.5.0.617" />
   </ItemGroup>
 
   <ItemGroup>
@@ -187,6 +183,10 @@
     <EmbeddedResource Update="Views\SettingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helper\" />
   </ItemGroup>
 
 </Project>

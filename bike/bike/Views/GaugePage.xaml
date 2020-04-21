@@ -44,9 +44,9 @@
                             <gauge:GaugeAnnotation.View>
                                 <Image
                                     BackgroundColor="yellow"
-                                    HeightRequest="36"
+                                    HeightRequest="28"
                                     Opacity=".3"
-                                    Source="{image:ImageResource bike.Assets.128.021-warning.png}"
+                                    Source="{image:ImageResource bike.Assets.high.021-warning.png}"
                                     WidthRequest="68" />
                             </gauge:GaugeAnnotation.View>
                         </gauge:GaugeAnnotation>
@@ -57,9 +57,9 @@
                             Offset="1">
                             <gauge:GaugeAnnotation.View>
                                 <Image
-                                    HeightRequest="36"
-                                    Source="{image:ImageResource bike.Assets.128.011-thermometer-1.png}"
-                                    WidthRequest="36" />
+                                    HeightRequest="28"
+                                    Source="{image:ImageResource bike.Assets.high.011-thermometer-1.png}"
+                                    WidthRequest="28" />
                             </gauge:GaugeAnnotation.View>
                         </gauge:GaugeAnnotation>
                         <gauge:GaugeAnnotation
@@ -69,9 +69,9 @@
                             Offset="1">
                             <gauge:GaugeAnnotation.View>
                                 <Image
-                                    HeightRequest="36"
-                                    Source="{image:ImageResource bike.Assets.128.017-battery.png}"
-                                    WidthRequest="36" />
+                                    HeightRequest="28"
+                                    Source="{image:ImageResource bike.Assets.high.017-battery.png}"
+                                    WidthRequest="28" />
                             </gauge:GaugeAnnotation.View>
                         </gauge:GaugeAnnotation>
                         <gauge:GaugeAnnotation

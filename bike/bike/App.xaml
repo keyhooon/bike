@@ -13,7 +13,6 @@
             <syncTheme:SyncfusionThemeDictionary.MergedDictionaries>
 
                 <!--  Theme resource dictionary  -->
-                <syncTheme:LightTheme />
                 <themes:LightTheme />
 
             </syncTheme:SyncfusionThemeDictionary.MergedDictionaries>

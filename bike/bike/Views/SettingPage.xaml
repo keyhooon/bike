@@ -24,20 +24,21 @@
                             AbsoluteLayout.LayoutBounds="0,0,.3,1"
                             AbsoluteLayout.LayoutFlags="All"
                             FontSize="{StaticResource BaseFontSize++}"
+                            IsEnabled="{Binding PedalActive}"
                             Text="Activity"
-                            TextColor="{StaticResource Gray-800}"
                             VerticalTextAlignment="Center" />
                         <Label
                             AbsoluteLayout.LayoutBounds=".3,0,.3,1"
                             AbsoluteLayout.LayoutFlags="All"
                             FontSize="{StaticResource BaseFontSize++}"
                             HorizontalTextAlignment="Center"
+                            IsEnabled="{Binding PedalActive}"
                             Text="{Binding PedalAssistActivityPercentText}"
-                            TextColor="{StaticResource Gray-800}"
                             VerticalTextAlignment="Center" />
                         <Stepper
                             AbsoluteLayout.LayoutBounds="1,0,.5,1"
                             AbsoluteLayout.LayoutFlags="All"
+                            HorizontalOptions="Center"
                             Increment="1"
                             IsEnabled="{Binding PedalActive}"
                             Maximum="7"
@@ -45,25 +46,12 @@
                             Value="{Binding PedalAssistActivityPercentIndex}" />
                     </AbsoluteLayout>
                 </sv:CustomCell>
+                <sv:TextPickerCell
+                    Title="Assist Sensivity"
+                    IsEnabled="{Binding PedalActive}"
+                    Items="{Binding PedalAssistSensivityStringList}"
+                    SelectedItem="{Binding PedalAssistSensivityString}" />
 
-                <sv:CustomCell IsEnabled="{Binding PedalActive}">
-                    <AbsoluteLayout>
-                        <Label
-                            AbsoluteLayout.LayoutBounds="0,0,.5,1"
-                            AbsoluteLayout.LayoutFlags="All"
-                            FontSize="{StaticResource BaseFontSize++}"
-                            Text="Assist Sensivity"
-                            TextColor="{StaticResource Gray-800}"
-                            VerticalTextAlignment="Center" />
-                        <Picker
-                            Title="Pedal Assist Sensivity"
-                            AbsoluteLayout.LayoutBounds="1,0,.5,1"
-                            AbsoluteLayout.LayoutFlags="All"
-                            IsEnabled="{Binding PedalActive}"
-                            ItemsSource="{Binding PedalAssistSensivityStringList}"
-                            SelectedIndex="{Binding PedalAssistSensivityIndex}" />
-                    </AbsoluteLayout>
-                </sv:CustomCell>
             </sv:Section>
             <sv:Section Title="Throttle">
                 <sv:SwitchCell Title="Active" On="{Binding ThrottleActive}" />

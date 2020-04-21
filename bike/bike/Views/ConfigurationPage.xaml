@@ -9,58 +9,56 @@
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource Gray-White}">
     <ContentPage.Content>
-        <sv:SettingsView BackgroundColor="Transparent" HasUnevenRows="True">
-            <sv:SettingsView.Margin>
-                <OnPlatform x:TypeArguments="Thickness" Android="16" />
-            </sv:SettingsView.Margin>
+        <sv:SettingsView>
             <sv:Section Title="Core">
                 <sv:LabelCell
                     Title="Unique Id"
                     Description="This ID Is Unique and represent You"
-                    ValueText="{Binding Core.UniqueId}" />
+                    ValueText="{Binding Core.UniqueId, TargetNullValue='Unknown'}" />
                 <sv:LabelCell
                     Title="Firmware Version"
                     Description="This Number Shows Version of Firmware Installed on your Driver"
-                    ValueText="{Binding Core.FirmwareVersion}" />
-
-
-                <sv:LabelCell Description="Bike Model, This Number Represent your Bike Model" ValueText="{Binding Core.ModelVersion}" />
+                    ValueText="{Binding Core.FirmwareVersion, TargetNullValue='Unknown'}" />
+                <sv:LabelCell
+                    Title="Bike Model"
+                    Description="This Number Represent your Bike Model"
+                    ValueText="{Binding Core.ModelVersion, TargetNullValue='Unknown'}" />
             </sv:Section>
             <sv:Section Title="Battery">
                 <sv:LabelCell
                     Title="Over Current"
                     Description="Current Exceeded from this Lead to Failure"
-                    ValueText="{Binding Battery.OverCurrent}" />
+                    ValueText="{Binding Battery.OverCurrent, StringFormat='{0:F2} A'}" />
                 <sv:LabelCell
                     Title="Over Voltage"
                     Description="Voltage Exceeded from this Lead to Failure"
-                    ValueText="{Binding Battery.OverVoltage}" />
+                    ValueText="{Binding Battery.OverVoltage, StringFormat='{0:F2} V'}" />
                 <sv:LabelCell
                     Title="Under Voltage"
                     Description="Voltage Less than this Lead to Failure"
-                    ValueText="{Binding Battery.UnedrVoltage}" />
+                    ValueText="{Binding Battery.UnderVoltage, StringFormat='{0:F2} V'}" />
                 <sv:LabelCell
                     Title="Nominal Voltage"
                     Description="The most Suitable Voltage"
-                    ValueText="{Binding Battery.NominalVoltage}" />
+                    ValueText="{Binding Battery.NominalVoltage, StringFormat='{0:F2} V'}" />
                 <sv:LabelCell
                     Title="Over Temprature"
                     Description="Temprature more than this cause Failure"
-                    ValueText="{Binding Battery.OverTemprature}" />
+                    ValueText="{Binding Battery.OverTemprature, StringFormat='{0:F1} c°'}" />
             </sv:Section>
             <sv:Section Title="Throttle">
                 <sv:LabelCell
                     Title="Min Voltage"
                     Description="Voltage of Throttle when leaving this"
-                    ValueText="{Binding Throttle.Min, StringFormat='{0:F2}'}" />
+                    ValueText="{Binding Throttle.Min, StringFormat='{0:F2} V'}" />
                 <sv:LabelCell
                     Title="Max Voltage"
                     Description="Voltage of Throttle when hold this tight"
-                    ValueText="{Binding Throttle.Max, StringFormat='{0:F2}'}" />
+                    ValueText="{Binding Throttle.Max, StringFormat='{0:F2} V'}" />
                 <sv:LabelCell
                     Title="Fault Voltage"
                     Description="Threshold Voltage That shows Proper Performance"
-                    ValueText="{Binding Throttle.FaultThreshold, StringFormat='{0:F2}'}" />
+                    ValueText="{Binding Throttle.FaultThreshold, StringFormat='{0:F2} V'}" />
             </sv:Section>
             <sv:Section Title="General">
                 <sv:LabelCell
@@ -70,7 +68,7 @@
                 <sv:LabelCell
                     Title="Wheel Radius"
                     Description="Used for Caulculate Speed"
-                    ValueText="{Binding Servo.WheelRadius}" />
+                    ValueText="{Binding Servo.WheelRadius, StringFormat='{0:F2} m'}" />
             </sv:Section>
         </sv:SettingsView>
     </ContentPage.Content>

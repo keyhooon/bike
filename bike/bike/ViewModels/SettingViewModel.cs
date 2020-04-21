@@ -24,8 +24,6 @@ namespace bike.ViewModels
 
         private readonly ServoDriveService _servoDriveService;
 
-        private string[] pedalAssistLevelTypeStringList;
-        private string[] lightStringList;
         #region Constructor
 
         /// <summary>
@@ -34,27 +32,6 @@ namespace bike.ViewModels
         public SettingViewModel(ServoDriveService servoDriveService) 
         {
             _servoDriveService = servoDriveService;
-            PedalSetting.PropertyChanged += (sender, e) =>
-            {
-                if (e.PropertyName == nameof(PedalSetting.AssistLevel))
-                {
-                    RaisePropertyChanged(nameof(PedalActive));
-                    RaisePropertyChanged(nameof(PedalAssistActivityPercentText));
-                    RaisePropertyChanged(nameof(PedalAssistActivityPercentIndex));
-                }
-            };
-            ThrottleSetting.PropertyChanged += (sender, e) =>
-            {
-                RaisePropertyChanged(nameof(ThrottleSport));
-                RaisePropertyChanged(nameof(ThrottleActive));
-            };
-            LightSetting.PropertyChanged += (sender, e) =>
-            {
-                RaisePropertyChanged(nameof(BackLightIndex));
-                RaisePropertyChanged(nameof(FrontLightIndex));
-                RaisePropertyChanged(nameof(BackLightText));
-                RaisePropertyChanged(nameof(FrontLightText));
-            };
         }
         #endregion
 
@@ -64,13 +41,14 @@ namespace bike.ViewModels
 
         protected override async Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation)
         {
-            pedalAssistLevelTypeStringList = typeof(PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToArray();
-            lightStringList = new[] { "25 %", "50 %", "75 %", "100 %" };
-            PedalAssistSensivityStringList = typeof(PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToList<string>();
+
+            PedalAssistLevelActivityStringList = typeof(PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).Reverse().ToList();
+            LightStringList = new List<string>( new[] { "25 %", "50 %", "75 %", "100 %" });
+            PedalAssistSensivityStringList = typeof(PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToList();
 
             PedalActive = PedalSetting.AssistLevel != PedalAssistLevelType.Off;
             PedalAssistActivityPercentIndex = PedalAssistLevelType.Off - PedalSetting.AssistLevel;
-            PedalAssistSensivityIndex = (int) PedalSetting.ActivationTime;
+            PedalAssistSensivityString = PedalAssistSensivityStringList[(int) PedalSetting.ActivationTime];
             ThrottleActive = ThrottleSetting.ActivityType != ThrottleActivityType.Off;
             ThrottleSport = ThrottleSetting.ActivityType == ThrottleActivityType.Sport;
 
@@ -79,6 +57,7 @@ namespace bike.ViewModels
 
             await Task.CompletedTask;
         }
+        
         private bool _pedalActive;
         public bool PedalActive
         {
@@ -86,25 +65,39 @@ namespace bike.ViewModels
             set => SetProperty(ref _pedalActive, value);
         }
 
+        private List<string> _pedalAssistLevelActivityStringList;
+        public List<string> PedalAssistLevelActivityStringList
+        {
+            get => _pedalAssistLevelActivityStringList;
+            set => SetProperty(ref _pedalAssistLevelActivityStringList, value);
+        }
 
+        private string _pedalAssistActivityPercentText;
         public string PedalAssistActivityPercentText
         {
-            get { return pedalAssistLevelTypeStringList[PedalAssistActivityPercentIndex]; }
+            get => _pedalAssistActivityPercentText;
+            private set => SetProperty(ref _pedalAssistActivityPercentText, value);
         }
 
         private int _pedalAssistActivityPercentIndex;
         public int PedalAssistActivityPercentIndex
         {
             get => _pedalAssistActivityPercentIndex;
-            set => SetProperty(ref _pedalAssistActivityPercentIndex, value);
+            set => SetProperty(ref _pedalAssistActivityPercentIndex, value, PedalAssistActivityPercentText = PedalAssistLevelActivityStringList[value]);
         }
 
-
-        private int _pedalAssistSensivityIndex;
-        public int PedalAssistSensivityIndex
+        private List<string> _pedalAssistSensivityStringList;
+        public List<string> PedalAssistSensivityStringList
         {
-            get => _pedalAssistSensivityIndex;
-            set => SetProperty(ref _pedalAssistSensivityIndex, value);
+            get => _pedalAssistSensivityStringList;
+            set => SetProperty(ref _pedalAssistSensivityStringList, value);
+        }
+
+        private string _pedalAssistSensivityString;
+        public string PedalAssistSensivityString
+        {
+            get => _pedalAssistSensivityString;
+            set => SetProperty(ref _pedalAssistSensivityString, value);
         }
 
         private bool _throttleActive;
@@ -121,34 +114,39 @@ namespace bike.ViewModels
             set => SetProperty(ref _throttleSport, value);
         }
 
-        private List<string> _pedalAssistSensivityStringList;
-        public List<string> PedalAssistSensivityStringList { 
-            get => _pedalAssistSensivityStringList; 
-            set => SetProperty(ref _pedalAssistSensivityStringList, value); 
+        private List<string> _lightStringList;
+        public List<string> LightStringList
+        {
+            get => _lightStringList;
+            set => SetProperty(ref _lightStringList, value);
         }
 
+        private string _frontLightText;
         public string FrontLightText
         {
-            get => lightStringList[FrontLightIndex]; 
+            get => _frontLightText;
+            private set => SetProperty(ref _frontLightText, value);
         }
 
         private int _frontLightIndex;
         public int FrontLightIndex
         {
             get => _frontLightIndex;
-            set => SetProperty(ref _frontLightIndex, value);
+            set => SetProperty(ref _frontLightIndex, value, FrontLightText = LightStringList[value]);
         }
 
+        private string _backLightText;
         public string BackLightText
         {
-            get => lightStringList[BackLightIndex]; 
+            get => _backLightText;
+            private set => SetProperty(ref _backLightText, value);
         }
 
         private int _backLightIndex;
         public int BackLightIndex
         {
             get => _backLightIndex;
-            set => SetProperty(ref _backLightIndex, value);
+            set => SetProperty(ref _backLightIndex, value, BackLightText = LightStringList[value]);
         }
     }
 }

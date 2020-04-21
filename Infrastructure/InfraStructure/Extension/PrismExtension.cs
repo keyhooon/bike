@@ -8,7 +8,7 @@ using ReactiveUI;
 
 namespace Infrastructure
 {
-    public static class ExtensionsPrism
+    public static class PrismExtension
     {
         public static Task Navigate(this INavigationService navigation, string uri, params (string, object)[] parameters)
             => navigation.Navigate(uri, parameters.ToNavParams());
