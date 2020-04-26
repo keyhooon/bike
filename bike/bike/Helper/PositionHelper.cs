@@ -1,63 +1,14 @@
-﻿using System;
+﻿using Mapsui.UI.Forms;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using Xamarin.Forms.Maps;
 
-namespace bike.Models
+namespace bike.Helper
 {
-    public struct LatLong
+    class PositionHelper
+
     {
-        public static readonly LatLong Empty = new LatLong(double.NaN, double.NaN);
-        public static readonly LatLong Min = new LatLong(-90, -180);
-        public static readonly LatLong Max = new LatLong(90, 180);
 
-        public LatLong(double latitude, double longitude)
-        {
-            Latitude = Math.Min(Math.Max(latitude, -90.0), 90.0);
-            Longitude = Math.Min(Math.Max(longitude, -180.0), 180.0);
-        }
-
-        public double Latitude { get; }
-
-        public double Longitude { get; }
-
-        public static bool operator ==(LatLong left, LatLong right)
-        {
-            return Equals(left, right);
-        }
-
-        public static bool operator !=(LatLong left, LatLong right)
-        {
-            return !Equals(left, right);
-        }
-
-        public static LatLong operator -(LatLong left, LatLong right)
-        {
-            return new LatLong(left.Latitude - right.Latitude, left.Longitude - right.Longitude);
-        }
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is LatLong))
-            {
-                return false;
-            }
-
-            var other = (LatLong)obj;
-            const double tolerance = 0.00000001;
-            return Math.Abs(Latitude - other.Latitude) < tolerance && Math.Abs(Longitude - other.Longitude) < tolerance;
-        }
-
-
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                int hashCode = Latitude.GetHashCode();
-                hashCode = (hashCode * 397) ^ Longitude.GetHashCode();
-                return hashCode;
-            }
-        }
         /// <summary>In kilometers.</summary>
         public const double EarthRadius = 6373d;
 
@@ -122,7 +73,7 @@ namespace bike.Models
         /// <param name="pointA">The point A.</param>
         /// <param name="pointB">The point B.</param>
         /// <returns>The distance in kilometers.</returns>
-        public static double HaversineDistance(LatLong pointA, LatLong pointB)
+        public static double HaversineDistance(Position pointA, Position pointB)
         {
             return HaversineDistance(pointA.Latitude, pointA.Longitude, pointB.Latitude, pointB.Longitude);
         }
@@ -139,7 +90,7 @@ namespace bike.Models
         /// <param name="point1">The point1.</param>
         /// <param name="point2">The point2.</param>
         /// <returns></returns>
-        public static double SquareDistance(LatLong point1, LatLong point2)
+        public static double SquareDistance(Position point1, Position point2)
         {
             return SquareDistance(point1.Latitude, point1.Longitude, point2.Latitude, point2.Longitude);
         }
@@ -148,7 +99,7 @@ namespace bike.Models
         ///     Gets the distance (in kilometers) between two spherical points (in degrees).
         ///     Warning: this method is poorly accurate.
         /// </summary>
-        public static double Distance(LatLong point1, LatLong point2)
+        public static double Distance(Position point1, Position point2)
         {
             return DegreeToKilometer(Math.Sqrt(SquareDistance(point1, point2)));
         }
@@ -180,7 +131,7 @@ namespace bike.Models
         /// <param name="point2">The point2.</param>
         /// <param name="point3">The point3.</param>
         /// <returns></returns>
-        public static double ComputeAngle(LatLong a, LatLong b, LatLong c)
+        public static double ComputeAngle(Position a, Position b, Position c)
         {
             if (a == b || a == c || b == c)
             {
@@ -197,13 +148,11 @@ namespace bike.Models
 
         public static MapSpan BoundsToMapSpan(Position bottomLeft, Position topRight)
         {
-            var center = new Position(
-                (topRight.Latitude + bottomLeft.Latitude) / 2,
-                (topRight.Longitude + bottomLeft.Longitude) / 2);
-
-            var distance = HaversineDistance(bottomLeft.Latitude, bottomLeft.Longitude, topRight.Latitude, topRight.Longitude) * 1000;
-
-            return MapSpan.FromCenterAndRadius(center, new Distance(distance / 2));
+            return new MapSpan(
+                new Position((topRight.Latitude + bottomLeft.Latitude) / 2, (topRight.Longitude + bottomLeft.Longitude) / 2),
+                topRight.Latitude - bottomLeft.Latitude,
+                topRight.Longitude - bottomLeft.Longitude
+            );
         }
     }
 }

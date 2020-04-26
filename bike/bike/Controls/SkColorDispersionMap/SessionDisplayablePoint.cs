@@ -1,4 +1,5 @@
 ﻿using bike.Models;
+using Mapsui.UI.Forms;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,7 +17,7 @@ namespace bike.Controls.SkColorDispersionMap
 
         double? Speed { get; }
 
-        LatLong Position { get; }
+        Position Position { get; }
 
         bool HasMarker { get; }
 
@@ -27,12 +28,13 @@ namespace bike.Controls.SkColorDispersionMap
 
     public class SessionDisplayablePoint : ISessionDisplayablePoint
     {
+        private static Position emptyPosition = new Position(0,0);
         public SessionDisplayablePoint(
             TimeSpan timeSpan,
             int? distance,
             int? altitude,
             double? speed,
-            LatLong position,
+            Position position,
             bool hasMarker = false,
             string label = null)
         {
@@ -57,7 +59,7 @@ namespace bike.Controls.SkColorDispersionMap
         public int? Distance { get; }
 
 
-        public LatLong Position { get; }
+        public Position Position { get; }
 
         public bool HasMarker { get; }
 
@@ -65,7 +67,7 @@ namespace bike.Controls.SkColorDispersionMap
 
         public double? Speed { get; }
 
-        public bool HasPosition => Position != LatLong.Empty;
+        public bool HasPosition => Position != emptyPosition;
 
         public void SetPointColor(Color color)
         {

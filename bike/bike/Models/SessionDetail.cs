@@ -1,4 +1,6 @@
-﻿using SQLite;
+﻿using Mapsui.Geometries;
+using Mapsui.UI.Forms;
+using SQLite;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,9 +13,11 @@ namespace bike.Models
         [AutoIncrement]
         public int Id { get; set; }
 
-        public DateTime TimeStamp { get; set; }
+        public TimeSpan TimeStamp { get; set; }
 
-        public LatLong Position { get; set; }
+        public double Latitude { get; set; }
+
+        public double Longitude{ get; set; }
 
         public int DistanceInMeters { get; set; }
 

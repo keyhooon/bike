@@ -10,11 +10,18 @@ using Xamarin.Forms;
 using SKSvg = SkiaSharp.Extended.Svg.SKSvg;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Xamarin.Forms.Maps;
 using Infrastructure.Extension;
 using bike.Models;
 using Infrastructure.Helper;
 using System.Reflection;
+using Mapsui;
+using Mapsui.Projection;
+using Mapsui.Utilities;
+using Mapsui.Widgets.ScaleBar;
+using Mapsui.Widgets.Zoom;
+using Mapsui.Widgets;
+using Mapsui.UI.Objects;
+using Mapsui.UI.Forms;
 
 namespace bike.Controls.SkColorDispersionMap
 {
@@ -55,9 +62,9 @@ namespace bike.Controls.SkColorDispersionMap
 
         private bool _forceInvalidation;
 
-        private LatLong _centerPosition;
-        private LatLong _topLeftPosition;
-        private LatLong _bottomRightPosition;
+        private Mapsui.Geometries.Point _centerPosition;
+        private Mapsui.Geometries.Point _topRightPosition;
+        private Mapsui.Geometries.Point _bottomLeftPosition;
 
         private SKPoint _previousCenter;
         private double _previousTopLeftBottomRightSquareDistance;
@@ -84,7 +91,22 @@ namespace bike.Controls.SkColorDispersionMap
         {
             InitializeComponent();
 
-            // LayoutChanged += OnLayoutChanged;
+            MapControl.Map = new Map
+            {
+                CRS = "EPSG:3857",
+                Transformation = new MinimalTransformation(),
+                RotationLock = true
+            };
+            MapControl.Map.Layers.Add(OpenStreetMap.CreateTileLayer());
+            MapControl.Map.Widgets.Add(new ScaleBarWidget(MapControl.Map) { 
+                TextAlignment = Alignment.Center, 
+                HorizontalAlignment = HorizontalAlignment.Center, 
+                VerticalAlignment = VerticalAlignment.Top });
+            MapControl.Map.Widgets.Add(new ZoomInOutWidget { 
+                MarginX = 20, 
+                MarginY = 40 });
+            MapControl.Renderer.StyleRenderers.Add(typeof(MultiVectorStyle), new MultiWeightLineStringRenderer());
+
         }
 
         public void OnDestroy()
@@ -157,10 +179,9 @@ namespace bike.Controls.SkColorDispersionMap
             _textDistanceLayer = null;
             _textDistanceLayer = new TextShapeLayer(textDistanceCount);
 
-            var region = SessionMapInfo.Region;
-            _centerPosition = new LatLong(region.Center.Latitude, region.Center.Longitude);
-            _topLeftPosition = SessionMapInfo.TopRight.ToLatLong();
-            _bottomRightPosition = SessionMapInfo.BottomLeft.ToLatLong();
+            _centerPosition = SessionMapInfo.Region.Center.ToMapsui();
+            _topRightPosition = SessionMapInfo.TopRight.ToMapsui();
+            _bottomLeftPosition = SessionMapInfo.BottomLeft.ToMapsui();
 
             _previousCenter = SKPoint.Empty;
             _previousTopLeftBottomRightSquareDistance = 1;
@@ -197,8 +218,7 @@ namespace bike.Controls.SkColorDispersionMap
             if (SessionMapInfo != null)
             {
                 Debug.WriteLine($"InitializeMap");
-
-                GoogleMap.MoveToRegion(SessionMapInfo.Region);
+                MapControl.Navigator.NavigateTo(new Mapsui.Geometries.BoundingBox(_bottomLeftPosition, _topRightPosition);
             }
         }
 

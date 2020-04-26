@@ -1,40 +1,87 @@
-﻿using bike.Models;
+﻿using bike.Helper;
+using bike.Models;
+using Mapsui.UI.Forms;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
-using Xamarin.Forms.Maps;
+using Infrastructure.Extension;
+using Mapsui.UI.Objects;
+using Mapsui.Providers;
 
 namespace bike.Controls.SkColorDispersionMap
 {
-    public class SessionMapInfo
+    public class SessionLineString : BindableObject, IFeatureProvider
     {
-        public SessionMapInfo(
-            IReadOnlyList<SessionDisplayablePoint> sessionPoints,
-            Point bottomLeft,
-            Point topRight,
-            int totalDurationInSeconds)
+        public static readonly BindableProperty SessionProperty = BindableProperty.Create(nameof(Session), typeof(Session), typeof(SessionLineString), null);
+
+        public SessionLineString(Session session)
         {
-            SessionPoints = sessionPoints;
-            BottomLeft = bottomLeft;
-            TopRight = topRight;
-            
-            Region = LatLong.BoundsToMapSpan(bottomLeft, topRight);
-            TotalDurationInSeconds = totalDurationInSeconds;
+
+        }
+
+        public Session Session
+        {
+            get { return (Session)GetValue(SessionProperty); }
+            set { SetValue(SessionProperty, value); }
+        }
+
+
+        private object sync = new object();
+
+
+
+        private void CreateFeature()
+        {
+            lock (sync)
+            {
+                if (Feature == null)
+                {
+                    // Create a new one
+                    Feature = new Feature
+                    {
+                        Geometry = new MultiWeigthLineString(){LineStrings = new multi,
+                    };
+                    Feature.Styles.Clear();
+                    Feature.Styles.Add(new VectorStyle
+                    {
+                        Line = new Pen { Width = StrokeWidth, Color = StrokeColor.ToMapsui() },
+                        Fill = new Brush { Color = FillColor.ToMapsui() }
+                    });
+                }
+            }
+        }
+
+        private Feature feature;
+
+        /// <summary>
+        /// Mapsui Feature belonging to this drawable
+        /// </summary>
+        public Feature Feature
+        {
+            get
+            {
+                return feature;
+            }
+            set
+            {
+                if (feature == null || !feature.Equals(value))
+                    feature = value;
+            }
         }
 
         public static SessionMapInfo Create(
-            IReadOnlyList<SessionDetail> points,
+            IReadOnlyList<SessionDetail> datas,
             Func<ISessionDisplayablePoint, Color?> colorBaseValueSelector,
             int markerInterval = int.MaxValue,
             int displayDistanceInterval = int.MaxValue)
         {
-            if (points == null || points.Count < 2)
+            if (datas == null || datas.Count < 2)
             {
                 throw new ArgumentException();
             }
 
-            var sessionPoints = new SessionDisplayablePoint[points.Count];
+            var sessionPoints = new SessionDisplayablePoint[datas.Count];
 
             double topLatitude = LatLong.Min.Latitude;
             double bottomLatitude = LatLong.Max.Latitude;
@@ -45,56 +92,56 @@ namespace bike.Controls.SkColorDispersionMap
             int nextDisplayDistance = displayDistanceInterval;
 
             SessionDisplayablePoint previousPoint = null;
-            DateTime startTime = points[0].TimeStamp;
-            for (int index = 0; index < points.Count; index++)
+            DateTime startTime = datas[0].TimeStamp;
+            for (int index = 0; index < datas.Count; index++)
             {
-                SessionDetail point = points[index];
+                SessionDetail data = datas[index];
 
-                if (point.Position != LatLong.Empty)
+                if (data.LatLong != LatLong.Empty)
                 {
-                    topLatitude = Math.Max(point.Position.Latitude, topLatitude);
-                    bottomLatitude = Math.Min(point.Position.Latitude, bottomLatitude);
-                    leftLongitude = Math.Min(point.Position.Longitude, leftLongitude);
-                    rightLongitude = Math.Max(point.Position.Longitude, rightLongitude);
+                    topLatitude = Math.Max(data.LatLong.Latitude, topLatitude);
+                    bottomLatitude = Math.Min(data.LatLong.Latitude, bottomLatitude);
+                    leftLongitude = Math.Min(data.LatLong.Longitude, leftLongitude);
+                    rightLongitude = Math.Max(data.LatLong.Longitude, rightLongitude);
                 }
 
                 bool hasMarker = false;
-                if (point.DistanceInMeters > nextMarkerDistance)
+                if (data.DistanceInMeters > nextMarkerDistance)
                 {
                     hasMarker = true;
                     nextMarkerDistance += markerInterval;
                 }
 
                 string displayDistance = null;
-                if (point.DistanceInMeters > nextDisplayDistance)
+                if (data.DistanceInMeters > nextDisplayDistance)
                 {
                     displayDistance = nextDisplayDistance.ToString();
                     nextDisplayDistance += displayDistanceInterval;
                 }
 
-                TimeSpan elapsedTime = point.TimeStamp - startTime;
+                TimeSpan elapsedTime = data.TimeStamp - startTime;
 
-                double? speed = point.Speed;
+                double? speed = data.Speed;
                 if (speed == null
                     && previousPoint != null
                     && previousPoint.HasPosition
                     && previousPoint.Distance.HasValue
-                    && point.Position != LatLong.Empty
-                    && point.DistanceInMeters > 0
+                    && data.LatLong != LatLong.Empty
+                    && data.DistanceInMeters > 0
                     && elapsedTime.TotalSeconds > 0)
                 {
                     double kilometersTraveled =
-                        LatLong.HaversineDistance(previousPoint.Position, point.Position);
+                        PositionHelper.HaversineDistance(previousPoint.Position, data.LatLong.ToPosition());
                     double hoursElapsed = (elapsedTime - previousPoint.Time).TotalHours;
                     speed = kilometersTraveled / hoursElapsed;
                 }
 
                 var currentPoint = sessionPoints[index] = new SessionDisplayablePoint(
                     elapsedTime,
-                    point.DistanceInMeters,
-                    point.AltitudeInMeters,
-                    speed,
-                    point.Position,
+                    data.DistanceInMeters,
+                    data.AltitudeInMeters,
+                    speed, 
+                    data.LatLong.ToPosition(),
                     hasMarker,
                     displayDistance);
 
@@ -107,8 +154,8 @@ namespace bike.Controls.SkColorDispersionMap
 
             return new SessionMapInfo(
                 sessionPoints,
-                new Point(bottomLatitude, leftLongitude),
-                new Point(topLatitude, rightLongitude),
+                new Position(bottomLatitude, leftLongitude),
+                new Position(topLatitude, rightLongitude),
                 previousPoint != null ? (int)previousPoint.Time.TotalSeconds : 0);
         }
 
@@ -116,9 +163,9 @@ namespace bike.Controls.SkColorDispersionMap
 
         public MapSpan Region { get; }
 
-        public Point BottomLeft { get; }
+        public Position BottomLeft { get; }
 
-        public Point TopRight { get; }
+        public Position TopRight { get; }
 
         public int TotalDurationInSeconds { get; }
     }

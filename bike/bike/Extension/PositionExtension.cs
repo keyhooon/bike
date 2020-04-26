@@ -1,34 +1,35 @@
 ﻿using bike.Models;
+using Mapsui.UI.Forms;
 using Syncfusion.SfMaps.XForms;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Xamarin.Forms;
-using Xamarin.Forms.Maps;
+
 
 namespace Infrastructure.Extension
 {
     public static class PositionExtension
     {
-        public static LatLong ToLatLong(this Point point)
+        public static LatLong ToLatLong(this Position point)
         {
-            if (point.X == 0 && point.Y == 0)
+            if (point.Latitude == 0 && point.Longitude == 0)
             {
                 return LatLong.Empty;
             }
 
-            return new LatLong(point.X, point.Y);
+            return new LatLong(point.Latitude, point.Longitude);
         }
 
-        public static Point ToPoint(this LatLong position)
+        public static Position ToPosition(this LatLong position)
         {
             if (position == LatLong.Empty)
             {
-                return new Point(0, 0);
+                return new Position(0, 0);
             }
 
-            return new Point(position.Latitude, position.Longitude);
+            return new Position(position.Latitude, position.Longitude);
         }
     }
 

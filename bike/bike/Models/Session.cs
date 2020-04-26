@@ -11,7 +11,7 @@ namespace bike.Models
         [AutoIncrement]
         public string Id { get; set; }
 
-        public DateTime LastPointTime { get; set; }
+        public DateTime StartTime { get; set; }
 
         public TimeSpan Duration { get; set; }
 

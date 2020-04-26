@@ -1,13 +1,18 @@
-﻿using Syncfusion.SfMaps.XForms;
+﻿using Mapsui.UI.Forms;
+using SQLite;
+using Syncfusion.SfMaps.XForms;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
 namespace bike.Models.ContactUs
 {
-    [Preserve(AllMembers = true)]
-    public class LocationMarker : MapMarker
+    public class LocationMarker 
     {
         #region Properties
+
+        [PrimaryKey]
+        [AutoIncrement]
+        public int Id { get; set; }
 
         /// <summary>
         /// Gets or sets the image to pin location.
@@ -23,6 +28,13 @@ namespace bike.Models.ContactUs
         /// Gets or sets the address.
         /// </summary>
         public string Address { get; set; }
+
+
+
+        public double Latitude { get; set; }
+
+        public double Longitude{ get; set; }
+
 
         /// <summary>
         /// Gets or sets the email id.
