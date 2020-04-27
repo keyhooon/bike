@@ -4,24 +4,30 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:image="clr-namespace:bike.Assets"
-    xmlns:maps="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms"
+    xmlns:maps="clr-namespace:Mapsui.UI.Forms;assembly=Mapsui.UI.Forms"
+    xmlns:mapsui="clr-namespace:Mapsui;assembly=Mapsui"
     xmlns:prism="http://prismlibrary.com"
     Title="Map"
     prism:ViewModelLocator.AutowireViewModel="True"
     IconImageSource="{image:ImageResource bike.Assets.low.map.png}">
-
-
     <ContentPage.Content>
-        <maps:SfMaps
-            EnableZooming="True"
-            MaxZoom="10"
-            MinZoom="1"
-            ZoomLevel="2">
-
-            <maps:SfMaps.Layers>
-                <maps:ImageryLayer CanCacheTiles="true" />
-            </maps:SfMaps.Layers>
-        </maps:SfMaps>
+        <StackLayout>
+            <maps:MapView
+                x:Name="mapView"
+                Margin="10"
+                BackgroundColor="Gray"
+                HorizontalOptions="Fill"
+                Info="mapView_Info"
+                MapClicked="mapView_MapClicked"
+                PinClicked="mapView_PinClicked"
+                ReSnapRotationDegrees="5"
+                RotationLock="false"
+                UnSnapRotationDegrees="30"
+                VerticalOptions="FillAndExpand" />
+            <Label
+                x:Name="info"
+                HorizontalOptions="CenterAndExpand"
+                Text="unknown" />
+        </StackLayout>
     </ContentPage.Content>
-
 </ContentPage>
