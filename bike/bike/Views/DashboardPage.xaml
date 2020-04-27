@@ -18,8 +18,6 @@
         <!--  Common style for icon buttons  -->
     </TabbedPage.Resources>
     <TabbedPage.Children>
-        <views:GaugePage  />
-        <views:MapPage />
-    </TabbedPage.Children>
 
+    </TabbedPage.Children>
 </TabbedPage>

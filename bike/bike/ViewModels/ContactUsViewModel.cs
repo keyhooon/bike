@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Globalization;
 using bike.Models.ContactUs;
+using Mapsui.UI.Forms;
 using Prism.Commands;
 using Prism.Mvvm;
 using Syncfusion.SfMaps.XForms;
@@ -18,7 +19,7 @@ namespace bike.ViewModels
     {
         #region Fields
 
-        private ObservableCollection<MapMarker> customMarkers;
+        private ObservableCollection<LocationMarker> customMarkers;
 
         private Point geoCoordinate;
 
@@ -31,7 +32,7 @@ namespace bike.ViewModels
         /// </summary>
         public ContactUsViewModel()
         {
-            this.CustomMarkers = new ObservableCollection<MapMarker>();
+            this.CustomMarkers = new ObservableCollection<LocationMarker>();
             this.GetPinLocation();
         }
 
@@ -52,7 +53,7 @@ namespace bike.ViewModels
         /// <summary>
         /// Gets or sets the CustomMarkers collection.
         /// </summary>
-        public ObservableCollection<MapMarker> CustomMarkers
+        public ObservableCollection<LocationMarker> CustomMarkers
         {
             get
             {
@@ -105,8 +106,8 @@ namespace bike.ViewModels
                     Address = "7654 Cleveland street, Phoenixville, PA 19460",
                     EmailId = "dopuyi@hostguru.info",
                     PhoneNumber = "+1-202-555-0101",
-                    Latitude = "40.133808",
-                    Longitude = "-75.516279"
+                    Latitude = 40.133808,
+                    Longitude = -75.516279
                 });
 
             foreach (var marker in this.CustomMarkers)

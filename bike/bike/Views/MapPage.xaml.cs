@@ -30,7 +30,7 @@ namespace bike.Views
                {
                    var coords = new Position(e.Position.Latitude, e.Position.Longitude);
                    info.Text = $"{coords.ToString()} - D:{(int)e.Heading} S:{Math.Round(e.Speed, 2)}";
-
+                   
                    mapView.MyLocationLayer.UpdateMyLocation(new Position(e.Position.Latitude, e.Position.Longitude));
                    mapView.MyLocationLayer.UpdateMyDirection(e.Heading, mapView.Viewport.Rotation);
                    mapView.MyLocationLayer.UpdateMySpeed(e.Speed);

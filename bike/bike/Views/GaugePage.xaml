@@ -11,7 +11,7 @@
     xmlns:valueConverter="clr-namespace:Infrastructure.ValueConverters;assembly=bike.Infrastructure"
     xmlns:xforms="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms"
     xmlns:xforms1="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
-    Title="Dashboard"
+    Title="Panel"
     prism:ViewModelLocator.AutowireViewModel="True"
     IconImageSource="{image:ImageResource bike.Assets.low.014-dashboard.png}">
     <ContentPage.Content>

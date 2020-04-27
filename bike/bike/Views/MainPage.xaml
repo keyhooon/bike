@@ -57,8 +57,8 @@
                         <Button
                             ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
-                            CommandParameter="Nav/Dashboard"
-                            ImageSource="{image:ImageResource bike.Assets.low.map.png}"
+                            CommandParameter="Nav/Dashboard?createTab=Gauge&amp;createTab=Map"
+                            ImageSource="{image:ImageResource bike.Assets.low.015-dashboard-1.png}"
                             Text="Dashboard" />
                         <Button
                             ef:Feedback.EffectColor="Accent"
