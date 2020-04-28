@@ -1,4 +1,5 @@
-﻿using bike.Models.Logging;
+﻿using bike.Models;
+using bike.Models.Logging;
 using Shiny.IO;
 using SQLite;
 using System;
@@ -13,12 +14,13 @@ namespace bike
         public SqliteConnection(IFileSystem fileSystem) : base(Path.Combine(fileSystem.AppData.FullName, "sqlite.db"))
         {
             var conn = this.GetConnection();
+            conn.CreateTable<AnswerQuestion>();
             conn.CreateTable<AppStateEvent>();
             conn.CreateTable<BleAdapterState>();
             conn.CreateTable<BleConnectedPeripheral>();
             conn.CreateTable<GpsData>();
         }
-
+        public AsyncTableQuery<AnswerQuestion> AnswerQuestion => Table<AnswerQuestion>();
         public AsyncTableQuery<AppStateEvent> AppStateEvent => Table<AppStateEvent>();
         public AsyncTableQuery<BleAdapterState> BleAdapterState => Table<BleAdapterState>();
         public AsyncTableQuery<BleConnectedPeripheral> BleConnectedPeripheral => Table<BleConnectedPeripheral>();

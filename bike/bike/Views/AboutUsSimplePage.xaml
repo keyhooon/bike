@@ -3,7 +3,7 @@
     x:Class="bike.Views.AboutUs.AboutUsSimplePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:image="clr-namespace:bike.Assets.Images"
+    xmlns:image="clr-namespace:bike.Assets"
     xmlns:prism="http://prismlibrary.com"
     xmlns:viewModel="clr-namespace:bike.ViewModels.AboutUs"
     Title="About"
@@ -56,7 +56,7 @@
                     <!--  Product image  -->
                     <Image
                         HeightRequest="110"
-                        Source="{Binding ProductIcon}"
+                        Source="logoPic.png"
                         WidthRequest="124" />
 
                     <!--  Product version  -->
@@ -71,7 +71,7 @@
                         FontFamily="{StaticResource Montserrat-SemiBold}"
                         HorizontalOptions="CenterAndExpand"
                         Style="{StaticResource HeaderLabelStyle}"
-                        Text="Acme Products">
+                        Text="EvTech Products">
                         <Label.Margin>
                             <OnIdiom
                                 x:TypeArguments="Thickness"

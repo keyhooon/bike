@@ -28,6 +28,7 @@ namespace bike.Shiny
             services.UseGps<GpsDelegate>();
             services.UseBleCentral();
             services.UseSqliteLogging(true, true);
+            services.BuildServiceProvider().GetService<SqliteConnection>().SetBusyTimeoutAsync(TimeSpan.FromSeconds(1));
             // Register Stuff
         }
     }

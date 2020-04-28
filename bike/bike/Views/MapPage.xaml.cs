@@ -5,16 +5,16 @@ using Mapsui.Utilities;
 using Mapsui.Widgets.ScaleBar;
 using Mapsui.Widgets.Zoom;
 using Mapsui.Widgets;
-using Xamarin.Forms;
 using Mapsui.UI.Forms;
 using Mapsui.Rendering.Skia;
 using Prism.Events;
 using bike.Events;
 using System;
+using Mapsui.Geometries;
 
 namespace bike.Views
 {
-    public partial class MapPage : ContentPage
+    public partial class MapPage 
     {
         private readonly IEventAggregator eventAggregator;
 
@@ -22,6 +22,7 @@ namespace bike.Views
         {
             InitializeComponent();
             mapView.Map = CreateMap();
+
             mapView.Navigator = new AnimatedNavigator(mapView.Map, (IViewport)mapView.Viewport);
             this.eventAggregator = eventAggregator;
             eventAggregator.GetEvent<GpsDataReceivedEvent>().Subscribe(e =>
@@ -44,6 +45,7 @@ namespace bike.Views
                 CRS = "EPSG:3857",
                 Transformation = new MinimalTransformation()
             };
+            map.Limiter.PanLimits = new BoundingBox(new Point(45.26,24.68), new Point(60.56, 39.26));
             map.Layers.Add(OpenStreetMap.CreateTileLayer());
             map.Widgets.Add(new ScaleBarWidget(map) { TextAlignment = Alignment.Center, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Top });
             map.Widgets.Add(new ZoomInOutWidget { MarginX = 20, MarginY = 40 });

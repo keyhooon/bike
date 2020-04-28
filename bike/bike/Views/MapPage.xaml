@@ -14,7 +14,7 @@
         <StackLayout>
             <maps:MapView
                 x:Name="mapView"
-                Margin="10"
+                Margin="10" 
                 BackgroundColor="Gray"
                 HorizontalOptions="Fill"
                 Info="mapView_Info"

@@ -12,12 +12,10 @@
     xmlns:views="clr-namespace:bike.Views"
     xmlns:xforms="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms"
     xmlns:xforms1="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
-    Title="Dashboard" 
+    Title="Dashboard"
     prism:ViewModelLocator.AutowireViewModel="True">
     <TabbedPage.Resources>
         <!--  Common style for icon buttons  -->
     </TabbedPage.Resources>
-    <TabbedPage.Children>
-
-    </TabbedPage.Children>
+    <TabbedPage.Children />
 </TabbedPage>

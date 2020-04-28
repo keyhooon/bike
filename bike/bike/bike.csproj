@@ -65,7 +65,6 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Assets\high\map.png" />
-    <EmbeddedResource Include="Assets\sim-card.png" />
     <EmbeddedResource Include="Assets\high\003-technology.png" />
     <EmbeddedResource Include="Assets\high\004-technology-1.png" />
     <EmbeddedResource Include="Assets\high\005-mechanic.png" />
@@ -178,6 +177,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MapPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\QuestionAnswerPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\SettingPage.xaml">

@@ -56,6 +56,7 @@ namespace bike
             containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>("Map");
             containerRegistry.RegisterForNavigation<LoggingPage>("Logs");
             containerRegistry.RegisterForNavigation<GaugePage, GaugePageViewModel>("Gauge");
+            containerRegistry.RegisterForNavigation<QuestionAnswerPage, QuestionAnswerViewModel>("Question");
         }
     }
 }
