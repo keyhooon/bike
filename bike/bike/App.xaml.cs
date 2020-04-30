@@ -1,5 +1,6 @@
 ﻿using Prism;
 using Prism.Ioc;
+using Shiny;
 using bike.ViewModels;
 using bike.Views;
 using Xamarin.Forms.Xaml;
@@ -13,10 +14,13 @@ using bike.Views.Settings;
 using Xamarin.Forms;
 using Communication;
 using Device;
+using Prism.Mvvm;
+using System;
+
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace bike
 {
-    public partial class App
+    public partial class App : global::Prism.Unity.PrismApplication
     {
         /* 
          * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
@@ -29,7 +33,12 @@ namespace bike
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            
+            ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewType =>
+            {
+                var viewModelTypeName = viewType.FullName.Replace("Page", "ViewModel");
+                var viewModelType = Type.GetType(viewModelTypeName);
+                return viewModelType;
+            });
             SyncfusionLicenseProvider.RegisterLicense("NzM3NEAzMTM3MmUzNDJlMzBPRm41TTBEL2hiZ0pjbG93dDZPQ0VocmRCWkJHSXlzWFgrUkxrZVlDaUpzPQ==");
             await NavigationService.NavigateAsync("Main/Nav/Welcome");
         }

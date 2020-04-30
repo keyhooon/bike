@@ -1,14 +1,19 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Android.Runtime;
 using Prism;
 using Prism.Ioc;
+using Shiny;
+using Xamarin.Forms.Platform.Android;
+
 namespace bike.Droid
 {
     [Activity(Theme = "@style/MainTheme.Splash", 
         MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle bundle)
         {
@@ -24,6 +29,11 @@ namespace bike.Droid
             AiForms.Renderers.Droid.SettingsViewInit.Init(); // need to write here
             AiForms.Effects.Droid.Effects.Init(); //need to write here
             LoadApplication(new App());
+        }
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            this.ShinyRequestPermissionsResult(requestCode, permissions, grantResults);
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
