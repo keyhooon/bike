@@ -20,16 +20,18 @@ using System;
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace bike
 {
-    public partial class App : global::Prism.Unity.PrismApplication
+    public partial class App 
     {
         /* 
          * The Xamarin Forms XAML Previewer in Visual Studio uses System.Activator.CreateInstance.
          * This imposes a limitation in which the App class must have a default constructor. 
          * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
          */
-        public App() : this(null) { }
+        public App()
+        {
 
-        public App(IPlatformInitializer initializer) : base(initializer) { }
+        }
+
         protected override async void OnInitialized()
         {
             InitializeComponent();
@@ -53,19 +55,19 @@ namespace bike
                 ;
             containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
             containerRegistry.RegisterForNavigation<TabbedPage>("TabbedPage");
-            containerRegistry.RegisterForNavigation<MainPage>("Main");
             containerRegistry.RegisterForNavigation<WelcomePage>("Welcome");
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
-            containerRegistry.RegisterForNavigation<AboutUsSimplePage, AboutUsSimpleViewModel>();
-            containerRegistry.RegisterForNavigation<ContactUsPage, ContactUsViewModel>("ContactUs");
-            containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
-            containerRegistry.RegisterForNavigation<SettingPage, SettingViewModel>("Settings");
-            containerRegistry.RegisterForNavigation<ConfigurationPage, ConfigurationViewModel>("Configurations");
+            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>("Main");
             containerRegistry.RegisterForNavigation<DashboardPage, DashboardViewModel>("Dashboard");
-            containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>("Map");
+            containerRegistry.RegisterForNavigation<GaugePage, GaugeViewModel>("Gauge");
+            containerRegistry.RegisterForNavigation<MapPage, MapViewModel>("Map");
+            containerRegistry.RegisterForNavigation<SettingPage, SettingViewModel>("Settings");
             containerRegistry.RegisterForNavigation<LoggingPage>("Logs");
-            containerRegistry.RegisterForNavigation<GaugePage, GaugePageViewModel>("Gauge");
+            containerRegistry.RegisterForNavigation<ConfigurationPage, ConfigurationViewModel>("Configurations");
+            containerRegistry.RegisterForNavigation<ContactUsPage, ContactUsViewModel>("ContactUs");
+            containerRegistry.RegisterForNavigation<AboutUsSimplePage, AboutUsSimpleViewModel>("AboutUs");
+            containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
             containerRegistry.RegisterForNavigation<QuestionAnswerPage, QuestionAnswerViewModel>("Question");
+            containerRegistry.RegisterForNavigation<ReportPage, ReportViewModel>();
         }
     }
 }

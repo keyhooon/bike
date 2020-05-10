@@ -9,6 +9,9 @@ using bike.Shiny.Delegate;
 using Shiny.Logging;
 using Acr.UserDialogs.Forms;
 using Shiny.Infrastructure;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Shiny.Integrations.Sqlite;
+using BruTile.Wms;
 
 namespace bike.Shiny
 {
@@ -18,17 +21,34 @@ namespace bike.Shiny
         {
             Log.UseConsole();
             Log.UseDebug();
-            services.UseMemoryCache();
-            services.UseSqliteLogging(true, true);
 
-
-            services.AddSingleton<SqliteConnection>();
-            services.AddSingleton<CoreDelegateServices>();
-            services.AddSingleton<IUserDialogs, UserDialogs>();
+            services.UseCache();
+            services.UseLogging();
+            services.UseUserDialog();
             services.UseGps<GpsDelegate>();
             services.UseBleCentral();
-            services.UseSqliteLogging(true, true);
+
             // Register Stuff
         }
+
+
     }
+    public static class LoggingExtension
+    {
+        public static void UseLogging(this IServiceCollection services, bool enableCrashes = true, bool enableEvents = false)
+        {
+            services.TryAddSingleton<SqliteConnection>();
+            services.RegisterPostBuildAction(sp =>
+            {
+                var conn = sp.GetService<SqliteConnection>();
+                var serializer = sp.GetService<ISerializer>();
+                Log.AddLogger(new SqliteLog(conn, serializer), enableCrashes, enableEvents);
+            });
+        }
+        public static void UseCache(this IServiceCollection services) => services.UseMemoryCache();
+
+        public static void UseUserDialog(this IServiceCollection services) => services.AddSingleton<IUserDialogs, UserDialogs>();
+
+    }
+
 }

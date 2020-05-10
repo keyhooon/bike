@@ -34,7 +34,7 @@ namespace bike.ViewModels
         }
         protected async override Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation)
         {
-            var answerQuestionList = await connection.AnswerQuestion.ToListAsync();
+            var answerQuestionList = await connection.AnswerQuestions.ToListAsync();
             CategorizedAnswerQuestions = answerQuestionList.GroupBy(
                 aq => aq.Category,
                 (aqCategory, aq) => ( CategoryName : aqCategory, AnswerQuestions : aq.ToList() ));

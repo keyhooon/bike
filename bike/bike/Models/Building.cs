@@ -6,7 +6,7 @@ using Xamarin.Forms.Internals;
 
 namespace bike.Models.ContactUs
 {
-    public class LocationMarker 
+    public class Building 
     {
         #region Properties
 
@@ -14,11 +14,7 @@ namespace bike.Models.ContactUs
         [AutoIncrement]
         public int Id { get; set; }
 
-        /// <summary>
-        /// Gets or sets the image to pin location.
-        /// </summary>
-        public ImageSource PinImage { get; set; }
-
+        public BuildingType Type { get; set; }
         /// <summary>
         /// Gets or sets the header.
         /// </summary>
@@ -29,12 +25,9 @@ namespace bike.Models.ContactUs
         /// </summary>
         public string Address { get; set; }
 
-
-
         public double Latitude { get; set; }
 
         public double Longitude{ get; set; }
-
 
         /// <summary>
         /// Gets or sets the email id.
@@ -46,11 +39,12 @@ namespace bike.Models.ContactUs
         /// </summary>
         public string PhoneNumber { get; set; }
 
-        /// <summary>
-        /// Gets or sets the close icon image.
-        /// </summary>
-        public ImageSource CloseImage { get; set; }
-
         #endregion
+    }
+    public enum BuildingType
+    {
+        Stock = 1,
+        Office = 2,
+        Headquarter = 3
     }
 }

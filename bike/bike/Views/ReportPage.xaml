@@ -1,12 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="bike.Views.EventsPage"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="Events">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding Clear}" Text="Clear" />
-    </ContentPage.ToolbarItems>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="bike.Views.ReportPage">
     <ContentPage.Content>
         <Grid>
             <Label
@@ -15,10 +12,13 @@
                 HorizontalOptions="FillAndExpand"
                 HorizontalTextAlignment="Center"
                 IsVisible="{Binding HasLogs, Converter={StaticResource Not}}"
-                Text="This will display a live feed of events as they are logged"
+                Text="No Trip have been started"
                 VerticalOptions="FillAndExpand"
                 VerticalTextAlignment="Center" />
+
             <ListView
+                IsPullToRefreshEnabled="True"
+                IsRefreshing="{Binding IsBusy}"
                 IsVisible="{Binding HasLogs}"
                 ItemsSource="{Binding Logs}"
                 RefreshCommand="{Binding Load}">

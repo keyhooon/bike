@@ -36,10 +36,11 @@
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
-                <Image
+                <BoxView BackgroundColor="{StaticResource PrimaryForeGroundColor}" HeightRequest="200" />
+                <!--<Image
                     Aspect="Fill"
                     HeightRequest="200"
-                    Source="NavyBlueGradient.jpeg" />
+                    Source="NavyBlueGradient.jpeg" />-->
                 <Image
                     Margin="10,5"
                     Aspect="AspectFit"

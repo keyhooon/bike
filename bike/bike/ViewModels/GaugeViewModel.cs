@@ -6,9 +6,9 @@ using System.Linq;
 
 namespace bike.ViewModels
 {
-    public class GaugePageViewModel : BindableBase
+    public class GaugeViewModel : BindableBase
     {
-        public GaugePageViewModel()
+        public GaugeViewModel()
         {
 
         }

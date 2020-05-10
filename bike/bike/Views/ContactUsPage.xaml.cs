@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Mapsui.Utilities;
+using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
@@ -19,6 +20,7 @@ namespace bike.Views.ContactUs
         public ContactUsPage()
         {
             InitializeComponent();
+ //           Map.Layers.Add(OpenStreetMap.CreateTileLayer());
         }
 
         /// <summary>

@@ -7,13 +7,15 @@ using System.Text;
 
 namespace bike.Models
 {
-    public class SessionDetail
+    public class TripDetail
     {
         [PrimaryKey]
         [AutoIncrement]
         public int Id { get; set; }
 
-        public TimeSpan TimeStamp { get; set; }
+        public int TripId { get; set; }
+
+        public DateTime Time { get; set; }
 
         public double Latitude { get; set; }
 

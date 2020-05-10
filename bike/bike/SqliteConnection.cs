@@ -1,17 +1,15 @@
 ﻿using bike.Models;
+using bike.Models.ContactUs;
 using bike.Models.Logging;
+using Shiny.Integrations.Sqlite;
 using Shiny.IO;
 using SQLite;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace bike
 {
-    public class SqliteConnection : SQLiteAsyncConnection
+    public class SqliteConnection : ShinySqliteConnection
     {
-        public SqliteConnection(IFileSystem fileSystem) : base(Path.Combine(fileSystem.AppData.FullName, "sqlite.db"))
+        public SqliteConnection(IFileSystem fileSystem) : base(fileSystem)
         {
             var conn = this.GetConnection();
             conn.CreateTable<AnswerQuestion>();
@@ -19,11 +17,14 @@ namespace bike
             conn.CreateTable<BleAdapterState>();
             conn.CreateTable<BleConnectedPeripheral>();
             conn.CreateTable<GpsData>();
+            conn.CreateTable<Building>();
         }
-        public AsyncTableQuery<AnswerQuestion> AnswerQuestion => Table<AnswerQuestion>();
+        public AsyncTableQuery<AnswerQuestion> AnswerQuestions => Table<AnswerQuestion>();
         public AsyncTableQuery<AppStateEvent> AppStateEvent => Table<AppStateEvent>();
-        public AsyncTableQuery<BleAdapterState> BleAdapterState => Table<BleAdapterState>();
-        public AsyncTableQuery<BleConnectedPeripheral> BleConnectedPeripheral => Table<BleConnectedPeripheral>();
-        public AsyncTableQuery<GpsData> GpsData => Table<GpsData>();
+        public AsyncTableQuery<Building> Buildings => Table<Building>();
+        public AsyncTableQuery<Trip> Trips => Table<Trip>();
+        public AsyncTableQuery<TripDetail> TripDetails => Table<TripDetail>();
+
+
     }
 }

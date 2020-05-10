@@ -21,7 +21,6 @@
     <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
     <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.2-preview.60" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
-    <PackageReference Include="Prism.Forms" Version="7.2.0.1422" />
     <PackageReference Include="Xamarin.Forms" Version="4.5.0.617" />
 
     <PackageReference Include="AiForms.Effects" Version="1.6.7" />
@@ -41,8 +40,6 @@
     <PackageReference Include="Shiny.Push.AzureNotificationHubs" Version="1.1.0.1449-beta" />
     <PackageReference Include="Shiny.Sensors" Version="1.1.0.1473" />
     <PackageReference Include="Shiny.SpeechRecognition" Version="1.1.0.1473" />
-
-    <PackageReference Include="sqlite-net-pcl" Version="1.6.292" />
 
     <PackageReference Include="Acr.UserDialogs.Forms" Version="1.0.0.7-beta" />
     <PackageReference Include="ReactiveUI.Fody" Version="11.2.3" />

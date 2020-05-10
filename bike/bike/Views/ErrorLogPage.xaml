@@ -1,32 +1,41 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="bike.Views.ErrorLogPage"
-             Title="Errors"  >
+<ContentPage
+    x:Class="bike.Views.ErrorLogPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Errors">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Clear"  Command="{Binding Clear}" />
+        <ToolbarItem Command="{Binding Clear}" Text="Clear" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="No Errors have been logged"
-                   FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" VerticalTextAlignment="Center"
-                   IsVisible="{Binding HasLogs, Converter={StaticResource Not}}" />
+        <Grid>
+            <Label
+                Margin="5"
+                FontSize="Large"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
+                IsVisible="{Binding HasLogs, Converter={StaticResource Not}}"
+                Text="No Errors have been logged"
+                VerticalOptions="FillAndExpand"
+                VerticalTextAlignment="Center" />
 
-            <ListView ItemsSource="{Binding Logs}"
-                      RefreshCommand="{Binding Load}"
-                      IsRefreshing="{Binding IsBusy}"
-                      IsVisible="{Binding HasLogs}"
-                      IsPullToRefreshEnabled="True">
+            <ListView
+                IsPullToRefreshEnabled="True"
+                IsRefreshing="{Binding IsBusy}"
+                IsVisible="{Binding HasLogs}"
+                ItemsSource="{Binding Logs}"
+                RefreshCommand="{Binding Load}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Text="{Binding Text}"
-                                  Detail="{Binding Detail}"
-                                  Command="{Binding PrimaryCommand}" />
+                        <TextCell
+                            Command="{Binding PrimaryCommand}"
+                            Detail="{Binding Detail}"
+                            Text="{Binding Text}" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

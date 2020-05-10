@@ -4,26 +4,54 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
-    xmlns:image="clr-namespace:bike.Assets"
     Title="Shiny">
 
     <ContentPage.Content>
-        <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+        <RelativeLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
             <Image
+                Aspect="AspectFill"
                 HorizontalOptions="Center"
+                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                       Property=Height,
+                                                                       Factor=0,
+                                                                       Constant=200}"
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                      Property=Width,
+                                                                      Factor=1,
+                                                                      Constant=0}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                  Property=Width,
+                                                                  Factor=0,
+                                                                  Constant=0}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                  Property=Height,
+                                                                  Factor=0,
+                                                                  Constant=0}"
                 Source="logo.png"
-                VerticalOptions="Start" />
+                VerticalOptions="Center" />
+
             <forms:AnimationView
                 x:Name="AnimationView"
                 Animation="splashpattern.json"
                 AutoPlay="True"
                 HorizontalOptions="FillAndExpand"
                 Loop="True"
-                Rotation="90"
-                VerticalOptions="Start" />
+                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                      Property=Width,
+                                                                      Factor=1,
+                                                                      Constant=0}"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                  Property=Width,
+                                                                  Factor=0,
+                                                                  Constant=0}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                  Property=Height,
+                                                                  Factor=0,
+                                                                  Constant=000}"
+                VerticalOptions="FillAndExpand" />
 
 
 
-        </Grid>
+        </RelativeLayout>
     </ContentPage.Content>
 </ContentPage>

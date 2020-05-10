@@ -9,12 +9,12 @@ using System.Linq;
 
 namespace bike.ViewModels
 {
-    public class MapPageViewModel : ViewModel
+    public class MapViewModel : ViewModel
     {
         private readonly IGpsManager manager;
         private readonly IUserDialogs dialogs;
 
-        public MapPageViewModel(IGpsManager manager, IUserDialogs dialogs)
+        public MapViewModel(IGpsManager manager, IUserDialogs dialogs)
         {
             this.manager = manager;
             this.dialogs = dialogs;

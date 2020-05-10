@@ -32,7 +32,7 @@
                     Grid.Row="1"
                     Grid.ColumnSpan="3"
                     BackgroundColor="#44444444"
-                    HeightRequest="400"
+                    HeightRequest="320"
                     HorizontalOptions="Center"
                     VerticalOptions="StartAndExpand">
                     <gauge:SfCircularGauge.Annotations>
@@ -96,7 +96,7 @@
                                             CharacterWidth="15"
                                             DisabledSegmentAlpha="20"
                                             DisabledSegmentColor="yellow"
-                                            HeightRequest="35"
+                                            HeightRequest="45"
                                             HorizontalOptions="End"
                                             SegmentStrokeWidth="3"
                                             VerticalOptions="EndAndExpand"
@@ -116,7 +116,7 @@
                                             CharacterWidth="15"
                                             DisabledSegmentAlpha="20"
                                             DisabledSegmentColor="yellow"
-                                            HeightRequest="35"
+                                            HeightRequest="45"
                                             HorizontalOptions="End"
                                             SegmentStrokeWidth="3"
                                             VerticalOptions="EndAndExpand"

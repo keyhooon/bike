@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Threading;
+using System.Threading.Tasks;
 using bike.Models.ContactUs;
+using Infrastructure;
 using Mapsui.UI.Forms;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Navigation;
 using Syncfusion.SfMaps.XForms;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -15,11 +20,11 @@ namespace bike.ViewModels
     /// ViewModel for contact us page.
     /// </summary>
     [Preserve(AllMembers = true)]
-    public class ContactUsViewModel : BindableBase
+    public class ContactUsViewModel : ViewModel
     {
         #region Fields
-
-        private ObservableCollection<LocationMarker> customMarkers;
+        private readonly SqliteConnection sqliteConnection;
+        private List<Building> _buildings;
 
         private Point geoCoordinate;
 
@@ -30,91 +35,33 @@ namespace bike.ViewModels
         /// <summary>
         /// Initializes a new instance of the <see cref="ContactUsViewModel" /> class.
         /// </summary>
-        public ContactUsViewModel()
+        public ContactUsViewModel(SqliteConnection sqliteConnection)
         {
-            this.CustomMarkers = new ObservableCollection<LocationMarker>();
-            this.GetPinLocation();
+            _buildings = new List<Building>();
+            this.sqliteConnection = sqliteConnection;
         }
 
         #endregion   
-
-        #region Commands
-
-        public DelegateCommand _sendCommand;
-        /// <summary>
-        /// Gets or sets the command that is executed when the Send button is clicked.
-        /// </summary>
-        public DelegateCommand SendCommand => _sendCommand ?? (_sendCommand = new DelegateCommand(Send));
-
-        #endregion
 
         #region Properties
 
         /// <summary>
         /// Gets or sets the CustomMarkers collection.
         /// </summary>
-        public ObservableCollection<LocationMarker> CustomMarkers
+        public List<Building> Buildings { get { return _buildings; } set { _buildings = value; } }
+
+        private Building _selectedBuilding;
+        public Building SelectedBuilding
         {
-            get
-            {
-                return this.customMarkers;
-            }
-
-            set
-            {
-                SetProperty(ref customMarkers, value);
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the geo coordinate.
-        /// </summary>
-        public Point GeoCoordinate
-        {
-            get
-            {
-                return this.geoCoordinate;
-            }
-
-            set
-            {
-                SetProperty(ref geoCoordinate, value);
-            }
+            get { return _selectedBuilding; }
+            set { SetProperty(ref _selectedBuilding, value); }
         }
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        /// Invoked when the send button is clicked.
-        /// </summary>
-        private void Send()
-        {
-            // Do something
-        }
-
-        /// <summary>
-        /// This method is for getting the pin location detail.
-        /// </summary>
-        private void GetPinLocation()
-        {
-            this.CustomMarkers.Add(
-                new LocationMarker
-                {
-                    Header = "Sipes Inc",
-                    Address = "7654 Cleveland street, Phoenixville, PA 19460",
-                    EmailId = "dopuyi@hostguru.info",
-                    PhoneNumber = "+1-202-555-0101",
-                    Latitude = 40.133808,
-                    Longitude = -75.516279
-                });
-
-            foreach (var marker in this.CustomMarkers)
-            {
-                this.GeoCoordinate = new Point(Convert.ToDouble(marker.Latitude, CultureInfo.CurrentCulture), Convert.ToDouble(marker.Longitude, CultureInfo.CurrentCulture));
-            }
-        }
+        protected override async Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation) => Buildings = await sqliteConnection.Buildings.ToListAsync() ;
 
         #endregion
     }

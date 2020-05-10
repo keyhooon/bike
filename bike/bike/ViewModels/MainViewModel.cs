@@ -4,10 +4,10 @@ using Prism.Navigation;
 
 namespace bike.ViewModels
 {
-    public class MainPageViewModel : BindableBase
+    public class MainViewModel : BindableBase
     {
         private readonly INavigationService navigationService;
-        public MainPageViewModel(INavigationService navigationService)
+        public MainViewModel(INavigationService navigationService)
         {
             this.navigationService = navigationService;
         }

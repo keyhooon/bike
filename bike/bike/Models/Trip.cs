@@ -5,11 +5,11 @@ using System.Text;
 
 namespace bike.Models
 {
-    public class Session
+    public class Trip
     {
         [PrimaryKey]
         [AutoIncrement]
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public DateTime StartTime { get; set; }
 
@@ -19,5 +19,6 @@ namespace bike.Models
 
         public double MaximumSpeed { get; set; }
 
+        public List<TripDetail> TripDetails { get; set; }
     }
 }
