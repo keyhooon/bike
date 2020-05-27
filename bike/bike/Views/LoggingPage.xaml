@@ -5,7 +5,6 @@
             Title="Logging">
 
     <TabbedPage.Children>
-        <views:ErrorLogPage Title="Errors" />
-        <views:EventsPage Title="Events" />
+
     </TabbedPage.Children>
 </TabbedPage>

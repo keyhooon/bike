@@ -3,14 +3,12 @@
     x:Class="bike.Views.AboutUs.AboutUsSimplePage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:image="clr-namespace:bike.Assets"
     xmlns:prism="http://prismlibrary.com"
-    xmlns:viewModel="clr-namespace:bike.ViewModels.AboutUs"
     Title="About"
     prism:ViewModelLocator.AutowireViewModel="True"
-    BackgroundColor="{DynamicResource Gray-White}"
-    NavigationPage.HasNavigationBar="False">
+    BackgroundColor="{DynamicResource Gray-White}">
     <ContentPage.Resources>
+
         <!--  Style for version label  -->
         <Style x:Key="VersionLabelStyle" TargetType="Label">
             <Setter Property="TextColor" Value="{DynamicResource Gray-700}" />
@@ -65,6 +63,11 @@
                         HorizontalOptions="CenterAndExpand"
                         Style="{StaticResource VersionLabelStyle}"
                         Text="{Binding ProductVersion, StringFormat='Version {0}'}" />
+                    <Label
+                        Margin="0,0,0,0"
+                        HorizontalOptions="CenterAndExpand"
+                        Style="{StaticResource VersionLabelStyle}"
+                        Text="{Binding ProductBuild, StringFormat='Build {0}'}" />
 
                     <!--  Product title  -->
                     <Label
@@ -85,8 +88,16 @@
                         Margin="15,0,15,0"
                         HorizontalOptions="Center"
                         HorizontalTextAlignment="Center"
+                        LineBreakMode="WordWrap"
                         Style="{StaticResource DescriptionLabelStyle}"
-                        Text="{Binding ProductDescription}" />
+                        Text="The electric bicycle, due to the electronic components and batteries used in it, could not have found a place in the market until 2015 due to the old technology of batteries and the lack of electric motors that could be suitable for an electric motor or electric bicycle" />
+                    <Label
+                        Margin="15,0,15,0"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        LineBreakMode="WordWrap"
+                        Style="{StaticResource DescriptionLabelStyle}"
+                        Text="But today, with the advent of ultra-powerful brushless electric motors, and the advancement of new lithium-ion battery technology, companies such as Volkswagen in Europe and Xiaomi Digital in China, all kinds of bicycles, scooters and electric motors with these new technologies. It has been greatly improved and has been able to completely change the way people around the world look at electric vehicles." />
                 </StackLayout>
             </ScrollView>
         </Grid>

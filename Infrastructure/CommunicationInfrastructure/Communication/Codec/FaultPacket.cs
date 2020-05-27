@@ -17,7 +17,7 @@ namespace Communication.Codec
         public bool OverVoltage { get; set; }
         public bool UnderVoltage { get; set; }
         public bool Motor { get; set; }
-        public bool Driver { get; set; }
+        public bool Drive { get; set; }
 
         public override string ToString()
         {
@@ -28,8 +28,8 @@ namespace Communication.Codec
                 $"Throttle : {Throttle}, " +
                 $"OverVoltage : {OverVoltage}, " +
                 $"UnderVoltage : {UnderVoltage}, " +
-                $"MotorVoltage : {Motor}, " +
-                $"DriverVoltage : {Driver}, ";
+                $"Motor : {Motor}, " +
+                $"Drive : {Drive}, ";
         }
         public class Encoding : AncestorPacketEncoding
         {
@@ -50,7 +50,7 @@ namespace Communication.Codec
                     (o.OverTemprature ? 0x02 : 0x00) | (o.OverCurrent ? 0x01 : 0x00) |
                     (o.Throttle ? 0x08 : 0x00) | (o.PedalSensor ? 0x04 : 0x00) |
                     (o.UnderVoltage ? 0x20 : 0x00) | (o.OverVoltage ? 0x10 : 0x00) |
-                    (o.Driver ? 0x80 : 0x00) | (o.Motor ? 0x40 : 0x00));
+                    (o.Drive ? 0x80 : 0x00) | (o.Motor ? 0x40 : 0x00));
                 var crc8 = value.Aggregate<byte, byte>(0, (current, t) => (byte)(current + t));
                 writer.Write(value);
                 writer.Write(crc8);
@@ -70,7 +70,7 @@ namespace Communication.Codec
                         OverVoltage = (value[0] & 0x10) == 0x10,
                         UnderVoltage = (value[0] & 0x20) == 0x20,
                         Motor = (value[0] & 0x40) == 0x40,
-                        Driver = (value[0] & 0x80) == 0x80
+                        Drive = (value[0] & 0x80) == 0x80
                     };
                 return null;
             }

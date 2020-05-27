@@ -1,9 +1,9 @@
-﻿using Mapsui.Geometries;
-using Mapsui.UI.Forms;
+﻿
 using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
-using System.Collections.Generic;
-using System.Text;
+
+
 
 namespace bike.Models
 {
@@ -12,7 +12,7 @@ namespace bike.Models
         [PrimaryKey]
         [AutoIncrement]
         public int Id { get; set; }
-
+        [ForeignKey(typeof(Trip))]
         public int TripId { get; set; }
 
         public DateTime Time { get; set; }

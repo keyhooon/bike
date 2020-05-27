@@ -1,7 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reflection;
 using bike.Models.AboutUs;
+using Infrastructure;
 using Prism.Mvvm;
+using Shiny;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
@@ -11,13 +13,16 @@ namespace bike.ViewModels.AboutUs
     /// ViewModel of AboutUs templates.
     /// </summary>
     [Preserve(AllMembers = true)]
-    public class AboutUsSimpleViewModel : BindableBase
+    public class AboutUsSimpleViewModel : ViewModel
     {
+        private readonly IEnvironment environment;
         #region Fields
 
         private string productDescription;
 
         private string productVersion;
+
+        private string productBuild;
 
         private ImageSource productIcon;
 
@@ -30,7 +35,7 @@ namespace bike.ViewModels.AboutUs
         /// <summary>
         /// Initializes a new instance for the <see cref="T:bike.ViewModels.AboutUs.AboutUsViewModel"/> class.
         /// </summary>
-        public AboutUsSimpleViewModel()
+        public AboutUsSimpleViewModel(IEnvironment environment)
         {
             this.productDescription =
                 "Situated in the heart of Smith-town, Acme Products, Inc., has a long-standing tradition of selling the best products while providing the fastest service on the market. Since 1952, we’ve helped our customers identify their needs, understand their wants, and capture their dreams.";
@@ -79,7 +84,11 @@ namespace bike.ViewModels.AboutUs
             };
 
             this.ItemSelectedCommand = new Command(this.ItemSelected);
+            this.environment = environment;
+            ProductVersion = environment.AppVersion;
+            ProductBuild = environment.AppBuild;
         }
+
 
         #endregion
 
@@ -105,41 +114,6 @@ namespace bike.ViewModels.AboutUs
         }
 
         /// <summary>
-        /// Gets or sets the description of a product or a company.
-        /// </summary>
-        /// <value>The product description.</value>
-        public string ProductDescription
-        {
-            get
-            {
-                return this.productDescription;
-            }
-
-            set
-            {
-                SetProperty(ref productDescription, value);
-
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the product icon.
-        /// </summary>
-        /// <value>The product icon.</value>
-        public ImageSource ProductIcon
-        {
-            get
-            {
-                return this.productIcon;
-            }
-
-            set
-            {
-                SetProperty(ref productIcon, value);
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the product version.
         /// </summary>
         /// <value>The product version.</value>
@@ -153,6 +127,19 @@ namespace bike.ViewModels.AboutUs
             set
             {
                 SetProperty(ref productVersion, value);
+            }
+        }
+
+        public string ProductBuild
+        {
+            get
+            {
+                return this.productBuild;
+            }
+
+            set
+            {
+                SetProperty(ref productBuild, value);
             }
         }
 

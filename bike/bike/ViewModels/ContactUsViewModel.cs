@@ -26,8 +26,6 @@ namespace bike.ViewModels
         private readonly SqliteConnection sqliteConnection;
         private List<Building> _buildings;
 
-        private Point geoCoordinate;
-
         #endregion
 
         #region Constructor
@@ -48,7 +46,7 @@ namespace bike.ViewModels
         /// <summary>
         /// Gets or sets the CustomMarkers collection.
         /// </summary>
-        public List<Building> Buildings { get { return _buildings; } set { _buildings = value; } }
+        public List<Building> Buildings { get { return _buildings; } set { SetProperty(ref _buildings, value); } }
 
         private Building _selectedBuilding;
         public Building SelectedBuilding

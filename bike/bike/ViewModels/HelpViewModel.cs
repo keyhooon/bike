@@ -1,11 +1,17 @@
-﻿using bike.Models;
+﻿using Acr.UserDialogs.Forms;
+using AiForms.Renderers;
+using bike.Models;
+using DynamicData;
 using Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Navigation;
+using ReactiveUI;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,36 +24,34 @@ namespace bike.ViewModels
     /// ViewModel for Help page 
     /// </summary> 
     [Preserve(AllMembers = true)]
-    public class HelpViewModel : ViewModel
+    public class HelpViewModel : AbstractLogViewModel<CommandItem>
     {
-        private readonly SqliteConnection connection;
-        private readonly IContainerExtension _container;
+        private readonly SqliteConnection conn;
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="HelpViewModel" /> class
         /// </summary>
-        public HelpViewModel(IContainerExtension container,SqliteConnection connection)
+        public HelpViewModel(SqliteConnection conn, IUserDialogs dialogs) : base(dialogs)
         {
-            _container = container;
-            this.connection = connection;
-        }
-        protected async override Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation)
-        {
-            var answerQuestionList = await connection.AnswerQuestions.ToListAsync();
-            CategorizedAnswerQuestions = answerQuestionList.GroupBy(
-                aq => aq.Category,
-                (aqCategory, aq) => ( CategoryName : aqCategory, AnswerQuestions : aq.ToList() ));
+            this.conn = conn;
+            var results = this.conn
+                .AnswerQuestions
+                .ToListAsync().Result;
+
+            Logs = new ObservableCollection<CommandItem>(results.Select(x => new CommandItem
+            {
+                Text = x.Question,
+                Detail = x.Answer,
+                PrimaryCommand = new DelegateCommand(() =>
+                {
+                    var s = $"{x.Answer}{Environment.NewLine}{Environment.NewLine}{x.Detail}";
+                    Dialogs.Alert(s, x.Question);
+                })
+            }));
         }
 
-        private IEnumerable<(string CategoryName, List<AnswerQuestion> AnswerQuestions)> _categorizedAnswerQuestions;
-        public IEnumerable<(string CategoryName, List<AnswerQuestion> AnswerQuestions)> CategorizedAnswerQuestions
-        {
-            get { return _categorizedAnswerQuestions; }
-            set { SetProperty(ref _categorizedAnswerQuestions, value); }
-        }
+        protected override Task ClearLogs() => throw new NotSupportedException();
 
     }
-
-
 }

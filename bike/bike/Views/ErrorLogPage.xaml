@@ -6,7 +6,8 @@
     Title="Errors">
 
     <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding Clear}" Text="Clear" />
+        <ToolbarItem Command="{Binding LoadCommand}" Text="Refresh" />
+        <ToolbarItem Command="{Binding ClearCommand}" Text="Clear" />
     </ContentPage.ToolbarItems>
 
     <ContentPage.Content>
@@ -26,7 +27,7 @@
                 IsRefreshing="{Binding IsBusy}"
                 IsVisible="{Binding HasLogs}"
                 ItemsSource="{Binding Logs}"
-                RefreshCommand="{Binding Load}">
+                RefreshCommand="{Binding LoadCommand}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Splat;
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
@@ -8,19 +9,6 @@ namespace Infrastructure.ValueConverters
 {
     public class EnumDescriptionValueConverter : IValueConverter
     {
-
-        //public Type EnumType { get; set; }
-
-
-
-        //public EnumDescriptionValueConverter()
-        //{
-
-        //}
-        //public EnumDescriptionValueConverter(Type enumType)
-        //{
-        //    EnumType = enumType;
-        //}
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
@@ -38,23 +26,5 @@ namespace Infrastructure.ValueConverters
         {
             throw new NotImplementedException();
         }
-
-        //public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        //{
-        //    FieldInfo[] fis = EnumType.GetFields();
-        //    foreach (var fi in fis)
-        //    {
-        //        if (fi != null)
-        //        {
-        //            var attributes = (DescriptionAttribute[])fi.GetCustomAttributes(typeof(DescriptionAttribute), false);
-        //            if (attributes.Length > 0 && (!string.IsNullOrEmpty(attributes[0].Description) ? attributes[0].Description : value.ToString()) == value)
-        //            { 
-        //                return System.Convert.ChangeType(fi.GetRawConstantValue(), EnumType);
-        //            }
-        //        }
-        //    }
-
-        //    return string.Empty;
-        //}
     }
 }

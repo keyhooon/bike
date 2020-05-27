@@ -43,6 +43,7 @@ namespace bike.Shiny
                 var conn = sp.GetService<SqliteConnection>();
                 var serializer = sp.GetService<ISerializer>();
                 Log.AddLogger(new SqliteLog(conn, serializer), enableCrashes, enableEvents);
+                conn.Seed();
             });
         }
         public static void UseCache(this IServiceCollection services) => services.UseMemoryCache();

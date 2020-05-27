@@ -1,10 +1,11 @@
 ﻿using DataModels;
 using Device;
+using Infrastructure;
 using Prism.Mvvm;
 
 namespace bike.ViewModels
 {
-    public class ConfigurationViewModel : BindableBase
+    public class ConfigurationViewModel : ViewModel
     {
         private readonly ServoDriveService _servoDriveService;
         #region Constructor

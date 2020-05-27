@@ -286,7 +286,7 @@
                     <BoxView BackgroundColor="#44444444" />
                     <Picker
                         HorizontalOptions="Center"
-                        ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:PedalAssistLevelType}}}"
+                        ItemsSource="{Binding PedalAssistLevelList}"
                         SelectedIndexChanged="Picker_SelectedIndexChanged"
                         SelectedItem="{Binding AssistLevel, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                         TextColor="LightBlue"
@@ -307,7 +307,7 @@
                     <Picker
                         BackgroundColor="Default"
                         HorizontalOptions="Center"
-                        ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:PedalActivationTimeType}}}"
+                        ItemsSource="{Binding PedalAssistSensitivitiesList}"
                         SelectedIndexChanged="Picker_SelectedIndexChanged"
                         SelectedItem="{Binding ActivationTime, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                         TextColor="LightBlue"
@@ -328,9 +328,9 @@
                     <Picker
                         BackgroundColor="Default"
                         HorizontalOptions="Center"
-                        ItemsSource="{Binding Source={markupextension:EnumBindingSource {x:Type dataModel:ThrottleActivityType}}}"
+                        ItemsSource="{Binding ThrottleModeList}"
                         SelectedIndexChanged="Picker_SelectedIndexChanged"
-                        SelectedItem="{Binding ThrottleSetting.ActivityType, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                        SelectedIndex="{Binding ThrottleSetting.ActivityType, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                         TextColor="LightBlue"
                         TitleColor="gray"
                         VerticalOptions="Start" />

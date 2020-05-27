@@ -61,13 +61,17 @@ namespace bike
             containerRegistry.RegisterForNavigation<GaugePage, GaugeViewModel>("Gauge");
             containerRegistry.RegisterForNavigation<MapPage, MapViewModel>("Map");
             containerRegistry.RegisterForNavigation<SettingPage, SettingViewModel>("Settings");
+            containerRegistry.RegisterForNavigation<ReportPage, ReportViewModel>("Report");
+            containerRegistry.RegisterForNavigation<DiagnosticPage, DiagnosticViewModel>("Diagnostic");
             containerRegistry.RegisterForNavigation<LoggingPage>("Logs");
+            containerRegistry.RegisterForNavigation<ErrorLogPage, ErrorLogViewModel>("Errors");
+            containerRegistry.RegisterForNavigation<EventsPage, EventsViewModel>("Events");
+
             containerRegistry.RegisterForNavigation<ConfigurationPage, ConfigurationViewModel>("Configurations");
             containerRegistry.RegisterForNavigation<ContactUsPage, ContactUsViewModel>("ContactUs");
             containerRegistry.RegisterForNavigation<AboutUsSimplePage, AboutUsSimpleViewModel>("AboutUs");
             containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
             containerRegistry.RegisterForNavigation<QuestionAnswerPage, QuestionAnswerViewModel>("Question");
-            containerRegistry.RegisterForNavigation<ReportPage, ReportViewModel>();
         }
     }
 }

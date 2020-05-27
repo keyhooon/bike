@@ -20,9 +20,6 @@ namespace bike.ViewModels
         public DashboardViewModel(ServoDriveService servoDriveService)
         {
             _servoDriveService = servoDriveService;
-            PedalAssistLevelList = typeof(PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
-            PedalAssistSensitivitiesList = typeof(PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
-            ThrottleModeList = typeof(ThrottleActivityType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
 
             ThrottleSetting.PropertyChanged += (sender, e) =>
             {

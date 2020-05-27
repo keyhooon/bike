@@ -12,7 +12,6 @@ namespace Infrastructure
     public abstract class ViewModel : BindableBase,
                                       IAutoInitialize,
                                       IInitialize,
-                                      IInitializeAsync,
                                       INavigatedAware,
                                       IPageLifecycleAware,
                                       IDestructible,
@@ -28,19 +27,32 @@ namespace Infrastructure
         protected CancellationTokenSource CancellationTokenSource => _cancellationTokenSource ??= new CancellationTokenSource();
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters) { }
-        public virtual void Initialize(INavigationParameters parameters) { }
-        public virtual async Task InitializeAsync(INavigationParameters parameters)
+        public virtual void Initialize(INavigationParameters parameters)
         {
-            IsBusy = true;
-            await LoadAsync(parameters, CancellationTokenSource.Token);
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = null;
-            IsBusy = false;
+            Task.Run(async () => {
+                IsBusy = true;
+                await LoadAsync(parameters, CancellationTokenSource.Token);
+                _cancellationTokenSource?.Dispose();
+                _cancellationTokenSource = null;
+                IsBusy = false;
+            });
+
         }
         public virtual void OnNavigatedTo(INavigationParameters parameters) { }
-        public virtual void OnAppearing() { }
+        public async virtual void OnAppearing()
+        {
+            //IsBusy = true;
+            //await LoadAsync(null, CancellationTokenSource.Token);
+            //_cancellationTokenSource?.Dispose();
+            //_cancellationTokenSource = null;
+            //IsBusy = false;
+        }
         public virtual void OnDisappearing() { }
-        public virtual void Destroy() { _deactivateWith?.Dispose(); _cancellationTokenSource?.Cancel(); _cancellationTokenSource?.Dispose(); }
+        public virtual void Destroy() { 
+            _deactivateWith?.Dispose(); 
+            _cancellationTokenSource?.Cancel(); 
+            _cancellationTokenSource?.Dispose(); 
+        }
         public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters) => Task.FromResult(true);
 
         bool _isBusy;
@@ -49,7 +61,7 @@ namespace Infrastructure
         string _title;
         public string Title { get => _title; protected set => SetProperty(ref _title, value); }
 
-        protected virtual Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation) => Task.CompletedTask;
+        protected virtual Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation = null) => Task.CompletedTask;
 
     }
 }

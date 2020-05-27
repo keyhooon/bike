@@ -1,11 +1,15 @@
-﻿using Android.App;
+﻿using AiForms.Effects.Droid;
+using AiForms.Renderers.Droid;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Prism;
 using Prism.Ioc;
+using Rg.Plugins.Popup;
 using Shiny;
+using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 namespace bike.Droid
@@ -24,10 +28,10 @@ namespace bike.Droid
             base.SetTheme(Resource.Style.MainTheme);
             Window.RequestFeature(Android.Views.WindowFeatures.ActionBar);
             base.OnCreate(bundle);
-
-            global::Xamarin.Forms.Forms.Init(this, bundle);
-            AiForms.Renderers.Droid.SettingsViewInit.Init(); // need to write here
-            AiForms.Effects.Droid.Effects.Init(); //need to write here
+            Forms.Init(this, bundle);
+            Popup.Init(this, bundle);
+            SettingsViewInit.Init(); // need to write here
+            Effects.Init(); //need to write here
 
 
             LoadApplication(new App());

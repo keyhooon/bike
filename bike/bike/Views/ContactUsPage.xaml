@@ -6,11 +6,9 @@
     xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:control="clr-namespace:bike.Controls"
-    xmlns:converter="clr-namespace:bike.Converters"
     xmlns:converter1="clr-namespace:Infrastructure.Converters;assembly=bike.Infrastructure"
     xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
     xmlns:customControls="clr-namespace:bike.Controls"
-    xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
     xmlns:layers="clr-namespace:Mapsui.Layers;assembly=Mapsui"
     xmlns:maps="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms"
     xmlns:maps1="clr-namespace:Mapsui.UI.Forms;assembly=Mapsui.UI.Forms"
@@ -71,21 +69,19 @@
                             TextColor="{DynamicResource Gray-900}"
                             VerticalTextAlignment="Center" />
 
-                        <border:SfBorder Style="{StaticResource SfBorderStyle}">
+                        <border:SfBorder>
 
                             <!--  Entry to get name from user  -->
 
                             <customControls:BorderlessEntry
                                 HeightRequest="40"
                                 Placeholder="Name"
-                                Style="{StaticResource BorderlessEntryStyle}"
                                 VerticalOptions="Center" />
                         </border:SfBorder>
 
                         <border:SfBorder
                             x:Name="EmailBorder"
-                            BorderColor="{Binding Path=IsVisible, Source={x:Reference WarningImage}, Converter={x:StaticResource BooleanToColorConverter}, ConverterParameter=2}"
-                            Style="{x:StaticResource SfBorderStyle}">
+                            BorderColor="{Binding Path=IsVisible, Source={x:Reference WarningImage}, Converter={x:StaticResource BooleanToColorConverter}, ConverterParameter=2}">
                             <StackLayout Orientation="Horizontal" Spacing="0">
 
 

@@ -32,7 +32,7 @@ namespace bike.Models.ContactUs
         /// <summary>
         /// Gets or sets the email id.
         /// </summary>
-        public string EmailId { get; set; }
+        public string Email { get; set; }
 
         /// <summary>
         /// Gets or sets the phone number.

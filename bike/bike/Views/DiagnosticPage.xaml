@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="bike.Views.DiagnosticPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:valueconverters="clr-namespace:Infrastructure.ValueConverters;assembly=bike.Infrastructure"
+    Title="Diagnostic"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <ContentPage.Resources>
+        <valueconverters:IsNullToColorValueConverter
+            x:Key="IsNullToColor"
+            IsNullColor="OrangeRed"
+            NotNullColor="LightGreen" />
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding ToggleCurrentCommand}" Text="{Binding CurrentCommandText}" />
+        <ToolbarItem Command="{Binding ClearCommand}" Text="Clear" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                VerticalOptions="Center" />
+            <Grid IsVisible="{Binding IsBusy, Converter={StaticResource Not}}">
+                <Label
+                    Margin="5"
+                    FontSize="Large"
+                    HorizontalOptions="FillAndExpand"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding HasLogs, Converter={StaticResource Not}}"
+                    Text="This will display a live feed of faults as they are existed"
+                    VerticalOptions="FillAndExpand"
+                    VerticalTextAlignment="Center" />
+                <ListView
+                    IsPullToRefreshEnabled="True"
+                    IsRefreshing="{Binding IsBusy}"
+                    IsVisible="{Binding HasLogs}"
+                    ItemsSource="{Binding Logs}"
+                    RefreshCommand="{Binding LoadCommand}"
+                    RowHeight="60">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout
+                                    Margin="5"
+                                    BackgroundColor="{Binding Data, Converter={StaticResource IsNullToColor}}"
+                                    Orientation="Vertical">
+                                    <StackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding PrimaryCommand}" NumberOfTapsRequired="2" />
+                                    </StackLayout.GestureRecognizers>
+                                    <Label
+                                        Margin="5,5,0,0"
+                                        BackgroundColor="Transparent"
+                                        FontAttributes="Bold"
+                                        FontSize="{StaticResource BaseFontSize++}"
+                                        HorizontalOptions="StartAndExpand"
+                                        LineBreakMode="NoWrap"
+                                        Text="{Binding Text}" />
+                                    <Label
+                                        Margin="5,-10,5,5"
+                                        HorizontalOptions="End"
+                                        HorizontalTextAlignment="Start"
+                                        Text="{Binding Detail}" />
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

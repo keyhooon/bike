@@ -31,7 +31,7 @@ namespace bike.ViewModels
 
             Log
                 .WhenExceptionLogged()
-                .ObserveOn(RxApp.MainThreadScheduler)
+                //.ObserveOn(RxApp.MainThreadScheduler)
                 .Select(x => new CommandItem
                 {
                     Text = DateTime.Now.ToString(),

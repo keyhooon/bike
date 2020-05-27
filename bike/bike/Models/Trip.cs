@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using SQLiteNetExtensions.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +19,7 @@ namespace bike.Models
         public int DistanceInMeters { get; set; }
 
         public double MaximumSpeed { get; set; }
-
+        [OneToMany]
         public List<TripDetail> TripDetails { get; set; }
     }
 }

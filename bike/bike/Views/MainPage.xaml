@@ -4,6 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
+    xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
     xmlns:image="clr-namespace:bike.Assets"
     xmlns:prism="http://prismlibrary.com"
     prism:ViewModelLocator.AutowireViewModel="True">
@@ -26,9 +27,7 @@
             <Setter Property="HeightRequest" Value="32" />
             <Setter Property="VerticalOptions" Value="CenterAndExpand" />
         </Style>
-
     </MasterDetailPage.Resources>
-
     <MasterDetailPage.Master>
         <ContentPage Title="Menu" BackgroundColor="LightGray">
             <Grid HeightRequest="150">
@@ -41,12 +40,32 @@
                     Aspect="Fill"
                     HeightRequest="200"
                     Source="NavyBlueGradient.jpeg" />-->
-                <Image
+                <!--<Image
                     Margin="10,5"
                     Aspect="AspectFit"
                     HorizontalOptions="FillAndExpand"
                     Source="logo.png"
-                    VerticalOptions="End" />
+                    VerticalOptions="End" />-->
+                <forms:AnimationView
+                    x:Name="AnimationView"
+                    Animation="splashpattern.json"
+                    AutoPlay="True"
+                    HeightRequest="200"
+                    HorizontalOptions="FillAndExpand"
+                    Loop="True"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                          Property=Width,
+                                                                          Factor=1,
+                                                                          Constant=0}"
+                    RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                      Property=Width,
+                                                                      Factor=0,
+                                                                      Constant=0}"
+                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,
+                                                                      Property=Height,
+                                                                      Factor=0,
+                                                                      Constant=000}"
+                    VerticalOptions="FillAndExpand" />
                 <ScrollView Grid.Row="1">
                     <StackLayout Spacing="0">
                         <StackLayout.Resources>
@@ -67,24 +86,22 @@
                             CommandParameter="Nav/Settings"
                             ImageSource="{image:ImageResource bike.Assets.low.026-slider.png}"
                             Text="Settings" />
-
                         <Button
                             ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
-                            CommandParameter="Nav/Settings"
+                            CommandParameter="Nav/Report"
                             ImageSource="{image:ImageResource bike.Assets.low.020-bar-graph.png}"
                             Text="Reports" />
-
                         <Button
                             ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
-                            CommandParameter="Nav/Settings"
+                            CommandParameter="Nav/Diagnostic"
                             ImageSource="{image:ImageResource bike.Assets.low.018-wrench.png}"
-                            Text="diagnostic" />
+                            Text="Diagnostics" />
                         <Button
                             ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
-                            CommandParameter="Nav/Logs?selectedTab=EventsPage"
+                            CommandParameter="Nav/Logs?createTab=Errors&amp;createTab=Events"
                             ImageSource="{image:ImageResource bike.Assets.low.003-technology.png}"
                             Text="Logs" />
                         <Button

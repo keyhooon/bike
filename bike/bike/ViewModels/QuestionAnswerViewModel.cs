@@ -7,26 +7,30 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Processors;
 
 namespace bike.ViewModels
 {
     public class QuestionAnswerViewModel : ViewModel
     {
-        public QuestionAnswerViewModel(IServiceCollection services)
+        public QuestionAnswerViewModel()
         {
+            ;
         }
         public override void OnNavigatedFrom(INavigationParameters parameters)
         {
             base.OnNavigatedFrom(parameters);
-            AnswerQuestion = parameters.GetValue<AnswerQuestion>("Question");
+            SelectedAnswerQuestion = parameters.GetValue<AnswerQuestion>("Question");
         }
-        private AnswerQuestion _answerQuestion;
-        private readonly SqliteConnection connection;
-
-        public AnswerQuestion AnswerQuestion
+        private AnswerQuestion _selectedAnswerQuestion;
+        public AnswerQuestion SelectedAnswerQuestion
         {
-            get { return _answerQuestion; }
-            set { SetProperty(ref _answerQuestion, value); }
+            get { return _selectedAnswerQuestion; }
+            set { SetProperty(ref _selectedAnswerQuestion, value); }
         }
+
+
+
+
     }
 }
