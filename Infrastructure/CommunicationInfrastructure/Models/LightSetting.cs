@@ -11,54 +11,39 @@ namespace DataModels
     public class LightSetting : BindableBase
     {
 
-        private static ISettings AppSettings => CrossSettings.Current;
+        private LightVolume _light1;
 
         public LightVolume Light1
         {
-            get => (LightVolume)AppSettings.GetValueOrDefault(nameof(Light1), (byte)LightVolume.High);
-            set
-            {
-                if (value == Light1)
-                    return;
-                AppSettings.AddOrUpdateValue(nameof(Light1), (byte)value);
-                RaisePropertyChanged();
-            }
+            get => _light1;
+            set => SetProperty(ref _light1, value);
         }
-        
+
+
+        private LightVolume _light2;
+
         public LightVolume Light2
         {
-            get => (LightVolume)AppSettings.GetValueOrDefault(nameof(Light2), (byte)LightVolume.High);
-            set
-            {
-                if (value == Light2)
-                    return;
-                AppSettings.AddOrUpdateValue(nameof(Light2), (byte)value);
-                RaisePropertyChanged();
-            }
+            get => _light2;
+            set => SetProperty(ref _light2, value);
         }
-        
+
+
+        private LightVolume _light3;
+
         public LightVolume Light3
         {
-            get => (LightVolume)AppSettings.GetValueOrDefault(nameof(Light3), (byte)LightVolume.High);
-            set
-            {
-                if (value == Light3)
-                    return;
-                AppSettings.AddOrUpdateValue(nameof(Light3), (byte)value);
-                RaisePropertyChanged();
-            }
+            get => _light3;
+            set => SetProperty(ref _light3, value);
         }
-        
+
+
+        private LightVolume _light4;
+
         public LightVolume Light4
         {
-            get => (LightVolume)AppSettings.GetValueOrDefault(nameof(Light4), (byte)LightVolume.High);
-            set
-            {
-                if (value == Light4)
-                    return;
-                AppSettings.AddOrUpdateValue(nameof(Light4), (byte)value);
-                RaisePropertyChanged();
-            }
+            get => _light4;
+            set => SetProperty(ref _light4, value);
         }
     }
     [TypeConverter(typeof(EnumDescriptionTypeConverter))]

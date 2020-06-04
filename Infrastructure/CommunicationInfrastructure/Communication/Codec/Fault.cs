@@ -1,15 +1,14 @@
-﻿using System;
+﻿using SharpCommunication.Codec.Encoding;
+using SharpCommunication.Codec.Packets;
+using System;
 using System.IO;
 using System.Linq;
-using SharpCommunication.Base.Codec.Packets;
 
-namespace Communication.Codec
+namespace Device.Communication.Codec
 {
-    public class FaultPacket : IPacket, IAncestorPacket
+    public class Fault : IPacket, IAncestorPacket
     {
-        public readonly static byte id = 100;
-        public const byte byteCount = 2;
-        public byte Id => id;
+
         public bool OverCurrent { get; set; }
         public bool OverTemprature { get; set; }
         public bool PedalSensor { get; set; }
@@ -22,46 +21,51 @@ namespace Communication.Codec
         public override string ToString()
         {
 
-            return $"OverCurrent : {OverCurrent}, " +
+            return $"Fault {{ OverCurrent : {OverCurrent}, " +
                 $"OverTemprature : {OverTemprature}, " +
                 $"PedalSensor : {PedalSensor}, " +
                 $"Throttle : {Throttle}, " +
                 $"OverVoltage : {OverVoltage}, " +
                 $"UnderVoltage : {UnderVoltage}, " +
                 $"Motor : {Motor}, " +
-                $"Drive : {Drive}, ";
+                $"Drive : {Drive} }} ";
         }
         public class Encoding : AncestorPacketEncoding
         {
 
-            public Encoding(PacketEncoding encoding) : base(encoding, id)
+            private readonly static byte byteCount = 1;
+            public override Type PacketType => typeof(Fault);
+
+            public override byte Id => 100;
+
+            public Encoding(EncodingDecorator encoding) : base(encoding)
             {
 
             }
-            public Encoding() : base(null, id)
+            public Encoding() : base(null)
             {
 
             }
 
-            public override void EncodeCore(IPacket packet, BinaryWriter writer)
+            public override void Encode(IPacket packet, BinaryWriter writer)
             {
-                var o = (FaultPacket)packet;
-                var value = BitConverter.GetBytes(
-                    (o.OverTemprature ? 0x02 : 0x00) | (o.OverCurrent ? 0x01 : 0x00) |
+                var o = (Fault)packet;
+                var value = ((byte)(
+                    (o.OverTemprature ?  0x02 : 0x00) | (o.OverCurrent ? 0x01 : 0x00) |
                     (o.Throttle ? 0x08 : 0x00) | (o.PedalSensor ? 0x04 : 0x00) |
                     (o.UnderVoltage ? 0x20 : 0x00) | (o.OverVoltage ? 0x10 : 0x00) |
-                    (o.Drive ? 0x80 : 0x00) | (o.Motor ? 0x40 : 0x00));
-                var crc8 = value.Aggregate<byte, byte>(0, (current, t) => (byte)(current + t));
+                    (o.Drive ? 0x80 : 0x00) | (o.Motor ? 0x40 : 0x00)));
+                var crc8 = value;
                 writer.Write(value);
                 writer.Write(crc8);
             }
 
-            public override IPacket DecodeCore(BinaryReader reader)
+            public override IPacket Decode(BinaryReader reader)
             {
                 var value = reader.ReadBytes(byteCount);
                 var crc8 = value.Aggregate<byte, byte>(0, (current, t) => (byte)(current + t));
                 if (crc8 == reader.ReadByte())
-                    return new FaultPacket
+                    return new Fault
                     {
                         OverCurrent = (value[0] & 0x01) == 0x01,
                         OverTemprature = (value[0] & 0x02) == 0x02,
@@ -74,17 +78,8 @@ namespace Communication.Codec
                     };
                 return null;
             }
-        }
-
-    }
-
-    public static class FaultEncoding
-    {
-        public static PacketEncodingBuilder CreateBuilder()
-        {
-            var packetEncodingBuilder = PacketEncodingBuilder.CreateDefaultBuilder();
-            packetEncodingBuilder.SetupActions.Add(item => new FaultPacket.Encoding(item));
-            return packetEncodingBuilder;
+            public static PacketEncodingBuilder CreateBuilder() =>
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
         }
 
     }

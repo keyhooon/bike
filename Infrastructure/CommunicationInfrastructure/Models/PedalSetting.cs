@@ -4,38 +4,29 @@ using Plugin.Settings;
 using Plugin.Settings.Abstractions;
 using Prism.Mvvm;
 using System.ComponentModel;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace DataModels
 {
     public class PedalSetting :BindableBase
     {
 
-        private static ISettings AppSettings => CrossSettings.Current;
-
+        private PedalAssistLevelType _assistLevel;
+        [Display(Name = "Level of Assist", Prompt = "Enter Level of Assist for Pedal", Description = "Level of Assist; If you want higher speed when Pedaling set High level for Pedal Assist")]
         public PedalAssistLevelType AssistLevel
         {
-            get => (PedalAssistLevelType)AppSettings.GetValueOrDefault(nameof(AssistLevel), 4);
-            set
-            {
-                if (value == AssistLevel)
-                    return;
-                AppSettings.AddOrUpdateValue(nameof(AssistLevel), (int)value);
-                RaisePropertyChanged();
-            }
+            get => _assistLevel;
+            set => SetProperty(ref _assistLevel, value);
         }
 
+
+        public PedalActivationTimeType _activationTime;
+
+        [Display(Name = "Sensivity of Assit", Prompt = "Enter Sensivity of Assist for Pedal", Description = "Sensivity of Pedal Assist.")]
         public PedalActivationTimeType ActivationTime
         {
-            get => (PedalActivationTimeType) AppSettings.GetValueOrDefault(nameof(ActivationTime), 3);
-            set
-            {
-                if (value == ActivationTime)
-                    return;
-                AppSettings.AddOrUpdateValue(nameof(ActivationTime), (int)value);
-                RaisePropertyChanged();
-            }
-
+            get => _activationTime;
+            set => SetProperty(ref _activationTime, value);
         }
      
     }

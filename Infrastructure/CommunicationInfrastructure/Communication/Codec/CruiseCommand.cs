@@ -1,38 +1,44 @@
-﻿using SharpCommunication.Base.Codec.Packets;
+﻿using SharpCommunication.Codec.Encoding;
+using SharpCommunication.Codec.Packets;
 using System;
 
 
-namespace Communication.Codec
+namespace Device.Communication.Codec
 {
     class CruiseCommand : IFunctionPacket
     {
         public bool IsOn { get; set; }
-        public byte[] Param
-        {
-            get => new[] { IsOn ? (byte)0x01 : (byte)0x00 };
-            set
-            {
-                if (value != null && value.Length > 0 && value[0] == 0x01)
+        public byte[] Param { 
+            get {
+                return new byte[] { IsOn ? (byte)0x01 : (byte)0x00 };
+            } 
+            set {
+                if (value != null && value.Length > 0 && value[0] == (byte)0x01)
                     IsOn = true;
             }
         }
-
+        public Action Action => throw new NotImplementedException();
         public override string ToString()
         {
 
-            return $"Cruise : {IsOn}";
+            return $"Cruise Command {{ Cruise : {IsOn} }}";
         }
-        public Action Action => throw new NotImplementedException();
 
-        public static readonly byte ParamByteCount = 1;
-        public const byte ID = 3;
-        public byte Id => ID;
-    }
-    public static class CruiseCommandEncoding
-    {
-        public static PacketEncodingBuilder CreateBuilder()
+        public class Encoding : FunctionPacketEncoding<CruiseCommand>
         {
-            return PacketEncodingBuilder.CreateDefaultBuilder().WithFunction<CruiseCommand>(CruiseCommand.ParamByteCount, CruiseCommand.ID);
+
+            public override byte ParameterByteCount => 1;
+            public override byte Id => 3;
+            public override Action<byte[]> ActionToDo { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+
+
+            public Encoding(EncodingDecorator encoding) : base(encoding)
+            {
+
+            }
+            public static PacketEncodingBuilder CreateBuilder() =>
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
         }
     }
 }

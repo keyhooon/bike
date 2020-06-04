@@ -9,19 +9,12 @@ namespace DataModels
     public class ThrottleSetting : BindableBase
     {
 
-        private static ISettings AppSettings => CrossSettings.Current;
+        private ThrottleActivityType _activityType;
 
         public ThrottleActivityType ActivityType
         {
-            get => (ThrottleActivityType)AppSettings.GetValueOrDefault(nameof(ActivityType), 3);
-            set
-            {
-                if (value == ActivityType)
-                    return;
-                AppSettings.AddOrUpdateValue(nameof(ActivityType), (int)value);
-                RaisePropertyChanged();
-            }
-
+            get => _activityType;
+            set => SetProperty(ref _activityType, value);
         }
     }
     [Xamarin.Forms.TypeConverter(typeof(EnumDescriptionTypeConverter))]

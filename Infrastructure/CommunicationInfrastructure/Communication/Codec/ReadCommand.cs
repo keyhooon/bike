@@ -1,14 +1,21 @@
-﻿using System;
-using SharpCommunication.Base.Codec.Packets;
+﻿using SharpCommunication.Codec.Encoding;
+using SharpCommunication.Codec.Packets;
+using System;
+using System.IO;
 
-namespace Communication.Codec
+namespace Device.Communication.Codec
 {
-    public class ReadCommand : IFunctionPacket
+    class ReadCommand : IFunctionPacket
     {
         public byte DataId { get; set; }
+
+
         public byte[] Param
         {
-            get => new[] { DataId };
+            get
+            {
+                return new byte[] { DataId };
+            }
             set
             {
                 if (value != null && value.Length > 0)
@@ -16,22 +23,27 @@ namespace Communication.Codec
 
             }
         }
+
         public override string ToString()
         {
 
-            return $"Request Data: {DataId}";
+            return $"Read Command {{ Request Data: {DataId} }}";
         }
-        public Action Action => throw new NotImplementedException();
 
-        public const byte ParamByteCount = 1;
-        public const byte id = 1;
-        public byte Id => id;
-    }
-    public static class ReadCommandEncoding
-    {
-        public static PacketEncodingBuilder CreateBuilder()
+        public class Encoding : FunctionPacketEncoding<ReadCommand>
         {
-            return PacketEncodingBuilder.CreateDefaultBuilder().WithFunction<ReadCommand>(ReadCommand.ParamByteCount, ReadCommand.id);
+            public override byte ParameterByteCount => 1;
+            public override byte Id => 1;
+            public override Action<byte[]> ActionToDo { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+            public Encoding(EncodingDecorator encoding) : base(encoding)
+            {
+
+            }
+
+            public static PacketEncodingBuilder CreateBuilder()=>
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
         }
+
     }
 }

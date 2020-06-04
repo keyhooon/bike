@@ -22,12 +22,12 @@ namespace bike.ViewModels
         public async override void OnAppearing()
         {
             base.OnAppearing();
-            var result = await dialogs.RequestAccess(() => this.manager.RequestAccess(new GpsRequest { UseBackground = true}));
-            if (!result)
-            {
-                await dialogs.Alert("Insufficient permissions");
-                return;
-            }
+            //var result = await dialogs.RequestAccess(() => this.manager.RequestAccess(new GpsRequest()));
+            //if (!result)
+            //{
+            //    await dialogs.Alert("Insufficient permissions");
+            //    return;
+            //}
 
             var request = new GpsRequest
             {

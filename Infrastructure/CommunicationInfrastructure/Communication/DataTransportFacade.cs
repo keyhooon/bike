@@ -3,20 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Communication.Codec;
+using Device.Communication.Codec;
 using Prism.Commands;
 using Prism.Ioc;
 using Prism.Unity;
-using SharpCommunication.Base.Channels;
-using SharpCommunication.Base.Codec.Packets;
-using SharpCommunication.Base.Transport;
-using SharpCommunication.Base.Transport.SerialPort;
+using SharpCommunication.Channels;
+using SharpCommunication.Codec.Packets;
+using SharpCommunication.Transport;
+using SharpCommunication.Transport.SerialPort;
 using Unity;
 
 namespace Communication
 {
     public class DataTransportFacade
     {
-        private DataTransport<DevicePacket> _dataTransport;
+        private DataTransport<Packet> _dataTransport;
         private UnityContainerExtension _container;
         private readonly SerialPortDataTransportOption serialPortDataTransportOption;
 
@@ -37,21 +38,21 @@ namespace Communication
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
                 foreach (var item in e.NewItems)
-                    ((IChannel<DevicePacket>)item).DataReceived += OnChannel_DataReceived;
+                    ((IChannel<Packet>)item).DataReceived += OnChannel_DataReceived;
             if (e.Action == NotifyCollectionChangedAction.Remove)
                 foreach (var item in e.OldItems)
-                    ((IChannel<DevicePacket>)item).DataReceived -= OnChannel_DataReceived;
+                    ((IChannel<Packet>)item).DataReceived -= OnChannel_DataReceived;
         }
 
-        private void OnChannel_DataReceived(object sender, DataReceivedEventArg<DevicePacket> e)
+        private void OnChannel_DataReceived(object sender, DataReceivedEventArg<Packet> e)
         {
             switch (e.Data.DescendantPacket)
             {
-                case DataPacket dataPacket:
-                    DataReceived?.Invoke(sender, new PacketReceivedEventArg(dataPacket.DescendantPacket));
+                case DatadataPacket:
+                    DataReceived?.Invoke(sender, new PacketReceivedEventArg(data.DescendantPacket));
                     break;
-                case CommandPacket commandPacket:
-                    CommandReceived?.Invoke(sender, new PacketReceivedEventArg(commandPacket.DescendantPacket));
+                case CommandcommandPacket:
+                    CommandReceived?.Invoke(sender, new PacketReceivedEventArg(command.DescendantPacket));
                     break;
                 default:
                     break;
@@ -62,7 +63,7 @@ namespace Communication
         {
             foreach (var channel in _dataTransport.Channels)
             {
-                channel.Transmit(DevicePacket.CreateDataPacket(dataPacket));
+                channel.Transmit(Packet.CreateDataPacket(dataPacket));
             }
         }
 

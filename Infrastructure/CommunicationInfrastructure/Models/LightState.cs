@@ -7,7 +7,7 @@ namespace DataModels
     {
         public LightState()
         {
-            _lights = new ObservableCollection<bool>(new[] { false, false, false, false });
+            _lights = new ObservableCollection<bool>(new bool[4] );
         }
 
         private ObservableCollection<bool> _lights;

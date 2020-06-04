@@ -30,5 +30,20 @@ namespace bike.ViewModels
         public List<string> PedalAssistSensitivitiesList { get; }
 
         public List<string> ThrottleModeList { get; }
+
+        public string PedalAssistLevelString { get; }
+
+        public string PedalAssistSensitivitiesString { get; }
+
+        public string ThrottleModeString { get; }
+
+        public LightSetting LightSetting => _servoDriveService.LightSetting;
+        public ThrottleSetting ThrottleSetting => _servoDriveService.ThrottleSetting;
+        public PedalSetting PedalSetting => _servoDriveService.PedalSetting;
+
+        public BatteryOutput Battery => _servoDriveService.Battery;
+        public Fault Fault => _servoDriveService.Fault;
+        public LightState Light => _servoDriveService.Light;
+        public ServoOutput Servo => _servoDriveService.Servo;
     }
 }

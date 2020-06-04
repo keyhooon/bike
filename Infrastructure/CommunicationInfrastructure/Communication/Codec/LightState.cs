@@ -1,13 +1,13 @@
-﻿using System.IO;
-using SharpCommunication.Base.Codec.Packets;
+﻿using System;
+using System.IO;
+using SharpCommunication.Codec.Encoding;
+using SharpCommunication.Codec.Packets;
 
 namespace Communication.Codec
 {
-    public class LightStatePacket : IPacket, IAncestorPacket
+    public class LightState : IPacket, IAncestorPacket
     {
-        public readonly static byte id = 6;
-        public const byte byteCount = 1;
-        public byte Id => id;
+
         public bool Light1 { get; set; }
         public bool Light2 { get; set; }
         public bool Light3 { get; set; }
@@ -16,26 +16,30 @@ namespace Communication.Codec
         public override string ToString()
         {
 
-            return $"Light1 : {Light1}" +
+            return $"Light State {{ Light1 : {Light1}" +
                 $", Light2 : {Light2}" +
                 $", Light3 : {Light3}" +
-                $", Light4 : {Light4}";
+                $", Light4 : {Light4} }}";
         }
         public class Encoding : AncestorPacketEncoding
         {
+            public const byte byteCount = 1;
+            public override byte Id => 6;
 
-            public Encoding(PacketEncoding encoding) : base(encoding, id)
+            public override Type PacketType => typeof(LightState);
+
+            public Encoding(EncodingDecorator encoding) : base(encoding)
             {
 
             }
-            public Encoding() : base(null, id)
+            public Encoding() : this(null)
             {
 
             }
 
-            public override void EncodeCore(IPacket packet, BinaryWriter writer)
+            public override void Encode(IPacket packet, BinaryWriter writer)
             {
-                var o = (LightSettingPacket)packet;
+                var o = (LightSetting)packet;
                 byte crc8 = 0;
                 byte value;
                 value = (byte)((byte)o.Light1 | (byte)o.Light2 << 1 | (byte)o.Light3 << 2 | (byte)o.Light4 << 3);
@@ -44,13 +48,13 @@ namespace Communication.Codec
                 writer.Write(crc8);
             }
 
-            public override IPacket DecodeCore(BinaryReader reader)
+            public override IPacket Decode(BinaryReader reader)
             {
                 var value = reader.ReadByte();
                 byte crc8 = 0;
                 crc8 += value;
                 if (crc8 == reader.ReadByte())
-                    return new LightStatePacket
+                    return new LightState
                     {
                         Light1 = (value & 1) == 1,
                         Light2 = (value >> 1 & 1) == 1,
@@ -59,18 +63,8 @@ namespace Communication.Codec
                     };
                 return null;
             }
+            public static PacketEncodingBuilder CreateBuilder() =>
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
         }
-
-    }
-
-    public static class LightStatePacetEncoding
-    {
-        public static PacketEncodingBuilder CreateBuilder()
-        {
-            var packetEncodingBuilder = PacketEncodingBuilder.CreateDefaultBuilder();
-            packetEncodingBuilder.SetupActions.Add(item => new LightStatePacket.Encoding(item));
-            return packetEncodingBuilder;
-        }
-
     }
 }

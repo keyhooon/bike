@@ -287,8 +287,8 @@
                     <Picker
                         HorizontalOptions="Center"
                         ItemsSource="{Binding PedalAssistLevelList}"
+                        SelectedIndex="{Binding PedalSetting.AssistLevel, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                         SelectedIndexChanged="Picker_SelectedIndexChanged"
-                        SelectedItem="{Binding AssistLevel, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                         TextColor="LightBlue"
                         TitleColor="gray"
                         VerticalOptions="Start" />
@@ -308,8 +308,8 @@
                         BackgroundColor="Default"
                         HorizontalOptions="Center"
                         ItemsSource="{Binding PedalAssistSensitivitiesList}"
+                        SelectedIndex="{Binding PedalSetting.ActivationTime, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                         SelectedIndexChanged="Picker_SelectedIndexChanged"
-                        SelectedItem="{Binding ActivationTime, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                         TextColor="LightBlue"
                         TitleColor="gray"
                         VerticalOptions="Start" />
@@ -329,8 +329,8 @@
                         BackgroundColor="Default"
                         HorizontalOptions="Center"
                         ItemsSource="{Binding ThrottleModeList}"
-                        SelectedIndexChanged="Picker_SelectedIndexChanged"
                         SelectedIndex="{Binding ThrottleSetting.ActivityType, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                        SelectedIndexChanged="Picker_SelectedIndexChanged"
                         TextColor="LightBlue"
                         TitleColor="gray"
                         VerticalOptions="Start" />

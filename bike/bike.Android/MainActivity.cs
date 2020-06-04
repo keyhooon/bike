@@ -35,11 +35,12 @@ namespace bike.Droid
 
 
             LoadApplication(new App());
+                            this.ShinyOnCreate();
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {
-            this.ShinyRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            this.ShinyRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 
