@@ -1,4 +1,4 @@
-﻿using SharpCommunication.Base.Codec.Packets;
+﻿using SharpCommunication.Codec.Packets;
 using System;
 
 namespace Communication

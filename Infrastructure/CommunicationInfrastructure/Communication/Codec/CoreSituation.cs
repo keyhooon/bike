@@ -1,15 +1,19 @@
 ﻿using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 
 namespace Device.Communication.Codec
 {
-    class CoreSituation : IPacket, IAncestorPacket
+    public class CoreSituation : IPacket, IAncestorPacket
     {
-
+        [Display(Name = "Core Temprature")]
+        [Editable(false)]
         public double Temprature { get; set; }
+        [Display(Name = "Core Voltage")]
+        [Editable(false)]
         public double Voltage { get; set; }
 
         public override string ToString()
@@ -22,14 +26,15 @@ namespace Device.Communication.Codec
         }
         public class Encoding : AncestorPacketEncoding
         {
-            private static byte byteCount = 4;
+            public static byte ID => 3;
+
             private static double _tempratureBitResolution = 0.0625d;
             private static double _voltageBitResolution = 0.0625d;
             private static double _tempratureBias = 0.0d;
             private static double _voltageBias = 0.0d;
 
 
-            public override byte Id => 3;
+            public override byte Id => ID;
 
             public override Type PacketType => typeof(CoreSituation);
 
@@ -59,7 +64,7 @@ namespace Device.Communication.Codec
 
             public override IPacket Decode(BinaryReader reader)
             {
-                var value = reader.ReadBytes(byteCount);
+                var value = reader.ReadBytes(4);
                 byte crc8 = 0;
                 for (int i = 0; i < value.Length; i++)
                     crc8 += value[i];

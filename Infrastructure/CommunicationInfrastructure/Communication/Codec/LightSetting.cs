@@ -1,29 +1,34 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
+using Infrastructure.TypeConverters;
 using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
 
-namespace Communication.Codec
+namespace Device.Communication.Codec
 {
     public class LightSetting : IPacket, IAncestorPacket
     {
 
-        public byte Light1 { get; set; }
-        public byte Light2 { get; set; }
-        public byte Light3 { get; set; }
-        public byte Light4 { get; set; }
+        public LightVolume Light1 { get; set; }
+        public LightVolume Light2 { get; set; }
+        public LightVolume Light3 { get; set; }
+        public LightVolume Light4 { get; set; }
 
         public override string ToString()
         {
 
-            return $"Light Setting {{ Light1 : {Light1}" +
-                $", Light2 : {Light2}" +
-                $", Light3 : {Light3}" +
-                $", Light4 : {Light4} }}";
+            return $"Light Setting {{ Light1 : {Enum.GetName(typeof(LightVolume), Light1)}" +
+                $", Light2 : {Enum.GetName(typeof(LightVolume), Light2)}" +
+                $", Light3 : {Enum.GetName(typeof(LightVolume), Light3)}" +
+                $", Light4 : {Enum.GetName(typeof(LightVolume), Light4)} }}";
         }
         public class Encoding : AncestorPacketEncoding
         {
-            public override byte Id => 5;
+
+            public static byte ID => 5;
+
+            public override byte Id => ID;
 
             public override Type PacketType => typeof(LightSetting);
 
@@ -54,16 +59,24 @@ namespace Communication.Codec
                 if (crc8 == reader.ReadByte())
                     return new LightSetting
                     {
-                        Light1 = (byte)(value & 0b11),
-                        Light2 = (byte)((value >> 2) & 0b11),
-                        Light3 = (byte)((value >> 4) & 0b11),
-                        Light4 = (byte)((value >> 6) & 0b11)
+                        Light1 = (LightVolume)(value & 0b11),
+                        Light2 = (LightVolume)((value >> 2) & 0b11),
+                        Light3 = (LightVolume)((value >> 4) & 0b11),
+                        Light4 = (LightVolume)((value >> 6) & 0b11)
                     };
                 return null;
             }
 
             public static PacketEncodingBuilder CreateBuilder() =>
                 PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
+        }
+        [TypeConverter(typeof(EnumDescriptionTypeConverter))]
+        public enum LightVolume : byte
+        {
+            ExtraLow = 0,
+            Low = 1,
+            Normal = 2,
+            High = 3,
         }
 
     }

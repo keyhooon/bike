@@ -2,15 +2,22 @@
 using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 
 namespace Device.Communication.Codec
 {
-    class CoreConfiguration : IPacket, IAncestorPacket
+    public class CoreConfiguration : IPacket, IAncestorPacket
     {
+        [Display(Name = "ID")]
+        [Editable(false)]
         public string UniqueId { get; set; }
+        [Display(Name = "Firmware Version")]
+        [Editable(false)] 
         public string FirmwareVersion{ get; set; }
+        [Display(Name = "Model Number")]
+        [Editable(false)] 
         public string ModelVersion { get; set; }
 
         public override string ToString()
@@ -21,8 +28,12 @@ namespace Device.Communication.Codec
         }
         public class Encoding : AncestorPacketEncoding
         {
-            private static readonly byte _byteCount = 16;
-            public override byte Id => 4;
+
+            public static byte ID => 4;
+
+
+
+            public override byte Id => ID;
 
             public override Type PacketType => typeof(CoreConfiguration);
 

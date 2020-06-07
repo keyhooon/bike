@@ -4,7 +4,7 @@ using System.Linq;
 using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
 
-namespace Communication.Codec
+namespace Device.Communication.Codec
 {
     public class ServoOutput : IPacket, IAncestorPacket
     {
@@ -22,13 +22,15 @@ namespace Communication.Codec
         }
         public class Encoding : AncestorPacketEncoding
         {
+            public static byte ID => 50;
+
             private static readonly double _activityPercentBitResolution = 0.0015259021896696d;
             private static readonly double _wheelSpeedBitResolution = 0.000244140625 / 60;
             private static readonly double _activityPercentBias = 0.0d;
             private static readonly double _wheelSpeedBias = 0.0d;
             private static readonly byte _byteCount = 5;
 
-            public override byte Id => 50;
+            public override byte Id => ID;
 
             public override Type PacketType => typeof(ServoOutput);
 

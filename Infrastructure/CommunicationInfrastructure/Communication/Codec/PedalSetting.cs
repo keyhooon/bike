@@ -1,29 +1,35 @@
-﻿using SharpCommunication.Codec.Encoding;
+﻿using Infrastructure.TypeConverters;
+using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
 using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 
-namespace Communication.Codec
+namespace Device.Communication.Codec
 {
     public class PedalSetting : IPacket, IAncestorPacket
     {
-        public byte AssistLevel { get; set; }
-        public byte ActivationTime { get; set; }
+        [Display(Name = "Level of Assist", Prompt = "Enter Level of Assist for Pedal", Description = "Level of Assist; If you want higher speed when Pedaling set High level for Pedal Assist")]
+        public PedalAssistLevelType AssistLevel { get; set; }
+        [Display(Name = "Sensivity of Assist", Prompt = "Enter Sensivity of Assist for Pedal", Description = "Sensivity of Pedal Assist.")]
+        public PedalActivationTimeType ActivationTime { get; set; }
         public int LowLimit { get; set; }
         public int HighLimit { get; set; }
 
         public override string ToString()
         {
 
-            return $"Pedal Setting {{ AssistLevel : {AssistLevel}, ActivationTime : {ActivationTime}, " +
+            return $"Pedal Setting {{ AssistLevel : {Enum.GetName(typeof(PedalAssistLevelType), AssistLevel)}, ActivationTime : {Enum.GetName(typeof(PedalActivationTimeType), ActivationTime)}, " +
                 $"LowLimit : {LowLimit}, HighLimit : {HighLimit} }}";
         }
         public class Encoding : AncestorPacketEncoding
         {
             private static readonly byte ByteCount = 5;
+            public static byte ID => 8;
 
-            public override byte Id => 8;
+            public override byte Id => ID;
 
             public override Type PacketType => typeof(PedalSetting);
 
@@ -40,7 +46,7 @@ namespace Communication.Codec
             {
                 var o = (PedalSetting)packet;
                 byte crc8 = 0;
-                var value = new byte[] { (byte)(o.AssistLevel | o.ActivationTime << 3) };
+                var value = new byte[] { (byte)((byte)o.AssistLevel | (byte)o.ActivationTime << 3) };
                 crc8 += value[0];
                 writer.Write(value);
                 value = BitConverter.GetBytes((ushort)o.LowLimit);
@@ -62,8 +68,8 @@ namespace Communication.Codec
                 if (crc8 == reader.ReadByte())
                     return new PedalSetting
                     {
-                        AssistLevel = (byte)(value.First() & 0b111),
-                        ActivationTime = (byte)(value.First() >> 3 & 0b11),
+                        AssistLevel = (PedalAssistLevelType)((byte)(value.First() & 0b111)),
+                        ActivationTime = (PedalActivationTimeType)((byte)(value.First() >> 3 & 0b11)),
                         LowLimit = BitConverter.ToUInt16(value, 1),
                         HighLimit = BitConverter.ToUInt16(value, 3)
                     };
@@ -73,6 +79,38 @@ namespace Communication.Codec
                 PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
 
 
+        }
+        [Xamarin.Forms.TypeConverter(typeof(EnumDescriptionTypeConverter))]
+        public enum PedalAssistLevelType : byte
+        {
+            [Description("87.5%")]
+            EightySevenPointFive = 0,
+            [Description("75  %")]
+            SeventyFive = 1,
+            [Description("62.5%")]
+            SixtyTwoPointFive = 2,
+            [Description("50  %")]
+            Fifty = 3,
+            [Description("37.5%")]
+            ThirtySevenPointFive = 4,
+            [Description("31.2%")]
+            ThrityOnePointTwentyFive = 5,
+            [Description("25  %")]
+            TowentyFive = 6,
+            [Description("OFF  ")]
+            Off = 7,
+        }
+        [Xamarin.Forms.TypeConverter(typeof(EnumDescriptionTypeConverter))]
+        public enum PedalActivationTimeType : byte
+        {
+            [Description("EXTRA")]
+            ExteraSensitive = 0,
+            [Description("HIGH ")]
+            HighSensitive = 1,
+            [Description("NORM ")]
+            NormalSensitive = 2,
+            [Description("LOW  ")]
+            LowSensitive = 3,
         }
     }
 

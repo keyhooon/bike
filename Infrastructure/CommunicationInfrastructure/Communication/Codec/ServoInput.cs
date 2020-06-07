@@ -6,7 +6,7 @@ using SharpCommunication.Codec.Packets;
 
 namespace Device.Communication.Codec
 {
-    class ServoInput : IPacket, IAncestorPacket
+    public class ServoInput : IPacket, IAncestorPacket
     {
 
         public double Throttle { get; set; }
@@ -27,6 +27,8 @@ namespace Device.Communication.Codec
         }
         public class Encoding : AncestorPacketEncoding
         {
+            public static byte ID => 9;
+
             private static readonly byte _byteCount = 7;
             private static readonly double _throttleBitResolution = 0.001953125;
             private static readonly double _pedalBitResolution = 0.001953125;
@@ -35,7 +37,7 @@ namespace Device.Communication.Codec
             private static readonly double _pedalBias = 0.0d;
             private static readonly double _cruiseBias = 0.0d;
 
-            public override byte Id => 9;
+            public override byte Id => ID;
 
             public override Type PacketType => typeof(ServoInput);
 

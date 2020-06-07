@@ -1,13 +1,15 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
 
-namespace Communication.Codec
+namespace Device.Communication.Codec
 {
     public class PedalConfiguration : IPacket, IAncestorPacket
     {
-
+        [Display(Name = "Number of Magnet", Prompt = "Enter Number of Magnet", Description = "Magnet Count that Used in Motor")]
+        [Editable(false)]
         public byte MagnetCount { get; set; }
 
         public override string ToString()
@@ -17,8 +19,9 @@ namespace Communication.Codec
         }
         public class Encoding : AncestorPacketEncoding
         {
+            public static byte ID => 7;
 
-            public override byte Id => 7;
+            public override byte Id => ID;
 
             public override Type PacketType => typeof(PedalConfiguration);
 

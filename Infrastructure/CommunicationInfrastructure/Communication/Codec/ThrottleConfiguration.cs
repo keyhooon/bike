@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using SharpCommunication.Codec.Encoding;
@@ -7,11 +8,17 @@ using SharpCommunication.Codec.Packets;
 
 namespace Device.Communication.Codec
 {
-    class ThrottleConfiguration : IPacket, IAncestorPacket
+    public class ThrottleConfiguration : IPacket, IAncestorPacket
     {
 
+        [Display(Name = "Throttle Threshold", Prompt = "Enter Threshold Limit for Throttle Voltage", Description = "Threshold Limit for Throttle Voltage")]
+        [Editable(false)]
         public double FaultThreshold { get; set; }
+        [Display(Name = "Throttle Low Limit Voltage", Prompt = "Enter Minimum Limit for Throttle Voltage", Description = "Minimum Limit for Throttle Voltage")]
+        [Editable(false)]
         public double Min { get; set; }
+        [Display(Name = "Throttle High Limit Voltage", Prompt = "Enter Maximum Limit for Throttle Voltage", Description = "Minimum Limit for Throttle Voltage")]
+        [Editable(false)]
         public double Max { get; set; }
 
 
@@ -28,7 +35,8 @@ namespace Device.Communication.Codec
         }
         public class Encoding : AncestorPacketEncoding
         {
-            public static readonly byte byteCount = 6;
+            public static byte ID => 10;
+
             private static readonly double _faultThresholdBitResolution = 5.035477225909819e-5;
             private static readonly double _minBitResolution = 5.035477225909819e-5;
             private static readonly double _maxBitResolution = 5.035477225909819e-5;
@@ -36,7 +44,7 @@ namespace Device.Communication.Codec
             private static readonly double _minBias = 0.0d;
             private static readonly double _maxBias = 0.0d;
 
-            public override byte Id => 10;
+            public override byte Id => ID;
 
             public override Type PacketType => typeof(ThrottleConfiguration);
 
@@ -71,7 +79,7 @@ namespace Device.Communication.Codec
 
             public override IPacket Decode(BinaryReader reader)
             {
-                var value = reader.ReadBytes(byteCount);
+                var value = reader.ReadBytes(6);
                 byte crc8 = 0;
                 for (int i = 0; i < value.Length; i++)
                     crc8 += value[i];

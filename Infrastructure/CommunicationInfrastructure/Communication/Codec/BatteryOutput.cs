@@ -1,15 +1,22 @@
 ﻿using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 
 namespace Device.Communication.Codec
 {
-    class BatteryOutput : IPacket, IAncestorPacket
+    public class BatteryOutput : IPacket, IAncestorPacket
     {
+        [Display(Name = "Battery Current")]
+        [Editable(false)]
         public double Current { get; set; }
+        [Display(Name = "Battery Voltage")]
+        [Editable(false)]
         public double Voltage { get; set; }
+        [Display(Name = "Battery Temprature")]
+        [Editable(false)]
         public double Temprature { get; set; }
 
         public BatteryOutput()
@@ -27,6 +34,8 @@ namespace Device.Communication.Codec
 
         public class Encoding : AncestorPacketEncoding
         {
+            public static byte ID => 2;
+
             private static readonly byte _byteCount = 6;
             private static readonly double _currentBitResolution = 0.125d;
             private static readonly double _voltageBitResolution = 0.25d;
@@ -37,7 +46,7 @@ namespace Device.Communication.Codec
 
             public override Type PacketType => typeof(BatteryOutput);
 
-            public override byte Id => 2;
+            public override byte Id => ID;
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {

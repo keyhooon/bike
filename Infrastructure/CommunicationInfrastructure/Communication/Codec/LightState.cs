@@ -3,7 +3,7 @@ using System.IO;
 using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
 
-namespace Communication.Codec
+namespace Device.Communication.Codec
 {
     public class LightState : IPacket, IAncestorPacket
     {
@@ -23,8 +23,10 @@ namespace Communication.Codec
         }
         public class Encoding : AncestorPacketEncoding
         {
+            public static byte ID => 6;
+
             public const byte byteCount = 1;
-            public override byte Id => 6;
+            public override byte Id => ID;
 
             public override Type PacketType => typeof(LightState);
 

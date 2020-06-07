@@ -5,9 +5,9 @@ using System.IO;
 
 namespace Device.Communication.Channels
 {
-    public partial class DevicePacketChannel : Channel<Packet>
+    public partial class PacketChannel : Channel<Packet>
     {
-        public DevicePacketChannel(Stream stream) : base(new DevicePacketCodec(), stream)
+        public PacketChannel(Stream stream) : base(new PacketCodec(), stream)
         {
 
 

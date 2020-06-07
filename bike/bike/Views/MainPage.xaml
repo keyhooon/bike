@@ -36,20 +36,11 @@
                     <RowDefinition Height="auto" />
                 </Grid.RowDefinitions>
                 <BoxView BackgroundColor="{StaticResource PrimaryForeGroundColor}" HeightRequest="200" />
-                <!--<Image
-                    Aspect="Fill"
-                    HeightRequest="200"
-                    Source="NavyBlueGradient.jpeg" />-->
-                <!--<Image
-                    Margin="10,5"
-                    Aspect="AspectFit"
-                    HorizontalOptions="FillAndExpand"
-                    Source="logo.png"
-                    VerticalOptions="End" />-->
                 <forms:AnimationView
                     x:Name="AnimationView"
                     Animation="splashpattern.json"
                     AutoPlay="True"
+                    HardwareAcceleration="True"
                     HeightRequest="200"
                     HorizontalOptions="FillAndExpand"
                     Loop="True"
@@ -65,6 +56,7 @@
                                                                       Property=Height,
                                                                       Factor=0,
                                                                       Constant=000}"
+                    Speed="5"
                     VerticalOptions="FillAndExpand" />
                 <ScrollView Grid.Row="1">
                     <StackLayout Spacing="0">

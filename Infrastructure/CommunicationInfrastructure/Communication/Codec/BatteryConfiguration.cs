@@ -4,14 +4,27 @@ using System.IO;
 using System.Linq;
 using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
+using System.ComponentModel.DataAnnotations;
+
 namespace Device.Communication.Codec
 {
     public class BatteryConfiguration: IPacket, IAncestorPacket
     {
+        [Display(Name = "Over Current", Prompt = "Enter Over Current", Description = "Max threshold for Current")]
+        [Editable(false)]
         public double OverCurrent { get; set; }
+
+        [Display(Name = "Over Voltage", Prompt = "Enter Over Voltage", Description = "Max threshold for Voltage")]
+        [Editable(false)] 
         public double OverVoltage { get; set; }
+        [Display(Name = "Under Voltage", Prompt = "Enter Under Voltage", Description = "Min threshold for Voltage")]
+        [Editable(false)]
         public double UnderVoltage { get; set; }
+        [Display(Name = "Nominal Voltage", Prompt = "Enter Nominal Voltage", Description = "Nominal Voltage Value")]
+        [Editable(false)]
         public double NominalVoltage { get; set; }
+        [Display(Name = "Over Temprature", Prompt = "Enter Over Temprature", Description = "Maximum Threshold for Temprature")]
+        [Editable(false)]
         public double OverTemprature { get; set; }
 
         public BatteryConfiguration()
@@ -27,6 +40,8 @@ namespace Device.Communication.Codec
         }
         public class Encoding : AncestorPacketEncoding
         {
+            public static byte ID => 1;
+
             private static readonly double _overCurrentBitResolution = 0.125d;
             private static readonly double _overVoltageBitResolution = 0.25d;
             private static readonly double _underVoltageBitResolution = 0.125d;
@@ -41,7 +56,7 @@ namespace Device.Communication.Codec
 
             public override Type PacketType => typeof(BatteryConfiguration);
 
-            public override byte Id => 1;
+            public override byte Id => ID;
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {

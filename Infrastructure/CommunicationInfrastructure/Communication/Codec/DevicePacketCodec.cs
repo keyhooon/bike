@@ -2,12 +2,9 @@
 using SharpCommunication.Codec;
 using System.Collections.Generic;
 using System.Linq;
-using SharpCommunication.Codec.Packets;
-using Communication.Codec;
-
 namespace Device.Communication.Codec
 {
-    public class DevicePacketCodec : Codec<Packet>
+    public class PacketCodec : Codec<Packet>
     {
         private readonly PacketEncodingBuilder EncodingBuilder;
 
@@ -38,6 +35,7 @@ namespace Device.Communication.Codec
                 ThrottleConfiguration.Encoding.CreateBuilder()
             });
 
+
         public override EncodingDecorator Encoding
         {
             get
@@ -48,7 +46,7 @@ namespace Device.Communication.Codec
             }
         }
 
-        public DevicePacketCodec(IEnumerable<PacketEncodingBuilder> PacketEncodingBuilderList)
+        public PacketCodec(IEnumerable<PacketEncodingBuilder> PacketEncodingBuilderList)
         {
             _defaultCommandPacketEncodingBuilders.AddRange(PacketEncodingBuilderList.Where(o => o.Build().GetType().BaseType.GetGenericTypeDefinition() == typeof(FunctionPacketEncoding<>)));
             _defaultDataPacketEncodingBuilders.AddRange(PacketEncodingBuilderList.Where(o => o.Build().GetType().BaseType.GetGenericTypeDefinition() == typeof(AncestorPacketEncoding)));
@@ -58,7 +56,7 @@ namespace Device.Communication.Codec
                 Command.Encoding.CreateBuilder(_defaultCommandPacketEncodingBuilders)
             });
         }
-        public DevicePacketCodec()
+        public PacketCodec()
         {
             EncodingBuilder = Packet.Encoding.CreateBuilder(new[] {
                 Data.Encoding.CreateBuilder(_defaultDataPacketEncodingBuilders),

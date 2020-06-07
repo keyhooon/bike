@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Acr.UserDialogs.Forms" Version="1.0.0.7-beta" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1422" />
     <PackageReference Include="SharpCommunication.Base" Version="1.0.6" />
   </ItemGroup>
@@ -16,10 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InfraStructure\InfraStructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Communication\Codec\" />
   </ItemGroup>
   
 </Project>

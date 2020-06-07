@@ -5,7 +5,7 @@ using System;
 
 namespace Device.Communication.Codec
 {
-    class CruiseCommand : IFunctionPacket
+    public class CruiseCommand : IFunctionPacket
     {
         public bool IsOn { get; set; }
         public byte[] Param { 
@@ -17,7 +17,6 @@ namespace Device.Communication.Codec
                     IsOn = true;
             }
         }
-        public Action Action => throw new NotImplementedException();
         public override string ToString()
         {
 
@@ -26,9 +25,10 @@ namespace Device.Communication.Codec
 
         public class Encoding : FunctionPacketEncoding<CruiseCommand>
         {
+            public static byte ID => 3;
 
             public override byte ParameterByteCount => 1;
-            public override byte Id => 3;
+            public override byte Id => ID;
             public override Action<byte[]> ActionToDo { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 

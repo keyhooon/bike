@@ -31,8 +31,10 @@ namespace Device.Communication.Codec
         }
         public class Encoding : FunctionPacketEncoding<LightCommand>
         {
+            public static byte ID => 2;
+
             public override byte ParameterByteCount => 1;
-            public override byte Id => 2;
+            public override byte Id => ID;
 
             public override Action<byte[]> ActionToDo { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 

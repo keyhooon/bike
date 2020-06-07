@@ -1,5 +1,5 @@
-﻿using DataModels;
-using Device;
+﻿using Device;
+using Device.Communication.Codec;
 using Infrastructure;
 using Prism.Mvvm;
 
@@ -22,9 +22,8 @@ namespace bike.ViewModels
         #endregion
 
         public BatteryConfiguration Battery => _servoDriveService.BatteryConfiguration;
-        public CoreVersion Core => _servoDriveService.CoreConfiguration;
+        public CoreConfiguration Core => _servoDriveService.CoreConfiguration;
         public PedalConfiguration Pedal => _servoDriveService.PedalConfiguration;
-        public ServoConfiguration Servo => _servoDriveService.ServoConfiguration;
         public ThrottleConfiguration Throttle => _servoDriveService.ThrottleConfiguration;
 
     }

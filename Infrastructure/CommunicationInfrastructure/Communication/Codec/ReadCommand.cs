@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Device.Communication.Codec
 {
-    class ReadCommand : IFunctionPacket
+    public class ReadCommand : IFunctionPacket
     {
         public byte DataId { get; set; }
 

@@ -12,6 +12,9 @@ using Shiny.Infrastructure;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Shiny.Integrations.Sqlite;
 using BruTile.Wms;
+using SharpCommunication.Transport;
+using Device.Communication.Codec;
+using Device.Communication.Transport;
 
 namespace bike.Shiny
 {
@@ -26,8 +29,12 @@ namespace bike.Shiny
             services.UseLogging();
             services.UseUserDialog();
             services.UseGps<GpsDelegate>();
-            services.UseBleCentral();
+            services.UseBleCentral<BleDelegate>();
+            services.UseBlePeripherals();
+
             services.UseSqliteSettings();
+
+            services.AddSingleton<DataTransport<Packet>, PacketDataTransport>();
             // Register Stuff
         }
 

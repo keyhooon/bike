@@ -1,5 +1,5 @@
-﻿using DataModels;
-using Device;
+﻿using Device;
+using Device.Communication.Codec;
 using Infrastructure;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -42,15 +42,15 @@ namespace bike.ViewModels
         protected override async Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation)
         {
 
-            PedalAssistLevelActivityStringList = typeof(PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).Reverse().ToList();
+            PedalAssistLevelActivityStringList = typeof(PedalSetting.PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).Reverse().ToList();
             LightStringList = new List<string>( new[] { "25 %", "50 %", "75 %", "100 %" });
-            PedalAssistSensivityStringList = typeof(PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToList();
+            PedalAssistSensivityStringList = typeof(PedalSetting.PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToList();
 
-            PedalActive = PedalSetting.AssistLevel != PedalAssistLevelType.Off;
-            PedalAssistActivityPercentIndex = PedalAssistLevelType.Off - PedalSetting.AssistLevel;
+            PedalActive = PedalSetting.AssistLevel != PedalSetting.PedalAssistLevelType.Off;
+            PedalAssistActivityPercentIndex = PedalSetting.PedalAssistLevelType.Off - PedalSetting.AssistLevel;
             PedalAssistSensivityString = PedalAssistSensivityStringList[(int) PedalSetting.ActivationTime];
-            ThrottleActive = ThrottleSetting.ActivityType != ThrottleActivityType.Off;
-            ThrottleSport = ThrottleSetting.ActivityType == ThrottleActivityType.Sport;
+            ThrottleActive = ThrottleSetting.ActivityType != ThrottleSetting.ThrottleActivityType.Off;
+            ThrottleSport = ThrottleSetting.ActivityType == ThrottleSetting.ThrottleActivityType.Sport;
 
             FrontLightIndex = (int) LightSetting.Light1;
             BackLightIndex = (int)LightSetting.Light2;

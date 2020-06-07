@@ -32,11 +32,12 @@ namespace Device.Communication.Codec
         }
         public class Encoding : AncestorPacketEncoding
         {
+            public static byte ID => 100;
 
             private readonly static byte byteCount = 1;
             public override Type PacketType => typeof(Fault);
 
-            public override byte Id => 100;
+            public override byte Id => ID;
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {

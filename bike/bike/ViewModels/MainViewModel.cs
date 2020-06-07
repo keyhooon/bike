@@ -1,26 +1,33 @@
-﻿using Prism.Commands;
+﻿using Device;
+using Infrastructure;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace bike.ViewModels
 {
-    public class MainViewModel : BindableBase
+    public class MainViewModel : ViewModel
     {
         private readonly INavigationService navigationService;
-        public MainViewModel(INavigationService navigationService)
+        private readonly ServoDriveService servoDriveService;
+
+        public MainViewModel(INavigationService navigationService, ServoDriveService servoDriveService)
         {
             this.navigationService = navigationService;
+            this.servoDriveService = servoDriveService;
         }
         DelegateCommand<string> _navigateCommand;
         public DelegateCommand<string> NavigateCommand => _navigateCommand ?? (_navigateCommand = new DelegateCommand<string>(async (x) =>
         {
-            DrawerIsOpen = false;
             await navigationService.NavigateAsync(x);
         }));
 
-
-        bool _drawerIsOpen;
-        public bool DrawerIsOpen { get => _drawerIsOpen; set => SetProperty(ref _drawerIsOpen, value); }
+        protected override async Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation = null)
+        {
+            servoDriveService.Open();
+        }
 
     }
 }
