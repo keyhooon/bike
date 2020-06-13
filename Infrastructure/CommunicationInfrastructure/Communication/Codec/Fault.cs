@@ -30,11 +30,22 @@ namespace Device.Communication.Codec
                 $"Motor : {Motor}, " +
                 $"Drive : {Drive} }} ";
         }
+        public enum Kind : int
+        {
+            OverCurrent = 0,
+            OverTemprature = 1,
+            PedalSensor = 2,
+            Throttle = 3,
+            OverVoltage = 4,
+            UnderVoltage = 5,
+            Motor = 6,
+            Drive = 7
+        }
         public class Encoding : AncestorPacketEncoding
         {
             public static byte ID => 100;
 
-            private readonly static byte byteCount = 1;
+            private readonly static byte byteCount = 2;
             public override Type PacketType => typeof(Fault);
 
             public override byte Id => ID;
@@ -51,12 +62,13 @@ namespace Device.Communication.Codec
             public override void Encode(IPacket packet, BinaryWriter writer)
             {
                 var o = (Fault)packet;
-                var value = ((byte)(
+                var value = new byte[2];
+                value [0]= ((byte)(
                     (o.OverTemprature ?  0x02 : 0x00) | (o.OverCurrent ? 0x01 : 0x00) |
                     (o.Throttle ? 0x08 : 0x00) | (o.PedalSensor ? 0x04 : 0x00) |
                     (o.UnderVoltage ? 0x20 : 0x00) | (o.OverVoltage ? 0x10 : 0x00) |
                     (o.Drive ? 0x80 : 0x00) | (o.Motor ? 0x40 : 0x00)));
-                var crc8 = value;
+                byte crc8 = (byte)(value[0] + value[1]);
                 writer.Write(value);
                 writer.Write(crc8);
             }

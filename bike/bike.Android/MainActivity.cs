@@ -32,10 +32,10 @@ namespace bike.Droid
             Popup.Init(this, bundle);
             SettingsViewInit.Init(); // need to write here
             Effects.Init(); //need to write here
-
+            
 
             LoadApplication(new App());
-                            this.ShinyOnCreate();
+            this.ShinyOnCreate();
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
         {

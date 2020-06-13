@@ -1,4 +1,5 @@
-﻿using Device;
+﻿using bike.Services;
+using Device;
 using Device.Communication.Codec;
 using Infrastructure;
 using Prism.Mvvm;

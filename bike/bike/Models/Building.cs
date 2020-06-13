@@ -1,6 +1,5 @@
 ﻿using Mapsui.UI.Forms;
 using SQLite;
-using Syncfusion.SfMaps.XForms;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 

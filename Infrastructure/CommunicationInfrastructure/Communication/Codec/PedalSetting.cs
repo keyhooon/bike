@@ -83,22 +83,23 @@ namespace Device.Communication.Codec
         [Xamarin.Forms.TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum PedalAssistLevelType : byte
         {
-            [Description("87.5%")]
-            EightySevenPointFive = 0,
-            [Description("75  %")]
-            SeventyFive = 1,
-            [Description("62.5%")]
-            SixtyTwoPointFive = 2,
-            [Description("50  %")]
-            Fifty = 3,
-            [Description("37.5%")]
-            ThirtySevenPointFive = 4,
-            [Description("31.2%")]
-            ThrityOnePointTwentyFive = 5,
-            [Description("25  %")]
-            TowentyFive = 6,
             [Description("OFF  ")]
-            Off = 7,
+            Off = 0,
+            [Description("25  %")]
+            TowentyFive = 1,
+            [Description("31.2%")]
+            ThrityOnePointTwentyFive = 2,
+            [Description("37.5%")]
+            ThirtySevenPointFive = 3,
+            [Description("50  %")]
+            Fifty = 4,
+            [Description("62.5%")]
+            SixtyTwoPointFive = 5,
+            [Description("75  %")]
+            SeventyFive = 6,
+            [Description("87.5%")]
+            EightySevenPointFive = 7,
+           
         }
         [Xamarin.Forms.TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum PedalActivationTimeType : byte

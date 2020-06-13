@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <RootNamespace>Communication</RootNamespace>
+    <AssemblyName>bike.Communication</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs.Forms" Version="1.0.0.7-beta" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1422" />
-    <PackageReference Include="SharpCommunication.Base" Version="1.0.6" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,6 +17,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\InfraStructure\InfraStructure.csproj" />
+    <ProjectReference Include="D:\Users\HP\Source\Repos\SharpCommunication\SharpCommunication.Base\SharpCommunication.Base.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Device\" />
   </ItemGroup>
   
 </Project>

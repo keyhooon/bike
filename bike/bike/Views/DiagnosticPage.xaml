@@ -12,9 +12,12 @@
             x:Key="IsNullToColor"
             IsNullColor="OrangeRed"
             NotNullColor="LightGreen" />
+        <valueconverters:IsNullToBoolConverter x:Key="IsNull" />
+        <valueconverters:IsNullToBoolConverter x:Key="IsNotNull" Not="True" />
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding ToggleCurrentCommand}" Text="{Binding CurrentCommandText}" />
+        <ToolbarItem Command="{Binding LoadCommand}" Text="Refresh"  />
         <ToolbarItem Command="{Binding ClearCommand}" Text="Clear" />
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
@@ -43,27 +46,42 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout
-                                    Margin="5"
-                                    BackgroundColor="{Binding Data, Converter={StaticResource IsNullToColor}}"
-                                    Orientation="Vertical">
-                                    <StackLayout.GestureRecognizers>
+                                <Grid Margin="10,5">
+                                    <Grid.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding PrimaryCommand}" NumberOfTapsRequired="2" />
-                                    </StackLayout.GestureRecognizers>
+                                    </Grid.GestureRecognizers>
                                     <Label
-                                        Margin="5,5,0,0"
                                         BackgroundColor="Transparent"
                                         FontAttributes="Bold"
                                         FontSize="{StaticResource BaseFontSize++}"
-                                        HorizontalOptions="StartAndExpand"
+                                        HorizontalOptions="Center"
                                         LineBreakMode="NoWrap"
-                                        Text="{Binding Text}" />
+                                        Text="{Binding Text}"
+                                        VerticalOptions="Center" />
                                     <Label
-                                        Margin="5,-10,5,5"
-                                        HorizontalOptions="End"
+                                        HorizontalOptions="Center"
                                         HorizontalTextAlignment="Start"
-                                        Text="{Binding Detail}" />
-                                </StackLayout>
+                                        Text="{Binding Detail}"
+                                        VerticalOptions="End" />
+                                    <Label
+                                        Margin="0,5,25,5"
+                                        FontFamily="{StaticResource MaterialIcons}"
+                                        FontSize="{StaticResource BaseFontSize++}"
+                                        HorizontalOptions="End"
+                                        IsVisible="{Binding Data, Converter={StaticResource IsNotNull}}"
+                                        Text=""
+                                        TextColor="{StaticResource Green}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Margin="0,5,25,5"
+                                        FontFamily="{StaticResource MaterialIcons}"
+                                        FontSize="{StaticResource BaseFontSize++}"
+                                        HorizontalOptions="End"
+                                        IsVisible="{Binding Data, Converter={StaticResource IsNull}}"
+                                        Text=""
+                                        TextColor="{StaticResource Red}"
+                                        VerticalOptions="Center" />
+                                </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

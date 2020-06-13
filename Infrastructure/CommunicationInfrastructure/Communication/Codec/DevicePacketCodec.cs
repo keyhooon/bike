@@ -32,7 +32,8 @@ namespace Device.Communication.Codec
                 PedalSetting.Encoding.CreateBuilder(),
                 ServoInput.Encoding.CreateBuilder(),
                 ServoOutput.Encoding.CreateBuilder(),
-                ThrottleConfiguration.Encoding.CreateBuilder()
+                ThrottleConfiguration.Encoding.CreateBuilder(),
+                ThrottleSetting.Encoding.CreateBuilder()
             });
 
 

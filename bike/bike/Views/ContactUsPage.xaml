@@ -3,19 +3,9 @@
     x:Class="bike.Views.ContactUs.ContactUsPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
-    xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-    xmlns:control="clr-namespace:bike.Controls"
-    xmlns:converter1="clr-namespace:Infrastructure.Converters;assembly=bike.Infrastructure"
-    xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
     xmlns:customControls="clr-namespace:bike.Controls"
-    xmlns:layers="clr-namespace:Mapsui.Layers;assembly=Mapsui"
-    xmlns:maps="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms"
     xmlns:maps1="clr-namespace:Mapsui.UI.Forms;assembly=Mapsui.UI.Forms"
-    xmlns:mapsui="clr-namespace:Mapsui;assembly=Mapsui"
     xmlns:prism="http://prismlibrary.com"
-    xmlns:projection="clr-namespace:Mapsui.Projection;assembly=Mapsui"
-    xmlns:ui="clr-namespace:Mapsui.UI;assembly=Mapsui"
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource Gray-White}"
     NavigationPage.HasNavigationBar="False">
@@ -55,10 +45,7 @@
                         <!--  Label to display title  -->
 
                         <Label
-                            Margin="{core:OnPlatformOrientationThickness Phone='0,16,0,16',
-                                                                         TabletPortrait='0,32,0,16',
-                                                                         TabletLandscape='0,32,0,16',
-                                                                         Desktop='0,48,0,16'}"
+                           
                             FontFamily="{StaticResource Montserrat-SemiBold}"
                             FontSize="20"
                             HorizontalOptions="FillAndExpand"
@@ -69,7 +56,6 @@
                             TextColor="{DynamicResource Gray-900}"
                             VerticalTextAlignment="Center" />
 
-                        <border:SfBorder>
 
                             <!--  Entry to get name from user  -->
 
@@ -77,12 +63,8 @@
                                 HeightRequest="40"
                                 Placeholder="Name"
                                 VerticalOptions="Center" />
-                        </border:SfBorder>
 
-                        <border:SfBorder
-                            x:Name="EmailBorder"
-                            BorderColor="{Binding Path=IsVisible, Source={x:Reference WarningImage}, Converter={x:StaticResource BooleanToColorConverter}, ConverterParameter=2}">
-                            <StackLayout Orientation="Horizontal" Spacing="0">
+                            <StackLayout x:Name="EmailBorder" Orientation="Horizontal" Spacing="0">
 
 
                                 <!--  Entry to get email id from user  -->
@@ -108,7 +90,7 @@
                                     TextColor="{DynamicResource Red}"
                                     VerticalOptions="CenterAndExpand" />
                             </StackLayout>
-                        </border:SfBorder>
+
 
                         <Label
                             x:Name="ValidationLabel"
@@ -119,7 +101,6 @@
                             Text="Please enter the valid e-mail"
                             TextColor="{DynamicResource Red}" />
 
-                        <border:SfBorder HeightRequest="120" Style="{StaticResource SfBorderStyle}">
 
                             <!--  Editor to get message from user  -->
 
@@ -137,14 +118,11 @@
                                 </customControls:BorderlessEditor.Margin>
                             </customControls:BorderlessEditor>
 
-                        </border:SfBorder>
-
 
                         <!--  Send Button  -->
 
-                        <buttons:SfButton
+                        <Button
                             Command="{Binding SendCommand}"
-                            Style="{StaticResource SfGradientButtonStyle}"
                             Text="SEND" />
 
                     </StackLayout>

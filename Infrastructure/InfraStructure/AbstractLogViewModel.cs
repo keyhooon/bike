@@ -1,17 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Acr.UserDialogs.Forms;
 using Prism.Commands;
 using Prism.Navigation;
-using ReactiveUI;
-using ReactiveUI.Fody.Helpers;
-using Shiny;
-using Shiny.Logging;
 
 namespace Infrastructure
 {
@@ -39,7 +34,7 @@ namespace Infrastructure
         }
         public bool HasLogs => Logs?.Any()??false;
 
-        protected override async Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation = null)
+        protected override async Task InitAsync(INavigationParameters parameters, CancellationToken? cancellation = null)
         {
             var logs = await LoadLogs();
             if (logs != null)
@@ -59,6 +54,7 @@ namespace Infrastructure
                     await ClearLogs();
                     var logs = await LoadLogs();
                     Logs = new ObservableCollection<TItem>(logs);
+
                     IsBusy = false;
                 }
             }));
@@ -82,6 +78,7 @@ namespace Infrastructure
         {
             lock (syncLock)
                 Logs.Insert(0, item);
+            RaisePropertyChanged(nameof(HasLogs));
         }
 
         //protected void SetLogs(IEnumerable<TItem> items)

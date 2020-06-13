@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs.Forms;
 using bike.Models;
+using bike.Services;
 using Infrastructure;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -17,15 +18,20 @@ namespace bike.ViewModels
     {
         private readonly ISerializer serializer;
         private readonly SqliteConnection connection;
+        private readonly ServoDriveService servoDriveService;
 
         public DiagnosticViewModel(IUserDialogs dialogs,
             ISerializer serializer,
-            SqliteConnection connection): base(dialogs)
+            SqliteConnection connection, ServoDriveService servoDriveService): base(dialogs)
         {
             this.serializer = serializer;
             this.connection = connection;
-
-
+            this.servoDriveService = servoDriveService;
+            servoDriveService.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == nameof(servoDriveService.Fault))
+                    LoadCommand.Execute();
+            };
         }
 
         protected async override Task ClearLogs()
@@ -79,7 +85,7 @@ namespace bike.ViewModels
         }
 
 
-        private string _currentCommandText = "All";
+        private string _currentCommandText = "Current";
         public string CurrentCommandText
         {
             get => _currentCommandText;

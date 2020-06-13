@@ -6,6 +6,7 @@ using Prism.Mvvm;
 using System.Reactive.Disposables;
 using System.Threading;
 using System;
+using System.Reactive.Linq;
 
 namespace Infrastructure
 {
@@ -20,6 +21,7 @@ namespace Infrastructure
         private CompositeDisposable _deactivateWith;
         protected CompositeDisposable DeactivateWith => _deactivateWith ??= new CompositeDisposable();
 
+        protected EventWaitHandle waitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
 
 
 
@@ -30,22 +32,14 @@ namespace Infrastructure
         public virtual void Initialize(INavigationParameters parameters)
         {
             Task.Run(async () => {
-                IsBusy = true;
-                await LoadAsync(parameters, CancellationTokenSource.Token);
-                _cancellationTokenSource?.Dispose();
-                _cancellationTokenSource = null;
-                IsBusy = false;
+                await LoadAsync(parameters).ConfigureAwait(false);
             });
 
         }
         public virtual void OnNavigatedTo(INavigationParameters parameters) { }
         public async virtual void OnAppearing()
         {
-            //IsBusy = true;
-            //await LoadAsync(null, CancellationTokenSource.Token);
-            //_cancellationTokenSource?.Dispose();
-            //_cancellationTokenSource = null;
-            //IsBusy = false;
+            waitHandle.Reset();
         }
         public virtual void OnDisappearing() { }
         public virtual void Destroy() { 
@@ -56,12 +50,22 @@ namespace Infrastructure
         public virtual Task<bool> CanNavigateAsync(INavigationParameters parameters) => Task.FromResult(true);
 
         bool _isBusy;
-        public bool IsBusy { get => _isBusy; set => SetProperty(ref _isBusy, value); }
+        public bool IsBusy { get => _isBusy; 
+            set => SetProperty(ref _isBusy, value); }
 
         string _title;
         public string Title { get => _title; protected set => SetProperty(ref _title, value); }
 
-        protected virtual Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation = null) => Task.CompletedTask;
+        protected virtual Task InitAsync(INavigationParameters parameters, CancellationToken? cancellation = null) => Task.CompletedTask;
 
+        protected async Task LoadAsync(INavigationParameters parameters = null, CancellationToken? cancellation = null)
+        {
+            IsBusy = true;
+            await InitAsync(parameters, CancellationTokenSource.Token).ConfigureAwait(false);
+            _cancellationTokenSource?.Dispose();
+            _cancellationTokenSource = null;
+            waitHandle.Set();
+            IsBusy = false;
+        }
     }
 }

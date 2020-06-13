@@ -14,10 +14,14 @@
     <ContentPage.Content>
         <Grid>
             <Image Aspect="Fill" Source="NavyBlueGradient.jpeg" />
-
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                VerticalOptions="Center" />
             <Grid
                 Margin="15"
                 ColumnSpacing="15"
+                IsVisible="{Binding IsBusy, Converter={StaticResource Not}}"
                 RowSpacing="15">
                 <Grid.RowDefinitions>
 
@@ -159,7 +163,7 @@
                                     Thickness="12"
                                     Offset=".93"
                                     Color="Blue"
-                                    Value="50" />
+                                    Value="{Binding ServoDriveService.BatteryOutput.Temprature}" />
                             </gauge:Scale.Pointers>
                             <gauge:Scale.MajorTickSettings>
                                 <gauge:TickSettings
@@ -195,7 +199,7 @@
                                     Thickness="14"
                                     Offset=".93"
                                     Color="Blue"
-                                    Value="50" />
+                                    Value="{Binding ServoDriveService.BatteryOutput.Voltage}" />
                             </gauge:Scale.Pointers>
                             <gauge:Scale.MajorTickSettings>
                                 <gauge:TickSettings
@@ -248,7 +252,7 @@
                                     Thickness="10"
                                     Offset=".83"
                                     Color="Cyan"
-                                    Value="30" />
+                                    Value="{Binding ServoDriveService.Servo.ActivityPercent}" />
                                 <gauge:MarkerPointer
                                     Offset=".74"
                                     Color="{DynamicResource PrimaryForeGroundColor}"
@@ -264,7 +268,7 @@
                                     TailLengthFactor=".13"
                                     Thickness="6"
                                     Color="DarkRed"
-                                    Value="10" />
+                                    Value="{Binding ServoDriveService.ServoOutput.WheelSpeed, Mode=TwoWay}" />
                             </gauge:Scale.Pointers>
                             <gauge:Scale.MinorTickSettings>
                                 <gauge:TickSettings
@@ -284,7 +288,7 @@
                     <Picker
                         HorizontalOptions="Center"
                         ItemsSource="{Binding PedalAssistLevelList}"
-                        SelectedIndex="{Binding PedalSetting.AssistLevel, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                        SelectedIndex="{Binding SelectedPedalAssistLevel, Mode=TwoWay}"
                         SelectedIndexChanged="Picker_SelectedIndexChanged"
                         TextColor="LightBlue"
                         TitleColor="gray"
@@ -305,7 +309,7 @@
                         BackgroundColor="Default"
                         HorizontalOptions="Center"
                         ItemsSource="{Binding PedalAssistSensitivitiesList}"
-                        SelectedIndex="{Binding PedalSetting.ActivationTime, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                        SelectedIndex="{Binding SelectedPedalAssistSensitivities}"
                         SelectedIndexChanged="Picker_SelectedIndexChanged"
                         TextColor="LightBlue"
                         TitleColor="gray"
@@ -326,7 +330,7 @@
                         BackgroundColor="Default"
                         HorizontalOptions="Center"
                         ItemsSource="{Binding ThrottleModeList}"
-                        SelectedIndex="{Binding ThrottleSetting.ActivityType, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
+                        SelectedIndex="{Binding SelectedThrottleMode, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                         SelectedIndexChanged="Picker_SelectedIndexChanged"
                         TextColor="LightBlue"
                         TitleColor="gray"

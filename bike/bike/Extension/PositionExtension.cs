@@ -1,6 +1,5 @@
 ﻿using bike.Models;
 using Mapsui.UI.Forms;
-using Syncfusion.SfMaps.XForms;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

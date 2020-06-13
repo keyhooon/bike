@@ -6,9 +6,11 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Acr.UserDialogs.Forms;
 using Infrastructure;
+using Prism.Commands;
 using ReactiveUI;
 using Shiny;
 using Shiny.Infrastructure;
+using Shiny.Integrations.Sqlite;
 using Shiny.Logging;
 
 
@@ -16,13 +18,13 @@ namespace bike.ViewModels
 {
     public class EventsViewModel : AbstractLogViewModel<CommandItem>
     {
-        private readonly SqliteConnection connection;
+        private readonly ShinySqliteConnection connection;
         private readonly ISerializer serializer;
 
         public EventsViewModel(
             IUserDialogs dialogs,
             ISerializer serializer,
-            SqliteConnection connection) : base(dialogs)
+            ShinySqliteConnection connection) : base(dialogs)
         {
             this.connection = connection;
             this.serializer = serializer;
@@ -34,7 +36,7 @@ namespace bike.ViewModels
                 {
                     Text = $"{x.EventName} ({DateTime.Now:hh:mm:ss tt})",
                     Detail = x.Description,
-                    PrimaryCommand = ReactiveCommand.Create(() =>
+                    PrimaryCommand = new DelegateCommand(() =>
                     {
                         var s = $"{x.EventName} ({DateTime.Now:hh:mm:ss tt}){Environment.NewLine}{x.Description}";
                         foreach (var p in x.Parameters)
@@ -64,7 +66,7 @@ namespace bike.ViewModels
             {
                 Text = $"{o.Description} ({o.TimestampUtc:hh:mm:ss tt})",
                 Detail = o.Detail,
-                PrimaryCommand = ReactiveCommand.Create(() =>
+                PrimaryCommand = new DelegateCommand(() =>
                 {
                     var s = $"{o.Description} ({o.TimestampUtc:hh:mm:ss tt}){Environment.NewLine}{o.Detail}{Environment.NewLine}";
                     if (!o.Parameters.IsEmpty())

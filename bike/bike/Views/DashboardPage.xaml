@@ -3,15 +3,7 @@
     x:Class="bike.Views.DashboardPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:dataModel="clr-namespace:DataModels;assembly=Device"
-    xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
-    xmlns:image="clr-namespace:bike.Assets"
-    xmlns:markupextension="clr-namespace:Infrastructure.MarkupExtension;assembly=bike.Infrastructure"
     xmlns:prism="http://prismlibrary.com"
-    xmlns:valueConverter="clr-namespace:Infrastructure.ValueConverters;assembly=bike.Infrastructure"
-    xmlns:views="clr-namespace:bike.Views"
-    xmlns:xforms="clr-namespace:Syncfusion.SfMaps.XForms;assembly=Syncfusion.SfMaps.XForms"
-    xmlns:xforms1="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
     Title="Dashboard"
     prism:ViewModelLocator.AutowireViewModel="True">
     <TabbedPage.Resources>

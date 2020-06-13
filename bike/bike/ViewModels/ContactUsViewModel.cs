@@ -1,17 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using bike.Models.ContactUs;
 using Infrastructure;
-using Mapsui.UI.Forms;
-using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
-using Syncfusion.SfMaps.XForms;
-using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
 namespace bike.ViewModels
@@ -59,7 +51,7 @@ namespace bike.ViewModels
 
         #region Methods
 
-        protected override async Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation) => Buildings = await sqliteConnection.Buildings.ToListAsync() ;
+        protected override async Task InitAsync(INavigationParameters parameters, CancellationToken? cancellation) => Buildings = await sqliteConnection.Buildings.ToListAsync() ;
 
         #endregion
     }

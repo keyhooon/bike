@@ -37,6 +37,6 @@ namespace bike.ViewModels
         {
             tripService.LoadTripAsync(trip);
         }
-        protected override async Task LoadAsync(INavigationParameters parameters, CancellationToken? cancellation) => Trips = await tripService.GetTripListAsync();
+        protected override async Task InitAsync(INavigationParameters parameters, CancellationToken? cancellation) => Trips = await tripService.GetTripListAsync();
     }
 }

@@ -8,7 +8,7 @@ namespace Infrastructure.ValueConverters
     {
         public Color IsNullColor { get; set; }
         public Color NotNullColor { get; set; }
-        public IsNullToColorValueConverter() : this (Color.Red,Color.Green)
+        public IsNullToColorValueConverter() : this(Color.Red, Color.Green)
         {
 
         }
@@ -33,7 +33,7 @@ namespace Infrastructure.ValueConverters
                 return IsNullColor;
             else
                 return NotNullColor;
-            
+
         }
     }
 }

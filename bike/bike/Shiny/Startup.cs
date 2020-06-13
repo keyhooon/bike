@@ -1,20 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Shiny.Prism;
-using Shiny.Locations;
 using Shiny;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using bike.Shiny.Delegate;
 using Shiny.Logging;
 using Acr.UserDialogs.Forms;
-using Shiny.Infrastructure;
-using Microsoft.Extensions.DependencyInjection.Extensions;
-using Shiny.Integrations.Sqlite;
-using BruTile.Wms;
-using SharpCommunication.Transport;
-using Device.Communication.Codec;
-using Device.Communication.Transport;
 
 namespace bike.Shiny
 {
@@ -24,17 +13,11 @@ namespace bike.Shiny
         {
             Log.UseConsole();
             Log.UseDebug();
-
-            services.UseCache();
-            services.UseLogging();
+            services.AddSingleton<SqliteConnection>();
+            services.UseMemoryCache();
             services.UseUserDialog();
             services.UseGps<GpsDelegate>();
-            services.UseBleCentral<BleDelegate>();
-            services.UseBlePeripherals();
-
-            services.UseSqliteSettings();
-
-            services.AddSingleton<DataTransport<Packet>, PacketDataTransport>();
+            services.UseSqliteLogging(true, true);
             // Register Stuff
         }
 
@@ -42,18 +25,6 @@ namespace bike.Shiny
     }
     public static class LoggingExtension
     {
-        public static void UseLogging(this IServiceCollection services, bool enableCrashes = true, bool enableEvents = false)
-        {
-            services.TryAddSingleton<SqliteConnection>();
-            services.RegisterPostBuildAction(sp =>
-            {
-                var conn = sp.GetService<SqliteConnection>();
-                var serializer = sp.GetService<ISerializer>();
-                Log.AddLogger(new SqliteLog(conn, serializer), enableCrashes, enableEvents);
-                conn.Seed();
-            });
-        }
-        public static void UseCache(this IServiceCollection services) => services.UseMemoryCache();
 
         public static void UseUserDialog(this IServiceCollection services) => services.AddSingleton<IUserDialogs, UserDialogs>();
 

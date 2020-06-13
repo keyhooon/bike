@@ -13,7 +13,7 @@ using bike.Views.ContactUs;
 using bike.Views.Settings;
 using Xamarin.Forms;
 using Communication;
-using Device;
+using bike.Services;
 using Prism.Mvvm;
 using System;
 
@@ -59,7 +59,7 @@ namespace bike
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>("Main");
             containerRegistry.RegisterForNavigation<DashboardPage, DashboardViewModel>("Dashboard");
             containerRegistry.RegisterForNavigation<GaugePage, GaugeViewModel>("Gauge");
-            containerRegistry.RegisterForNavigation<MapPage, MapViewModel>("Map");
+            //containerRegistry.RegisterForNavigation<MapPage, MapViewModel>("Map");
             containerRegistry.RegisterForNavigation<SettingPage, SettingViewModel>("Settings");
             containerRegistry.RegisterForNavigation<ReportPage, ReportViewModel>("Report");
             containerRegistry.RegisterForNavigation<DiagnosticPage, DiagnosticViewModel>("Diagnostic");

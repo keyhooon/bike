@@ -6,8 +6,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Acr.UserDialogs.Forms;
 using Infrastructure;
-using ReactiveUI;
-
+using Prism.Commands;
 using Shiny;
 using Shiny.Infrastructure;
 using Shiny.Integrations.Sqlite;
@@ -31,12 +30,10 @@ namespace bike.ViewModels
 
             Log
                 .WhenExceptionLogged()
-                //.ObserveOn(RxApp.MainThreadScheduler)
                 .Select(x => new CommandItem
                 {
-                    Text = DateTime.Now.ToString(),
-                    Detail = x.Exception.ToString(),
-                    PrimaryCommand = ReactiveCommand.Create(() =>
+                    Text = $"{DateTime.Now:MM/dd/yy hh:mm:ss tt zzz}",
+                    PrimaryCommand = new DelegateCommand(() =>
                     {
                         var s = $"{x.Exception}{Environment.NewLine}";
                         foreach (var p in x.Parameters)
@@ -63,9 +60,10 @@ namespace bike.ViewModels
 
             return results.Select(x => new CommandItem
             {
-                Text = x.TimestampUtc.ToString(),
+
+                Text = $"{x.TimestampUtc:MM/dd/yy hh:mm:ss tt zzz}",
                 Detail = x.Description,
-                PrimaryCommand = ReactiveCommand.Create(() =>
+                PrimaryCommand = new DelegateCommand(() =>
                 {
                     var s = $"{x.TimestampUtc}{Environment.NewLine}{x.Description}{Environment.NewLine}";
                     if (!x.Parameters.IsEmpty())
@@ -76,7 +74,7 @@ namespace bike.ViewModels
                     }
                     this.Dialogs.Alert(s);
                 })
-            });
+            }); ;
         }
     }
 }

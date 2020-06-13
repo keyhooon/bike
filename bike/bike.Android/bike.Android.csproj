@@ -12,7 +12,7 @@
     <RootNamespace>bike.Droid</RootNamespace>
     <AssemblyName>bike.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v10.0</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -28,19 +28,24 @@
     </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>false</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidLinkMode>None</AndroidLinkMode>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <AndroidSupportedAbis />
     <AotAssemblies>true</AotAssemblies>
     <EnableLLVM>true</EnableLLVM>
-    <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
+    <BundleAssemblies>true</BundleAssemblies>
+    <AndroidDexTool>d8</AndroidDexTool>
+    <MandroidI18n />
+    <EmbedAssembliesIntoApk>true</EmbedAssembliesIntoApk>
+    <AndroidLinkTool>r8</AndroidLinkTool>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,16 +67,16 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AiForms.Effects">
-      <Version>1.6.7</Version>
+      <Version>1.6.8</Version>
     </PackageReference>
     <PackageReference Include="AiForms.SettingsView">
-      <Version>1.1.4-pre</Version>
+      <Version>1.2.12-pre</Version>
     </PackageReference>
     <PackageReference Include="Com.Airbnb.Android.Lottie">
-      <Version>3.0.6</Version>
+      <Version>3.4.2</Version>
     </PackageReference>
     <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie">
-      <Version>3.0.4</Version>
+      <Version>3.1.2</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity.Extensions">
       <Version>7.2.0.1054</Version>
@@ -79,37 +84,19 @@
     <PackageReference Include="Shiny.Prism">
       <Version>7.2.0.1054</Version>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>17.4.0.55</Version>
-    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>17.4.0.55</Version>
-    </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
-      <Version>17.4.0.55</Version>
-    </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
       <Version>17.4.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfGauge">
       <Version>17.4.0.55</Version>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfListView">
-      <Version>17.4.0.55</Version>
+    <PackageReference Include="Xamarin.AndroidX.AppCompat.Resources">
+      <Version>1.1.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfMaps">
-      <Version>17.4.0.55</Version>
+    <PackageReference Include="Xamarin.AndroidX.MediaRouter">
+      <Version>1.1.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer">
-      <Version>17.4.0.55</Version>
-    </PackageReference>
-    <PackageReference Include="Syncfusion.Xamarin.SfRating">
-      <Version>17.4.0.55</Version>
-    </PackageReference>
-    <PackageReference Include="Xam.Plugins.Settings">
-      <Version>3.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.5.0.617" />
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.848-pre3" />
     <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.3" />
@@ -128,6 +115,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <AndroidResource Include="Resources\values\colors.xml">
     </AndroidResource>
+    <Compile Include="Services\BluetoothDataTransport.cs" />
   </ItemGroup>
   <ItemGroup>
     <AndroidAsset Include="Assets\UIFontIcons.ttf" />
@@ -159,9 +147,17 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Infrastructure\CommunicationInfrastructure\Device.csproj">
+      <Project>{F3C999E2-893F-4A1C-9188-006AAE16F1AB}</Project>
+      <Name>Device</Name>
+    </ProjectReference>
     <ProjectReference Include="..\bike\bike.csproj">
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
       <Name>bike</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Users\HP\Source\Repos\SharpCommunication\SharpCommunication.Base\SharpCommunication.Base.csproj">
+      <Project>{64da0243-a723-4cad-9abd-2dd6be26c764}</Project>
+      <Name>SharpCommunication.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

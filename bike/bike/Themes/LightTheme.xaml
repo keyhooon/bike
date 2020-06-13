@@ -3,7 +3,6 @@
     x:Class="bike.Themes.LightTheme"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
     xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView">
 
 
@@ -53,8 +52,8 @@
 
     <Style TargetType="sv:SettingsView">
         <Setter Property="SeparatorColor" Value="{StaticResource DisabledColor}" />
-        <Setter Property="BackgroundColor" Value="{StaticResource PaleBackColorPrimary}" />
-        <Setter Property="HeaderBackgroundColor" Value="{StaticResource PaleBackColorPrimary}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource Gray-200}" />
+        <Setter Property="HeaderBackgroundColor" Value="{StaticResource Gray-200}" />
         <Setter Property="CellTitleColor" Value="{StaticResource Gray-800}" />
         <Setter Property="CellTitleFontSize" Value="{StaticResource BaseFontSize++}" />
         <Setter Property="CellValueTextFontSize" Value="{StaticResource BaseFontSize}" />
@@ -116,18 +115,6 @@
     </OnPlatform>
 
 
-    <Style x:Key="HeaderIconButtonStyle" TargetType="button:SfButton">
-        <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
-        <Setter Property="BackgroundColor" Value="Transparent" />
-        <Setter Property="FontFamily" Value="{StaticResource MaterialIcons}" />
-        <Setter Property="FontSize" Value="28" />
-        <Setter Property="HorizontalTextAlignment" Value="Center" />
-        <Setter Property="VerticalTextAlignment" Value="Center" />
-        <Setter Property="HorizontalOptions" Value="Center" />
-        <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="HeightRequest" Value="48" />
-        <Setter Property="WidthRequest" Value="48" />
-    </Style>
     <Style x:Key="HeaderLabelStyle" TargetType="Label">
         <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
         <Setter Property="BackgroundColor" Value="Transparent" />
