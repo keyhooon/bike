@@ -41,11 +41,10 @@ namespace bike.Droid.Services
                 if (!SpinWait.SpinUntil(()=>_adapter.IsEnabled, TimeSpan.FromSeconds(2)))
                     throw new Exception("Bluetooth adapter can not enabled.");
             }
-
             BluetoothDevice device = (_adapter.BondedDevices.FirstOrDefault((device) => device.Name == ((BluetoothDataTransportOption)Option).DeviceName));
 
             if (device == null)
-                throw new Exception("Device not found.");
+                throw new Exception($"There is no BlueTooth Device with {Java.Util.UUID.FromString(((BluetoothDataTransportOption)Option).UUID)} Name.");
             _socket = device.CreateRfcommSocketToServiceRecord(Java.Util.UUID.FromString(((BluetoothDataTransportOption)Option).UUID));
             _socket.Connect();
             _channels.Add(ChannelFactory.Create(_socket.InputStream,_socket.OutputStream));

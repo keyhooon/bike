@@ -42,7 +42,7 @@ namespace bike
                 return viewModelType;
             });
             SyncfusionLicenseProvider.RegisterLicense("NzM3NEAzMTM3MmUzNDJlMzBPRm41TTBEL2hiZ0pjbG93dDZPQ0VocmRCWkJHSXlzWFgrUkxrZVlDaUpzPQ==");
-            await NavigationService.NavigateAsync("Main/Nav/Welcome");
+            await NavigationService.NavigateAsync("Main/Nav/Dashboard?createTab=Gauge");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

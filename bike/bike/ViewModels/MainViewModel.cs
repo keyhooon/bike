@@ -32,6 +32,7 @@ namespace bike.ViewModels
         {
             await Task.Run(() =>
             {
+                while(!servoDriveService.IsOpen)
                 try
                 {
                     if (servoDriveService.CanOpen)
@@ -43,6 +44,7 @@ namespace bike.ViewModels
 
                     dialogs.Alert(e.Message);
                 }
+
 
             });
     }

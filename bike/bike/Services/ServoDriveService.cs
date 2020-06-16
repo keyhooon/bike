@@ -156,7 +156,7 @@ namespace bike.Services
                 RefreshThrottleConfiguration();
                 RefreshFault();
             }
-            IsOpenChanged(this, e);
+            IsOpenChanged?.Invoke(this, e);
             OnPropertyChanged(nameof(CanOpen));
             OnPropertyChanged(nameof(CanClose));
 
