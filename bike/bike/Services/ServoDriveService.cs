@@ -190,7 +190,7 @@ namespace bike.Services
 
         public LightSetting LightSetting
         {
-            get => settings.Get<LightSetting>(nameof(LightSetting));
+            get => settings.Get(nameof(LightSetting), new LightSetting());
             set
             {
                 if (value == LightSetting)
@@ -202,7 +202,7 @@ namespace bike.Services
 
         public PedalSetting PedalSetting
         {
-            get => settings.Get<PedalSetting>(nameof(PedalSetting));
+            get => settings.Get(nameof(PedalSetting), new PedalSetting());
             set
             {
                 if (value == PedalSetting)
@@ -214,7 +214,7 @@ namespace bike.Services
 
         public ThrottleSetting ThrottleSetting
         {
-            get => settings.Get<ThrottleSetting>(nameof(ThrottleSetting));
+            get => settings.Get(nameof(ThrottleSetting), new ThrottleSetting());
             set
             {
                 if (value == ThrottleSetting)
@@ -230,7 +230,7 @@ namespace bike.Services
 
         public Fault Fault
         {
-            get => settings.Get<Fault>(nameof(Fault));
+            get => settings.Get(nameof(Fault), new Fault());
             private set
             {
                 if (value == Fault)

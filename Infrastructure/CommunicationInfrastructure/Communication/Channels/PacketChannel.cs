@@ -6,8 +6,8 @@ using System.IO;
 namespace Device.Communication.Channels
 {
     public partial class PacketChannel : Channel<Packet>
-    {
-        public PacketChannel(Stream stream) : base(new PacketCodec(), stream)
+    { 
+        public PacketChannel(Stream inputstream, Stream outputstream) : base(new PacketCodec(), inputstream, outputstream)
         {
 
 

@@ -43,7 +43,7 @@
                     HardwareAcceleration="True"
                     HeightRequest="200"
                     HorizontalOptions="FillAndExpand"
-                    Loop="True"
+                    Loop="{Binding IsConnected}"
                     RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
                                                                           Property=Width,
                                                                           Factor=1,

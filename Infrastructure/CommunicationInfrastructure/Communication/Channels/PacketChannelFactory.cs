@@ -13,10 +13,9 @@ namespace Device.Communication.Channels
 
             }
 
-            public override IChannel<Packet> Create(Stream stream)
+            public override IChannel<Packet> Create(Stream inputStream, Stream outputStream)
             {
-                return (new CachedChannel<Packet>( new MonitoredChannel<Packet>( new PacketChannel(stream) ) ));
-            }
-
+            return (new MonitoredChannel<Packet>(new PacketChannel(inputStream, outputStream)));
+        }
         }
 }
