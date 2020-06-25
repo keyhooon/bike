@@ -29,18 +29,10 @@
     <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="3.1.2" />
 
     <PackageReference Include="Shiny.Prism" Version="7.2.0.1054" />
-    <PackageReference Include="Shiny.Beacons" Version="1.2.0.1686-beta" />
-    <PackageReference Include="Shiny.BluetoothLE" Version="1.2.0.1686-beta" />
     <PackageReference Include="Shiny.Integrations.Sqlite" Version="1.2.0.1686" />
     <PackageReference Include="Shiny.Locations" Version="1.2.0.1686" />
-    <PackageReference Include="Shiny.Logging.AppCenter" Version="1.2.0.1686" />
-    <PackageReference Include="Shiny.Net.Http" Version="1.2.0.1686" />
-    <PackageReference Include="Shiny.Nfc" Version="1.2.0.1686-beta" />
     <PackageReference Include="Shiny.Notifications" Version="1.2.0.1686" />
-    <PackageReference Include="Shiny.Push" Version="1.2.0.1686" />
-    <PackageReference Include="Shiny.Push.AzureNotificationHubs" Version="1.2.0.1686" />
     <PackageReference Include="Shiny.Sensors" Version="1.2.0.1686" />
-    <PackageReference Include="Shiny.SpeechRecognition" Version="1.2.0.1686" />
 
     <PackageReference Include="Acr.UserDialogs.Forms" Version="1.0.0.7-beta" />
     <PackageReference Include="ReactiveUI.Fody" Version="11.4.17" />

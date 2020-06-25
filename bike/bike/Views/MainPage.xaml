@@ -43,6 +43,7 @@
                     HardwareAcceleration="True"
                     HeightRequest="200"
                     HorizontalOptions="FillAndExpand"
+                    IsPlaying="{Binding IsConnected}"
                     Loop="{Binding IsConnected}"
                     RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,
                                                                           Property=Width,
@@ -94,7 +95,7 @@
                         <Button
                             ef:Feedback.EffectColor="Accent"
                             Command="{Binding NavigateCommand}"
-                            CommandParameter="Nav/Logs?createTab=Errors&amp;createTab=Events"
+                            CommandParameter="Nav/Logs?createTab=Errors&amp;createTab=Events&amp;createTab=Servo"
                             ImageSource="{image:ImageResource bike.Assets.low.003-technology.png}"
                             Text="Logs" />
                         <Button

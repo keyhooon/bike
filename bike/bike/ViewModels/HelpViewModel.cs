@@ -35,11 +35,17 @@ namespace bike.ViewModels
         public HelpViewModel(SqliteConnection conn, IUserDialogs dialogs) : base(dialogs)
         {
             this.conn = conn;
-            var results = this.conn
-                .AnswerQuestions
-                .ToListAsync().Result;
+        }
 
-            Logs = new ObservableCollection<CommandItem>(results.Select(x => new CommandItem
+        protected override Task ClearLogs() => throw new NotSupportedException();
+
+        protected override async Task<IEnumerable<CommandItem>> LoadLogs()
+        {
+            var results =await conn
+                .AnswerQuestions
+                .ToListAsync();
+
+            return new ObservableCollection<CommandItem>(results.Select(x => new CommandItem
             {
                 Text = x.Question,
                 Detail = x.Answer,
@@ -50,8 +56,6 @@ namespace bike.ViewModels
                 })
             }));
         }
-
-        protected override Task ClearLogs() => throw new NotSupportedException();
 
     }
 }

@@ -13,50 +13,56 @@
 
     <ContentPage.Content>
         <Grid>
-            <Label
-                Margin="5"
-                FontSize="Large"
-                HorizontalOptions="FillAndExpand"
-                HorizontalTextAlignment="Center"
-                IsVisible="{Binding HasLogs, Converter={StaticResource Not}}"
-                Text="No Errors have been logged"
-                VerticalOptions="FillAndExpand"
-                VerticalTextAlignment="Center" />
+            <ActivityIndicator
+                HorizontalOptions="Center"
+                IsRunning="{Binding IsBusy}"
+                VerticalOptions="Center" />
+            <Grid IsVisible="{Binding IsBusy, Converter={StaticResource Not}}">
+                <Label
+                    Margin="5"
+                    FontSize="Large"
+                    HorizontalOptions="FillAndExpand"
+                    HorizontalTextAlignment="Center"
+                    IsVisible="{Binding HasLogs, Converter={StaticResource Not}}"
+                    Text="No Errors have been logged"
+                    VerticalOptions="FillAndExpand"
+                    VerticalTextAlignment="Center" />
 
-            <ListView
-                IsPullToRefreshEnabled="True"
-                IsRefreshing="{Binding IsBusy}"
-                IsVisible="{Binding HasLogs}"
-                ItemsSource="{Binding Logs, Mode=TwoWay}"
-                RefreshCommand="{Binding LoadCommand}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Grid Margin="10,5">
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding PrimaryCommand}" NumberOfTapsRequired="2" />
-                                </Grid.GestureRecognizers>
-                                <Label
-                                    BackgroundColor="Transparent"
-                                    FontAttributes="Bold"
-                                    FontSize="{StaticResource BaseFontSize++}"
-                                    HorizontalOptions="Center"
-                                    LineBreakMode="NoWrap"
-                                    Text="{Binding Text}"
-                                    VerticalOptions="Start" />
-                                <Label
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Start"
-                                    LineBreakMode="NoWrap"
-                                    Text="{Binding Detail}"
-                                    TextType="Html"
-                                    VerticalOptions="End" />
+                <ListView
+                    IsPullToRefreshEnabled="True"
+                    IsRefreshing="{Binding IsBusy}"
+                    IsVisible="{Binding HasLogs}"
+                    ItemsSource="{Binding Logs, Mode=TwoWay}"
+                    RefreshCommand="{Binding LoadCommand}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid Margin="10,5">
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding PrimaryCommand}" NumberOfTapsRequired="2" />
+                                    </Grid.GestureRecognizers>
+                                    <Label
+                                        BackgroundColor="Transparent"
+                                        FontAttributes="Bold"
+                                        FontSize="{StaticResource BaseFontSize++}"
+                                        HorizontalOptions="Center"
+                                        LineBreakMode="NoWrap"
+                                        Text="{Binding Text}"
+                                        VerticalOptions="Start" />
+                                    <Label
+                                        HorizontalOptions="Center"
+                                        HorizontalTextAlignment="Start"
+                                        LineBreakMode="NoWrap"
+                                        Text="{Binding Detail}"
+                                        TextType="Html"
+                                        VerticalOptions="End" />
 
-                            </Grid>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -66,9 +66,11 @@ namespace bike
             containerRegistry.RegisterForNavigation<LoggingPage>("Logs");
             containerRegistry.RegisterForNavigation<ErrorLogPage, ErrorLogViewModel>("Errors");
             containerRegistry.RegisterForNavigation<EventsPage, EventsViewModel>("Events");
+            containerRegistry.RegisterForNavigation<ServoPage, ServoViewModel>("Servo");
+
 
             containerRegistry.RegisterForNavigation<ConfigurationPage, ConfigurationViewModel>("Configurations");
-            containerRegistry.RegisterForNavigation<ContactUsPage, ContactUsViewModel>("ContactUs");
+            containerRegistry.RegisterForNavigation<ContactUsPage>("ContactUs");
             containerRegistry.RegisterForNavigation<AboutUsSimplePage, AboutUsSimpleViewModel>("AboutUs");
             containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
             containerRegistry.RegisterForNavigation<QuestionAnswerPage, QuestionAnswerViewModel>("Question");

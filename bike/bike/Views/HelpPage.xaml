@@ -15,21 +15,6 @@
 
 
     <StackLayout Spacing="0">
-        <!--<ListView
-            IsPullToRefreshEnabled="True"
-            IsRefreshing="{Binding IsBusy}"
-            IsVisible="{Binding HasLogs}"
-            ItemsSource="{Binding Logs}"
-            RefreshCommand="{Binding LoadCommand}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell
-                        Command="{Binding PrimaryCommand}"
-                        Detail="{Binding Detail}"
-                        Text="{Binding Text}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>-->
         <sv:SettingsView ShowArrowIndicatorForAndroid="True">
             <sv:Section Title="Question" ItemsSource="{Binding Logs}">
                 <sv:Section.ItemTemplate>

@@ -17,8 +17,7 @@ namespace bike
             var conn = this.GetConnection();
             conn.CreateTable<AnswerQuestion>();
             conn.CreateTable<AppStateEvent>();
-            conn.CreateTable<BleAdapterState>();
-            conn.CreateTable<BleConnectedPeripheral>();
+
             conn.CreateTable<GpsData>();
 
             conn.CreateTable<Building>();

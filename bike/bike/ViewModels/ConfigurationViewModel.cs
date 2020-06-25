@@ -17,6 +17,17 @@ namespace bike.ViewModels
         public ConfigurationViewModel(ServoDriveService servoDriveService)
         {
             _servoDriveService = servoDriveService;
+            _servoDriveService.PropertyChanged += (sender, e) =>
+            {
+                if (e.PropertyName == nameof(ServoDriveService.BatteryConfiguration))
+                    RaisePropertyChanged(nameof(Battery));
+                else if (e.PropertyName == nameof(ServoDriveService.CoreConfiguration))
+                    RaisePropertyChanged(nameof(Core));
+                else if (e.PropertyName == nameof(ServoDriveService.PedalConfiguration))
+                    RaisePropertyChanged(nameof(Pedal));
+                else if (e.PropertyName == nameof(ServoDriveService.ThrottleConfiguration))
+                    RaisePropertyChanged(nameof(Throttle));
+            };
         }
 
 

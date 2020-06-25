@@ -37,9 +37,9 @@
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
     <AndroidSupportedAbis />
-    <AotAssemblies>true</AotAssemblies>
-    <EnableLLVM>true</EnableLLVM>
-    <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidDexTool>dx</AndroidDexTool>

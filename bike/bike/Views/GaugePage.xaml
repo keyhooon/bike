@@ -54,25 +54,34 @@
                         <gauge:GaugeAnnotation
                             HorizontalAlignment="Start"
                             VerticalAlignment="End"
-                            Angle="315"
+                            Angle="310"
                             Offset="1">
                             <gauge:GaugeAnnotation.View>
-                                <Image
-                                    HeightRequest="28"
-                                    Source="{image:ImageResource bike.Assets.high.011-thermometer-1.png}"
-                                    WidthRequest="28" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Image
+                                        Margin="-8,0"
+                                        HeightRequest="28"
+                                        Source="{image:ImageResource bike.Assets.high.011-thermometer-1.png}"
+                                        WidthRequest="28" />
+                                    <Label Text="{Binding ServoDriveService.BatteryOutput.Temprature, StringFormat='{0:F1}°'}" VerticalOptions="Center" />
+
+                                </StackLayout>
                             </gauge:GaugeAnnotation.View>
                         </gauge:GaugeAnnotation>
                         <gauge:GaugeAnnotation
                             HorizontalAlignment="End"
                             VerticalAlignment="End"
-                            Angle="225"
+                            Angle="230"
                             Offset="1">
                             <gauge:GaugeAnnotation.View>
-                                <Image
-                                    HeightRequest="28"
-                                    Source="{image:ImageResource bike.Assets.high.017-battery.png}"
-                                    WidthRequest="28" />
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding ServoDriveService.BatteryOutput.Voltage, StringFormat='{0:F1}v'}" VerticalOptions="Center" />
+                                    <Image
+                                        Margin="-8,0"
+                                        HeightRequest="28"
+                                        Source="{image:ImageResource bike.Assets.high.017-battery.png}"
+                                        WidthRequest="28" />
+                                </StackLayout>
                             </gauge:GaugeAnnotation.View>
                         </gauge:GaugeAnnotation>
                         <gauge:GaugeAnnotation
@@ -102,7 +111,7 @@
                                             SegmentStrokeWidth="3"
                                             VerticalOptions="EndAndExpand"
                                             WidthRequest="100"
-                                            Value=" 100" />
+                                            Value="{Binding ServoDriveService.ServoOutput.WheelSpeed, StringFormat='{0,3:00}'}" />
                                         <Label
                                             BackgroundColor="Transparent"
                                             Text="Km"
@@ -268,7 +277,7 @@
                                     TailLengthFactor=".13"
                                     Thickness="6"
                                     Color="DarkRed"
-                                    Value="{Binding ServoDriveService.ServoOutput.WheelSpeed, Mode=TwoWay}" />
+                                    Value="{Binding ServoDriveService.ServoOutput.WheelSpeed}" />
                             </gauge:Scale.Pointers>
                             <gauge:Scale.MinorTickSettings>
                                 <gauge:TickSettings

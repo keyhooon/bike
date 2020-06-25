@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Threading.Tasks;
 using bike.Models;
 using Device.Communication.Codec;
@@ -26,7 +27,6 @@ namespace bike.Services
         private readonly SqliteConnection connection;
         private readonly ICache cache;
         private ObservableCollection<Diagnostic> currentDiagnostic;
-
         public event EventHandler IsOpenChanged;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -36,19 +36,60 @@ namespace bike.Services
             this.settings = settings;
             this.connection = connection;
             this.cache = cache;
-            this.dataTransport.IsOpenChanged += (sender, e) => OnIsOpenChanged(e);
+
+            _ = Task.Run(async () =>
+            {
+                while (!dataTransport.IsOpen)
+                {
+                    try
+                    {
+                        await Task.Delay(1000);
+                        if (dataTransport.CanOpen)
+                            dataTransport.Open();
+                    }
+                    catch 
+                    {
+                        
+                    
+                    }
+            }
+            });
+            this.dataTransport.IsOpenChanged += (sender, e) => 
+            {
+                {
+                    if (dataTransport.IsOpen)
+                    {
+                        RefreshBatteryConfiguration();
+                        RefreshCoreConfiguration();
+                        RefreshPedalConfiguration();
+                        RefreshThrottleConfiguration();
+                        RefreshFault();
+                    }
+                    else
+                    {
+                        _ = Task.Run(async () =>
+                        {
+                            while (!dataTransport.IsOpen)
+                            {
+                                try
+                                {
+                                    await Task.Delay(1000);
+                                    if (dataTransport.CanOpen)
+                                        dataTransport.Open();
+                                }
+                                catch
+                                {
+
+
+                                }
+                            }
+                        });
+                    }
+                    IsOpenChanged?.Invoke(this, e);
+                }
+            };
             ((INotifyCollectionChanged)this.dataTransport.Channels).CollectionChanged += ServoDriveService_CollectionChanged;
-
         }
-
-
-        public virtual void Open() => dataTransport.Open();
-
-        public virtual void Close() => dataTransport.Close();
-
-        public bool CanClose => dataTransport.CanClose;
-        public bool CanOpen => dataTransport.CanOpen;
-
 
 
         private void ServoDriveService_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -142,25 +183,10 @@ namespace bike.Services
                     }
                     break;
             }
-            if (e.Data.DescendantPacket is IDescendantPacket dec)
-                Log.Write("DataReceived", dec.DescendantPacket.ToString());
-        }
-
-        protected virtual void OnIsOpenChanged(EventArgs e)
-        {
-            if (dataTransport.IsOpen)
-            {
-                RefreshBatteryConfiguration();
-                RefreshCoreConfiguration();
-                RefreshPedalConfiguration();
-                RefreshThrottleConfiguration();
-                RefreshFault();
-            }
-            IsOpenChanged?.Invoke(this, e);
-            OnPropertyChanged(nameof(CanOpen));
-            OnPropertyChanged(nameof(CanClose));
 
         }
+
+
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

@@ -37,11 +37,11 @@ namespace Device.Communication.Codec
             public static byte ID => 2;
 
             private static readonly byte _byteCount = 6;
-            private static readonly double _currentBitResolution = 0.125d;
-            private static readonly double _voltageBitResolution = 0.25d;
-            private static readonly double _tempratureBitResolution = 0.125d;
-            private static readonly double _currentBias = 0.0d;
-            private static readonly double _voltageBias = 20.0d;
+            private static readonly double _currentBitResolution = BatteryConfiguration. CurrentCalibrationHelper.Gain;
+            private static readonly double _voltageBitResolution = BatteryConfiguration.VoltageCalibrationHelper.Gain;
+            private static readonly double _tempratureBitResolution = 1.0d;
+            private static readonly double _currentBias = BatteryConfiguration.CurrentCalibrationHelper.Bias;
+            private static readonly double _voltageBias = BatteryConfiguration.VoltageCalibrationHelper.Bias;
             private static readonly double _tempratureBias = 0.0d;
 
             public override Type PacketType => typeof(BatteryOutput);
@@ -96,5 +96,6 @@ namespace Device.Communication.Codec
             public static PacketEncodingBuilder CreateBuilder() => 
                 PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(item => new Encoding(item));
         }
+
     }
 }

@@ -18,7 +18,7 @@ namespace Device.Communication.Codec
 
         public override string ToString()
         {
-            return $"Battery Situation {{ Temprature : {Temprature}, Voltage : {Voltage} }} ";
+            return $"Core Situation {{ Temprature : {Temprature}, Voltage : {Voltage} }} ";
         }
         public CoreSituation()
         {
@@ -28,8 +28,8 @@ namespace Device.Communication.Codec
         {
             public static byte ID => 3;
 
-            private static double _tempratureBitResolution = 0.0625d;
-            private static double _voltageBitResolution = 0.0625d;
+            private static double _tempratureBitResolution = 0.1d;
+            private static double _voltageBitResolution = 0.002288488210818;
             private static double _tempratureBias = 0.0d;
             private static double _voltageBias = 0.0d;
 

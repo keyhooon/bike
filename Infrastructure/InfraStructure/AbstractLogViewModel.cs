@@ -77,7 +77,7 @@ namespace Infrastructure
         protected virtual void InsertItem(TItem item)
         {
             lock (syncLock)
-                Logs.Insert(0, item);
+                Logs?.Insert(0, item);
             RaisePropertyChanged(nameof(HasLogs));
         }
 

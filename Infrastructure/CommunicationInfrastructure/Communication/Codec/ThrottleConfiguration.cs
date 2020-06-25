@@ -37,9 +37,9 @@ namespace Device.Communication.Codec
         {
             public static byte ID => 10;
 
-            private static readonly double _faultThresholdBitResolution = 5.035477225909819e-5;
-            private static readonly double _minBitResolution = 5.035477225909819e-5;
-            private static readonly double _maxBitResolution = 5.035477225909819e-5;
+            private static readonly double _faultThresholdBitResolution = 8.0586080586080586080586080586081e-4;
+            private static readonly double _minBitResolution = 8.0586080586080586080586080586081e-4;
+            private static readonly double _maxBitResolution = 8.0586080586080586080586080586081e-4;
             private static readonly double _faultThresholdBias = 0.0d;
             private static readonly double _minBias = 0.0d;
             private static readonly double _maxBias = 0.0d;

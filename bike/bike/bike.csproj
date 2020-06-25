@@ -136,6 +136,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\ServoPage.xaml.cs">
+      <DependentUpon>ServoPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Update="Themes\LightTheme.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

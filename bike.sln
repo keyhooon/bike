@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bike.Android", "bike\bike.A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bike.iOS", "bike\bike.iOS\bike.iOS.csproj", "{2CF006EA-05DE-4057-AA52-F8F858BA54A9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{FA0F91DE-B64A-40F4-B233-5125137B9817}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{064A375E-1595-4523-99E6-FBCD1B9AD83A}"
 	ProjectSection(SolutionItems) = preProject
 		bike\bike.Android\Assets\splashpattern.json = bike\bike.Android\Assets\splashpattern.json

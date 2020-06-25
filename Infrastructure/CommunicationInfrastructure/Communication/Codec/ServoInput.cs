@@ -29,10 +29,11 @@ namespace Device.Communication.Codec
         {
             public static byte ID => 9;
 
+            private const double V = 0.0015259021896696d;
             private static readonly byte _byteCount = 7;
-            private static readonly double _throttleBitResolution = 0.001953125;
-            private static readonly double _pedalBitResolution = 0.001953125;
-            private static readonly double _cruiseBitResolution = 0.001953125;
+            private static readonly double _throttleBitResolution = V;
+            private static readonly double _pedalBitResolution = V;
+            private static readonly double _cruiseBitResolution = V;
             private static readonly double _throttleBias = 0.0d;
             private static readonly double _pedalBias = 0.0d;
             private static readonly double _cruiseBias = 0.0d;

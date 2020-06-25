@@ -42,16 +42,16 @@ namespace Device.Communication.Codec
         {
             public static byte ID => 1;
 
-            private static readonly double _overCurrentBitResolution = 0.125d;
-            private static readonly double _overVoltageBitResolution = 0.25d;
-            private static readonly double _underVoltageBitResolution = 0.125d;
-            private static readonly double _nominalVoltageBitResolution = 1.0d;
-            private static readonly double _overTempratureBitResolution = 0.25d;
-            private static readonly double _overCurrentBias = 0.125d;
-            private static readonly double _overVoltageBias = 0.25d;
-            private static readonly double _underVoltageBias = 0.125d;
-            private static readonly double _nominalVoltageBias = 1.0d;
-            private static readonly double _overTempratureBias = 0.25d;
+            private static readonly double _overCurrentBitResolution = CurrentCalibrationHelper.Gain;
+            private static readonly double _overVoltageBitResolution = VoltageCalibrationHelper.Gain;
+            private static readonly double _underVoltageBitResolution = VoltageCalibrationHelper.Gain;
+            private static readonly double _nominalVoltageBitResolution = VoltageCalibrationHelper.Gain;
+            private static readonly double _overTempratureBitResolution = 1;
+            private static readonly double _overCurrentBias = CurrentCalibrationHelper.Bias;
+            private static readonly double _overVoltageBias = VoltageCalibrationHelper.Bias;
+            private static readonly double _underVoltageBias = VoltageCalibrationHelper.Bias;
+            private static readonly double _nominalVoltageBias = VoltageCalibrationHelper.Bias;
+            private static readonly double _overTempratureBias = 0;
             private static readonly byte _byteCount = 10;
 
             public override Type PacketType => typeof(BatteryConfiguration);
@@ -112,6 +112,23 @@ namespace Device.Communication.Codec
             }
             public static PacketEncodingBuilder CreateBuilder() =>
                 PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(item => new Encoding(item));
+        }
+        public static class CurrentCalibrationHelper
+        {
+            public readonly static double V_Bias = 1.27d;
+            public readonly static double ADC_Max = 4095;
+            public readonly static double V_Max = 3.3;
+            public readonly static double Coeficient = 0.006;
+            public static double Gain => -V_Max / (ADC_Max * Coeficient);
+            public static double Bias => V_Bias / Coeficient;
+        }
+        public static class VoltageCalibrationHelper
+        {
+            public readonly static double ADC_Max = 4095;
+            public readonly static double V_Max = 3.3;
+            public readonly static double Coeficient = 60 / 3.3;
+            public static double Gain => V_Max * Coeficient / ADC_Max;
+            public static double Bias => 0;
         }
     }
 }
