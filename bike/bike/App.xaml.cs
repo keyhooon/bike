@@ -16,6 +16,9 @@ using Communication;
 using bike.Services;
 using Prism.Mvvm;
 using System;
+using System.Reflection;
+using System.Globalization;
+
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace bike
@@ -37,9 +40,11 @@ namespace bike
             InitializeComponent();
             ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewType =>
             {
-                var viewModelTypeName = viewType.FullName.Replace("Page", "ViewModel");
-                var viewModelType = Type.GetType(viewModelTypeName);
-                return viewModelType;
+                var viewName = viewType.FullName;
+                viewName = viewName.Replace(".Views.", ".ViewModels.").Replace("Page", "ViewModel");
+                var viewAssemblyName = viewType.GetTypeInfo().Assembly.FullName;
+                var viewModelName = string.Format(CultureInfo.InvariantCulture, "{0}, {1}", viewName, viewAssemblyName);
+                return Type.GetType(viewModelName);
             });
             SyncfusionLicenseProvider.RegisterLicense("NzM3NEAzMTM3MmUzNDJlMzBPRm41TTBEL2hiZ0pjbG93dDZPQ0VocmRCWkJHSXlzWFgrUkxrZVlDaUpzPQ==");
             await NavigationService.NavigateAsync("Main/Nav/Dashboard?createTab=Gauge");
@@ -55,18 +60,17 @@ namespace bike
                 ;
             containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
             containerRegistry.RegisterForNavigation<TabbedPage>("TabbedPage");
-            containerRegistry.RegisterForNavigation<WelcomePage>("Welcome");
-            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>("Main");
-            containerRegistry.RegisterForNavigation<DashboardPage, DashboardViewModel>("Dashboard");
-            containerRegistry.RegisterForNavigation<GaugePage, GaugeViewModel>("Gauge");
+            containerRegistry.RegisterForNavigation<MainPage>("Main");
+            containerRegistry.RegisterForNavigation<DashboardPage>("Dashboard");
+            containerRegistry.RegisterForNavigation<GaugePage>("Gauge");
             //containerRegistry.RegisterForNavigation<MapPage, MapViewModel>("Map");
-            containerRegistry.RegisterForNavigation<SettingPage, SettingViewModel>("Settings");
-            containerRegistry.RegisterForNavigation<ReportPage, ReportViewModel>("Report");
-            containerRegistry.RegisterForNavigation<DiagnosticPage, DiagnosticViewModel>("Diagnostic");
+            containerRegistry.RegisterForNavigation<SettingPage>("Settings");
+            containerRegistry.RegisterForNavigation<ReportPage>("Report");
+            containerRegistry.RegisterForNavigation<DiagnosticPage>("Diagnostic");
             containerRegistry.RegisterForNavigation<LoggingPage>("Logs");
-            containerRegistry.RegisterForNavigation<ErrorLogPage, ErrorLogViewModel>("Errors");
-            containerRegistry.RegisterForNavigation<EventsPage, EventsViewModel>("Events");
-            containerRegistry.RegisterForNavigation<ServoPage, ServoViewModel>("Servo");
+            containerRegistry.RegisterForNavigation<ErrorLogPage>("Errors");
+            containerRegistry.RegisterForNavigation<EventsPage>("Events");
+            containerRegistry.RegisterForNavigation<ServoPage>("Servo");
 
 
             containerRegistry.RegisterForNavigation<ConfigurationPage, ConfigurationViewModel>("Configurations");

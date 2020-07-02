@@ -36,7 +36,7 @@ namespace bike.ViewModels
                 RaisePropertyChanged(e.PropertyName);
             };
         }
-        protected override async Task InitAsync(INavigationParameters parameters, CancellationToken? cancellation = null)
+        protected override async Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation = null)
         {
             PedalAssistLevelList = typeof(PedalSetting.PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
             PedalAssistSensitivitiesList = typeof(PedalSetting.PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();

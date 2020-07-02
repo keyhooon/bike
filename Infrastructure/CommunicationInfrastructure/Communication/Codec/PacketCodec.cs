@@ -2,14 +2,21 @@
 using SharpCommunication.Codec;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.ObjectModel;
+using DynamicData;
+using System;
+using Xamarin.Forms.Internals;
+
 namespace Device.Communication.Codec
 {
     public class PacketCodec : Codec<Packet>
     {
         private readonly PacketEncodingBuilder EncodingBuilder;
-
         private EncodingDecorator encoding;
+        private Dictionary<Type, AncestorPacketEncoding> _ancestorPacketEncodings;
+        public IReadOnlyDictionary<Type, AncestorPacketEncoding> AncestorPacketEncodings { get; }
 
+        public event EventHandler EncodingCreated;
         private readonly List<PacketEncodingBuilder> _defaultCommandPacketEncodingBuilders = new List<PacketEncodingBuilder>(
             new [] 
             {
@@ -41,14 +48,14 @@ namespace Device.Communication.Codec
         {
             get
             {
-                if (encoding == null)
-                    encoding = EncodingBuilder.Build();
                 return encoding;
             }
         }
 
         public PacketCodec(IEnumerable<PacketEncodingBuilder> PacketEncodingBuilderList)
         {
+            _ancestorPacketEncodings = new Dictionary<Type, AncestorPacketEncoding>();
+            AncestorPacketEncodings = new ReadOnlyDictionary<Type, AncestorPacketEncoding>(_ancestorPacketEncodings);
             _defaultCommandPacketEncodingBuilders.AddRange(PacketEncodingBuilderList.Where(o => o.Build().GetType().BaseType.GetGenericTypeDefinition() == typeof(FunctionPacketEncoding<>)));
             _defaultDataPacketEncodingBuilders.AddRange(PacketEncodingBuilderList.Where(o => o.Build().GetType().BaseType.GetGenericTypeDefinition() == typeof(AncestorPacketEncoding)));
 
@@ -56,14 +63,16 @@ namespace Device.Communication.Codec
                 Data.Encoding.CreateBuilder(_defaultDataPacketEncodingBuilders),
                 Command.Encoding.CreateBuilder(_defaultCommandPacketEncodingBuilders)
             });
+            encoding = EncodingBuilder.Build();
+            var PacketEncoding = ((DescendantPacketEncoding<Packet>)encoding.FindDecoratedEncoding<DescendantPacketEncoding<Packet>>());
+            var DataEncoding = ((DescendantPacketEncoding<Data>)PacketEncoding.EncodingDictionary[PacketEncoding.IdDictionary[typeof(Data)]].FindDecoratedEncoding<DescendantPacketEncoding<Data>>());
+            foreach (var item in DataEncoding.IdDictionary)
+            {
+                _ancestorPacketEncodings.Add(item.Key,(AncestorPacketEncoding) DataEncoding.EncodingDictionary[item.Value]);
+            }
         }
-        public PacketCodec()
-        {
-            EncodingBuilder = Packet.Encoding.CreateBuilder(new[] {
-                Data.Encoding.CreateBuilder(_defaultDataPacketEncodingBuilders),
-                Command.Encoding.CreateBuilder(_defaultCommandPacketEncodingBuilders)
-            });
-        }
+        public PacketCodec() : this(new List<PacketEncodingBuilder>())
+        { }
 
     }
 }

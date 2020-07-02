@@ -30,19 +30,14 @@ namespace Device.Communication.Codec
             return $"Read Command {{ Request Data: {DataId} }}";
         }
 
-        public class Encoding : FunctionPacketEncoding<ReadCommand>
+        public static class Encoding
         {
-            public override byte ParameterByteCount => 1;
-            public override byte Id => 1;
-            public override Action<byte[]> ActionToDo { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-            public Encoding(EncodingDecorator encoding) : base(encoding)
-            {
-
-            }
-
+            public static byte Id => 1;
+            public static byte ParameterByteCount => 1;
+            public static Type PacketType => typeof(ReadCommand);
+            public static Action<byte[]> ActionToDo { get => null; set => throw new NotImplementedException(); }
             public static PacketEncodingBuilder CreateBuilder()=>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(o => new FunctionPacketEncoding<ReadCommand>(o, ActionToDo, ParameterByteCount));
         }
 
     }

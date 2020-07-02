@@ -3,10 +3,11 @@ using Device;
 using Device.Communication.Codec;
 using Infrastructure;
 using Prism.Mvvm;
+using Prism.Navigation;
 
 namespace bike.ViewModels
 {
-    public class ConfigurationViewModel : ViewModel
+    public class ConfigurationViewModel : ViewModel, IMasterDetailPageOptions
     {
         private readonly ServoDriveService _servoDriveService;
         #region Constructor
@@ -38,5 +39,6 @@ namespace bike.ViewModels
         public PedalConfiguration Pedal => _servoDriveService.PedalConfiguration;
         public ThrottleConfiguration Throttle => _servoDriveService.ThrottleConfiguration;
 
+        public bool IsPresentedAfterNavigation => true;
     }
 }

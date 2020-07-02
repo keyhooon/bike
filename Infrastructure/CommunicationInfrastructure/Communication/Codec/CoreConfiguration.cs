@@ -26,16 +26,14 @@ namespace Device.Communication.Codec
             return $"Core Configuration {{ UniqueId : {UniqueId}, FirmwareVersion : {FirmwareVersion}, " +
                 $"ModelVersion : {ModelVersion} }}";
         }
-        public class Encoding : AncestorPacketEncoding
+        public class Encoding : EncodingDecorator
         {
 
-            public static byte ID => 4;
 
 
+            public static byte Id => 4;
 
-            public override byte Id => ID;
-
-            public override Type PacketType => typeof(CoreConfiguration);
+            public static Type PacketType => typeof(CoreConfiguration);
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {
@@ -80,7 +78,7 @@ namespace Device.Communication.Codec
                     };
                 return null;
             }
-            public static PacketEncodingBuilder CreateBuilder() =>PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(item => new Encoding(item));
+            public static PacketEncodingBuilder CreateBuilder() =>PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(item => new Encoding(item));
             
         }
 

@@ -10,7 +10,7 @@ using Acr.UserDialogs.Forms;
 
 namespace bike.ViewModels
 {
-    public class MainViewModel : ViewModel
+    public class MainViewModel : ViewModel, IMasterDetailPageOptions
     {
         private readonly INavigationService navigationService;
         private readonly ServoDriveService servoDriveService;
@@ -21,13 +21,19 @@ namespace bike.ViewModels
             this.navigationService = navigationService;
             this.servoDriveService = servoDriveService;
             this.dialogs = dialogs;
-            servoDriveService.IsOpenChanged += (sender, e)=>  RaisePropertyChanged(nameof(IsConnected));
+            IsPresentedAfterNavigation = false;
+            servoDriveService.IsOpenChanged += (sender, e) => RaisePropertyChanged(nameof(IsConnected));
         }
 
         DelegateCommand<string> _navigateCommand;
-        public DelegateCommand<string> NavigateCommand => _navigateCommand ??= new DelegateCommand<string>( (x) =>
+        private bool _masterIsPresent;
+
+        public DelegateCommand<string> NavigateCommand => _navigateCommand ??= new DelegateCommand<string>(async (x) =>
         {
-            navigationService.NavigateAsync(x);
+            IsPresented = false;
+            await Task.Delay(300);
+            await navigationService.NavigateAsync(x);
+            
         });
 
         public bool IsConnected
@@ -35,5 +41,11 @@ namespace bike.ViewModels
             get => servoDriveService.IsOpen;
         }
 
+        public bool IsPresented
+        {
+            get => _masterIsPresent; set => SetProperty(ref _masterIsPresent, value);
+        }
+
+        public bool IsPresentedAfterNavigation { get; set; }
     }
 }

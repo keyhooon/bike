@@ -13,7 +13,6 @@ namespace Device.Communication.Service
     class DeviceService
     {
         private List<DataTransport<Packet>> DataTransports;
-        public event EventHandler<DataReceivedEventArg<Packet>> DataReceived;
         public DeviceService()
         {
             DataTransports = new List<DataTransport<Packet>>();

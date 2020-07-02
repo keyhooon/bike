@@ -2,7 +2,7 @@
 using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
-namespace bike.Views.Settings
+namespace bike.Views
 {
     /// <summary>
     /// Page to show the setting.

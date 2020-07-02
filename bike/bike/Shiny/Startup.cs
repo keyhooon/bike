@@ -11,7 +11,7 @@ namespace bike.Shiny
     {
         protected override void ConfigureServices(IServiceCollection services)
         {
-            Log.UseConsole();
+            //Log.UseConsole();
             Log.UseDebug();
             services.AddSingleton<SqliteConnection>();
             services.UseMemoryCache();

@@ -6,7 +6,7 @@
     xmlns:prism="http://prismlibrary.com"
     xmlns:valueconverters="clr-namespace:Infrastructure.ValueConverters;assembly=bike.Infrastructure"
     Title="Diagnostic"
-    prism:ViewModelLocator.AutowireViewModel="True">
+    prism:ViewModelLocator.AutowireViewModel="True" >
     <ContentPage.Resources>
         <valueconverters:IsNullToColorValueConverter
             x:Key="IsNullToColor"

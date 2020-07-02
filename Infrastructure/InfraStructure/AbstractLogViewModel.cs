@@ -34,7 +34,7 @@ namespace Infrastructure
         }
         public bool HasLogs => Logs?.Any()??false;
 
-        protected override async Task InitAsync(INavigationParameters parameters, CancellationToken? cancellation = null)
+        protected override async Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation = null)
         {
             var logs = await LoadLogs();
             if (logs != null)

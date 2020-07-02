@@ -14,15 +14,12 @@ namespace Device.Communication.Codec
         {
             return $"Throttle Setting {{ ThrottleMode : {Enum.GetName(typeof(ThrottleActivityType), ActivityType)} }}";
         }
-        public class Encoding : AncestorPacketEncoding
+        public class Encoding : EncodingDecorator
         {
-            public static byte ID => 30;
 
-            public static readonly byte byteCount = 1;
+            public static byte Id => 30;
 
-            public override byte Id => ID;
-
-            public override Type PacketType => typeof(ThrottleSetting);
+            public static Type PacketType => typeof(ThrottleSetting);
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {
@@ -47,7 +44,7 @@ namespace Device.Communication.Codec
 
             public override IPacket Decode(BinaryReader reader)
             {
-                var value = reader.ReadBytes(byteCount);
+                var value = reader.ReadBytes(1);
                 byte crc8 = 0;
                 for (int i = 0; i < value.Length; i++)
                     crc8 += value[i];
@@ -59,7 +56,7 @@ namespace Device.Communication.Codec
                 return null;
             }
             public static PacketEncodingBuilder CreateBuilder() =>
-    PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(item => new Encoding(item));
+    PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(item => new Encoding(item));
 
         }
         [Xamarin.Forms.TypeConverter(typeof(EnumDescriptionTypeConverter))]

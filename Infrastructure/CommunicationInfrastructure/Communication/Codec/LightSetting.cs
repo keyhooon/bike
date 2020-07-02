@@ -23,14 +23,12 @@ namespace Device.Communication.Codec
                 $", Light3 : {Enum.GetName(typeof(LightVolume), Light3)}" +
                 $", Light4 : {Enum.GetName(typeof(LightVolume), Light4)} }}";
         }
-        public class Encoding : AncestorPacketEncoding
+        public class Encoding : EncodingDecorator
         {
 
-            public static byte ID => 5;
+            public static byte Id => 5;
 
-            public override byte Id => ID;
-
-            public override Type PacketType => typeof(LightSetting);
+            public static Type PacketType => typeof(LightSetting);
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {
@@ -68,7 +66,7 @@ namespace Device.Communication.Codec
             }
 
             public static PacketEncodingBuilder CreateBuilder() =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(o => new Encoding(o));
         }
         [TypeConverter(typeof(EnumDescriptionTypeConverter))]
         public enum LightVolume : byte

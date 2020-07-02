@@ -5,17 +5,17 @@ using System.IO;
 
 namespace Device.Communication.Channels
 {
-        public class PacketChannelFactory : ChannelFactory<Packet>
+    public class PacketChannelFactory : ChannelFactory<Packet>
+    {
+
+        public PacketChannelFactory() : base(new PacketCodec())
         {
 
-            public PacketChannelFactory() : base(new PacketCodec())
-            {
-
-            }
-
-            public override IChannel<Packet> Create(Stream inputStream, Stream outputStream)
-            {
-            return (new MonitoredChannel<Packet>(new PacketChannel(inputStream, outputStream)));
         }
+
+        public override IChannel<Packet> Create(Stream inputStream, Stream outputStream)
+        {
+        return (new MonitoredChannel<Packet>(new PacketChannel(inputStream, outputStream)));
         }
+    }
 }

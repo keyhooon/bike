@@ -12,8 +12,6 @@ namespace Infrastructure.Extension
         /// <returns>The smart date string</returns>
         public static string ToSmartDate(this DateTime inputValue)
         {
-            string res;
-
             var months = CultureInfo.CurrentUICulture.DateTimeFormat.MonthNames;
             var dayNames = CultureInfo.CurrentUICulture.DateTimeFormat.DayNames;
 

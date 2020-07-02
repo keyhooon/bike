@@ -22,11 +22,7 @@ namespace bike.Droid.Services
         }
 
         protected override bool IsOpenCore {
-            get
-            {
-                //var lastPacketTime = _channels.FirstOrDefault()?.ToMonitoredChannel()?.LastPacketTime??DateTime.MinValue;
-                return _socket != null && _socket.IsConnected /*&& (lastPacketTime > (DateTime.Now - TimeSpan.FromSeconds(2)))*/;
-            }
+            get => _socket != null && _socket.IsConnected && Channels.Any();
         }
 
         protected override void CloseCore()
@@ -54,13 +50,14 @@ namespace bike.Droid.Services
                 throw new Exception($"There is no BlueTooth Device with {Java.Util.UUID.FromString(((BluetoothDataTransportOption)Option).DeviceName)} Name.");
             _socket = device.CreateRfcommSocketToServiceRecord(Java.Util.UUID.FromString(((BluetoothDataTransportOption)Option).UUID));
             _socket.Connect();
-            var ch = ChannelFactory.Create(_socket.InputStream, _socket.OutputStream);
+            var ch = ((PacketChannelFactory)ChannelFactory).Create(_socket.InputStream, _socket.OutputStream);
             ch.ErrorReceived += (sender, ex) =>
             {
                 _socket = null;
             };
             _channels.Add(ch);
-
+            ch.DataReceived += (sender, e) => DataReceivedCount = ch.ToMonitoredChannel().GetDataReceivedCount;
         }
+        public int DataReceivedCount { get; set; }
     }
 }

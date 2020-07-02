@@ -38,10 +38,8 @@ namespace Device.Communication.Codec
                 $"UnderVoltage : {UnderVoltage}, NominalVoltage : {NominalVoltage}, " +
                 $"OverTemprature : {OverTemprature} }} ";
         }
-        public class Encoding : AncestorPacketEncoding
+        public class Encoding : EncodingDecorator
         {
-            public static byte ID => 1;
-
             private static readonly double _overCurrentBitResolution = CurrentCalibrationHelper.Gain;
             private static readonly double _overVoltageBitResolution = VoltageCalibrationHelper.Gain;
             private static readonly double _underVoltageBitResolution = VoltageCalibrationHelper.Gain;
@@ -54,9 +52,9 @@ namespace Device.Communication.Codec
             private static readonly double _overTempratureBias = 0;
             private static readonly byte _byteCount = 10;
 
-            public override Type PacketType => typeof(BatteryConfiguration);
+            public static Type PacketType => typeof(BatteryConfiguration);
 
-            public override byte Id => ID;
+            public static byte Id => 1;
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {
@@ -111,7 +109,7 @@ namespace Device.Communication.Codec
                 return null;
             }
             public static PacketEncodingBuilder CreateBuilder() =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(item => new Encoding(item));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(item => new Encoding(item));
         }
         public static class CurrentCalibrationHelper
         {

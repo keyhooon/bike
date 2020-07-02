@@ -2,7 +2,7 @@
 
 namespace bike.Views
 {
-    public partial class ReportPage : ContentPage
+    public partial class ReportPage 
     {
         public ReportPage()
         {

@@ -14,27 +14,16 @@ namespace Device.Communication.Codec
         {
             return $"DevicePacket {{ {DescendantPacket?.ToString()} }}";
         }
-        public class Encoding : DescendantPacketEncoding<Packet>
+        public static class Encoding  
         {
             private static readonly byte[] Header = { 0xAA, 0xAA };
 
-            public Encoding(EncodingDecorator encoding) : base(encoding)
-            {
-
-            }
-            public Encoding(EncodingDecorator encoding, IEnumerable<EncodingDecorator> encodingsList) : this(encoding)
-            {
-                foreach (var encodingItem in encodingsList)
-                {
-                    Register(encodingItem);
-                }
-            }
             public static PacketEncodingBuilder CreateBuilder() =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new HeaderPacketEncoding(o, Header)).AddDecorate(o => new Encoding(o));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new HeaderPacketEncoding(o, Header)).AddDecorate(o => new DescendantPacketEncoding<Packet>(o));
             public static PacketEncodingBuilder CreateBuilder(IEnumerable<PacketEncodingBuilder> encodingBuileders) =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o =>new HeaderPacketEncoding(o, Header)).AddDecorate(o => new Encoding(o, encodingBuileders.Select(o => o.Build()).ToList()));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o =>new HeaderPacketEncoding(o, Header)).AddDecorate(o => new DescendantPacketEncoding<Packet>(o, encodingBuileders.Select(o => o.Build()).ToList()));
             public static PacketEncodingBuilder CreateBuilder(IEnumerable<EncodingDecorator> encodings) =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new HeaderPacketEncoding(o, Header)).AddDecorate(o => new Encoding(o, encodings));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new HeaderPacketEncoding(o, Header)).AddDecorate(o => new DescendantPacketEncoding<Packet>(o, encodings));
         }
 
     }

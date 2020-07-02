@@ -21,14 +21,13 @@ namespace Device.Communication.Codec
                 $", Light3 : {Light3}" +
                 $", Light4 : {Light4} }}";
         }
-        public class Encoding : AncestorPacketEncoding
+        public class Encoding : EncodingDecorator
         {
-            public static byte ID => 6;
 
-            public const byte byteCount = 1;
-            public override byte Id => ID;
 
-            public override Type PacketType => typeof(LightState);
+            public static byte Id => 6;
+
+            public static Type PacketType => typeof(LightState);
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {
@@ -66,7 +65,7 @@ namespace Device.Communication.Codec
                 return null;
             }
             public static PacketEncodingBuilder CreateBuilder() =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(o => new Encoding(o));
         }
     }
 }

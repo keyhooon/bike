@@ -24,14 +24,14 @@ namespace Device.Communication.Codec
             return $"Pedal Setting {{ AssistLevel : {Enum.GetName(typeof(PedalAssistLevelType), AssistLevel)}, ActivationTime : {Enum.GetName(typeof(PedalActivationTimeType), ActivationTime)}, " +
                 $"LowLimit : {LowLimit}, HighLimit : {HighLimit} }}";
         }
-        public class Encoding : AncestorPacketEncoding
+        public class Encoding : EncodingDecorator
         {
             private static readonly byte ByteCount = 5;
             public static byte ID => 8;
 
-            public override byte Id => ID;
+            public static byte Id => ID;
 
-            public override Type PacketType => typeof(PedalSetting);
+            public static Type PacketType => typeof(PedalSetting);
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {
@@ -76,7 +76,7 @@ namespace Device.Communication.Codec
                 return null;
             }
             public static PacketEncodingBuilder CreateBuilder() =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(o => new Encoding(o));
 
 
         }

@@ -32,14 +32,14 @@ namespace Infrastructure
         public virtual void Initialize(INavigationParameters parameters)
         {
             Task.Run(async () => {
-                await LoadAsync(parameters).ConfigureAwait(false);
+                await PrepareLoadDataAsync(parameters).ConfigureAwait(false);
             });
 
         }
         public virtual void OnNavigatedTo(INavigationParameters parameters) { }
         public async virtual void OnAppearing()
         {
-            waitHandle.Reset();
+            await Task.CompletedTask;
         }
         public virtual void OnDisappearing() { }
         public virtual void Destroy() { 
@@ -56,15 +56,20 @@ namespace Infrastructure
         string _title;
         public string Title { get => _title; protected set => SetProperty(ref _title, value); }
 
-        protected virtual Task InitAsync(INavigationParameters parameters, CancellationToken? cancellation = null) => Task.CompletedTask;
+        protected virtual Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation = null) => Task.CompletedTask;
 
-        protected async Task LoadAsync(INavigationParameters parameters = null, CancellationToken? cancellation = null)
+        protected async Task PrepareLoadDataAsync(INavigationParameters parameters = null, CancellationToken? cancellation = null)
         {
             IsBusy = true;
-            await InitAsync(parameters, CancellationTokenSource.Token).ConfigureAwait(false);
+            CancellationToken token;
+            if (cancellation.HasValue)
+                token = CancellationTokenSource.CreateLinkedTokenSource(cancellation.Value).Token;
+            else
+                token = CancellationTokenSource.Token;
+            await LoadDataAsync(parameters, token).ConfigureAwait(false);
             _cancellationTokenSource?.Dispose();
             _cancellationTokenSource = null;
-            waitHandle.Set();
+
             IsBusy = false;
         }
     }

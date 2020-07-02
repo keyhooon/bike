@@ -39,9 +39,8 @@ namespace bike.ViewModels
         private List<string> pedalAssistSensivityStringList;
         private List<string> lightStringList;
 
-        protected override async Task InitAsync(INavigationParameters parameters, CancellationToken? cancellation)
+        protected override async Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation)
         {
-
             PedalAssistLevelActivityStringList = typeof(PedalSetting.PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToList();
             LightStringList = new List<string>(new[] { "25 %", "50 %", "75 %", "100 %" });
             PedalAssistSensivityStringList = typeof(PedalSetting.PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToList();
@@ -208,7 +207,7 @@ namespace bike.ViewModels
             _servoDriveService.LightSetting = new LightSetting();
             _servoDriveService.PedalSetting = new PedalSetting();
             _servoDriveService.ThrottleSetting = new ThrottleSetting();
-            _ = LoadAsync();
+            _ = PrepareLoadDataAsync();
         }));
     }
 }

@@ -17,13 +17,11 @@ namespace Device.Communication.Codec
 
             return $"Pedal Configuration {{ MagnetCount : {MagnetCount} }}";
         }
-        public class Encoding : AncestorPacketEncoding
+        public class Encoding : EncodingDecorator
         {
-            public static byte ID => 7;
+            public static byte Id => 7;
 
-            public override byte Id => ID;
-
-            public override Type PacketType => typeof(PedalConfiguration);
+            public static Type PacketType => typeof(PedalConfiguration);
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {
@@ -57,7 +55,7 @@ namespace Device.Communication.Codec
                 return null;
             }
             public static PacketEncodingBuilder CreateBuilder() =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(o => new Encoding(o));
 
         }
 

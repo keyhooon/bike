@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using bike.Models;
 using Device.Communication.Codec;
 using SharpCommunication.Channels;
+using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
 using SharpCommunication.Transport;
 using Shiny.Caching;
@@ -26,9 +27,23 @@ namespace bike.Services
         private readonly ISettings settings;
         private readonly SqliteConnection connection;
         private readonly ICache cache;
-        private ObservableCollection<Diagnostic> currentDiagnostic;
+        private readonly ObservableCollection<Diagnostic> currentDiagnostic;
         public event EventHandler IsOpenChanged;
         public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> BatteryConfigurationChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> BatteryOutputChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> CoreConfigurationChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> CoreSituationChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> FaultChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> LightSettingChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> LightStateChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> PedalConfigurationChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> PedalSettingChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> ServoInputChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> ServoOutputChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> ThrottleConfigurationChanged;
+        public event EventHandler<EncodingOperationFinishedEventArgs> ThrottleSettingChanged;
+
 
         public ServoDriveService(DataTransport<Packet> dataTransport, ISettings settings, SqliteConnection connection, ICache cache)
         {
@@ -37,28 +52,93 @@ namespace bike.Services
             this.connection = connection;
             this.cache = cache;
 
-            _ = Task.Run(async () =>
-            {
-                while (!dataTransport.IsOpen)
-                {
-                    try
-                    {
-                        await Task.Delay(1000);
-                        if (dataTransport.CanOpen)
-                            dataTransport.Open();
-                    }
-                    catch 
-                    {
-                        
-                    
-                    }
-            }
-            });
-            this.dataTransport.IsOpenChanged += (sender, e) => 
+            _ = Task.Run(TryOpenDataTransport);
+            this.dataTransport.IsOpenChanged += (sender, e) =>
             {
                 {
                     if (dataTransport.IsOpen)
                     {
+                        dataTransport.Channels.First().DataReceived += Item_DataReceived;
+                        var packetEncodings = ((PacketCodec)dataTransport.Channels.First().Codec).AncestorPacketEncodings;
+                        packetEncodings[typeof(BatteryConfiguration)].DecodeFinished += (sender, e) =>
+                        {
+                            BatteryConfiguration = (BatteryConfiguration)e.Packet;
+                            OnPropertyChanged(nameof(BatteryConfiguration));
+                            BatteryConfigurationChanged?.Invoke(sender, e);
+                        };
+                        packetEncodings[typeof(BatteryOutput)].DecodeFinished += (sender, e) =>
+                        {
+                            BatteryOutput = (BatteryOutput)e.Packet;
+                            OnPropertyChanged(nameof(BatteryOutput));
+                            BatteryOutputChanged?.Invoke(sender, e);
+                        };
+                        packetEncodings[typeof(CoreConfiguration)].DecodeFinished += (sender, e) =>
+                        {
+                            CoreConfiguration = (CoreConfiguration)e.Packet;
+                            OnPropertyChanged(nameof(CoreConfiguration));
+                            CoreConfigurationChanged?.Invoke(sender, e);
+                        };
+                        packetEncodings[typeof(CoreSituation)].DecodeFinished += (sender, e) =>
+                        {
+                            Core = (CoreSituation)e.Packet;
+                            OnPropertyChanged(nameof(CoreSituation));
+                            CoreSituationChanged?.Invoke(sender, e);
+                        }; 
+                        packetEncodings[typeof(Fault)].DecodeFinished += (sender, e) =>
+                        {
+                            Fault = (Fault)e.Packet;
+                            OnPropertyChanged(nameof(Fault));
+                            FaultChanged?.Invoke(sender, e);
+                        }; 
+                        packetEncodings[typeof(LightSetting)].DecodeFinished += (sender, e) =>
+                        {
+                            LightSetting = (LightSetting)e.Packet;
+                            OnPropertyChanged(nameof(LightSetting));
+                            LightSettingChanged?.Invoke(sender, e);
+                        }; 
+                        packetEncodings[typeof(LightState)].DecodeFinished += (sender, e) =>
+                        {
+                            LightState = (LightState)e.Packet;
+                            OnPropertyChanged(nameof(LightState));
+                            LightStateChanged?.Invoke(sender, e);
+                        }; 
+                        packetEncodings[typeof(PedalConfiguration)].DecodeFinished += (sender, e) =>
+                        {
+                            PedalConfiguration = (PedalConfiguration)e.Packet;
+                            OnPropertyChanged(nameof(PedalConfiguration));
+                            PedalConfigurationChanged?.Invoke(sender, e);
+                        }; 
+                        packetEncodings[typeof(PedalSetting)].DecodeFinished += (sender, e) =>
+                        {
+                            PedalSetting = (PedalSetting)e.Packet;
+                            OnPropertyChanged(nameof(PedalSetting));
+                            PedalSettingChanged?.Invoke(sender, e);
+                        }; ;
+                        packetEncodings[typeof(ServoInput)].DecodeFinished += (sender, e) =>
+                        {
+                            ServoInput = (ServoInput)e.Packet;
+                            OnPropertyChanged(nameof(ServoInput));
+                            ServoInputChanged?.Invoke(sender, e);
+                        }; ;
+                        packetEncodings[typeof(ServoOutput)].DecodeFinished += (sender, e) =>
+                        {
+                            ServoOutput = (ServoOutput)e.Packet;
+                            OnPropertyChanged(nameof(ServoOutput));
+                            ServoOutputChanged?.Invoke(sender, e);
+                        }; ;
+                        packetEncodings[typeof(ThrottleConfiguration)].DecodeFinished += (sender, e) =>
+                        {
+                            ThrottleConfiguration = (ThrottleConfiguration)e.Packet;
+                            OnPropertyChanged(nameof(ThrottleConfiguration));
+                            ThrottleConfigurationChanged?.Invoke(sender, e);
+                        }; ;
+                        packetEncodings[typeof(ThrottleSetting)].DecodeFinished += (sender, e) =>
+                        {
+                            ThrottleSetting = (ThrottleSetting)e.Packet;
+                            OnPropertyChanged(nameof(ThrottleSetting));
+                            ThrottleSettingChanged?.Invoke(sender, e);
+                        }; ;
+
                         RefreshBatteryConfiguration();
                         RefreshCoreConfiguration();
                         RefreshPedalConfiguration();
@@ -67,122 +147,110 @@ namespace bike.Services
                     }
                     else
                     {
-                        _ = Task.Run(async () =>
-                        {
-                            while (!dataTransport.IsOpen)
-                            {
-                                try
-                                {
-                                    await Task.Delay(1000);
-                                    if (dataTransport.CanOpen)
-                                        dataTransport.Open();
-                                }
-                                catch
-                                {
-
-
-                                }
-                            }
-                        });
+                        _ = Task.Run(TryOpenDataTransport);
                     }
                     IsOpenChanged?.Invoke(this, e);
                 }
             };
-            ((INotifyCollectionChanged)this.dataTransport.Channels).CollectionChanged += ServoDriveService_CollectionChanged;
         }
 
 
-        private void ServoDriveService_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+
+        private async Task TryOpenDataTransport()
         {
-            if (e.Action == NotifyCollectionChangedAction.Add)
-                foreach (Channel<Packet> item in e.NewItems)
+            while (!dataTransport.IsOpen)
+            {
+                try
                 {
-                    item.DataReceived += Item_DataReceived;
+                    await Task.Delay(1000);
+                    if (dataTransport.CanOpen)
+                        dataTransport.Open();
                 }
-            else if (e.Action == NotifyCollectionChangedAction.Remove)
-                foreach (Channel<Packet> item in e.OldItems)
+                catch
                 {
-                    item.DataReceived -= Item_DataReceived;
+
+
                 }
+            }
         }
 
         private void Item_DataReceived(object sender, DataReceivedEventArg<Packet> e)
         {
-            switch (e.Data.DescendantPacket)
-            {
-                case Data data:
-                    switch (data.DescendantPacket)
-                    {
-                        case BatteryConfiguration batteryConfiguration:
-                            BatteryConfiguration = batteryConfiguration;
-                            OnPropertyChanged(nameof(BatteryConfiguration));
-                            break;
-                        case BatteryOutput batteryOutput:
-                            BatteryOutput = batteryOutput;
-                            OnPropertyChanged(nameof(BatteryOutput));
-                            break;
-                        case CoreConfiguration coreConfiguration:
-                            CoreConfiguration = coreConfiguration;
-                            OnPropertyChanged(nameof(CoreConfiguration));
-                            break;
-                        case CoreSituation coreSituation:
-                            Core = coreSituation;
-                            OnPropertyChanged(nameof(Core));
-                            break;
-                        case LightSetting lightSetting:
-                            LightSetting = lightSetting;
-                            OnPropertyChanged(nameof(LightSetting));
-                            break;
-                        case Fault fault:
-                            Fault = fault;
-                            OnPropertyChanged(nameof(Fault));
-                            break;
-                        case LightState lightState:
-                            LightState = lightState;
-                            OnPropertyChanged(nameof(LightState));
-                            break;
-                        case PedalConfiguration pedalConfiguration:
-                            PedalConfiguration = pedalConfiguration;
-                            OnPropertyChanged(nameof(PedalConfiguration));
-                            break;
-                        case PedalSetting pedalSetting:
-                            PedalSetting = pedalSetting;
-                            OnPropertyChanged(nameof(PedalSetting));
-                            break;
-                        case ServoInput servoInput:
-                            ServoInput = servoInput;
-                            OnPropertyChanged(nameof(ServoInput));
-                            break;
-                        case ServoOutput servoOutput:
-                            ServoOutput = servoOutput;
-                            OnPropertyChanged(nameof(ServoOutput));
-                            break;
-                        case ThrottleConfiguration throttleConfiguration:
-                            ThrottleConfiguration = throttleConfiguration;
-                            OnPropertyChanged(nameof(ThrottleConfiguration));
-                            break;
-                        case ThrottleSetting throttleSetting:
-                            ThrottleSetting = throttleSetting;
-                            OnPropertyChanged(nameof(ThrottleSetting));
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case Command command:
-                    switch (command.DescendantPacket)
-                    {
-                        case CruiseCommand cruiseCommand:
-                            break;
-                        case LightCommand lightCommand:
-                            break;
-                        case ReadCommand readCommand:
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-            }
+            //switch (e.Data.DescendantPacket)
+            //{
+            //    case Data data:
+            //        switch (data.DescendantPacket)
+            //        {
+            //            case BatteryConfiguration batteryConfiguration:
+            //                BatteryConfiguration = batteryConfiguration;
+            //                OnPropertyChanged(nameof(BatteryConfiguration));
+            //                break;
+            //            case BatteryOutput batteryOutput:
+            //                BatteryOutput = batteryOutput;
+            //                OnPropertyChanged(nameof(BatteryOutput));
+            //                break;
+            //            case CoreConfiguration coreConfiguration:
+            //                CoreConfiguration = coreConfiguration;
+            //                OnPropertyChanged(nameof(CoreConfiguration));
+            //                break;
+            //            case CoreSituation coreSituation:
+            //                Core = coreSituation;
+            //                OnPropertyChanged(nameof(Core));
+            //                break;
+            //            case LightSetting lightSetting:
+            //                LightSetting = lightSetting;
+            //                OnPropertyChanged(nameof(LightSetting));
+            //                break;
+            //            case Fault fault:
+            //                Fault = fault;
+            //                OnPropertyChanged(nameof(Fault));
+            //                break;
+            //            case LightState lightState:
+            //                LightState = lightState;
+            //                OnPropertyChanged(nameof(LightState));
+            //                break;
+            //            case PedalConfiguration pedalConfiguration:
+            //                PedalConfiguration = pedalConfiguration;
+            //                OnPropertyChanged(nameof(PedalConfiguration));
+            //                break;
+            //            case PedalSetting pedalSetting:
+            //                PedalSetting = pedalSetting;
+            //                OnPropertyChanged(nameof(PedalSetting));
+            //                break;
+            //            case ServoInput servoInput:
+            //                ServoInput = servoInput;
+            //                OnPropertyChanged(nameof(ServoInput));
+            //                break;
+            //            case ServoOutput servoOutput:
+            //                ServoOutput = servoOutput;
+            //                OnPropertyChanged(nameof(ServoOutput));
+            //                break;
+            //            case ThrottleConfiguration throttleConfiguration:
+            //                ThrottleConfiguration = throttleConfiguration;
+            //                OnPropertyChanged(nameof(ThrottleConfiguration));
+            //                break;
+            //            case ThrottleSetting throttleSetting:
+            //                ThrottleSetting = throttleSetting;
+            //                OnPropertyChanged(nameof(ThrottleSetting));
+            //                break;
+            //            default:
+            //                break;
+            //        }
+            //        break;
+            //    case Command command:
+            //        switch (command.DescendantPacket)
+            //        {
+            //            case CruiseCommand cruiseCommand:
+            //                break;
+            //            case LightCommand lightCommand:
+            //                break;
+            //            case ReadCommand readCommand:
+            //                break;
+            //            default:
+            //                break;
+            //        }
+            //        break;
+            //}
 
         }
 
@@ -193,15 +261,15 @@ namespace bike.Services
         }
 
 
-        public void RefreshBatteryConfiguration() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = BatteryConfiguration.Encoding.ID } } });
+        public void RefreshBatteryConfiguration() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = BatteryConfiguration.Encoding.Id } } });
 
-        public void RefreshCoreConfiguration() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = CoreConfiguration.Encoding.ID } } });
+        public void RefreshCoreConfiguration() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = CoreConfiguration.Encoding.Id } } });
 
-        public void RefreshPedalConfiguration() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = PedalConfiguration.Encoding.ID } } });
+        public void RefreshPedalConfiguration() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = PedalConfiguration.Encoding.Id } } });
 
-        public void RefreshThrottleConfiguration() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = ThrottleConfiguration.Encoding.ID } } });
+        public void RefreshThrottleConfiguration() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = ThrottleConfiguration.Encoding.Id } } });
 
-        public void RefreshFault() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = Fault.Encoding.ID } } });
+        public void RefreshFault() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = Fault.Encoding.Id } } });
 
 
         public bool IsOpen { get => dataTransport.IsOpen; }

@@ -11,7 +11,7 @@
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource Gray-100}">
 
-    <ContentPage.Resources />
+
 
 
     <StackLayout Spacing="0">

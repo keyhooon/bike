@@ -33,7 +33,7 @@ namespace Device.Communication.Codec
             return $"Throttle Configuration {{ FaultThreshold : {FaultThreshold}v, Min : {Min}v, " +
                 $"Max : {Max}v }}";
         }
-        public class Encoding : AncestorPacketEncoding
+        public class Encoding : EncodingDecorator
         {
             public static byte ID => 10;
 
@@ -44,9 +44,9 @@ namespace Device.Communication.Codec
             private static readonly double _minBias = 0.0d;
             private static readonly double _maxBias = 0.0d;
 
-            public override byte Id => ID;
+            public static byte Id => ID;
 
-            public override Type PacketType => typeof(ThrottleConfiguration);
+            public static Type PacketType => typeof(ThrottleConfiguration);
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {
@@ -93,7 +93,7 @@ namespace Device.Communication.Codec
                 return null;
             }
             public static PacketEncodingBuilder CreateBuilder() =>
-    PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(item => new Encoding(item));
+    PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(item => new Encoding(item));
 
         }
 

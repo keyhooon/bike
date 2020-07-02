@@ -20,19 +20,17 @@ namespace Device.Communication.Codec
 
             return $"Servo Output {{ ActivityPercent : {ActivityPercent}, WheelSpeed : {WheelSpeed} }} ";
         }
-        public class Encoding : AncestorPacketEncoding
+        public class Encoding : EncodingDecorator
         {
-            public static byte ID => 50;
-
             private static readonly double _activityPercentBitResolution = 0.0015259021896696d;
             private static readonly double _wheelSpeedBitResolution = 0.000244140625 / 60;
             private static readonly double _activityPercentBias = 0.0d;
             private static readonly double _wheelSpeedBias = 0.0d;
             private static readonly byte _byteCount = 5;
 
-            public override byte Id => ID;
+            public static byte Id => 50;
 
-            public override Type PacketType => typeof(ServoOutput);
+            public static Type PacketType => typeof(ServoOutput);
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {
@@ -70,7 +68,7 @@ namespace Device.Communication.Codec
                 return null;
             }
             public static PacketEncodingBuilder CreateBuilder() =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(item => new Encoding(item));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(item => new Encoding(item));
         }
 
     }

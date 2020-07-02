@@ -1,12 +1,9 @@
 ﻿using AiForms.Effects.Droid;
 using AiForms.Renderers.Droid;
 using Android.App;
-using Android.Content;
+
 using Android.Content.PM;
 using Android.OS;
-using Android.Runtime;
-using Prism;
-using Prism.Ioc;
 using Rg.Plugins.Popup;
 using Shiny;
 using Xamarin.Forms;
@@ -30,6 +27,7 @@ namespace bike.Droid
             base.OnCreate(bundle);
             Forms.Init(this, bundle);
             Popup.Init(this, bundle);
+
             SettingsViewInit.Init(); // need to write here
             Effects.Init(); //need to write here
             

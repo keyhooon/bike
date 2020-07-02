@@ -1,7 +1,7 @@
 ﻿using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
 using System;
-
+using System.IO;
 
 namespace Device.Communication.Codec
 {
@@ -23,22 +23,16 @@ namespace Device.Communication.Codec
             return $"Cruise Command {{ Cruise : {IsOn} }}";
         }
 
-        public class Encoding : FunctionPacketEncoding<CruiseCommand>
+        public static class Encoding 
         {
-            public static byte ID => 3;
+            public static byte Id => 3;
+            public static byte ParameterByteCount => 1;
+            public static Type PacketType => typeof(CruiseCommand);
 
-            public override byte ParameterByteCount => 1;
-            public override byte Id => ID;
-            public override Action<byte[]> ActionToDo { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+            public static Action<byte[]> ActionToDo { get => null; set => throw new NotImplementedException(); }
 
-
-
-            public Encoding(EncodingDecorator encoding) : base(encoding)
-            {
-
-            }
             public static PacketEncodingBuilder CreateBuilder() =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(o => new FunctionPacketEncoding<CruiseCommand>(o, ActionToDo, ParameterByteCount));
         }
     }
 }

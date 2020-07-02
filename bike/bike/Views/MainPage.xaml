@@ -7,7 +7,9 @@
     xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
     xmlns:image="clr-namespace:bike.Assets"
     xmlns:prism="http://prismlibrary.com"
-    prism:ViewModelLocator.AutowireViewModel="True">
+    prism:ViewModelLocator.AutowireViewModel="True"
+    IsPresented="{Binding IsPresented, Mode=TwoWay}"
+    MasterBehavior="SplitOnLandscape">
     <MasterDetailPage.Resources>
         <Color x:Key="Transparent">Transparent</Color>
         <x:String x:Key="hum">&#xe5d2;</x:String>
@@ -70,6 +72,7 @@
                         <!--  CommandParameter="Nav/Dashboard?createTab=Gauge&amp;createTab=Map"  -->
                         <Button
                             ef:Feedback.EffectColor="Accent"
+                            Clicked="Button_Clicked"
                             Command="{Binding NavigateCommand}"
                             CommandParameter="Nav/Dashboard?createTab=Gauge"
                             ImageSource="{image:ImageResource bike.Assets.low.015-dashboard-1.png}"

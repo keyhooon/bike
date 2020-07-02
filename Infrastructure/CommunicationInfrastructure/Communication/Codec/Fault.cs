@@ -41,14 +41,12 @@ namespace Device.Communication.Codec
             Motor = 6,
             Drive = 7
         }
-        public class Encoding : AncestorPacketEncoding
+        public class Encoding : EncodingDecorator
         {
-            public static byte ID => 100;
-
             private readonly static byte byteCount = 2;
-            public override Type PacketType => typeof(Fault);
+            public static Type PacketType => typeof(Fault);
 
-            public override byte Id => ID;
+            public static byte Id => 100;
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {
@@ -92,7 +90,7 @@ namespace Device.Communication.Codec
                 return null;
             }
             public static PacketEncodingBuilder CreateBuilder() =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new Encoding(o));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(o => new Encoding(o));
         }
 
     }

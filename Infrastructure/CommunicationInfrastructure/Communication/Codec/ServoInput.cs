@@ -25,9 +25,9 @@ namespace Device.Communication.Codec
             return $"Servo Input {{ Throttle : {Throttle}, Pedal : {Pedal}, " +
                 $"Cruise : {Cruise}, IsBreak : {IsBreak} }} ";
         }
-        public class Encoding : AncestorPacketEncoding
+        public class Encoding : EncodingDecorator
         {
-            public static byte ID => 9;
+
 
             private const double V = 0.0015259021896696d;
             private static readonly byte _byteCount = 7;
@@ -38,9 +38,9 @@ namespace Device.Communication.Codec
             private static readonly double _pedalBias = 0.0d;
             private static readonly double _cruiseBias = 0.0d;
 
-            public override byte Id => ID;
+            public static byte Id => 9;
 
-            public override Type PacketType => typeof(ServoInput);
+            public static Type PacketType => typeof(ServoInput);
 
             public Encoding(EncodingDecorator encoding) : base(encoding)
             {
@@ -92,7 +92,7 @@ namespace Device.Communication.Codec
                 return null;
             }
             public static PacketEncodingBuilder CreateBuilder() =>
-                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(item => new Encoding(item));
+                PacketEncodingBuilder.CreateDefaultBuilder().AddDecorate(o => new AncestorPacketEncoding(o, Id, PacketType)).AddDecorate(item => new Encoding(item));
         }
     }
 
