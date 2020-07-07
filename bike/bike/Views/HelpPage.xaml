@@ -9,24 +9,52 @@
     x:Name="helpPage"
     Title="Help"
     prism:ViewModelLocator.AutowireViewModel="True"
-    BackgroundColor="{DynamicResource Gray-100}">
+    BackgroundColor="{DynamicResource Gray-100}"
+    NavigationPage.HasNavigationBar="False">
+
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <AbsoluteLayout BackgroundColor="{StaticResource PrimaryColor}" HeightRequest="55">
+            <Button
+                Padding="0"
+                AbsoluteLayout.LayoutBounds="0,0,.2,1"
+                AbsoluteLayout.LayoutFlags="All"
+                BackgroundColor="{StaticResource PrimaryColor}"
+                Command="{prism:GoBack}"
+                FontFamily="{StaticResource MaterialIcons}"
+                FontSize="30"
+                HorizontalOptions="Start"
+                Text=""
+                TextColor="White"
+                WidthRequest="50" />
+            <Label
+                AbsoluteLayout.LayoutBounds=".4,0,.6,1"
+                AbsoluteLayout.LayoutFlags="All"
+                FontSize="{StaticResource BaseFontSize++}"
+                HorizontalOptions="Fill"
+                HorizontalTextAlignment="Center"
+                Text="Help"
+                TextColor="White"
+                VerticalTextAlignment="Center" />
+        </AbsoluteLayout>
 
 
-
-
-    <StackLayout Spacing="0">
-        <sv:SettingsView ShowArrowIndicatorForAndroid="True">
-            <sv:Section Title="Question" ItemsSource="{Binding Logs}">
-                <sv:Section.ItemTemplate>
-                    <DataTemplate>
-                        <sv:CommandCell
-                            Title="{Binding Text}"
-                            Command="{Binding PrimaryCommand}"
-                            Description="{Binding Detail}" />
-                    </DataTemplate>
-                </sv:Section.ItemTemplate>
-            </sv:Section>
-        </sv:SettingsView>
-    </StackLayout>
-
+        <StackLayout Grid.Row="1" Spacing="0">
+            <sv:SettingsView ShowArrowIndicatorForAndroid="True">
+                <sv:Section Title="Question" ItemsSource="{Binding Logs}">
+                    <sv:Section.ItemTemplate>
+                        <DataTemplate>
+                            <sv:CommandCell
+                                Title="{Binding Text}"
+                                Command="{Binding PrimaryCommand}"
+                                Description="{Binding Detail}" />
+                        </DataTemplate>
+                    </sv:Section.ItemTemplate>
+                </sv:Section>
+            </sv:SettingsView>
+        </StackLayout>
+    </Grid>
 </ContentPage>

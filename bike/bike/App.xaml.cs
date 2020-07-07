@@ -10,7 +10,6 @@ using Syncfusion.Licensing;
 using bike.Views.AboutUs;
 using bike.ViewModels.AboutUs;
 using bike.Views.ContactUs;
-using bike.Views.Settings;
 using Xamarin.Forms;
 using Communication;
 using bike.Services;
@@ -47,7 +46,7 @@ namespace bike
                 return Type.GetType(viewModelName);
             });
             SyncfusionLicenseProvider.RegisterLicense("NzM3NEAzMTM3MmUzNDJlMzBPRm41TTBEL2hiZ0pjbG93dDZPQ0VocmRCWkJHSXlzWFgrUkxrZVlDaUpzPQ==");
-            await NavigationService.NavigateAsync("Main/Nav/Dashboard?createTab=Gauge");
+            await NavigationService.NavigateAsync("Main");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -73,11 +72,11 @@ namespace bike
             containerRegistry.RegisterForNavigation<ServoPage>("Servo");
 
 
-            containerRegistry.RegisterForNavigation<ConfigurationPage, ConfigurationViewModel>("Configurations");
+            containerRegistry.RegisterForNavigation<ConfigurationPage>("Configurations");
             containerRegistry.RegisterForNavigation<ContactUsPage>("ContactUs");
-            containerRegistry.RegisterForNavigation<AboutUsSimplePage, AboutUsSimpleViewModel>("AboutUs");
+            containerRegistry.RegisterForNavigation<AboutUsSimplePage>("AboutUs");
             containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
-            containerRegistry.RegisterForNavigation<QuestionAnswerPage, QuestionAnswerViewModel>("Question");
+            containerRegistry.RegisterForNavigation<QuestionAnswerPage>("Question");
         }
     }
 }

@@ -75,22 +75,9 @@ namespace bike.ViewModels
         public bool IsCurrent
         {
             get => _isCurrent;
-            set => SetProperty(ref _isCurrent, value, () =>
-            {
-                if (value)
-                    CurrentCommandText = "All";
-                else
-                    CurrentCommandText = "Current";
-            });
+            set => SetProperty(ref _isCurrent, value);
         }
 
-
-        private string _currentCommandText = "Current";
-        public string CurrentCommandText
-        {
-            get => _currentCommandText;
-            set => SetProperty(ref _currentCommandText, value);
-        }
 
         private DelegateCommand _toggleCurrentCommand;
         public DelegateCommand ToggleCurrentCommand =>

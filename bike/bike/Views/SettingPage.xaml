@@ -14,12 +14,55 @@
     <ContentPage.Resources />
 
     <ContentPage.Content>
-        <Grid>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <AbsoluteLayout BackgroundColor="{StaticResource PrimaryColor}" HeightRequest="55">
+                <Button
+                    Padding="0"
+                    AbsoluteLayout.LayoutBounds="0,0,.2,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    Command="{prism:GoBack}"
+                    FontFamily="{StaticResource MaterialIcons}"
+                    FontSize="30"
+                    HorizontalOptions="Start"
+                    Text=""
+                    TextColor="White"
+                    WidthRequest="50" />
+                <Label
+                    AbsoluteLayout.LayoutBounds=".4,0,.6,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    FontSize="{StaticResource BaseFontSize++}"
+                    HorizontalOptions="Fill"
+                    HorizontalTextAlignment="Center"
+                    Text="Settings"
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
+                <Button
+                    Padding="0"
+                    AbsoluteLayout.LayoutBounds="1,0,.2,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    Command="{Binding RestCommand}"
+                    FontFamily="{StaticResource MaterialIcons}"
+                    FontSize="30"
+                    HorizontalOptions="End"
+                    Text=""
+                    TextColor="White"
+                    WidthRequest="50" />
+            </AbsoluteLayout>
             <ActivityIndicator
+                Grid.Row="1"
                 HorizontalOptions="Center"
                 IsRunning="{Binding IsBusy}"
                 VerticalOptions="Center" />
-            <sv:SettingsView HasUnevenRows="True" IsVisible="{Binding IsBusy, Converter={StaticResource Not}}">
+            <sv:SettingsView
+                Grid.Row="1"
+                HasUnevenRows="True"
+                IsVisible="{Binding IsBusy, Converter={StaticResource Not}}">
                 <sv:SettingsView.Resources />
                 <sv:Section Title="Pedal">
 

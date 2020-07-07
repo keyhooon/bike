@@ -122,12 +122,15 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Prism.Forms" Version="7.2.0.1422" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.55" />
+
     <PackageReference Include="Syncfusion.Xamarin.SfGauge" Version="17.4.0.55" />
 
-
-
+    <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer" Version="17.4.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfTabView" Version="17.4.0.55" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1422" />
+
   </ItemGroup>
 
   <ItemGroup>

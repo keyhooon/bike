@@ -7,45 +7,178 @@ using Prism.Navigation;
 using System.Threading;
 using System.Threading.Tasks;
 using Acr.UserDialogs.Forms;
+using Prism.Services;
+using System.Collections.Generic;
+using Device.Communication.Codec;
+using System.Reflection;
+using System.Linq;
+using System.ComponentModel;
+using Xamarin.Forms;
 
 namespace bike.ViewModels
 {
-    public class MainViewModel : ViewModel, IMasterDetailPageOptions
+    public class MainViewModel : ViewModel
     {
+        private readonly IDeviceService deviceService;
         private readonly INavigationService navigationService;
-        private readonly ServoDriveService servoDriveService;
         private readonly IUserDialogs dialogs;
 
-        public MainViewModel(INavigationService navigationService, ServoDriveService servoDriveService, IUserDialogs dialogs)
+        public MainViewModel(IDeviceService deviceService, INavigationService navigationService, ServoDriveService servoDriveService, IUserDialogs dialogs)
         {
+            this.deviceService = deviceService;
             this.navigationService = navigationService;
-            this.servoDriveService = servoDriveService;
+                _servoDriveService = servoDriveService;
+            _servoDriveService.PropertyChanged += (sender, e) =>
+            {
+                RaisePropertyChanged(e.PropertyName);
+            };
             this.dialogs = dialogs;
-            IsPresentedAfterNavigation = false;
-            servoDriveService.IsOpenChanged += (sender, e) => RaisePropertyChanged(nameof(IsConnected));
+            servoDriveService.IsOpenChanged += (sender, e) =>
+            {
+                RaisePropertyChanged(nameof(IsConnected));
+            };
         }
 
         DelegateCommand<string> _navigateCommand;
-        private bool _masterIsPresent;
-
         public DelegateCommand<string> NavigateCommand => _navigateCommand ??= new DelegateCommand<string>(async (x) =>
         {
             IsPresented = false;
-            await Task.Delay(300);
+            await Task.Delay(340);
             await navigationService.NavigateAsync(x);
-            
+
+        });
+
+        DelegateCommand _openDrawerCommand;
+        public DelegateCommand OpenDrawerCommand => _openDrawerCommand ??= new DelegateCommand(() =>
+        {
+            IsPresented = true;
         });
 
         public bool IsConnected
         {
-            get => servoDriveService.IsOpen;
+            get => _servoDriveService.IsOpen;
         }
 
+        private bool _masterIsPresent;
         public bool IsPresented
         {
             get => _masterIsPresent; set => SetProperty(ref _masterIsPresent, value);
         }
+        private readonly ServoDriveService _servoDriveService;
 
-        public bool IsPresentedAfterNavigation { get; set; }
+        private List<string> pedalAssistLevelList;
+        private List<string> pedalAssistSensitivitiesList;
+        private List<string> throttleModeList;
+        private int _selectedPedalAssistLevel;
+        private int _selectedpedalAssistSensitivities;
+        private int _selectedthrottleMode;
+        private BatteryOutput _batteryOutput;
+        private Fault _fault;
+        private LightState _light;
+        private ServoOutput _servo;
+
+        protected override async Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation = null)
+        {
+            PedalAssistLevelList = typeof(PedalSetting.PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
+            PedalAssistSensitivitiesList = typeof(PedalSetting.PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
+            ThrottleModeList = typeof(ThrottleSetting.ThrottleActivityType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
+            _selectedPedalAssistLevel = (int)ServoDriveService.PedalSetting.AssistLevel;
+            _selectedpedalAssistSensitivities = (int)ServoDriveService.PedalSetting.ActivationTime;
+            _selectedthrottleMode = (int)ServoDriveService.ThrottleSetting.ActivityType;
+            RaisePropertyChanged(nameof(SelectedPedalAssistLevel));
+            RaisePropertyChanged(nameof(SelectedPedalAssistSensitivities));
+            RaisePropertyChanged(nameof(SelectedThrottleMode));
+            await Task.CompletedTask;
+        }
+        public List<string> PedalAssistLevelList { get => pedalAssistLevelList; private set => SetProperty(ref pedalAssistLevelList, value); }
+
+        public List<string> PedalAssistSensitivitiesList { get => pedalAssistSensitivitiesList; private set => SetProperty(ref pedalAssistSensitivitiesList, value); }
+
+        public List<string> ThrottleModeList { get => throttleModeList; private set => SetProperty(ref throttleModeList, value); }
+
+        public int SelectedPedalAssistLevel
+        {
+            get => _selectedPedalAssistLevel; set => SetProperty(ref _selectedPedalAssistLevel, value, () =>
+            {
+                if (value == -1)
+                {
+                    _selectedPedalAssistLevel = (int)ServoDriveService.PedalSetting.AssistLevel;
+                    return;
+                }
+                ServoDriveService.PedalSetting =
+                new PedalSetting
+                {
+                    ActivationTime = (PedalSetting.PedalActivationTimeType)_selectedpedalAssistSensitivities,
+                    AssistLevel = (PedalSetting.PedalAssistLevelType)_selectedPedalAssistLevel
+                };
+            });
+        }
+
+        public int SelectedPedalAssistSensitivities
+        {
+            get => _selectedpedalAssistSensitivities; set => SetProperty(ref _selectedpedalAssistSensitivities, value, () =>
+            {
+                if (value == -1)
+                {
+                    _selectedpedalAssistSensitivities = (int)ServoDriveService.PedalSetting.ActivationTime;
+                    return;
+                }
+                ServoDriveService.PedalSetting =
+                new PedalSetting
+                {
+                    ActivationTime = (PedalSetting.PedalActivationTimeType)_selectedpedalAssistSensitivities,
+                    AssistLevel = (PedalSetting.PedalAssistLevelType)_selectedPedalAssistLevel
+                };
+            });
+        }
+
+        public int SelectedThrottleMode
+        {
+            get => _selectedthrottleMode; set => SetProperty(ref _selectedthrottleMode, value, () =>
+            {
+                if (value == -1)
+                {
+                    _selectedthrottleMode = (int)ServoDriveService.ThrottleSetting.ActivityType;
+                    return;
+                }
+                ServoDriveService.ThrottleSetting =
+                new ThrottleSetting
+                {
+                    ActivityType = (ThrottleSetting.ThrottleActivityType)_selectedthrottleMode
+                };
+            });
+        }
+
+        public BatteryOutput Battery
+        {
+            get => _batteryOutput; set => SetProperty(ref _batteryOutput, value, () =>
+            {
+
+            });
+        }
+        public Fault Fault
+        {
+            get => _fault; set => SetProperty(ref _fault, value, () =>
+            {
+
+            });
+        }
+        public LightState Light
+        {
+            get => _light; set => SetProperty(ref _light, value, () =>
+            {
+
+            });
+        }
+        public ServoOutput Servo
+        {
+            get => _servo; set => SetProperty(ref _servo, value, () =>
+            {
+
+            });
+        }
+
+        public ServoDriveService ServoDriveService => _servoDriveService;
+
     }
 }

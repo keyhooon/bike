@@ -154,8 +154,6 @@ namespace bike.Services
             };
         }
 
-
-
         private async Task TryOpenDataTransport()
         {
             while (!dataTransport.IsOpen)
@@ -176,90 +174,13 @@ namespace bike.Services
 
         private void Item_DataReceived(object sender, DataReceivedEventArg<Packet> e)
         {
-            //switch (e.Data.DescendantPacket)
-            //{
-            //    case Data data:
-            //        switch (data.DescendantPacket)
-            //        {
-            //            case BatteryConfiguration batteryConfiguration:
-            //                BatteryConfiguration = batteryConfiguration;
-            //                OnPropertyChanged(nameof(BatteryConfiguration));
-            //                break;
-            //            case BatteryOutput batteryOutput:
-            //                BatteryOutput = batteryOutput;
-            //                OnPropertyChanged(nameof(BatteryOutput));
-            //                break;
-            //            case CoreConfiguration coreConfiguration:
-            //                CoreConfiguration = coreConfiguration;
-            //                OnPropertyChanged(nameof(CoreConfiguration));
-            //                break;
-            //            case CoreSituation coreSituation:
-            //                Core = coreSituation;
-            //                OnPropertyChanged(nameof(Core));
-            //                break;
-            //            case LightSetting lightSetting:
-            //                LightSetting = lightSetting;
-            //                OnPropertyChanged(nameof(LightSetting));
-            //                break;
-            //            case Fault fault:
-            //                Fault = fault;
-            //                OnPropertyChanged(nameof(Fault));
-            //                break;
-            //            case LightState lightState:
-            //                LightState = lightState;
-            //                OnPropertyChanged(nameof(LightState));
-            //                break;
-            //            case PedalConfiguration pedalConfiguration:
-            //                PedalConfiguration = pedalConfiguration;
-            //                OnPropertyChanged(nameof(PedalConfiguration));
-            //                break;
-            //            case PedalSetting pedalSetting:
-            //                PedalSetting = pedalSetting;
-            //                OnPropertyChanged(nameof(PedalSetting));
-            //                break;
-            //            case ServoInput servoInput:
-            //                ServoInput = servoInput;
-            //                OnPropertyChanged(nameof(ServoInput));
-            //                break;
-            //            case ServoOutput servoOutput:
-            //                ServoOutput = servoOutput;
-            //                OnPropertyChanged(nameof(ServoOutput));
-            //                break;
-            //            case ThrottleConfiguration throttleConfiguration:
-            //                ThrottleConfiguration = throttleConfiguration;
-            //                OnPropertyChanged(nameof(ThrottleConfiguration));
-            //                break;
-            //            case ThrottleSetting throttleSetting:
-            //                ThrottleSetting = throttleSetting;
-            //                OnPropertyChanged(nameof(ThrottleSetting));
-            //                break;
-            //            default:
-            //                break;
-            //        }
-            //        break;
-            //    case Command command:
-            //        switch (command.DescendantPacket)
-            //        {
-            //            case CruiseCommand cruiseCommand:
-            //                break;
-            //            case LightCommand lightCommand:
-            //                break;
-            //            case ReadCommand readCommand:
-            //                break;
-            //            default:
-            //                break;
-            //        }
-            //        break;
-            //}
 
         }
-
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
 
         public void RefreshBatteryConfiguration() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = BatteryConfiguration.Encoding.Id } } });
 

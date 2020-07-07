@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
 using bike.Services;
+using Acr.UserDialogs.Forms;
 
 namespace bike.ViewModels
 {
@@ -24,15 +25,17 @@ namespace bike.ViewModels
     {
 
         private readonly ServoDriveService _servoDriveService;
+        private readonly IUserDialogs dialogs;
 
         #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingViewModel" /> class
         /// </summary>
-        public SettingViewModel(ServoDriveService servoDriveService)
+        public SettingViewModel(ServoDriveService servoDriveService, IUserDialogs dialogs)
         {
             _servoDriveService = servoDriveService;
+            this.dialogs = dialogs;
         }
         #endregion
         private List<string> pedalAssistLevelActivityStringList;
@@ -201,13 +204,17 @@ namespace bike.ViewModels
 
         private DelegateCommand _resetCommand;
 
-        public DelegateCommand RestCommand => _resetCommand ?? (_resetCommand = new DelegateCommand(() =>
+        public DelegateCommand RestCommand => _resetCommand ?? (_resetCommand = new DelegateCommand(async() =>
         {
+            var confirm = await dialogs.Confirm("Reset Settings?");
+            if (confirm)
+            {
+                _servoDriveService.LightSetting = new LightSetting();
+                _servoDriveService.PedalSetting = new PedalSetting();
+                _servoDriveService.ThrottleSetting = new ThrottleSetting();
+                Initialize(null);
+            }
 
-            _servoDriveService.LightSetting = new LightSetting();
-            _servoDriveService.PedalSetting = new PedalSetting();
-            _servoDriveService.ThrottleSetting = new ThrottleSetting();
-            _ = PrepareLoadDataAsync();
         }));
     }
 }

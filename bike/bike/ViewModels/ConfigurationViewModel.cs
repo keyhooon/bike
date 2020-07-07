@@ -7,7 +7,7 @@ using Prism.Navigation;
 
 namespace bike.ViewModels
 {
-    public class ConfigurationViewModel : ViewModel, IMasterDetailPageOptions
+    public class ConfigurationViewModel : ViewModel
     {
         private readonly ServoDriveService _servoDriveService;
         #region Constructor
@@ -18,27 +18,15 @@ namespace bike.ViewModels
         public ConfigurationViewModel(ServoDriveService servoDriveService)
         {
             _servoDriveService = servoDriveService;
-            _servoDriveService.PropertyChanged += (sender, e) =>
-            {
-                if (e.PropertyName == nameof(ServoDriveService.BatteryConfiguration))
-                    RaisePropertyChanged(nameof(Battery));
-                else if (e.PropertyName == nameof(ServoDriveService.CoreConfiguration))
-                    RaisePropertyChanged(nameof(Core));
-                else if (e.PropertyName == nameof(ServoDriveService.PedalConfiguration))
-                    RaisePropertyChanged(nameof(Pedal));
-                else if (e.PropertyName == nameof(ServoDriveService.ThrottleConfiguration))
-                    RaisePropertyChanged(nameof(Throttle));
-            };
+            _servoDriveService.PropertyChanged += (sender, e) => RaisePropertyChanged(nameof(e.PropertyName));
         }
 
 
         #endregion
 
-        public BatteryConfiguration Battery => _servoDriveService.BatteryConfiguration;
-        public CoreConfiguration Core => _servoDriveService.CoreConfiguration;
-        public PedalConfiguration Pedal => _servoDriveService.PedalConfiguration;
-        public ThrottleConfiguration Throttle => _servoDriveService.ThrottleConfiguration;
-
-        public bool IsPresentedAfterNavigation => true;
+        public BatteryConfiguration BatteryConfiguration => _servoDriveService.BatteryConfiguration;
+        public CoreConfiguration CoreConfiguration => _servoDriveService.CoreConfiguration;
+        public PedalConfiguration PedalConfiguration => _servoDriveService.PedalConfiguration;
+        public ThrottleConfiguration ThrottleConfiguration => _servoDriveService.ThrottleConfiguration;
     }
 }

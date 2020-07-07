@@ -3,9 +3,10 @@
     x:Class="bike.App"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:Infrastructure.Converters;assembly=bike.Infrastructure"
     xmlns:prism="clr-namespace:Prism;assembly=Prism.Forms.Extended"
     xmlns:syncTheme="clr-namespace:Syncfusion.XForms.Themes;assembly=Syncfusion.Core.XForms"
-    xmlns:themes="clr-namespace:bike.Themes;assembly=bike" xmlns:converters="clr-namespace:Infrastructure.Converters;assembly=bike.Infrastructure">
+    xmlns:themes="clr-namespace:bike.Themes;assembly=bike">
     <Application.Resources>
 
         <syncTheme:SyncfusionThemeDictionary>
@@ -13,6 +14,7 @@
 
                 <!--  Theme resource dictionary  -->
                 <themes:LightTheme />
+                <!--  Control style resource dictionaries  -->
 
             </syncTheme:SyncfusionThemeDictionary.MergedDictionaries>
             <converters:InverseBooleanConverter x:Key="Not" />

@@ -5,50 +5,83 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
     xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
-    Title="Configurations"
+    Title="Live Data"
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource Gray-White}">
     <ContentPage.Content>
-        <sv:SettingsView>
+        <Grid RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <AbsoluteLayout BackgroundColor="{StaticResource PrimaryColor}" HeightRequest="55">
+                <Button
+                    Padding="0"
+                    AbsoluteLayout.LayoutBounds="0,0,.2,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    Command="{prism:GoBack}"
+                    FontFamily="{StaticResource MaterialIcons}"
+                    FontSize="30"
+                    HorizontalOptions="Start"
+                    Text=""
+                    TextColor="White"
+                    WidthRequest="50" />
+                <Label
+                    AbsoluteLayout.LayoutBounds=".4,0,.6,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    FontSize="{StaticResource BaseFontSize++}"
+                    HorizontalOptions="Fill"
+                    HorizontalTextAlignment="Center"
+                    Text="Live Data"
+                    TextColor="White"
+                    VerticalTextAlignment="Center" />
 
-            <sv:Section Title="Core State">
-                <sv:LabelCell Title="Temprature" ValueText="{Binding CoreSituation.Temprature}" />
-                <sv:LabelCell Title="Voltage" ValueText="{Binding CoreSituation.Voltage}" />
-            </sv:Section>
-            <sv:Section Title="Battery Output">
-                <sv:LabelCell
-                    Title="Current"
-                    Description="Current Exceeded from this Lead to Failure"
-                    ValueText="{Binding BatteryOutput.Current, StringFormat='{0:F2} A'}" />
-                <sv:LabelCell
-                    Title="Voltage"
-                    Description="Voltage Exceeded from this Lead to Failure"
-                    ValueText="{Binding BatteryOutput.Voltage, StringFormat='{0:F2} V'}" />
-                <sv:LabelCell
-                    Title="Temprature"
-                    Description="Temprature more than this cause Failure"
-                    ValueText="{Binding BatteryOutput.Temprature, StringFormat='{0:F1} c°'}" />
-            </sv:Section>
-            <sv:Section Title="Fault">
-                <sv:CheckboxCell Title="Over Current" Checked="{Binding Fault.OverCurrent}" />
-                <sv:CheckboxCell Title="Over Temprature" Checked="{Binding Fault.OverTemprature}" />
-                <sv:CheckboxCell Title="Pedal Sensor" Checked="{Binding Fault.PedalSensor}" />
-                <sv:CheckboxCell Title="Throttle" Checked="{Binding Fault.Throttle}" />
-                <sv:CheckboxCell Title="Over Voltage" Checked="{Binding Fault.OverVoltage}" />
-                <sv:CheckboxCell Title="Under Voltage" Checked="{Binding Fault.UnderVoltage}" />
-                <sv:CheckboxCell Title="Motor" Checked="{Binding Fault.Motor}" />
-                <sv:CheckboxCell Title="Drive" Checked="{Binding Fault.Drive}" />
-            </sv:Section>
-            <sv:Section Title="Servo Input">
-                <sv:LabelCell Title="Throttle" ValueText="{Binding ServoInput.Throttle, StringFormat='{0:F2} %'}" />
-                <sv:LabelCell Title="Pedal" ValueText="{Binding ServoInput.Pedal}" />
-                <sv:LabelCell Title="Cruise" ValueText="{Binding ServoInput.Cruise}" />
-                <sv:CheckboxCell Title="Is Break" Checked="{Binding ServoInput.IsBreak}" />
-            </sv:Section>
-            <sv:Section Title="Servo Output">
-                <sv:LabelCell Title="Activity Percent" ValueText="{Binding ServoOutput.ActivityPercent}" />
-                <sv:LabelCell Title="Wheel Speed" ValueText="{Binding ServoOutput.WheelSpeed}" />
-            </sv:Section>
-        </sv:SettingsView>
+            </AbsoluteLayout>
+            <sv:SettingsView Grid.Row="1">
+
+                <sv:Section Title="Core State">
+                    <sv:LabelCell Title="Temprature" ValueText="{Binding Core.Temprature}" />
+                    <sv:LabelCell Title="Voltage" ValueText="{Binding Core.Voltage}" />
+                </sv:Section>
+                <sv:Section Title="Battery Output">
+                    <sv:LabelCell
+                        Title="Current"
+                        Description="Current Exceeded from this Lead to Failure"
+                        ValueText="{Binding BatteryOutput.Current, StringFormat='{0:F2} A'}" />
+                    <sv:LabelCell
+                        Title="Voltage"
+                        Description="Voltage Exceeded from this Lead to Failure"
+                        ValueText="{Binding BatteryOutput.Voltage, StringFormat='{0:F2} V'}" />
+                    <sv:LabelCell
+                        Title="Temprature"
+                        Description="Temprature more than this cause Failure"
+                        ValueText="{Binding BatteryOutput.Temprature, StringFormat='{0:F1} c°'}" />
+                </sv:Section>
+                <sv:Section Title="Fault">
+                    <sv:CheckboxCell Title="Over Current" Checked="{Binding Fault.OverCurrent}" />
+                    <sv:CheckboxCell Title="Over Temprature" Checked="{Binding Fault.OverTemprature}" />
+                    <sv:CheckboxCell Title="Pedal Sensor" Checked="{Binding Fault.PedalSensor}" />
+                    <sv:CheckboxCell Title="Throttle" Checked="{Binding Fault.Throttle}" />
+                    <sv:CheckboxCell Title="Over Voltage" Checked="{Binding Fault.OverVoltage}" />
+                    <sv:CheckboxCell Title="Under Voltage" Checked="{Binding Fault.UnderVoltage}" />
+                    <sv:CheckboxCell Title="Motor" Checked="{Binding Fault.Motor}" />
+                    <sv:CheckboxCell Title="Drive" Checked="{Binding Fault.Drive}" />
+                </sv:Section>
+                <sv:Section Title="Servo Input">
+                    <sv:LabelCell Title="Throttle" ValueText="{Binding ServoInput.Throttle, StringFormat='{0:F2} %'}" />
+                    <sv:LabelCell Title="Pedal" ValueText="{Binding ServoInput.Pedal}" />
+                    <sv:LabelCell Title="Cruise" ValueText="{Binding ServoInput.Cruise}" />
+                    <sv:CheckboxCell Title="Is Break" Checked="{Binding ServoInput.IsBreak}" />
+                </sv:Section>
+                <sv:Section Title="Servo Output">
+                    <sv:LabelCell Title="Activity Percent" ValueText="{Binding ServoOutput.ActivityPercent}" />
+                    <sv:LabelCell Title="Wheel Speed" ValueText="{Binding ServoOutput.WheelSpeed}" />
+                </sv:Section>
+                <sv:Section Title="BlueTooth ">
+                    <sv:LabelCell Title="Data Received Count" ValueText="{Binding DataReceivedCount}" />
+                </sv:Section>
+            </sv:SettingsView>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
