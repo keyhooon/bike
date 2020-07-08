@@ -43,7 +43,10 @@
         IsOpen="{Binding IsPresented, Mode=TwoWay}"
         Duration="300">
         <navigationdrawer:SfNavigationDrawer.ContentView>
-            <Grid x:Name="mainContentView" RowSpacing="0">
+            <Grid
+                x:Name="mainContentView"
+                IsVisible="{Binding IsBusy, Converter={StaticResource Not}}"
+                RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="55" />
                     <RowDefinition />
@@ -498,15 +501,6 @@
                             <Setter Property="HeightRequest" Value="60" />
                         </Style>
                     </StackLayout.Resources>
-                    <!--  CommandParameter="Nav/Dashboard?createTab=Gauge&amp;createTab=Map"  -->
-                    <!--<Button
-                        ef:Feedback.EffectColor="Accent"
-                        Clicked="Button_Clicked"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="Nav/Dashboard?createTab=Gauge"
-                        ImageSource="{image:ImageResource bike.Assets.low.015-dashboard-1.png}"
-                        Text="Dashboard" />-->
-
                     <Button
                         ef:Feedback.EffectColor="Accent"
                         Command="{Binding NavigateCommand}"

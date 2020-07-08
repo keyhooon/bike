@@ -4,7 +4,10 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
+    xmlns:pullToRefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
+    xmlns:syncEffectsView="clr-namespace:Syncfusion.XForms.EffectsView;assembly=Syncfusion.Core.XForms"
     xmlns:valueconverters="clr-namespace:Infrastructure.ValueConverters;assembly=bike.Infrastructure"
+    xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
     Title="Diagnostic"
     prism:ViewModelLocator.AutowireViewModel="True"
     NavigationPage.HasNavigationBar="False">
@@ -110,55 +113,66 @@
                     Text="This will display a live feed of faults as they are existed"
                     VerticalOptions="FillAndExpand"
                     VerticalTextAlignment="Center" />
-                <ListView
-                    IsPullToRefreshEnabled="True"
-                    IsVisible="{Binding HasLogs}"
-                    ItemsSource="{Binding Logs}"
+                <pullToRefresh:SfPullToRefresh
+                    x:Name="pullToRefresh"
+                    IsRefreshing="{Binding IsBusy}"
+                    ProgressBackgroundColor="#428BCA"
                     RefreshCommand="{Binding LoadCommand}"
-                    RowHeight="60">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid Margin="10,5">
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding PrimaryCommand}" NumberOfTapsRequired="2" />
-                                    </Grid.GestureRecognizers>
-                                    <Label
-                                        BackgroundColor="Transparent"
-                                        FontAttributes="Bold"
-                                        FontSize="{StaticResource BaseFontSize++}"
-                                        HorizontalOptions="Center"
-                                        LineBreakMode="NoWrap"
-                                        Text="{Binding Text}"
-                                        VerticalOptions="Center" />
-                                    <Label
-                                        HorizontalOptions="Center"
-                                        HorizontalTextAlignment="Start"
-                                        Text="{Binding Detail}"
-                                        VerticalOptions="End" />
-                                    <Label
-                                        Margin="0,5,25,5"
-                                        FontFamily="{StaticResource MaterialIcons}"
-                                        FontSize="{StaticResource BaseFontSize++}"
-                                        HorizontalOptions="End"
-                                        IsVisible="{Binding Data, Converter={StaticResource IsNotNull}}"
-                                        Text=""
-                                        TextColor="{StaticResource Green}"
-                                        VerticalOptions="Center" />
-                                    <Label
-                                        Margin="0,5,25,5"
-                                        FontFamily="{StaticResource MaterialIcons}"
-                                        FontSize="{StaticResource BaseFontSize++}"
-                                        HorizontalOptions="End"
-                                        IsVisible="{Binding Data, Converter={StaticResource IsNull}}"
-                                        Text=""
-                                        TextColor="{StaticResource Red}"
-                                        VerticalOptions="Center" />
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                    RefreshContentHeight="50"
+                    TransitionMode="SlideOnTop">
+                    <pullToRefresh:SfPullToRefresh.PullableContent>
+
+                        <xforms:SfListView
+                            IsVisible="{Binding HasLogs}"
+                            ItemSize="80"
+                            ItemsSource="{Binding Logs}"
+                            SelectionChangedCommand="{Binding PrimaryCommand}"
+                            SelectionGesture="Tap"
+                            SelectionMode="Single">
+                            <xforms:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <syncEffectsView:SfEffectsView HeightRequest="80" TouchDownEffects="Ripple">
+                                        <Grid Margin="10,5">
+
+                                            <Label
+                                                BackgroundColor="Transparent"
+                                                FontAttributes="Bold"
+                                                FontSize="{StaticResource BaseFontSize++}"
+                                                HorizontalOptions="Center"
+                                                LineBreakMode="NoWrap"
+                                                Text="{Binding Text}"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                HorizontalOptions="Center"
+                                                HorizontalTextAlignment="Start"
+                                                Text="{Binding Detail}"
+                                                VerticalOptions="End" />
+                                            <Label
+                                                Margin="0,5,25,5"
+                                                FontFamily="{StaticResource MaterialIcons}"
+                                                FontSize="{StaticResource BaseFontSize++}"
+                                                HorizontalOptions="End"
+                                                IsVisible="{Binding Data, Converter={StaticResource IsNotNull}}"
+                                                Text=""
+                                                TextColor="{StaticResource Green}"
+                                                VerticalOptions="Center" />
+                                            <Label
+                                                Margin="0,5,25,5"
+                                                FontFamily="{StaticResource MaterialIcons}"
+                                                FontSize="{StaticResource BaseFontSize++}"
+                                                HorizontalOptions="End"
+                                                IsVisible="{Binding Data, Converter={StaticResource IsNull}}"
+                                                Text=""
+                                                TextColor="{StaticResource Red}"
+                                                VerticalOptions="Center" />
+                                        </Grid>
+                                    </syncEffectsView:SfEffectsView>
+                                </DataTemplate>
+                            </xforms:SfListView.ItemTemplate>
+                        </xforms:SfListView>
+                    </pullToRefresh:SfPullToRefresh.PullableContent>
+                </pullToRefresh:SfPullToRefresh>
+
             </Grid>
 
         </Grid>

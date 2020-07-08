@@ -43,8 +43,10 @@ namespace bike.ViewModels
         public DelegateCommand<string> NavigateCommand => _navigateCommand ??= new DelegateCommand<string>(async (x) =>
         {
             IsPresented = false;
+            IsBusy = true;
             await Task.Delay(340);
             await navigationService.NavigateAsync(x);
+            IsBusy = false;
 
         });
 
