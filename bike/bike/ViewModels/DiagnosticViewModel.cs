@@ -41,6 +41,7 @@ namespace bike.ViewModels
 
         protected async override Task<IEnumerable<CommandItem>> LoadLogs()
         {
+            await Task.Delay(10000);
             var faultTypes =await connection.FaultType.ToListAsync().ConfigureAwait(false);
             var query = connection
                 .Diagnostics

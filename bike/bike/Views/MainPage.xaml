@@ -3,6 +3,7 @@
     x:Class="bike.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
     xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
     xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
     xmlns:gauge="clr-namespace:Syncfusion.SfGauge.XForms;assembly=Syncfusion.SfGauge.XForms"
@@ -43,10 +44,7 @@
         IsOpen="{Binding IsPresented, Mode=TwoWay}"
         Duration="300">
         <navigationdrawer:SfNavigationDrawer.ContentView>
-            <Grid
-                x:Name="mainContentView"
-                IsVisible="{Binding IsBusy, Converter={StaticResource Not}}"
-                RowSpacing="0">
+            <Grid x:Name="mainContentView" RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="55" />
                     <RowDefinition />
@@ -95,11 +93,20 @@
                         </Label.Triggers>
                     </Label>
                 </AbsoluteLayout>
+                <busyindicator:SfBusyIndicator
+                Title="Loading..."
+                Grid.Row="1"
+                AnimationType="ZoomingTarget"
+                HorizontalOptions="Center"
+                IsBusy="{Binding IsBusy}"
+                VerticalOptions="Center"
+                Duration=".4" />
                 <tabview:SfTabView
                     Grid.Row="1"
                     DisplayMode="Text"
                     EnableSwiping="False"
                     HorizontalOptions="FillAndExpand"
+                    IsVisible="{Binding IsBusy, Converter={StaticResource Not}}"
                     TabHeaderPosition="Bottom"
                     VerticalOptions="FillAndExpand"
                     VisibleHeaderCount="2">
@@ -108,14 +115,9 @@
                         <tabview:SfTabItem.Content>
                             <Grid>
                                 <Image Aspect="Fill" Source="NavyBlueGradient.jpeg" />
-                                <ActivityIndicator
-                                    HorizontalOptions="Center"
-                                    IsRunning="{Binding IsBusy}"
-                                    VerticalOptions="Center" />
                                 <Grid
                                     Margin="15"
                                     ColumnSpacing="15"
-                                    IsVisible="{Binding IsBusy, Converter={StaticResource Not}}"
                                     RowSpacing="15">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="auto" />

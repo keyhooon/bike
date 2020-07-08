@@ -146,6 +146,10 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\SharpCommunication\SharpCommunication.Base\SharpCommunication.Base.csproj">
+      <Project>{58750381-8bbc-4c6e-9148-6298cfa98018}</Project>
+      <Name>SharpCommunication.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Infrastructure\CommunicationInfrastructure\Device.csproj">
       <Project>{F3C999E2-893F-4A1C-9188-006AAE16F1AB}</Project>
       <Name>Device</Name>
@@ -153,10 +157,6 @@
     <ProjectReference Include="..\bike\bike.csproj">
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
       <Name>bike</Name>
-    </ProjectReference>
-    <ProjectReference Include="D:\Users\HP\Source\Repos\SharpCommunication\SharpCommunication.Base\SharpCommunication.Base.csproj">
-      <Project>{64da0243-a723-4cad-9abd-2dd6be26c764}</Project>
-      <Name>SharpCommunication.Base</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

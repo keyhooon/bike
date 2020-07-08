@@ -4,7 +4,7 @@
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
-    xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
+    xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView" xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
     Title="Settings"
     prism:ViewModelLocator.AutowireViewModel="True"
     BackgroundColor="{DynamicResource Gray-White}">
@@ -54,11 +54,14 @@
                     TextColor="White"
                     WidthRequest="50" />
             </AbsoluteLayout>
-            <ActivityIndicator
+            <busyindicator:SfBusyIndicator
+                Title="Loading..."
                 Grid.Row="1"
+                AnimationType="ZoomingTarget"
                 HorizontalOptions="Center"
-                IsRunning="{Binding IsBusy}"
-                VerticalOptions="Center" />
+                IsBusy="{Binding IsBusy}"
+                VerticalOptions="Center"
+                Duration=".4" />
             <sv:SettingsView
                 Grid.Row="1"
                 HasUnevenRows="True"
