@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Disposables;
 using System.Reactive.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Acr.UserDialogs.Forms;
 using Infrastructure;
 using Prism.Commands;
+using Prism.Navigation;
 using Shiny;
 using Shiny.Infrastructure;
 using Shiny.Integrations.Sqlite;
@@ -16,65 +18,65 @@ using Shiny.Models;
 
 namespace bike.ViewModels
 {
-    public class ErrorLogViewModel : AbstractLogViewModel<CommandItem>
+    public class ErrorLogViewModel : AbstractItemListViewModel<LogStore>
     {
-        readonly ShinySqliteConnection conn;
-        readonly ISerializer serializer;
-
-        public ErrorLogViewModel(ShinySqliteConnection conn,
-                                 ISerializer serializer,
-                                 IUserDialogs dialogs) : base(dialogs)
+        private readonly ShinySqliteConnection conn;
+        private readonly ISerializer serializer;
+        protected CompositeDisposable DestroyWith { get; } = new CompositeDisposable();
+        public ErrorLogViewModel(
+            IUserDialogs dialogs,
+            ISerializer serializer,
+            ShinySqliteConnection connection) : base(dialogs)
         {
-            this.conn = conn;
+            this.conn = connection;
             this.serializer = serializer;
 
             Log
                 .WhenExceptionLogged()
-                .Select(x => new CommandItem
+                .Select(x => new LogStore
                 {
-                    Text = $"{DateTime.Now:MM/dd/yy hh:mm:ss tt zzz}",
-                    PrimaryCommand = new DelegateCommand(() =>
-                    {
-                        var s = $"{x.Exception}{Environment.NewLine}";
-                        foreach (var p in x.Parameters)
-                            s += $"{Environment.NewLine}{p.Key}: {p.Value}";
-
-                        this.Dialogs.Alert(s);
-                    })
+                    Description = x.ToString(),
+                    Detail = String.Empty,
+                    Parameters = this.serializer.Serialize(x.Parameters),
+                    IsError = true,
+                    TimestampUtc = DateTime.UtcNow
                 })
-                .Subscribe(this.InsertItem)
-                .DisposeWith(this.DeactivateWith);
+                .Subscribe(this.Add)
+                .DisposeWith(this.DestroyWith);
+        }
+        public override void Destroy()
+        {
+            base.Destroy();
+            DestroyWith.Dispose();
+        }
+        protected override async Task ClearItemsAsync(CancellationToken token) => await conn.DeleteAllAsync<LogStore>();
+
+
+        protected override string DatailText(LogStore item)
+        {
+            var s = $"{item.TimestampUtc}{Environment.NewLine}{item.Description}{Environment.NewLine}";
+            if (!item.Parameters.IsEmpty())
+            {
+                var parameters = this.serializer.Deserialize<Tuple<string, string>[]>(item.Parameters);
+                foreach (var p in parameters)
+                    s += $"{Environment.NewLine}{p.Item1}: {p.Item2}";
+            }
+            return s;
         }
 
-
-        protected override Task ClearLogs() => this.conn.DeleteAllAsync<LogStore>();
-
-
-        protected override async Task<IEnumerable<CommandItem>> LoadLogs()
+        protected override string DetailHeader(LogStore item)
         {
-            var results = await this.conn
+            return string.Empty;
+        }
+
+        protected override async Task<IEnumerable<LogStore>> LoadItemsAsync(INavigationParameters parameters, CancellationToken token)
+        {
+            return (await conn
                 .Logs
                 .Where(x => x.IsError)
                 .OrderByDescending(x => x.TimestampUtc)
-                .ToListAsync();
+                .ToListAsync());
 
-            return results.Select(x => new CommandItem
-            {
-
-                Text = $"{x.TimestampUtc:MM/dd/yy hh:mm:ss tt zzz}",
-                Detail = x.Description,
-                PrimaryCommand = new DelegateCommand(() =>
-                {
-                    var s = $"{x.TimestampUtc}{Environment.NewLine}{x.Description}{Environment.NewLine}";
-                    if (!x.Parameters.IsEmpty())
-                    {
-                        var parameters = this.serializer.Deserialize<Tuple<string, string>[]>(x.Parameters);
-                        foreach (var p in parameters)
-                            s += $"{Environment.NewLine}{p.Item1}: {p.Item2}";
-                    }
-                    this.Dialogs.Alert(s);
-                })
-            }); ;
         }
     }
 }

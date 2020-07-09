@@ -4,17 +4,19 @@ using bike.Services;
 using Infrastructure;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Navigation;
 using ReactiveUI;
 using Shiny.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace bike.ViewModels
 {
-    public class DiagnosticViewModel : AbstractLogViewModel<CommandItem>
+    public class DiagnosticViewModel : AbstractItemListViewModel<Diagnostic>
     {
         private readonly ISerializer serializer;
         private readonly SqliteConnection connection;
@@ -27,21 +29,19 @@ namespace bike.ViewModels
             this.serializer = serializer;
             this.connection = connection;
             this.servoDriveService = servoDriveService;
-            servoDriveService.PropertyChanged += (sender, e) =>
+            servoDriveService.FaultChanged += (sender, e) =>
             {
-                if (e.PropertyName == nameof(servoDriveService.Fault))
                     LoadCommand.Execute();
             };
         }
 
-        protected async override Task ClearLogs()
+        protected async override Task ClearItemsAsync(CancellationToken token)
         {
             await connection.ExecuteAsync("DELETE FROM Diagnostic");
         }
 
-        protected async override Task<IEnumerable<CommandItem>> LoadLogs()
+        protected async override Task<IEnumerable<Diagnostic>> LoadItemsAsync(INavigationParameters parameters, CancellationToken token)
         {
-            await Task.Delay(10000);
             var faultTypes =await connection.FaultType.ToListAsync().ConfigureAwait(false);
             var query = connection
                 .Diagnostics
@@ -49,28 +49,32 @@ namespace bike.ViewModels
                 .Take(100);
             if (IsCurrent)
                 query = query.Where(o => o.StopTime == null);
-            var diagnostics = await query.ToListAsync().ConfigureAwait(false);
- 
-            var ret = diagnostics.Select(o => 
+            return  (await query.ToListAsync().ConfigureAwait(false)).Join(faultTypes,
+                o=>o.FaultTypeId,
+                o=>o.Id, 
+                (o,o1)=> 
             {
-                var fault = faultTypes.First(t => t.Id == o.FaultTypeId);
-                return new CommandItem
-                {
-                    Detail = $"{o.StartTime:MM/dd/yy hh:mm:ss tt zzz}",
-                    Text = $"{fault.Name}",
-                    Data = o.StopTime,
-                    PrimaryCommand = new DelegateCommand(() =>
-                    {
-                        var s = $"{o.StartTime:MM/dd/yy hh:mm:ss tt zzz}{Environment.NewLine}" +
-                        $"{o.StopTime:MM/dd/yy hh:mm:ss tt zzz}{Environment.NewLine}" +
-                        $"{fault.Description}";
-                        Dialogs.Alert(s, fault.Name);
-                    })
-                };
+                o.FaultType = o1;
+                return o; 
             });
-            return ret;
         }
 
+        protected override string DatailText(Diagnostic item)
+        {
+            if (item.StopTime == null)
+            return $"Fault Time:{item.StartTime:MM/dd/yy hh:mm:ss tt zzz}{Environment.NewLine}" +
+                $"Not Repaired{Environment.NewLine}" +
+                $"{item.FaultType.Description}";
+            else return $"Fault Time:{item.StartTime:MM/dd/yy hh:mm:ss tt zzz}{Environment.NewLine}" +
+                 $"Repaired Time:{item.StopTime:MM/dd/yy hh:mm:ss tt zzz}{Environment.NewLine}" +
+                 $"{item.FaultType.Description}";
+        }
+
+
+        protected override string DetailHeader(Diagnostic item)
+        {
+            return item.FaultType.Name;
+        }
 
         private bool _isCurrent = false;
         public bool IsCurrent
@@ -79,14 +83,12 @@ namespace bike.ViewModels
             set => SetProperty(ref _isCurrent, value);
         }
 
-
         private DelegateCommand _toggleCurrentCommand;
         public DelegateCommand ToggleCurrentCommand =>
-            _toggleCurrentCommand ?? (_toggleCurrentCommand = new DelegateCommand(async () =>
+            _toggleCurrentCommand ??= new DelegateCommand(() =>
             {
                 IsCurrent = !IsCurrent;
-                var logs = await LoadLogs();
-                Logs = new ObservableCollection<CommandItem>(logs);
-            }));
+                LoadCommand.Execute();
+            });
     }
 }

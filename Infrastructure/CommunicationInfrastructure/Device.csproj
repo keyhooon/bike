@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\SharpCommunication\SharpCommunication.Base\SharpCommunication.Base.csproj" />
     <ProjectReference Include="..\InfraStructure\InfraStructure.csproj" />
+    <ProjectReference Include="D:\Users\HP\Source\Repos\SharpCommunication\SharpCommunication.Base\SharpCommunication.Base.csproj" />
   </ItemGroup>
   
 </Project>

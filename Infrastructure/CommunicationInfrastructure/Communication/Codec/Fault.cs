@@ -1,12 +1,14 @@
 ﻿using SharpCommunication.Codec.Encoding;
 using SharpCommunication.Codec.Packets;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
 namespace Device.Communication.Codec
 {
-    public class Fault : IPacket, IAncestorPacket
+    public class Fault : IPacket, IAncestorPacket, IEqualityComparer<Fault>
     {
 
         public bool OverCurrent { get; set; }
@@ -17,6 +19,23 @@ namespace Device.Communication.Codec
         public bool UnderVoltage { get; set; }
         public bool Motor { get; set; }
         public bool Drive { get; set; }
+
+        public bool Equals(Fault x, Fault y)
+        {
+            return (x.OverCurrent == y.OverCurrent && x.OverTemprature == y.OverTemprature && x.PedalSensor == y.PedalSensor && x.Throttle == y.Throttle &&
+                x.OverVoltage == y.OverVoltage && x.UnderVoltage == y.UnderVoltage && x.Motor == y.Motor && x.Drive == y.Drive);
+
+
+        }
+
+        public int GetHashCode(Fault o)
+        {
+           return 
+                    (o.OverTemprature ? 0x02 : 0x00) | (o.OverCurrent ? 0x01 : 0x00) |
+                    (o.Throttle ? 0x08 : 0x00) | (o.PedalSensor ? 0x04 : 0x00) |
+                    (o.UnderVoltage ? 0x20 : 0x00) | (o.OverVoltage ? 0x10 : 0x00) |
+                    (o.Drive ? 0x80 : 0x00) | (o.Motor ? 0x40 : 0x00);
+        }
 
         public override string ToString()
         {

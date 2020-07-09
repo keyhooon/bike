@@ -1,10 +1,7 @@
 ﻿using Device;
 using Device.Communication.Codec;
-using Infrastructure;
 using Prism.Commands;
-using Prism.Mvvm;
 using Prism.Navigation;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -14,6 +11,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
 using bike.Services;
 using Acr.UserDialogs.Forms;
+using Infrastructure;
 
 namespace bike.ViewModels
 {
@@ -21,7 +19,7 @@ namespace bike.ViewModels
     /// ViewModel for Setting page 
     /// </summary> 
     [Preserve(AllMembers = true)]
-    public class SettingViewModel : ViewModel
+    public class SettingViewModel : ViewModel, IInitialize
     {
 
         private readonly ServoDriveService _servoDriveService;
@@ -38,11 +36,8 @@ namespace bike.ViewModels
             this.dialogs = dialogs;
         }
         #endregion
-        private List<string> pedalAssistLevelActivityStringList;
-        private List<string> pedalAssistSensivityStringList;
-        private List<string> lightStringList;
 
-        protected override async Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation)
+        public void Initialize(INavigationParameters parameters)
         {
             PedalAssistLevelActivityStringList = typeof(PedalSetting.PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false).FirstOrDefault())?.Description ?? x.Name).ToList();
             LightStringList = new List<string>(new[] { "25 %", "50 %", "75 %", "100 %" });
@@ -64,14 +59,16 @@ namespace bike.ViewModels
             _frontLightIndex = (int)_servoDriveService.LightSetting.Light1;
             _backLightIndex = (int)_servoDriveService.LightSetting.Light2;
             RaisePropertyChanged(nameof(FrontLightText));
-            RaisePropertyChanged(nameof(BackLightText)); 
+            RaisePropertyChanged(nameof(BackLightText));
             RaisePropertyChanged(nameof(FrontLightIndex));
             RaisePropertyChanged(nameof(BackLightIndex));
-
-            await Task.CompletedTask;
         }
 
+        private List<string> pedalAssistLevelActivityStringList;
+        private List<string> pedalAssistSensivityStringList;
+        private List<string> lightStringList;
 
+ 
 
         public List<string> PedalAssistLevelActivityStringList { get => pedalAssistLevelActivityStringList; private set => SetProperty(ref pedalAssistLevelActivityStringList , value); }
         public List<string> PedalAssistSensivityStringList { get => pedalAssistSensivityStringList; private set => SetProperty(ref pedalAssistSensivityStringList, value); }
@@ -216,5 +213,7 @@ namespace bike.ViewModels
             }
 
         }));
+
+      
     }
 }

@@ -94,13 +94,13 @@
                     </Label>
                 </AbsoluteLayout>
                 <busyindicator:SfBusyIndicator
-                Title="Loading..."
-                Grid.Row="1"
-                AnimationType="ZoomingTarget"
-                HorizontalOptions="Center"
-                IsBusy="{Binding IsBusy}"
-                VerticalOptions="Center"
-                Duration=".4" />
+                    Title="Loading..."
+                    Grid.Row="1"
+                    AnimationType="ZoomingTarget"
+                    HorizontalOptions="Center"
+                    IsBusy="{Binding IsBusy}"
+                    VerticalOptions="Center"
+                    Duration=".1" />
                 <tabview:SfTabView
                     Grid.Row="1"
                     DisplayMode="Text"

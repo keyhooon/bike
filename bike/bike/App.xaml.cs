@@ -62,7 +62,7 @@ namespace bike
             containerRegistry.RegisterForNavigation<MainPage>("Main");
             containerRegistry.RegisterForNavigation<DashboardPage>("Dashboard");
             containerRegistry.RegisterForNavigation<GaugePage>("Gauge");
-            //containerRegistry.RegisterForNavigation<MapPage, MapViewModel>("Map");
+
             containerRegistry.RegisterForNavigation<SettingPage>("Settings");
             containerRegistry.RegisterForNavigation<ReportPage>("Report");
             containerRegistry.RegisterForNavigation<DiagnosticPage>("Diagnostic");
@@ -76,7 +76,7 @@ namespace bike
             containerRegistry.RegisterForNavigation<ContactUsPage>("ContactUs");
             containerRegistry.RegisterForNavigation<AboutUsSimplePage>("AboutUs");
             containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
-            containerRegistry.RegisterForNavigation<QuestionAnswerPage>("Question");
+
         }
     }
 }

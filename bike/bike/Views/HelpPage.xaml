@@ -44,12 +44,13 @@
 
         <StackLayout Grid.Row="1" Spacing="0">
             <sv:SettingsView ShowArrowIndicatorForAndroid="True">
-                <sv:Section Title="Question" ItemsSource="{Binding Logs}">
+                <sv:Section Title="Question" ItemsSource="{Binding Items}">
                     <sv:Section.ItemTemplate>
                         <DataTemplate>
                             <sv:CommandCell
-                                Title="{Binding Text}"
-                                Command="{Binding PrimaryCommand}"
+                                Title="{Binding Question}"
+                                Command="{Binding Path=BindingContext.ShowDetailCommand, Source={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContentPage}}}"
+                                CommandParameter="{Binding}"
                                 Description="{Binding Detail}" />
                         </DataTemplate>
                     </sv:Section.ItemTemplate>

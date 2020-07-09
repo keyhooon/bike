@@ -24,17 +24,6 @@ namespace bike.Shiny.Delegate
         }
         public async Task OnReading(IGpsReading reading)
         {
-            //await connection.InsertAsync(new GpsData()
-            //{
-            //    Latitude = reading.Position.Latitude,
-            //    Longitude = reading.Position.Longitude,
-            //    Altitude = reading.Altitude,
-            //    PositionAccuracy = reading.PositionAccuracy,
-            //    Heading = reading.Heading,
-            //    HeadingAccuracy = reading.HeadingAccuracy,
-            //    Speed = reading.Speed,
-            //    Date = reading.Timestamp.ToLocalTime()
-            //});
             eventAggregator.GetEvent<GpsDataReceivedEvent>().Publish(reading);
         }
     }

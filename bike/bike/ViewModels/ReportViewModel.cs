@@ -13,7 +13,7 @@ using Unity;
 
 namespace bike.ViewModels
 {
-    public class ReportViewModel : ViewModel
+    public class ReportViewModel : ViewModel, IInitializeAsync
     {
         private readonly TripService tripService;
 
@@ -37,6 +37,12 @@ namespace bike.ViewModels
         {
             tripService.LoadTripAsync(trip);
         }
-        protected override async Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation) => Trips = await tripService.GetTripListAsync();
+
+        public async Task InitializeAsync(INavigationParameters parameters)
+        {
+            IsBusy = true;
+            Trips = await tripService.GetTripListAsync();
+            IsBusy = false;
+        }
     }
 }

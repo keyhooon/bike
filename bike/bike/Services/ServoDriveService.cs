@@ -18,6 +18,7 @@ using Shiny.Logging;
 using Shiny.Models;
 using Shiny.Settings;
 using SQLite;
+using Xamarin.Forms.Internals;
 
 namespace bike.Services
 {
@@ -43,6 +44,8 @@ namespace bike.Services
         public event EventHandler<EncodingOperationFinishedEventArgs> ServoOutputChanged;
         public event EventHandler<EncodingOperationFinishedEventArgs> ThrottleConfigurationChanged;
         public event EventHandler<EncodingOperationFinishedEventArgs> ThrottleSettingChanged;
+
+        public event EventHandler<EventArg<(Fault.Kind Kind, bool IsFinished)>> FaultOccured;
 
 
         public ServoDriveService(DataTransport<Packet> dataTransport, ISettings settings, SqliteConnection connection, ICache cache)
@@ -278,106 +281,43 @@ namespace bike.Services
         private void CheckFault(Fault value)
         {
             if (value.OverCurrent && !Fault.OverCurrent)
-                connection.InsertAsync(new Diagnostic { FaultTypeId = (int)Fault.Kind.OverCurrent, StartTime = DateTime.Now });
+                OnFaultOccured(Fault.Kind.OverCurrent, false);
             if (!value.OverCurrent && Fault.OverCurrent)
-            {
-                Task.Run(async () =>
-                {
-                    var v = await connection.Diagnostics.FirstOrDefaultAsync((o) => o.FaultTypeId == (int)Fault.Kind.OverCurrent && o.StopTime == null);
-                    if (v != null)
-                    {
-                        v.StopTime = DateTime.Now;
-                        await connection.UpdateAsync(v);
-                    }
-                });
-            }
+                OnFaultOccured(Fault.Kind.OverCurrent, true);
             if (value.OverTemprature && !Fault.OverTemprature)
-                connection.InsertAsync(new Diagnostic { FaultTypeId = (int)Fault.Kind.OverTemprature, StartTime = DateTime.Now });
+                OnFaultOccured(Fault.Kind.OverTemprature, false);
             if (!value.OverTemprature && Fault.OverTemprature)
-            {
-                Task.Run(async () =>
-                {
-                    var v = await connection.Diagnostics.FirstOrDefaultAsync((o) => o.FaultTypeId == (int)Fault.Kind.OverTemprature && o.StopTime == null);
-                    if (v != null)
-                    {
-                        v.StopTime = DateTime.Now;
-                        await connection.UpdateAsync(v);
-                    }
-                });
-            }
+                OnFaultOccured(Fault.Kind.OverTemprature, true);
             if (value.PedalSensor && !Fault.PedalSensor)
-                connection.InsertAsync(new Diagnostic { FaultTypeId = (int)Fault.Kind.PedalSensor, StartTime = DateTime.Now });
+                OnFaultOccured(Fault.Kind.PedalSensor, false);
             if (!value.PedalSensor && Fault.PedalSensor)
-            {
-                Task.Run(async () =>
-                {
-                    var v = await connection.Diagnostics.FirstOrDefaultAsync((o) => o.FaultTypeId == (int)Fault.Kind.PedalSensor && o.StopTime == null);
-                    if (v != null)
-                    {
-                        v.StopTime = DateTime.Now;
-                        await connection.UpdateAsync(v);
-                    }
-                });
-            }
+                OnFaultOccured(Fault.Kind.PedalSensor, true);
             if (value.Throttle && !Fault.Throttle)
-                connection.InsertAsync(new Diagnostic { FaultTypeId = (int)Fault.Kind.Throttle, StartTime = DateTime.Now });
+                OnFaultOccured(Fault.Kind.Throttle, false);
             if (!value.Throttle && Fault.Throttle)
-            {
-                Task.Run(async () =>
-                {
-                    var v = await connection.Diagnostics.FirstOrDefaultAsync((o) => o.FaultTypeId == (int)Fault.Kind.Throttle && o.StopTime == null);
-                    if (v != null)
-                    {
-                        v.StopTime = DateTime.Now;
-                        await connection.UpdateAsync(v);
-                    }
-                });
-            }
+                OnFaultOccured(Fault.Kind.Throttle, true);
             if (value.OverVoltage && !Fault.OverVoltage)
-                connection.InsertAsync(new Diagnostic { FaultTypeId = (int)Fault.Kind.OverVoltage, StartTime = DateTime.Now });
+                OnFaultOccured(Fault.Kind.OverVoltage, false);
             if (!value.OverVoltage && Fault.OverVoltage)
-            {
-                Task.Run(async () =>
-                {
-                    var v = await connection.Diagnostics.FirstOrDefaultAsync((o) => o.FaultTypeId == (int)Fault.Kind.OverVoltage && o.StopTime == null);
-                    if (v != null)
-                    {
-                        v.StopTime = DateTime.Now;
-                        await connection.UpdateAsync(v);
-                    }
-                });
-            }
+                OnFaultOccured(Fault.Kind.OverVoltage, true);
             if (value.UnderVoltage && !Fault.UnderVoltage)
-                connection.InsertAsync(new Diagnostic { FaultTypeId = (int)Fault.Kind.UnderVoltage, StartTime = DateTime.Now });
+                OnFaultOccured(Fault.Kind.UnderVoltage, false);
             if (!value.UnderVoltage && Fault.UnderVoltage)
-            {
-                Task.Run(async () =>
-                {
-                    var v = await connection.Diagnostics.FirstOrDefaultAsync((o) => o.FaultTypeId == (int)Fault.Kind.UnderVoltage && o.StopTime == null);
-                    if (v != null)
-                    {
-                        v.StopTime = DateTime.Now;
-                        await connection.UpdateAsync(v);
-                    }
-                });
-            }
+                OnFaultOccured(Fault.Kind.UnderVoltage, true);
             if (value.Motor && !Fault.Motor)
-                connection.InsertAsync(new Diagnostic { FaultTypeId = (int)Fault.Kind.Motor, StartTime = DateTime.Now });
+                OnFaultOccured(Fault.Kind.Motor, false);
             if (!value.Motor && Fault.Motor)
-            {
-                Task.Run(async () =>
-                {
-                    var v = await connection.Diagnostics.FirstOrDefaultAsync((o) => o.FaultTypeId == (int)Fault.Kind.Motor && o.StopTime == null);
-                    if (v != null)
-                    {
-                        v.StopTime = DateTime.Now;
-                        await connection.UpdateAsync(v);
-                    }
-                });
-            }
+                OnFaultOccured(Fault.Kind.Motor, true);
             if (value.Drive && !Fault.Drive)
-                connection.InsertAsync(new Diagnostic { FaultTypeId = (int)Fault.Kind.Drive, StartTime = DateTime.Now });
+                OnFaultOccured(Fault.Kind.Drive, false);
             if (!value.Drive && Fault.Drive)
+                OnFaultOccured(Fault.Kind.Drive, true);
+
+
+        }
+        protected virtual void OnFaultOccured(Fault.Kind kind, bool isFinished)
+        {
+            if (isFinished)
             {
                 Task.Run(async () =>
                 {
@@ -389,7 +329,10 @@ namespace bike.Services
                     }
                 });
             }
+            else
+                connection.InsertAsync(new Diagnostic { FaultTypeId = (int)Fault.Kind.Drive, StartTime = DateTime.Now });
 
+            FaultOccured?.Invoke(this, new EventArg<(Fault.Kind kind, bool isFinished)>((kind, isFinished)));
         }
 
 

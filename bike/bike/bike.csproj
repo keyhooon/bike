@@ -140,7 +140,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Infrastructure\CommunicationInfrastructure\Device.csproj" />
-    <ProjectReference Include="..\..\Infrastructure\InfraStructure\InfraStructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -180,13 +179,7 @@
     <EmbeddedResource Update="Views\LoggingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\MainTabbedPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\MapPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\QuestionAnswerPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ReportPage.xaml">

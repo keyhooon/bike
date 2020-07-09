@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
@@ -7,87 +9,105 @@ using System.Threading.Tasks;
 using Acr.UserDialogs.Forms;
 using Prism.Commands;
 using Prism.Navigation;
+using Xamarin.Forms.Internals;
 
 namespace Infrastructure
 {
-    public abstract class AbstractLogViewModel<TItem> : ViewModel
+    public abstract class AbstractItemListViewModel<TItem> : ViewModel, IInitialize, IDestructible
     {
-        readonly object syncLock = new object();
+        private readonly object syncLock = new object();
+        private readonly IUserDialogs _dialogs;
+        private readonly CancellationTokenSource tokenSource;
+        private ObservableCollection<TItem> innerItems;
 
 
-        protected AbstractLogViewModel(IUserDialogs dialogs)
+        protected AbstractItemListViewModel(IUserDialogs dialogs)
         {
-            Dialogs = dialogs;
+            _dialogs = dialogs;
+            tokenSource = new CancellationTokenSource();
+            innerItems = new ObservableCollection<TItem>();
+            Items = new ReadOnlyObservableCollection<TItem>(innerItems);
         }
-        public override void Destroy()
+        public virtual void Destroy()
         {
-            base.Destroy();
+            tokenSource.Cancel();
+            Clear();
+        }
+        protected void Add(TItem item)
+        {
             lock (syncLock)
-                Logs.Clear();
+            {
+                innerItems.Insert(0, item);
+            }
+            RaisePropertyChanged(nameof(HasItems));
         }
-
-        protected IUserDialogs Dialogs { get; }
-        private ObservableCollection<TItem> _logs;
-        public ObservableCollection<TItem> Logs {
-            get => _logs;
-            set => SetProperty(ref _logs, value,()=>RaisePropertyChanged(nameof(HasLogs)));
-        }
-        public bool HasLogs => Logs?.Any()??false;
-
-        protected override async Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation = null)
+        protected void AddRange(IEnumerable<TItem> items)
         {
-            var logs = await LoadLogs();
-            if (logs != null)
-                Logs = new ObservableCollection<TItem>(logs);
-
+            lock (syncLock)
+            {
+                items.ForEach((item) => innerItems.Insert(0, item));
+            }
+            RaisePropertyChanged(nameof(HasItems));
+        }
+        protected void Clear()
+        {
+            if (!HasItems)
+                return; 
+            lock (syncLock)
+            {
+                innerItems.Clear();
+            }
+            RaisePropertyChanged(nameof(HasItems));
         }
 
+
+        public ReadOnlyCollection<TItem> Items {get;}
+        public bool HasItems => Items?.Any()??false;
 
         private DelegateCommand _ClearCommand;
         public DelegateCommand ClearCommand =>
-            _ClearCommand ?? (_ClearCommand = new DelegateCommand(async () =>
+            _ClearCommand ??= new DelegateCommand(async () =>
             {
-                var confirm = await Dialogs.Confirm("Clear Logs?");
+                var confirm = await _dialogs.Confirm("Clear Logs?");
                 if (confirm)
                 {
                     IsBusy = true;
-                    await ClearLogs();
-                    var logs = await LoadLogs();
-                    Logs = new ObservableCollection<TItem>(logs);
-
+                    await ClearItemsAsync(tokenSource.Token);
+                    Clear();
                     IsBusy = false;
                 }
-            }));
+            });
         private DelegateCommand _loadCommand;
         public DelegateCommand LoadCommand =>
-            _loadCommand ?? (_loadCommand = new DelegateCommand(async () =>
+            _loadCommand ??= new DelegateCommand(async () =>
             {
                 IsBusy = true;
-                var logs = await LoadLogs();
-                Logs = new ObservableCollection<TItem>(logs);
-               // SetLogs(logs);
+                Clear();
+                AddRange(await LoadItemsAsync(null, tokenSource.Token));
                 IsBusy = false;
-            }));
+            });
+
+        private DelegateCommand<TItem> _showDetailCommand;
+        public DelegateCommand<TItem> ShowDetailCommand =>
+            _showDetailCommand ??= new DelegateCommand<TItem>(async (item) => await _dialogs.Alert(DatailText(item), DetailHeader(item)));
 
 
-        protected async virtual Task<IEnumerable<TItem>> LoadLogs() => await Task.FromResult<List<TItem>>(null);
+        protected abstract Task<IEnumerable<TItem>> LoadItemsAsync(INavigationParameters parameters, CancellationToken token);
+        protected abstract Task ClearItemsAsync(CancellationToken token);
+        protected abstract string DatailText(TItem item);
+        protected abstract string DetailHeader(TItem item);
 
-        protected abstract Task ClearLogs();
 
-        protected virtual void InsertItem(TItem item)
+
+
+        public void Initialize(INavigationParameters parameters)
         {
-            lock (syncLock)
-                Logs?.Insert(0, item);
-            RaisePropertyChanged(nameof(HasLogs));
+            Task.Run(async () => {
+                IsBusy = true;
+                AddRange(await LoadItemsAsync(parameters, tokenSource.Token));
+                IsBusy = false;
+            });
         }
 
-        //protected void SetLogs(IEnumerable<TItem> items)
-        //{
-        //    lock (syncLock)
-        //    { 
-        //        Logs.Clear();
-        //        Logs.AddRange(items);
-        //    }
-        //}
     }
 }

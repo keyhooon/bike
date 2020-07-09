@@ -30,16 +30,13 @@ namespace bike.ViewModels
             _servoDriveService = servoDriveService;
             this.dataTransport = dataTransport;
             _servoDriveService.PropertyChanged += (sender, e)=>RaisePropertyChanged(e.PropertyName);
-
-        }
-        protected override Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation = null)
-        {
             var ch = dataTransport.Channels.FirstOrDefault();
             if (ch != null)
                 ch.DataReceived += ServoViewModel_DataReceived;
             ((INotifyCollectionChanged)dataTransport.Channels).CollectionChanged += ServoViewModel_CollectionChanged;
-            return Task.CompletedTask;
+
         }
+
         private void ServoViewModel_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)

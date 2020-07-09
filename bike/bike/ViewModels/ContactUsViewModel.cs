@@ -51,7 +51,7 @@ namespace bike.ViewModels
 
         #region Methods
 
-        protected override async Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation) => Buildings = await sqliteConnection.Buildings.ToListAsync() ;
+        protected async Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation) => Buildings = await sqliteConnection.Buildings.ToListAsync() ;
 
         #endregion
     }

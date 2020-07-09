@@ -17,7 +17,7 @@ using Xamarin.Forms;
 
 namespace bike.ViewModels
 {
-    public class MainViewModel : ViewModel
+    public class MainViewModel : ViewModel, IInitialize
     {
         private readonly IDeviceService deviceService;
         private readonly INavigationService navigationService;
@@ -79,7 +79,7 @@ namespace bike.ViewModels
         private LightState _light;
         private ServoOutput _servo;
 
-        protected override async Task LoadDataAsync(INavigationParameters parameters, CancellationToken? cancellation = null)
+        public void Initialize(INavigationParameters parameters)
         {
             PedalAssistLevelList = typeof(PedalSetting.PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
             PedalAssistSensitivitiesList = typeof(PedalSetting.PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
@@ -90,8 +90,8 @@ namespace bike.ViewModels
             RaisePropertyChanged(nameof(SelectedPedalAssistLevel));
             RaisePropertyChanged(nameof(SelectedPedalAssistSensitivities));
             RaisePropertyChanged(nameof(SelectedThrottleMode));
-            await Task.CompletedTask;
         }
+
         public List<string> PedalAssistLevelList { get => pedalAssistLevelList; private set => SetProperty(ref pedalAssistLevelList, value); }
 
         public List<string> PedalAssistSensitivitiesList { get => pedalAssistSensitivitiesList; private set => SetProperty(ref pedalAssistSensitivitiesList, value); }

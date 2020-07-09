@@ -24,7 +24,7 @@ namespace bike.ViewModels
     /// ViewModel for Help page 
     /// </summary> 
     [Preserve(AllMembers = true)]
-    public class HelpViewModel : AbstractLogViewModel<CommandItem>
+    public class HelpViewModel : AbstractItemListViewModel<AnswerQuestion>
     {
         private readonly SqliteConnection conn;
 
@@ -37,25 +37,26 @@ namespace bike.ViewModels
             this.conn = conn;
         }
 
-        protected override Task ClearLogs() => throw new NotSupportedException();
-
-        protected override async Task<IEnumerable<CommandItem>> LoadLogs()
+        protected override Task ClearItemsAsync(CancellationToken token)
         {
-            var results =await conn
-                .AnswerQuestions
-                .ToListAsync();
-
-            return new ObservableCollection<CommandItem>(results.Select(x => new CommandItem
-            {
-                Text = x.Question,
-                Detail = x.Answer,
-                PrimaryCommand = new DelegateCommand(() =>
-                {
-                    var s = $"{x.Answer}{Environment.NewLine}{Environment.NewLine}{x.Detail}";
-                    Dialogs.Alert(s, x.Question);
-                })
-            }));
+            throw new NotImplementedException();
         }
 
+        protected override string DatailText(AnswerQuestion item)
+        {
+            return $"{item.Answer}{Environment.NewLine}{Environment.NewLine}{item.Detail}";
+        }
+
+        protected override string DetailHeader(AnswerQuestion item)
+        {
+            return item.Question.ToString();
+        }
+
+        protected override async Task<IEnumerable<AnswerQuestion>> LoadItemsAsync(INavigationParameters parameters, CancellationToken token)
+        {
+            return await conn
+                .AnswerQuestions
+                .ToListAsync();
+        }
     }
 }
