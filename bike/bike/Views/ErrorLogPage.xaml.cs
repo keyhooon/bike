@@ -9,6 +9,7 @@ namespace bike.Views
         public ErrorLogPage()
         {
             this.InitializeComponent();
+            listView.ItemGenerator = new Infrastructure.ItemGeneratorExt(listView);
         }
     }
 }

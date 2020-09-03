@@ -9,7 +9,7 @@ namespace bike.Services
         public static IContainerRegistry UseServoDrive(this IContainerRegistry containerRegistry)
         {
             return containerRegistry
-                .RegisterInstance(new BluetoothDataTransportOption("00001101-0000-1000-8000-00805F9B34FB", "HC-05"))
+                .RegisterInstance(new BluetoothDataTransportOption("00001101-0000-1000-8000-00805F9B34FB", "ICRC-UGI"))
                 .RegisterSingleton<ServoDriveService>(); 
         }
     }

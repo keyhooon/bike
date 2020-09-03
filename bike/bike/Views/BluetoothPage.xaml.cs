@@ -2,9 +2,9 @@
 
 namespace bike.Views
 {
-    public partial class DiagnosticPage : ContentPage
+    public partial class BluetoothPage : ContentPage
     {
-        public DiagnosticPage()
+        public BluetoothPage()
         {
             InitializeComponent();
             listView.ItemGenerator = new Infrastructure.ItemGeneratorExt(listView);

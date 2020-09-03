@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using bike.Droid.Services;
+using bike.Services;
 using bike.Shiny;
 using Device.Communication.Codec;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +31,9 @@ namespace bike.Droid
         protected override void OnBuildApplication(IServiceCollection builder)
         {
             base.OnBuildApplication(builder);
-            builder.AddSingleton<DataTransport<Packet>, BluetoothPacketDataTransport>();
+            builder.AddSingleton<BluetoothPacketDataTransport>();
+            builder.AddSingleton<DataTransport<Packet>>(x => x.GetRequiredService<BluetoothPacketDataTransport>());
+            builder.AddSingleton<IBlueToothService>(x => x.GetRequiredService<BluetoothPacketDataTransport>());
         }
     }
 }

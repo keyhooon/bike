@@ -3,6 +3,7 @@
     x:Class="bike.Views.MainPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:SFCards="clr-namespace:Syncfusion.XForms.Cards;assembly=Syncfusion.Cards.XForms"
     xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
     xmlns:ef="clr-namespace:AiForms.Effects;assembly=AiForms.Effects"
     xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
@@ -41,8 +42,10 @@
     </ContentPage.Resources>
     <navigationdrawer:SfNavigationDrawer
         x:Name="navigationDrawer"
+        DrawerHeaderHeight="160"
+        DrawerWidth="300"
         IsOpen="{Binding IsPresented, Mode=TwoWay}"
-        Duration="300">
+        Duration="250">
         <navigationdrawer:SfNavigationDrawer.ContentView>
             <Grid x:Name="mainContentView" RowSpacing="0">
                 <Grid.RowDefinitions>
@@ -91,6 +94,9 @@
                                 <Setter Property="Text" Value="" />
                             </DataTrigger>
                         </Label.Triggers>
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{prism:NavigateTo BlueTooth}" />
+                        </Label.GestureRecognizers>
                     </Label>
                 </AbsoluteLayout>
                 <busyindicator:SfBusyIndicator
@@ -103,34 +109,38 @@
                     Duration=".1" />
                 <tabview:SfTabView
                     Grid.Row="1"
-                    DisplayMode="Text"
+                    DisplayMode="ImageWithText"
                     EnableSwiping="False"
                     HorizontalOptions="FillAndExpand"
                     IsVisible="{Binding IsBusy, Converter={StaticResource Not}}"
                     TabHeaderPosition="Bottom"
                     VerticalOptions="FillAndExpand"
                     VisibleHeaderCount="2">
+
+                    <tabview:SfTabView.SelectionIndicatorSettings>
+                        <tabview:SelectionIndicatorSettings StrokeThickness="5" Color="{StaticResource PrimaryDarkColor}" />
+                    </tabview:SfTabView.SelectionIndicatorSettings>
                     <tabview:SfTabView.Resources />
-                    <tabview:SfTabItem Title="Panel">
+                    <tabview:SfTabItem
+                        Title="Panel"
+                        FontIconFontFamily="{StaticResource MaterialIcons}"
+                        IconFont="">
                         <tabview:SfTabItem.Content>
-                            <Grid>
-                                <Image Aspect="Fill" Source="NavyBlueGradient.jpeg" />
-                                <Grid
-                                    Margin="15"
-                                    ColumnSpacing="15"
-                                    RowSpacing="15">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="auto" />
-                                        <RowDefinition Height="auto" />
-                                        <RowDefinition Height="1*" />
-                                    </Grid.RowDefinitions>
-                                    <gauge:SfCircularGauge
-                                        Grid.Row="1"
-                                        Grid.ColumnSpan="3"
-                                        BackgroundColor="#44444444"
-                                        HeightRequest="320"
-                                        HorizontalOptions="Center"
-                                        VerticalOptions="StartAndExpand">
+                            <Grid
+                                Margin="15"
+                                BackgroundColor="{DynamicResource Gray-100}"
+                                ColumnSpacing="0"
+                                RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="auto" />
+                                    <RowDefinition Height="100" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <SFCards:SfCardView
+                                    Grid.Row="0"
+                                    Grid.ColumnSpan="3"
+                                    Margin="15,15,15,0">
+                                    <gauge:SfCircularGauge HorizontalOptions="Center" VerticalOptions="StartAndExpand">
                                         <gauge:SfCircularGauge.Annotations>
                                             <gauge:GaugeAnnotation
                                                 HorizontalAlignment="Center"
@@ -138,12 +148,29 @@
                                                 Angle="270"
                                                 Offset=".3">
                                                 <gauge:GaugeAnnotation.View>
-                                                    <Image
-                                                        BackgroundColor="yellow"
+                                                    <Label
+                                                        FontFamily="{StaticResource MaterialIcons}"
+                                                        FontSize="{StaticResource BaseFontSize+++}"
                                                         HeightRequest="28"
-                                                        Opacity=".3"
-                                                        Source="{image:ImageResource bike.Assets.high.021-warning.png}"
-                                                        WidthRequest="68" />
+                                                        HorizontalOptions="Center"
+                                                        HorizontalTextAlignment="Center"
+                                                        Opacity="0"
+                                                        Text=""
+                                                        TextColor="yellow"
+                                                        WidthRequest="68">
+                                                        <Label.Style>
+                                                            <Style TargetType="Label">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger
+                                                                        Binding="{Binding ServoDriveService.ServoInput.IsFault}"
+                                                                        TargetType="Label"
+                                                                        Value="true">
+                                                                        <Setter Property="Opacity" Value="1" />
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Label.Style>
+                                                    </Label>
                                                 </gauge:GaugeAnnotation.View>
                                             </gauge:GaugeAnnotation>
                                             <gauge:GaugeAnnotation
@@ -153,11 +180,11 @@
                                                 Offset="1">
                                                 <gauge:GaugeAnnotation.View>
                                                     <StackLayout Orientation="Horizontal">
-                                                        <Image
-                                                            Margin="-8,0"
-                                                            HeightRequest="28"
-                                                            Source="{image:ImageResource bike.Assets.high.011-thermometer-1.png}"
-                                                            WidthRequest="28" />
+                                                        <Label
+                                                            FontFamily="{StaticResource MaterialIcons}"
+                                                            FontSize="{StaticResource BaseFontSize+++}"
+                                                            Text=""
+                                                            TextColor="DarkRed" />
                                                         <Label Text="{Binding ServoDriveService.BatteryOutput.Temprature, StringFormat='{0:F1}°'}" VerticalOptions="Center" />
                                                     </StackLayout>
                                                 </gauge:GaugeAnnotation.View>
@@ -170,11 +197,11 @@
                                                 <gauge:GaugeAnnotation.View>
                                                     <StackLayout Orientation="Horizontal">
                                                         <Label Text="{Binding ServoDriveService.BatteryOutput.Voltage, StringFormat='{0:F1}v'}" VerticalOptions="Center" />
-                                                        <Image
-                                                            Margin="-8,0"
-                                                            HeightRequest="28"
-                                                            Source="{image:ImageResource bike.Assets.high.017-battery.png}"
-                                                            WidthRequest="28" />
+                                                        <Label
+                                                            FontFamily="{StaticResource MaterialIcons}"
+                                                            FontSize="{StaticResource BaseFontSize+++}"
+                                                            Text=""
+                                                            TextColor="DarkBlue" />
                                                     </StackLayout>
                                                 </gauge:GaugeAnnotation.View>
                                             </gauge:GaugeAnnotation>
@@ -194,11 +221,11 @@
                                                             <gauge:SfDigitalGauge
                                                                 BackgroundColor="Transparent"
                                                                 CharacterHeight="30"
-                                                                CharacterStrokeColor="LightBlue"
+                                                                CharacterStrokeColor="{DynamicResource PrimaryForeGroundColor}"
                                                                 CharacterType="SegmentSeven"
                                                                 CharacterWidth="15"
-                                                                DisabledSegmentAlpha="20"
-                                                                DisabledSegmentColor="yellow"
+                                                                DisabledSegmentAlpha="60"
+                                                                DisabledSegmentColor="{DynamicResource Gray-500}"
                                                                 HeightRequest="45"
                                                                 HorizontalOptions="End"
                                                                 SegmentStrokeWidth="3"
@@ -208,17 +235,17 @@
                                                             <Label
                                                                 BackgroundColor="Transparent"
                                                                 Text="Km"
-                                                                TextColor="LightBlue" />
+                                                                TextColor="{DynamicResource PrimaryForeGroundColor}" />
                                                         </StackLayout>
                                                         <StackLayout Grid.Row="1" Orientation="Horizontal">
                                                             <gauge:SfDigitalGauge
                                                                 BackgroundColor="Transparent"
                                                                 CharacterHeight="30"
-                                                                CharacterStrokeColor="LightBlue"
+                                                                CharacterStrokeColor="{DynamicResource PrimaryForeGroundColor}"
                                                                 CharacterType="SegmentSeven"
                                                                 CharacterWidth="15"
-                                                                DisabledSegmentAlpha="20"
-                                                                DisabledSegmentColor="yellow"
+                                                                DisabledSegmentAlpha="60"
+                                                                DisabledSegmentColor="{DynamicResource Gray-300}"
                                                                 HeightRequest="45"
                                                                 HorizontalOptions="End"
                                                                 SegmentStrokeWidth="3"
@@ -228,7 +255,7 @@
                                                             <Label
                                                                 BackgroundColor="Transparent"
                                                                 Text="Km"
-                                                                TextColor="LightBlue" />
+                                                                TextColor="{DynamicResource PrimaryForeGroundColor}" />
                                                         </StackLayout>
                                                     </Grid>
                                                 </gauge:GaugeAnnotation.View>
@@ -239,11 +266,11 @@
                                                 Direction="AntiClockwise"
                                                 EndValue="100"
                                                 Interval="25"
-                                                MinorTicksPerInterval="0"
+                                                MinorTicksPerInterval="1"
                                                 RimColor="{DynamicResource Gray-500}"
-                                                RimThickness="10"
-                                                ScaleEndOffset=".95"
-                                                ScaleStartOffset=".84"
+                                                RimThickness="18"
+                                                ScaleEndOffset=".80"
+                                                ScaleStartOffset=".78"
                                                 ShowLabels="false"
                                                 ShowRim="true"
                                                 StartAngle="290"
@@ -253,33 +280,41 @@
                                                     <gauge:Range
                                                         EndValue="98"
                                                         StartValue="2"
-                                                        Thickness="12"
+                                                        Thickness="18"
                                                         Offset=".93"
-                                                        Color="{DynamicResource Gray-900}" />
+                                                        Color="{DynamicResource Gray-300}" />
                                                 </gauge:Scale.Ranges>
                                                 <gauge:Scale.Pointers>
                                                     <gauge:RangePointer
-                                                        Thickness="12"
+                                                        EnableAnimation="False"
+                                                        Thickness="18"
                                                         Offset=".93"
-                                                        Color="Blue"
+                                                        Color="DarkRed"
                                                         Value="{Binding ServoDriveService.BatteryOutput.Temprature}" />
                                                 </gauge:Scale.Pointers>
                                                 <gauge:Scale.MajorTickSettings>
                                                     <gauge:TickSettings
                                                         EndOffset=".95"
-                                                        StartOffset=".84"
+                                                        StartOffset=".80"
                                                         Thickness="3"
-                                                        Color="{DynamicResource Gray-500}" />
+                                                        Color="{DynamicResource Gray-White}" />
                                                 </gauge:Scale.MajorTickSettings>
+                                                <gauge:Scale.MinorTickSettings>
+                                                    <gauge:TickSettings
+                                                        EndOffset="0.90"
+                                                        StartOffset="0.84"
+                                                        Thickness="2"
+                                                        Color="{DynamicResource Gray-200}" />
+                                                </gauge:Scale.MinorTickSettings>
                                             </gauge:Scale>
                                             <gauge:Scale
                                                 EndValue="100"
                                                 Interval="25"
-                                                MinorTicksPerInterval="0"
+                                                MinorTicksPerInterval="1"
                                                 RimColor="{DynamicResource Gray-500}"
-                                                RimThickness="10"
-                                                ScaleEndOffset=".95"
-                                                ScaleStartOffset=".84"
+                                                RimThickness="18"
+                                                ScaleEndOffset=".80"
+                                                ScaleStartOffset=".78"
                                                 ShowLabels="false"
                                                 ShowRim="true"
                                                 StartAngle="200"
@@ -289,32 +324,40 @@
                                                     <gauge:Range
                                                         EndValue="98"
                                                         StartValue="2"
-                                                        Thickness="14"
+                                                        Thickness="18"
                                                         Offset=".93"
-                                                        Color="{DynamicResource Gray-900}" />
+                                                        Color="{DynamicResource Gray-300}" />
                                                 </gauge:Scale.Ranges>
                                                 <gauge:Scale.Pointers>
                                                     <gauge:RangePointer
-                                                        Thickness="14"
+                                                        EnableAnimation="False"
+                                                        Thickness="18"
                                                         Offset=".93"
-                                                        Color="Blue"
+                                                        Color="DarkBlue"
                                                         Value="{Binding ServoDriveService.BatteryOutput.Voltage}" />
                                                 </gauge:Scale.Pointers>
                                                 <gauge:Scale.MajorTickSettings>
                                                     <gauge:TickSettings
                                                         EndOffset=".95"
-                                                        StartOffset=".84"
+                                                        StartOffset=".80"
                                                         Thickness="3"
-                                                        Color="{DynamicResource Gray-500}" />
+                                                        Color="{DynamicResource Gray-White}" />
                                                 </gauge:Scale.MajorTickSettings>
+                                                <gauge:Scale.MinorTickSettings>
+                                                    <gauge:TickSettings
+                                                        EndOffset="0.90"
+                                                        StartOffset="0.84"
+                                                        Thickness="2"
+                                                        Color="{DynamicResource Gray-200}" />
+                                                </gauge:Scale.MinorTickSettings>
                                             </gauge:Scale>
                                             <gauge:Scale
                                                 EndValue="80"
                                                 Interval="10"
-                                                LabelColor="White"
-                                                LabelOffset="0.60"
+                                                LabelColor="{DynamicResource Gray-500}"
+                                                LabelOffset="0.50"
                                                 MinorTicksPerInterval="5"
-                                                RimColor="White"
+                                                RimColor="{DynamicResource Gray-White}"
                                                 ScaleEndOffset="0.74"
                                                 ScaleStartOffset="0.75"
                                                 StartAngle="150"
@@ -323,8 +366,8 @@
                                                 <gauge:Scale.Ranges>
                                                     <gauge:Range
                                                         EndValue="80"
-                                                        InnerEndOffset=".68"
-                                                        InnerStartOffset="0.68"
+                                                        InnerEndOffset=".62"
+                                                        InnerStartOffset="0.62"
                                                         OuterEndOffset=".74"
                                                         OuterStartOffset=".74"
                                                         StartValue="0">
@@ -340,23 +383,14 @@
                                                 </gauge:Scale.Ranges>
                                                 <gauge:Scale.MajorTickSettings>
                                                     <gauge:TickSettings
-                                                        EndOffset="0.65"
+                                                        EndOffset="0.60"
                                                         StartOffset="0.75"
                                                         Thickness="3"
-                                                        Color="LightGray" />
+                                                        Color="{DynamicResource Gray-White}" />
                                                 </gauge:Scale.MajorTickSettings>
                                                 <gauge:Scale.Pointers>
-                                                    <gauge:RangePointer
-                                                        RangeCap="End"
-                                                        Thickness="10"
-                                                        Offset=".83"
-                                                        Color="Cyan"
-                                                        Value="{Binding ServoDriveService.Servo.ActivityPercent}" />
-                                                    <gauge:MarkerPointer
-                                                        Offset=".74"
-                                                        Color="{DynamicResource PrimaryForeGroundColor}"
-                                                        Value="60" />
                                                     <gauge:NeedlePointer
+                                                        AnimationDuration="0"
                                                         KnobColor="{DynamicResource Gray-900}"
                                                         KnobRadius="15"
                                                         KnobRadiusFactor="1"
@@ -371,81 +405,98 @@
                                                 </gauge:Scale.Pointers>
                                                 <gauge:Scale.MinorTickSettings>
                                                     <gauge:TickSettings
-                                                        EndOffset="0.70"
-                                                        StartOffset="0.74"
+                                                        EndOffset="0.66"
+                                                        StartOffset="0.71"
                                                         Thickness="2"
-                                                        Color="LightGray" />
+                                                        Color="{DynamicResource Gray-300}" />
                                                 </gauge:Scale.MinorTickSettings>
                                             </gauge:Scale>
                                         </gauge:SfCircularGauge.Scales>
                                     </gauge:SfCircularGauge>
-                                    <Grid Grid.Row="2" Grid.Column="0">
+
+                                </SFCards:SfCardView>
+                                <SFCards:SfCardView Grid.Row="1" Margin="15,15,0,15">
+                                    <Grid>
                                         <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                            <SwipeGestureRecognizer Swiped="TapGestureRecognizer_Tapped" />
                                         </Grid.GestureRecognizers>
-                                        <BoxView BackgroundColor="#44444444" />
+
                                         <Picker
-                                            HorizontalOptions="Center"
+                                            HorizontalOptions="Center" 
                                             ItemsSource="{Binding PedalAssistLevelList}"
                                             SelectedIndex="{Binding SelectedPedalAssistLevel, Mode=TwoWay}"
                                             SelectedIndexChanged="Picker_SelectedIndexChanged"
-                                            TextColor="LightBlue"
+                                            TextColor="{DynamicResource PrimaryDarkColor}"
                                             TitleColor="gray"
                                             VerticalOptions="Start" />
                                         <Label
                                             Margin="0,10"
                                             HorizontalOptions="Center"
                                             Text="Assist Level"
-                                            TextColor="LightBlue"
+                                            TextColor="{DynamicResource SecondaryColor}"
                                             VerticalOptions="End" />
                                     </Grid>
-                                    <Grid Grid.Row="2" Grid.Column="1">
+                                </SFCards:SfCardView>
+                                <SFCards:SfCardView
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="7.5,15,7.5,15">
+                                    <Grid>
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                                         </Grid.GestureRecognizers>
-                                        <BoxView BackgroundColor="#44444444" />
+
                                         <Picker
                                             BackgroundColor="Default"
                                             HorizontalOptions="Center"
                                             ItemsSource="{Binding PedalAssistSensitivitiesList}"
                                             SelectedIndex="{Binding SelectedPedalAssistSensitivities}"
                                             SelectedIndexChanged="Picker_SelectedIndexChanged"
-                                            TextColor="LightBlue"
+                                            TextColor="{DynamicResource PrimaryDarkColor}"
                                             TitleColor="gray"
                                             VerticalOptions="Start" />
                                         <Label
                                             Margin="0,10"
                                             HorizontalOptions="Center"
-                                            Text="Pedal Sensivity"
-                                            TextColor="LightBlue"
+                                            Text="Light"
+                                            TextColor="{DynamicResource SecondaryColor}"
                                             VerticalOptions="End" />
                                     </Grid>
-                                    <Grid Grid.Row="2" Grid.Column="2">
+                                </SFCards:SfCardView>
+                                <SFCards:SfCardView
+                                    Grid.Row="1"
+                                    Grid.Column="2"
+                                    Margin="0,15,15,15">
+                                    <Grid>
                                         <Grid.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                                         </Grid.GestureRecognizers>
-                                        <BoxView BackgroundColor="#44444444" HeightRequest="200" />
+
                                         <Picker
                                             BackgroundColor="Default"
                                             HorizontalOptions="Center"
                                             ItemsSource="{Binding ThrottleModeList}"
                                             SelectedIndex="{Binding SelectedThrottleMode, Mode=TwoWay, UpdateSourceEventName=SelectionChanged}"
                                             SelectedIndexChanged="Picker_SelectedIndexChanged"
-                                            TextColor="LightBlue"
+                                            TextColor="{DynamicResource PrimaryDarkColor}"
                                             TitleColor="gray"
                                             VerticalOptions="Start" />
                                         <Label
                                             Margin="0,10"
                                             HorizontalOptions="Center"
                                             Text="Throttle"
-                                            TextColor="LightBlue"
+                                            TextColor="{DynamicResource SecondaryColor}"
                                             VerticalOptions="End" />
                                     </Grid>
-                                </Grid>
+                                </SFCards:SfCardView>
                             </Grid>
+
                         </tabview:SfTabItem.Content>
                     </tabview:SfTabItem>
-                    <tabview:SfTabItem Title="Map">
+                    <tabview:SfTabItem
+                        Title="Map"
+                        FontIconFontFamily="{StaticResource MaterialIcons}"
+                        IconFont="">
                         <tabview:SfTabItem.Content>
                             <StackLayout>
                                 <maps:MapView
@@ -468,9 +519,9 @@
             </Grid>
         </navigationdrawer:SfNavigationDrawer.ContentView>
         <navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
-            <Grid BackgroundColor="#1aa1d6">
-                <BoxView BackgroundColor="{StaticResource PrimaryForeGroundColor}" />
-                <forms:AnimationView
+            <Grid BackgroundColor="{StaticResource PrimaryColor}">
+                <Image Margin="10" Source="{image:ImageResource bike.Assets.Logo - parcham.jpg}" />
+                <!--<forms:AnimationView
                     x:Name="AnimationView"
                     Animation="splashpattern.json"
                     AutoPlay="True"
@@ -491,68 +542,39 @@
                                                                       Factor=0,
                                                                       Constant=000}"
                     Speed="5"
-                    VerticalOptions="FillAndExpand" />
+                    VerticalOptions="FillAndExpand" />-->
             </Grid>
         </navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
         <navigationdrawer:SfNavigationDrawer.DrawerContentView>
-            <ScrollView>
-                <StackLayout Spacing="0">
-                    <StackLayout.Resources>
-                        <Style TargetType="Button">
-                            <Setter Property="Padding" Value="30,0" />
-                            <Setter Property="HeightRequest" Value="60" />
-                        </Style>
-                    </StackLayout.Resources>
-                    <Button
-                        ef:Feedback.EffectColor="Accent"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="Settings"
-                        ImageSource="{image:ImageResource bike.Assets.low.026-slider.png}"
-                        Text="Settings" />
-                    <Button
-                        ef:Feedback.EffectColor="Accent"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="Nav/Report"
-                        ImageSource="{image:ImageResource bike.Assets.low.020-bar-graph.png}"
-                        Text="Reports" />
-                    <Button
-                        ef:Feedback.EffectColor="Accent"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="Nav/Diagnostic"
-                        ImageSource="{image:ImageResource bike.Assets.low.018-wrench.png}"
-                        Text="Diagnostics" />
-                    <Button
-                        ef:Feedback.EffectColor="Accent"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="Nav/Logs?createTab=Errors&amp;createTab=Events&amp;createTab=Servo"
-                        ImageSource="{image:ImageResource bike.Assets.low.003-technology.png}"
-                        Text="Logs" />
-                    <Button
-                        ef:Feedback.EffectColor="Accent"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="Nav/Configurations"
-                        ImageSource="{image:ImageResource bike.Assets.low.005-mechanic.png}"
-                        Text="Configurations" />
-                    <Button
-                        ef:Feedback.EffectColor="Accent"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="Nav/ContactUs"
-                        ImageSource="{image:ImageResource bike.Assets.low.013-call.png}"
-                        Text="Contact Us" />
-                    <Button
-                        ef:Feedback.EffectColor="Accent"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="Nav/AboutUs"
-                        ImageSource="{image:ImageResource bike.Assets.low.027-user.png}"
-                        Text="About Us" />
-                    <Button
-                        ef:Feedback.EffectColor="Accent"
-                        Command="{Binding NavigateCommand}"
-                        CommandParameter="Nav/Help"
-                        ImageSource="{image:ImageResource bike.Assets.low.009-information.png}"
-                        Text="Help" />
-                </StackLayout>
-            </ScrollView>
+            <ListView
+                x:Name="listView"
+                IsEnabled="{Binding IsNavigateOnProgress, Converter={StaticResource Not}}"
+                ItemsSource="{Binding NavigationItems}">
+                <ListView.Resources />
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.NavigateCommand}" CommandParameter="{Binding NavigationTarget}" />
+                                </StackLayout.GestureRecognizers>
+                                <Label
+                                    Padding="20,0"
+                                    FontFamily="{StaticResource MaterialIcons}"
+                                    Text="{Binding ImageIcon}"
+                                    TextColor="{StaticResource Gray-700}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+                                <Label
+                                    FontSize="16"
+                                    Text="{Binding Text}"
+                                    TextColor="{StaticResource Gray-700}"
+                                    VerticalOptions="Center" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </navigationdrawer:SfNavigationDrawer.DrawerContentView>
     </navigationdrawer:SfNavigationDrawer>
 

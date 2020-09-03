@@ -3,11 +3,13 @@
     x:Class="bike.Views.SettingPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
     xmlns:prism="http://prismlibrary.com"
-    xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView" xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+    xmlns:sv="clr-namespace:AiForms.Renderers;assembly=SettingsView"
     Title="Settings"
     prism:ViewModelLocator.AutowireViewModel="True"
-    BackgroundColor="{DynamicResource Gray-White}">
+    BackgroundColor="{DynamicResource Gray-White}"
+    NavigationPage.HasNavigationBar="False">
     <ContentPage.ToolbarItems>
         <ToolbarItem Command="{Binding RestCommand}" Text="Reset" />
     </ContentPage.ToolbarItems>

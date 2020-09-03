@@ -19,20 +19,26 @@ namespace Infrastructure
         private readonly IUserDialogs _dialogs;
         private readonly CancellationTokenSource tokenSource;
         private ObservableCollection<TItem> innerItems;
-
-
+        private bool canShowDetail;
+        private bool canClearDetail;
         protected AbstractItemListViewModel(IUserDialogs dialogs)
         {
             _dialogs = dialogs;
             tokenSource = new CancellationTokenSource();
             innerItems = new ObservableCollection<TItem>();
             Items = new ReadOnlyObservableCollection<TItem>(innerItems);
+            CanShowDetail = true;
+            CanClear = true;
+
         }
         public virtual void Destroy()
         {
             tokenSource.Cancel();
             Clear();
         }
+        public bool CanShowDetail { get => canShowDetail; set => SetProperty(ref canShowDetail, value); }
+        public bool CanClear { get => canClearDetail; set => SetProperty(ref canClearDetail, value); }
+
         protected void Add(TItem item)
         {
             lock (syncLock)
@@ -52,7 +58,7 @@ namespace Infrastructure
         protected void Clear()
         {
             if (!HasItems)
-                return; 
+                return;
             lock (syncLock)
             {
                 innerItems.Clear();
@@ -61,8 +67,8 @@ namespace Infrastructure
         }
 
 
-        public ReadOnlyCollection<TItem> Items {get;}
-        public bool HasItems => Items?.Any()??false;
+        public ReadOnlyCollection<TItem> Items { get; }
+        public bool HasItems => Items?.Any() ?? false;
 
         private DelegateCommand _ClearCommand;
         public DelegateCommand ClearCommand =>
@@ -84,12 +90,13 @@ namespace Infrastructure
                 IsBusy = true;
                 Clear();
                 AddRange(await LoadItemsAsync(null, tokenSource.Token));
+
                 IsBusy = false;
             });
 
         private DelegateCommand<TItem> _showDetailCommand;
         public DelegateCommand<TItem> ShowDetailCommand =>
-            _showDetailCommand ??= new DelegateCommand<TItem>(async (item) => await _dialogs.Alert(DatailText(item), DetailHeader(item)));
+            _showDetailCommand ??= new DelegateCommand<TItem>(async (item) => await _dialogs.Alert(DatailText(item), DetailHeader(item)),(item)=>CanShowDetail).ObservesCanExecute(()=>CanShowDetail);
 
 
         protected abstract Task<IEnumerable<TItem>> LoadItemsAsync(INavigationParameters parameters, CancellationToken token);
@@ -102,7 +109,8 @@ namespace Infrastructure
 
         public void Initialize(INavigationParameters parameters)
         {
-            Task.Run(async () => {
+            Task.Run(async () =>
+            {
                 IsBusy = true;
                 AddRange(await LoadItemsAsync(parameters, tokenSource.Token));
                 IsBusy = false;

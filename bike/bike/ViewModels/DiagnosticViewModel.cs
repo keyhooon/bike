@@ -29,10 +29,10 @@ namespace bike.ViewModels
             this.serializer = serializer;
             this.connection = connection;
             this.servoDriveService = servoDriveService;
-            servoDriveService.FaultChanged += (sender, e) =>
-            {
-                    LoadCommand.Execute();
-            };
+            //servoDriveService.FaultChanged += (sender, e) =>
+            //{
+            //        LoadCommand.Execute();
+            //};
         }
 
         protected async override Task ClearItemsAsync(CancellationToken token)

@@ -13,6 +13,8 @@ namespace Device.Communication.Codec
         public double Pedal { get; set; }
         public double Cruise { get; set; }
         public bool IsBreak { get; set; }
+        public bool IsFault { get; set; }
+
 
 
         public ServoInput()
@@ -68,7 +70,7 @@ namespace Device.Communication.Codec
                 for (int i = 0; i < value.Length; i++)
                     crc8 += value[i];
                 writer.Write(value);
-                value = new byte[] { (o.IsBreak?(byte)1:(byte)0)};
+                value = new byte[] {(byte)( (o.IsBreak ? 1 : 0) | (o.IsFault ? 2 : 0) )};
                 for (int i = 0; i < value.Length; i++)
                     crc8 += value[i];
                 writer.Write(value);
@@ -87,7 +89,10 @@ namespace Device.Communication.Codec
                         Throttle = BitConverter.ToUInt16(value.Take(2).ToArray()) * _throttleBitResolution + _throttleBias,
                         Pedal = BitConverter.ToUInt16(value.Skip(2).Take(2).ToArray()) * _pedalBitResolution + _pedalBias,
                         Cruise = BitConverter.ToUInt16(value.Skip(4).Take(2).ToArray()) * _cruiseBitResolution + _cruiseBias,
-                        IsBreak = (value.Skip(6).First() == 1)? true: false
+                        IsBreak = ((value[6] & 0x01) == 1) ? true : false,
+                        IsFault = ((value[6] & 0x02) == 2) ? true : false,
+
+                        //IsFault = (value.Skip(7).First() == 1) ? true : false
                     };
                 return null;
             }

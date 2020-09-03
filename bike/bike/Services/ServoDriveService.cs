@@ -280,37 +280,38 @@ namespace bike.Services
 
         private void CheckFault(Fault value)
         {
-            if (value.OverCurrent && !Fault.OverCurrent)
+            var old = Fault;
+            if (value.OverCurrent && !old.OverCurrent)
                 OnFaultOccured(Fault.Kind.OverCurrent, false);
-            if (!value.OverCurrent && Fault.OverCurrent)
+            if (!value.OverCurrent && old.OverCurrent)
                 OnFaultOccured(Fault.Kind.OverCurrent, true);
-            if (value.OverTemprature && !Fault.OverTemprature)
+            if (value.OverTemprature && !old.OverTemprature)
                 OnFaultOccured(Fault.Kind.OverTemprature, false);
-            if (!value.OverTemprature && Fault.OverTemprature)
+            if (!value.OverTemprature && old.OverTemprature)
                 OnFaultOccured(Fault.Kind.OverTemprature, true);
-            if (value.PedalSensor && !Fault.PedalSensor)
+            if (value.PedalSensor && !old.PedalSensor)
                 OnFaultOccured(Fault.Kind.PedalSensor, false);
-            if (!value.PedalSensor && Fault.PedalSensor)
+            if (!value.PedalSensor && old.PedalSensor)
                 OnFaultOccured(Fault.Kind.PedalSensor, true);
-            if (value.Throttle && !Fault.Throttle)
+            if (value.Throttle && !old.Throttle)
                 OnFaultOccured(Fault.Kind.Throttle, false);
-            if (!value.Throttle && Fault.Throttle)
+            if (!value.Throttle && old.Throttle)
                 OnFaultOccured(Fault.Kind.Throttle, true);
-            if (value.OverVoltage && !Fault.OverVoltage)
+            if (value.OverVoltage && !old.OverVoltage)
                 OnFaultOccured(Fault.Kind.OverVoltage, false);
-            if (!value.OverVoltage && Fault.OverVoltage)
+            if (!value.OverVoltage && old.OverVoltage)
                 OnFaultOccured(Fault.Kind.OverVoltage, true);
-            if (value.UnderVoltage && !Fault.UnderVoltage)
+            if (value.UnderVoltage && !old.UnderVoltage)
                 OnFaultOccured(Fault.Kind.UnderVoltage, false);
-            if (!value.UnderVoltage && Fault.UnderVoltage)
+            if (!value.UnderVoltage && old.UnderVoltage)
                 OnFaultOccured(Fault.Kind.UnderVoltage, true);
-            if (value.Motor && !Fault.Motor)
+            if (value.Motor && !old.Motor)
                 OnFaultOccured(Fault.Kind.Motor, false);
-            if (!value.Motor && Fault.Motor)
+            if (!value.Motor && old.Motor)
                 OnFaultOccured(Fault.Kind.Motor, true);
-            if (value.Drive && !Fault.Drive)
+            if (value.Drive && !old.Drive)
                 OnFaultOccured(Fault.Kind.Drive, false);
-            if (!value.Drive && Fault.Drive)
+            if (!value.Drive && old.Drive)
                 OnFaultOccured(Fault.Kind.Drive, true);
 
 

@@ -5,124 +5,25 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\high\002-sim-card.png" />
-    <None Remove="Assets\high\003-technology.png" />
-    <None Remove="Assets\high\004-technology-1.png" />
-    <None Remove="Assets\high\005-mechanic.png" />
-    <None Remove="Assets\high\006-desktop-monitor.png" />
-    <None Remove="Assets\high\007-home.png" />
-    <None Remove="Assets\high\008-gear.png" />
-    <None Remove="Assets\high\009-information.png" />
-    <None Remove="Assets\high\010-thermometer.png" />
-    <None Remove="Assets\high\011-thermometer-1.png" />
-    <None Remove="Assets\high\012-pedal.png" />
-    <None Remove="Assets\high\013-call.png" />
-    <None Remove="Assets\high\014-dashboard.png" />
-    <None Remove="Assets\high\015-dashboard-1.png" />
-    <None Remove="Assets\high\016-battery-charge.png" />
-    <None Remove="Assets\high\017-battery.png" />
-    <None Remove="Assets\high\018-wrench.png" />
-    <None Remove="Assets\high\019-car-battery.png" />
-    <None Remove="Assets\high\020-bar-graph.png" />
-    <None Remove="Assets\high\021-warning.png" />
-    <None Remove="Assets\high\022-handlebar.png" />
-    <None Remove="Assets\high\023-handlebar-1.png" />
-    <None Remove="Assets\high\024-pin.png" />
-    <None Remove="Assets\high\025-about-us.png" />
-    <None Remove="Assets\high\026-slider.png" />
-    <None Remove="Assets\high\027-user.png" />
-    <None Remove="Assets\high\028-group.png" />
-    <None Remove="Assets\high\map.png" />
-    <None Remove="Assets\low\002-sim-card.png" />
-    <None Remove="Assets\low\003-technology.png" />
-    <None Remove="Assets\low\004-technology-1.png" />
-    <None Remove="Assets\low\005-mechanic.png" />
-    <None Remove="Assets\low\006-desktop-monitor.png" />
-    <None Remove="Assets\low\007-home.png" />
-    <None Remove="Assets\low\008-gear.png" />
-    <None Remove="Assets\low\009-information.png" />
-    <None Remove="Assets\low\010-thermometer.png" />
-    <None Remove="Assets\low\011-thermometer-1.png" />
-    <None Remove="Assets\low\012-pedal.png" />
-    <None Remove="Assets\low\013-call.png" />
-    <None Remove="Assets\low\014-dashboard.png" />
-    <None Remove="Assets\low\015-dashboard-1.png" />
-    <None Remove="Assets\low\016-battery-charge.png" />
-    <None Remove="Assets\low\017-battery.png" />
-    <None Remove="Assets\low\018-wrench.png" />
-    <None Remove="Assets\low\019-car-battery.png" />
-    <None Remove="Assets\low\020-bar-graph.png" />
-    <None Remove="Assets\low\021-warning.png" />
-    <None Remove="Assets\low\022-handlebar.png" />
-    <None Remove="Assets\low\023-handlebar-1.png" />
-    <None Remove="Assets\low\024-pin.png" />
-    <None Remove="Assets\low\025-about-us.png" />
-    <None Remove="Assets\low\026-slider.png" />
-    <None Remove="Assets\low\027-user.png" />
-    <None Remove="Assets\low\028-group.png" />
-    <None Remove="Assets\low\map.png" />
+    <Compile Remove="Assets\high\**" />
+    <Compile Remove="Assets\low\**" />
+    <EmbeddedResource Remove="Assets\high\**" />
+    <EmbeddedResource Remove="Assets\low\**" />
+    <None Remove="Assets\high\**" />
+    <None Remove="Assets\low\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Assets\high\map.png" />
-    <EmbeddedResource Include="Assets\high\003-technology.png" />
-    <EmbeddedResource Include="Assets\high\004-technology-1.png" />
-    <EmbeddedResource Include="Assets\high\005-mechanic.png" />
-    <EmbeddedResource Include="Assets\high\006-desktop-monitor.png" />
-    <EmbeddedResource Include="Assets\high\007-home.png" />
-    <EmbeddedResource Include="Assets\high\008-gear.png" />
-    <EmbeddedResource Include="Assets\high\009-information.png" />
-    <EmbeddedResource Include="Assets\high\010-thermometer.png" />
-    <EmbeddedResource Include="Assets\high\011-thermometer-1.png" />
-    <EmbeddedResource Include="Assets\high\012-pedal.png" />
-    <EmbeddedResource Include="Assets\high\013-call.png" />
-    <EmbeddedResource Include="Assets\high\014-dashboard.png" />
-    <EmbeddedResource Include="Assets\high\015-dashboard-1.png" />
-    <EmbeddedResource Include="Assets\high\016-battery-charge.png" />
-    <EmbeddedResource Include="Assets\high\017-battery.png" />
-    <EmbeddedResource Include="Assets\high\018-wrench.png" />
-    <EmbeddedResource Include="Assets\high\019-car-battery.png" />
-    <EmbeddedResource Include="Assets\high\020-bar-graph.png" />
-    <EmbeddedResource Include="Assets\high\021-warning.png" />
-    <EmbeddedResource Include="Assets\high\022-handlebar.png" />
-    <EmbeddedResource Include="Assets\high\023-handlebar-1.png" />
-    <EmbeddedResource Include="Assets\high\024-pin.png" />
-    <EmbeddedResource Include="Assets\high\025-about-us.png" />
-    <EmbeddedResource Include="Assets\high\026-slider.png" />
-    <EmbeddedResource Include="Assets\high\027-user.png" />
-    <EmbeddedResource Include="Assets\high\028-group.png" />
-    <EmbeddedResource Include="Assets\low\map.png" />
-    <EmbeddedResource Include="Assets\low\002-sim-card.png" />
-    <EmbeddedResource Include="Assets\low\003-technology.png" />
-    <EmbeddedResource Include="Assets\low\004-technology-1.png" />
-    <EmbeddedResource Include="Assets\low\005-mechanic.png" />
-    <EmbeddedResource Include="Assets\low\006-desktop-monitor.png" />
-    <EmbeddedResource Include="Assets\low\007-home.png" />
-    <EmbeddedResource Include="Assets\low\008-gear.png" />
-    <EmbeddedResource Include="Assets\low\009-information.png" />
-    <EmbeddedResource Include="Assets\low\010-thermometer.png" />
-    <EmbeddedResource Include="Assets\low\011-thermometer-1.png" />
-    <EmbeddedResource Include="Assets\low\012-pedal.png" />
-    <EmbeddedResource Include="Assets\low\013-call.png" />
-    <EmbeddedResource Include="Assets\low\014-dashboard.png" />
-    <EmbeddedResource Include="Assets\low\015-dashboard-1.png" />
-    <EmbeddedResource Include="Assets\low\016-battery-charge.png" />
-    <EmbeddedResource Include="Assets\low\017-battery.png" />
-    <EmbeddedResource Include="Assets\low\018-wrench.png" />
-    <EmbeddedResource Include="Assets\low\019-car-battery.png" />
-    <EmbeddedResource Include="Assets\low\020-bar-graph.png" />
-    <EmbeddedResource Include="Assets\low\021-warning.png" />
-    <EmbeddedResource Include="Assets\low\022-handlebar.png" />
-    <EmbeddedResource Include="Assets\low\023-handlebar-1.png" />
-    <EmbeddedResource Include="Assets\low\024-pin.png" />
-    <EmbeddedResource Include="Assets\low\025-about-us.png" />
-    <EmbeddedResource Include="Assets\low\026-slider.png" />
-    <EmbeddedResource Include="Assets\low\027-user.png" />
-    <EmbeddedResource Include="Assets\low\028-group.png" />
+    <None Remove="Assets\Logo - parcham.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Logo - parcham.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Prism.Forms" Version="7.2.0.1422" />
+    <PackageReference Include="Syncfusion.Xamarin.Cards" Version="17.4.0.46" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.55" />
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="17.4.0.46" />
 
@@ -154,6 +55,9 @@
     </EmbeddedResource>
     <EmbeddedResource Update="Views\AboutUsSimplePage.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\BluetoothPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\ContactUsPage.xaml">
       <Generator>MSBuild:Compile</Generator>

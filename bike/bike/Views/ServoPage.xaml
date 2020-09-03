@@ -70,12 +70,12 @@
                 </sv:Section>
                 <sv:Section Title="Servo Input">
                     <sv:LabelCell Title="Throttle" ValueText="{Binding ServoInput.Throttle, StringFormat='{0:F2} %'}" />
-                    <sv:LabelCell Title="Pedal" ValueText="{Binding ServoInput.Pedal}" />
-                    <sv:LabelCell Title="Cruise" ValueText="{Binding ServoInput.Cruise}" />
+                    <sv:LabelCell Title="Pedal" ValueText="{Binding ServoInput.Pedal, StringFormat='{0:F2} %'}" />
+                    <sv:LabelCell Title="Cruise" ValueText="{Binding ServoInput.Cruise, StringFormat='{0:F2} %'}" />
                     <sv:CheckboxCell Title="Is Break" Checked="{Binding ServoInput.IsBreak}" />
                 </sv:Section>
                 <sv:Section Title="Servo Output">
-                    <sv:LabelCell Title="Activity Percent" ValueText="{Binding ServoOutput.ActivityPercent}" />
+                    <sv:LabelCell Title="Activity Percent" ValueText="{Binding ServoOutput.ActivityPercent, StringFormat='{0:F2} %'}" />
                     <sv:LabelCell Title="Wheel Speed" ValueText="{Binding ServoOutput.WheelSpeed}" />
                 </sv:Section>
                 <sv:Section Title="BlueTooth ">

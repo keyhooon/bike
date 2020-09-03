@@ -57,6 +57,7 @@ namespace bike
                 .RegisterSingleton<IConfigurationProvider, MapperConfiguration>()
                 .UseServoDrive()
                 ;
+
             containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
             containerRegistry.RegisterForNavigation<TabbedPage>("TabbedPage");
             containerRegistry.RegisterForNavigation<MainPage>("Main");
@@ -64,12 +65,12 @@ namespace bike
             containerRegistry.RegisterForNavigation<GaugePage>("Gauge");
 
             containerRegistry.RegisterForNavigation<SettingPage>("Settings");
-            containerRegistry.RegisterForNavigation<ReportPage>("Report");
-            containerRegistry.RegisterForNavigation<DiagnosticPage>("Diagnostic");
+            containerRegistry.RegisterForNavigation<ReportPage>("Reports");
+            containerRegistry.RegisterForNavigation<DiagnosticPage>("Diagnostics");
             containerRegistry.RegisterForNavigation<LoggingPage>("Logs");
-            containerRegistry.RegisterForNavigation<ErrorLogPage>("Errors");
-            containerRegistry.RegisterForNavigation<EventsPage>("Events");
-            containerRegistry.RegisterForNavigation<ServoPage>("Servo");
+            containerRegistry.RegisterForNavigation<ErrorLogPage, ErrorLogViewModel>("Errors");
+            containerRegistry.RegisterForNavigation<EventsPage, EventsViewModel>("Events");
+            containerRegistry.RegisterForNavigation<ServoPage, ServoViewModel>("Servo");
 
 
             containerRegistry.RegisterForNavigation<ConfigurationPage>("Configurations");
@@ -77,6 +78,7 @@ namespace bike
             containerRegistry.RegisterForNavigation<AboutUsSimplePage>("AboutUs");
             containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
 
+            containerRegistry.RegisterForNavigation<BluetoothPage, BluetoothPageViewModel>("BlueTooth");
         }
     }
 }

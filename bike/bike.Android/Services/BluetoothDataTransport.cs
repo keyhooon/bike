@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Threading;
 using Android.Bluetooth;
+using Android.Locations;
+using bike.Services;
 using Device.Communication.Channels;
 using Device.Communication.Codec;
 using Device.Communication.Transport;
@@ -10,7 +12,7 @@ using SharpCommunication.Transport;
 
 namespace bike.Droid.Services
 {
-    public class BluetoothPacketDataTransport : DataTransport<Packet>
+    public class BluetoothPacketDataTransport : DataTransport<Packet>, IBlueToothService
     {
         private BluetoothAdapter _adapter;
         private BluetoothSocket _socket;
@@ -59,5 +61,6 @@ namespace bike.Droid.Services
             ch.DataReceived += (sender, e) => DataReceivedCount = ch.ToMonitoredChannel().GetDataReceivedCount;
         }
         public int DataReceivedCount { get; set; }
+        public (string Name,string Address)[] BluetoothBonded => (_adapter.BondedDevices.Select((device) => ( device.Name, device.Address )).ToArray());
     }
 }

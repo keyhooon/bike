@@ -14,6 +14,7 @@ using System.Reflection;
 using System.Linq;
 using System.ComponentModel;
 using Xamarin.Forms;
+using System.Collections.ObjectModel;
 
 namespace bike.ViewModels
 {
@@ -22,12 +23,14 @@ namespace bike.ViewModels
         private readonly IDeviceService deviceService;
         private readonly INavigationService navigationService;
         private readonly IUserDialogs dialogs;
-
+        private bool isNavigateOnProgress;
+        private bool _masterIsPresent;
+        private readonly ServoDriveService _servoDriveService;
         public MainViewModel(IDeviceService deviceService, INavigationService navigationService, ServoDriveService servoDriveService, IUserDialogs dialogs)
         {
             this.deviceService = deviceService;
             this.navigationService = navigationService;
-                _servoDriveService = servoDriveService;
+            _servoDriveService = servoDriveService;
             _servoDriveService.PropertyChanged += (sender, e) =>
             {
                 RaisePropertyChanged(e.PropertyName);
@@ -37,16 +40,24 @@ namespace bike.ViewModels
             {
                 RaisePropertyChanged(nameof(IsConnected));
             };
+            Task.Run(async() => {
+                await Task.Delay(300);
+
+            });
         }
 
         DelegateCommand<string> _navigateCommand;
         public DelegateCommand<string> NavigateCommand => _navigateCommand ??= new DelegateCommand<string>(async (x) =>
         {
+
+            // IsBusy = true;
+            
+            IsNavigateOnProgress = true;
+            await Task.Run(() => Application.Current.Dispatcher.BeginInvokeOnMainThread(async() => { await navigationService.NavigateAsync(x); }));
+
+            // IsBusy = false;
             IsPresented = false;
-            IsBusy = true;
-            await Task.Delay(340);
-            await navigationService.NavigateAsync(x);
-            IsBusy = false;
+            IsNavigateOnProgress = false;
 
         });
 
@@ -61,12 +72,16 @@ namespace bike.ViewModels
             get => _servoDriveService.IsOpen;
         }
 
-        private bool _masterIsPresent;
+
         public bool IsPresented
         {
             get => _masterIsPresent; set => SetProperty(ref _masterIsPresent, value);
         }
-        private readonly ServoDriveService _servoDriveService;
+        public bool IsNavigateOnProgress
+        {
+            get => isNavigateOnProgress; set => SetProperty(ref isNavigateOnProgress, value);
+        }
+        public Collection<NavigationItem> NavigationItems { get; protected set; }
 
         private List<string> pedalAssistLevelList;
         private List<string> pedalAssistSensitivitiesList;
@@ -74,10 +89,7 @@ namespace bike.ViewModels
         private int _selectedPedalAssistLevel;
         private int _selectedpedalAssistSensitivities;
         private int _selectedthrottleMode;
-        private BatteryOutput _batteryOutput;
-        private Fault _fault;
-        private LightState _light;
-        private ServoOutput _servo;
+
 
         public void Initialize(INavigationParameters parameters)
         {
@@ -90,6 +102,18 @@ namespace bike.ViewModels
             RaisePropertyChanged(nameof(SelectedPedalAssistLevel));
             RaisePropertyChanged(nameof(SelectedPedalAssistSensitivities));
             RaisePropertyChanged(nameof(SelectedThrottleMode));
+
+            NavigationItems = new Collection<NavigationItem>(new[] {
+               new NavigationItem (  "Trip Reports", "Nav/Reports", "" ),
+               new NavigationItem (  "Settings", "Nav/Settings", "" ),
+               new NavigationItem (  "Configurations", "Nav/Configurations", "" ),
+               new NavigationItem (  "Diagnostics", "Nav/Diagnostics", "" ),
+               new NavigationItem (  "Logs", "Nav/Logs?createTab=Servo&createTab=Errors&createTab=Events", "" ),
+               new NavigationItem (  "Contact Us", "Nav/ContactUs", "" ),
+               new NavigationItem (  "About Us", "Nav/AboutUs", "" ),
+               new NavigationItem (  "Help", "Nav/Help", "" ),
+
+            });
         }
 
         public List<string> PedalAssistLevelList { get => pedalAssistLevelList; private set => SetProperty(ref pedalAssistLevelList, value); }
@@ -151,36 +175,23 @@ namespace bike.ViewModels
             });
         }
 
-        public BatteryOutput Battery
-        {
-            get => _batteryOutput; set => SetProperty(ref _batteryOutput, value, () =>
-            {
-
-            });
-        }
-        public Fault Fault
-        {
-            get => _fault; set => SetProperty(ref _fault, value, () =>
-            {
-
-            });
-        }
-        public LightState Light
-        {
-            get => _light; set => SetProperty(ref _light, value, () =>
-            {
-
-            });
-        }
-        public ServoOutput Servo
-        {
-            get => _servo; set => SetProperty(ref _servo, value, () =>
-            {
-
-            });
-        }
-
         public ServoDriveService ServoDriveService => _servoDriveService;
+
+
+    }
+    public class NavigationItem
+    {
+        public NavigationItem(string text, string navigationTarget, string imageIcon)
+        {
+            NavigationTarget = navigationTarget;
+            Text = text;
+            ImageIcon = imageIcon;
+        }
+        public string NavigationTarget { get; set; }
+
+        public string Text { get; set; }
+
+        public string ImageIcon { get; set; }
 
     }
 }
