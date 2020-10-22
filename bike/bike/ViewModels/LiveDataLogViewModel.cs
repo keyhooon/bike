@@ -16,23 +16,24 @@ using System.Threading.Tasks;
 
 namespace bike.ViewModels
 {
-    public class ServoViewModel : ViewModel
+    public class LiveDataLogViewModel : ViewModel
     {
         private readonly ServoDriveService _servoDriveService;
         private readonly DataTransport<Packet> dataTransport;
+        IChannel<Packet> channel;
         #region Constructor
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SettingViewModel" /> class
         /// </summary>
-        public ServoViewModel(ServoDriveService servoDriveService, DataTransport<Packet> dataTransport)
+        public LiveDataLogViewModel(ServoDriveService servoDriveService, DataTransport<Packet> dataTransport)
         {
             _servoDriveService = servoDriveService;
             this.dataTransport = dataTransport;
             _servoDriveService.PropertyChanged += (sender, e)=>RaisePropertyChanged(e.PropertyName);
-            var ch = dataTransport.Channels.FirstOrDefault();
-            if (ch != null)
-                ch.DataReceived += ServoViewModel_DataReceived;
+            channel = dataTransport.Channels.FirstOrDefault();
+              if (channel != null)
+                channel.DataReceived += ServoViewModel_DataReceived;
             ((INotifyCollectionChanged)dataTransport.Channels).CollectionChanged += ServoViewModel_CollectionChanged;
 
         }
@@ -40,9 +41,13 @@ namespace bike.ViewModels
         private void ServoViewModel_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                channel = (IChannel<Packet>)e.NewItems[0];
                 ((IChannel<Packet>)e.NewItems[0]).DataReceived += ServoViewModel_DataReceived;
+            }
             if (e.Action == NotifyCollectionChangedAction.Remove)
-                ((IChannel<Packet>)e.OldItems[0]).DataReceived -= ServoViewModel_DataReceived;
+                channel = null;
+                ((IChannel<Packet>)e.NewItems[0]).DataReceived -= ServoViewModel_DataReceived;
         }
 
 
@@ -53,7 +58,7 @@ namespace bike.ViewModels
 
         #endregion
 
-        public int DataReceivedCount => dataTransport.Channels.FirstOrDefault()?.ToMonitoredChannel()?.GetDataReceivedCount??0;
+        public int DataReceivedCount => channel?.ToMonitoredChannel()?.GetDataReceivedCount??0;
         public BatteryOutput BatteryOutput => _servoDriveService.BatteryOutput;
 
         public CoreSituation Core => _servoDriveService.Core;

@@ -17,7 +17,9 @@ using Prism.Mvvm;
 using System;
 using System.Reflection;
 using System.Globalization;
-
+using Prism.Unity;
+using Unity;
+using Unity.Injection;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace bike
@@ -33,6 +35,7 @@ namespace bike
         {
 
         }
+ 
 
         protected override async void OnInitialized()
         {
@@ -47,16 +50,27 @@ namespace bike
             });
             SyncfusionLicenseProvider.RegisterLicense("NzM3NEAzMTM3MmUzNDJlMzBPRm41TTBEL2hiZ0pjbG93dDZPQ0VocmRCWkJHSXlzWFgrUkxrZVlDaUpzPQ==");
             await NavigationService.NavigateAsync("Main");
+            
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            IUnityContainer container = containerRegistry.GetContainer();
             containerRegistry
                 .RegisterSingleton<MapperConfigurationExpression>()
                 .RegisterSingleton<IConfigurationProvider, MapperConfiguration>()
                 .UseServoDrive()
                 ;
+            ViewModelLocationProvider.SetDefaultViewModelFactory((Type t) =>
+            {
+                if (!container.IsRegistered(t, t.ToString()))
+                {
+                    container.RegisterSingleton(t);
+                }
+                return container.Resolve(t);
+            });
+                    
+
 
             containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
             containerRegistry.RegisterForNavigation<TabbedPage>("TabbedPage");
@@ -69,15 +83,15 @@ namespace bike
             containerRegistry.RegisterForNavigation<DiagnosticPage>("Diagnostics");
             containerRegistry.RegisterForNavigation<LoggingPage>("Logs");
             containerRegistry.RegisterForNavigation<ErrorLogPage, ErrorLogViewModel>("Errors");
-            containerRegistry.RegisterForNavigation<EventsPage, EventsViewModel>("Events");
-            containerRegistry.RegisterForNavigation<ServoPage, ServoViewModel>("Servo");
+            containerRegistry.RegisterForNavigation<EventLogPage, EventLogViewModel>("Events");
+            containerRegistry.RegisterForNavigation<LiveDataLogPage, LiveDataLogViewModel>("Servo");
 
 
             containerRegistry.RegisterForNavigation<ConfigurationPage>("Configurations");
             containerRegistry.RegisterForNavigation<ContactUsPage>("ContactUs");
             containerRegistry.RegisterForNavigation<AboutUsSimplePage>("AboutUs");
             containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
-
+            
             containerRegistry.RegisterForNavigation<BluetoothPage, BluetoothPageViewModel>("BlueTooth");
         }
     }

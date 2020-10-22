@@ -4,9 +4,9 @@ using Xamarin.Forms;
 
 namespace bike.Views
 {
-    public partial class EventsPage 
+    public partial class EventLogPage
     {
-        public EventsPage()
+        public EventLogPage()
         {
             this.InitializeComponent();
         }

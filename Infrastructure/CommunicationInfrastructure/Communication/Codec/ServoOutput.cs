@@ -63,7 +63,7 @@ namespace Device.Communication.Codec
                     return new ServoOutput
                     {
                         ActivityPercent = BitConverter.ToUInt16(value, 0) * _activityPercentBitResolution + _activityPercentBias,
-                        WheelSpeed = 1 / (BitConverter.ToUInt16(value, 2) * _wheelSpeedBitResolution + _wheelSpeedBias)
+                        WheelSpeed = (((double)BitConverter.ToUInt16(value, 2) / (1 << 13)) * 2 * 3.6)
                     };
                 return null;
             }

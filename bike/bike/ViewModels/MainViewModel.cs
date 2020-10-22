@@ -30,16 +30,9 @@ namespace bike.ViewModels
         {
             this.deviceService = deviceService;
             this.navigationService = navigationService;
-            _servoDriveService = servoDriveService;
-            _servoDriveService.PropertyChanged += (sender, e) =>
-            {
-                RaisePropertyChanged(e.PropertyName);
-            };
             this.dialogs = dialogs;
-            servoDriveService.IsOpenChanged += (sender, e) =>
-            {
-                RaisePropertyChanged(nameof(IsConnected));
-            };
+            _servoDriveService = servoDriveService;
+
             Task.Run(async() => {
                 await Task.Delay(300);
 
@@ -50,9 +43,10 @@ namespace bike.ViewModels
         public DelegateCommand<string> NavigateCommand => _navigateCommand ??= new DelegateCommand<string>(async (x) =>
         {
 
-            // IsBusy = true;
+
             
             IsNavigateOnProgress = true;
+            // IsBusy = true;
             await Task.Run(() => Application.Current.Dispatcher.BeginInvokeOnMainThread(async() => { await navigationService.NavigateAsync(x); }));
 
             // IsBusy = false;
@@ -93,6 +87,29 @@ namespace bike.ViewModels
 
         public void Initialize(INavigationParameters parameters)
         {
+            _servoDriveService.PropertyChanged += (sender, e) =>
+            {
+                RaisePropertyChanged(e.PropertyName);
+                if (e.PropertyName == nameof(ServoDriveService.PedalSetting))
+                {
+                    _selectedPedalAssistLevel = (int)ServoDriveService.PedalSetting.AssistLevel;
+                    _selectedpedalAssistSensitivities = (int)ServoDriveService.PedalSetting.ActivationTime;
+                    RaisePropertyChanged(nameof(SelectedPedalAssistLevel));
+                    RaisePropertyChanged(nameof(SelectedPedalAssistSensitivities));
+                }
+                if (e.PropertyName == nameof(ServoDriveService.ThrottleSetting))
+                {
+                    _selectedthrottleMode = (int)ServoDriveService.ThrottleSetting.ActivityType;
+                    RaisePropertyChanged(nameof(SelectedThrottleMode));
+                }
+            };
+
+            _servoDriveService.IsOpenChanged += (sender, e) =>
+            {
+                RaisePropertyChanged(nameof(IsConnected));
+            };
+
+
             PedalAssistLevelList = typeof(PedalSetting.PedalAssistLevelType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
             PedalAssistSensitivitiesList = typeof(PedalSetting.PedalActivationTimeType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
             ThrottleModeList = typeof(ThrottleSetting.ThrottleActivityType).GetFields(BindingFlags.Public | BindingFlags.Static).Select(x => ((DescriptionAttribute)x.GetCustomAttributes(typeof(DescriptionAttribute), false)[0]).Description).ToList();
@@ -124,7 +141,8 @@ namespace bike.ViewModels
 
         public int SelectedPedalAssistLevel
         {
-            get => _selectedPedalAssistLevel; set => SetProperty(ref _selectedPedalAssistLevel, value, () =>
+            get => _selectedPedalAssistLevel; 
+            set => SetProperty(ref _selectedPedalAssistLevel, value, () =>
             {
                 if (value == -1)
                 {
@@ -142,7 +160,8 @@ namespace bike.ViewModels
 
         public int SelectedPedalAssistSensitivities
         {
-            get => _selectedpedalAssistSensitivities; set => SetProperty(ref _selectedpedalAssistSensitivities, value, () =>
+            get => _selectedpedalAssistSensitivities; 
+            set => SetProperty(ref _selectedpedalAssistSensitivities, value, () =>
             {
                 if (value == -1)
                 {
@@ -160,7 +179,8 @@ namespace bike.ViewModels
 
         public int SelectedThrottleMode
         {
-            get => _selectedthrottleMode; set => SetProperty(ref _selectedthrottleMode, value, () =>
+            get => _selectedthrottleMode; 
+            set => SetProperty(ref _selectedthrottleMode, value, () =>
             {
                 if (value == -1)
                 {

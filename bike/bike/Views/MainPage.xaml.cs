@@ -13,12 +13,13 @@ using Prism.Events;
 using bike.Events;
 using Mapsui.UI.Forms;
 using System;
+using Shiny.Locations;
 
 namespace bike.Views
 {
     public partial class MainPage 
     {
-        public MainPage(IEventAggregator eventAggregator)
+        public MainPage(IGpsManager manager, IEventAggregator eventAggregator)
         {
             InitializeComponent();
 
@@ -27,18 +28,25 @@ namespace bike.Views
                 CRS = "EPSG:3857",
                 Transformation = new MinimalTransformation()
             };
-            map.Limiter.PanLimits = new BoundingBox(new Mapsui.Geometries.Point(45.26, 24.68), new Mapsui.Geometries.Point(60.56, 39.26));
+
+           // map.Limiter.PanLimits = new BoundingBox(new Mapsui.Geometries.Point(45.26, 24.68), new Mapsui.Geometries.Point(60.56, 39.26));
             map.Layers.Add(OpenStreetMap.CreateTileLayer());
+            
             map.Widgets.Add(new ScaleBarWidget(map) { TextAlignment = Alignment.Center, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Top });
             map.Widgets.Add(new ZoomInOutWidget { MarginX = 20, MarginY = 40 });
             mapView.Map = map;
-            mapView.Navigator = new AnimatedNavigator(mapView.Map, (IViewport)mapView.Viewport);
+            
+                manager.RequestAccessAndStart(new GpsRequest());
+            manager.StartListener(new GpsRequest());
+
+            mapView.Navigator = new Navigator(mapView.Map, (IViewport)mapView.Viewport);
+            
             eventAggregator.GetEvent<GpsDataReceivedEvent>().Subscribe(e =>
             {
                 Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
                 {
                     var coords = new Position(e.Position.Latitude, e.Position.Longitude);
-                    info.Text = $"{coords.ToString()} - D:{(int)e.Heading} S:{Math.Round(e.Speed, 2)}";
+                    info.Text = $"{coords} - D:{(int)e.Heading} S:{Math.Round(e.Speed, 2)}";
 
                     mapView.MyLocationLayer.UpdateMyLocation(new Position(e.Position.Latitude, e.Position.Longitude));
                     mapView.MyLocationLayer.UpdateMyDirection(e.Heading, mapView.Viewport.Rotation);

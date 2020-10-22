@@ -44,8 +44,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\ServoPage.xaml.cs">
-      <DependentUpon>ServoPage.xaml</DependentUpon>
+    <Compile Update="Views\EventLogPage.xaml.cs">
+      <DependentUpon>EventLogPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\LiveDataLogPage.xaml.cs">
+      <DependentUpon>LiveDataLogPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
@@ -71,7 +74,7 @@
     <EmbeddedResource Update="Views\ErrorLogPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EventsPage.xaml">
+    <EmbeddedResource Update="Views\EventLogPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\GaugePage.xaml">

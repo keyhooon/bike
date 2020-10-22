@@ -84,7 +84,7 @@ namespace Device.Communication.Codec
                 if (crc8 == reader.ReadByte())
                     return new BatteryOutput()
                     {
-                        Current = BitConverter.ToUInt16(value.Take(2).ToArray()) * _currentBitResolution + _currentBias,
+                        Current = ((double)BitConverter.ToUInt16(value.Take(2).ToArray()))/500,
                         Voltage = BitConverter.ToUInt16(value.Skip(2).Take(2).ToArray()) * _voltageBitResolution + _voltageBias,
                         Temprature = BitConverter.ToUInt16(value.Skip(4).Take(2).ToArray()) * _tempratureBitResolution + _tempratureBias,
                     };

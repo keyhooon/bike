@@ -2,6 +2,7 @@
 using Device;
 using Device.Communication.Codec;
 using Infrastructure;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 
@@ -19,8 +20,22 @@ namespace bike.ViewModels
         {
             _servoDriveService = servoDriveService;
             _servoDriveService.PropertyChanged += (sender, e) => RaisePropertyChanged(nameof(e.PropertyName));
-        }
+            RaisePropertyChanged(nameof(BatteryConfiguration));
+            RaisePropertyChanged(nameof(CoreConfiguration));
+            RaisePropertyChanged(nameof(PedalConfiguration));
+            RaisePropertyChanged(nameof(ThrottleConfiguration));
 
+        }
+        private DelegateCommand _refreshCommand;
+        public DelegateCommand RefreshCommand =>
+            _refreshCommand ??= new DelegateCommand(() =>
+            {
+                _servoDriveService.RefreshConfiguration();
+                RaisePropertyChanged(nameof(BatteryConfiguration));
+                RaisePropertyChanged(nameof(CoreConfiguration));
+                RaisePropertyChanged(nameof(PedalConfiguration));
+                RaisePropertyChanged(nameof(ThrottleConfiguration));
+            });
 
         #endregion
 

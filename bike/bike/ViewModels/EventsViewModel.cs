@@ -18,13 +18,13 @@ using Shiny.Models;
 
 namespace bike.ViewModels
 {
-    public class EventsViewModel : AbstractItemListViewModel<LogStore>
+    public class EventLogViewModel : AbstractItemListViewModel<LogStore>
     {
         private readonly ShinySqliteConnection connection;
         private readonly ISerializer serializer;
         protected CompositeDisposable DestroyWith { get; } = new CompositeDisposable();
 
-        public EventsViewModel(
+        public EventLogViewModel(
             IUserDialogs dialogs,
             ISerializer serializer,
             ShinySqliteConnection connection) : base(dialogs)

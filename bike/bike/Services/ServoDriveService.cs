@@ -95,7 +95,8 @@ namespace bike.Services
                         }; 
                         packetEncodings[typeof(LightSetting)].DecodeFinished += (sender, e) =>
                         {
-                            LightSetting = (LightSetting)e.Packet;
+                            settings.Set(nameof(LightSetting), (LightSetting)e.Packet);
+                            //LightSetting = (LightSetting)e.Packet;
                             OnPropertyChanged(nameof(LightSetting));
                             LightSettingChanged?.Invoke(sender, e);
                         }; 
@@ -113,7 +114,8 @@ namespace bike.Services
                         }; 
                         packetEncodings[typeof(PedalSetting)].DecodeFinished += (sender, e) =>
                         {
-                            PedalSetting = (PedalSetting)e.Packet;
+                            settings.Set(nameof(PedalSetting), (PedalSetting)e.Packet);
+                            //PedalSetting = (PedalSetting)e.Packet;
                             OnPropertyChanged(nameof(PedalSetting));
                             PedalSettingChanged?.Invoke(sender, e);
                         }; ;
@@ -137,16 +139,13 @@ namespace bike.Services
                         }; ;
                         packetEncodings[typeof(ThrottleSetting)].DecodeFinished += (sender, e) =>
                         {
-                            ThrottleSetting = (ThrottleSetting)e.Packet;
+                            settings.Set(nameof(ThrottleSetting), (ThrottleSetting)e.Packet);
+                            //ThrottleSetting = (ThrottleSetting)e.Packet;
                             OnPropertyChanged(nameof(ThrottleSetting));
                             ThrottleSettingChanged?.Invoke(sender, e);
                         }; ;
 
-                        RefreshBatteryConfiguration();
-                        RefreshCoreConfiguration();
-                        RefreshPedalConfiguration();
-                        RefreshThrottleConfiguration();
-                        RefreshFault();
+                        RefreshConfiguration();
                     }
                     else
                     {
@@ -155,6 +154,14 @@ namespace bike.Services
                     IsOpenChanged?.Invoke(this, e);
                 }
             };
+        }
+        public void RefreshConfiguration()
+        {
+            RefreshBatteryConfiguration();
+            RefreshCoreConfiguration();
+            RefreshPedalConfiguration();
+            RefreshThrottleConfiguration();
+            RefreshFault();
         }
 
         private async Task TryOpenDataTransport()
@@ -215,6 +222,7 @@ namespace bike.Services
                     return;
                 settings.Set(nameof(LightSetting), value);
                 dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Data() { DescendantPacket = value } });
+                OnPropertyChanged(nameof(LightSetting));
             }
         }
 
@@ -227,6 +235,7 @@ namespace bike.Services
                     return;
                 settings.Set(nameof(PedalSetting), value);
                 dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Data() { DescendantPacket = value } });
+                OnPropertyChanged(nameof(PedalSetting));
             }
         }
 
@@ -239,6 +248,7 @@ namespace bike.Services
                     return;
                 settings.Set(nameof(ThrottleSetting), value);
                 dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Data() { DescendantPacket = value } });
+                OnPropertyChanged(nameof(ThrottleSetting));
             }
         }
 

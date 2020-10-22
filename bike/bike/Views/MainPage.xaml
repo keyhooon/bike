@@ -176,28 +176,41 @@
                                             <gauge:GaugeAnnotation
                                                 HorizontalAlignment="Start"
                                                 VerticalAlignment="End"
-                                                Angle="310"
-                                                Offset="1">
+                                                Angle="320"
+                                                Offset=".9">
                                                 <gauge:GaugeAnnotation.View>
-                                                    <StackLayout Orientation="Horizontal">
+                                                    <StackLayout Orientation="Vertical">
                                                         <Label
+                                                            FontSize="{StaticResource BaseFontSize-}"
+                                                            LineBreakMode="NoWrap"
+                                                            Text="{Binding ServoDriveService.BatteryOutput.Temprature, StringFormat='{0:F1}°'}"
+                                                            VerticalOptions="Center" />
+                                                        <Label
+                                                            Margin="0"
+                                                            Padding="0"
                                                             FontFamily="{StaticResource MaterialIcons}"
                                                             FontSize="{StaticResource BaseFontSize+++}"
                                                             Text=""
                                                             TextColor="DarkRed" />
-                                                        <Label Text="{Binding ServoDriveService.BatteryOutput.Temprature, StringFormat='{0:F1}°'}" VerticalOptions="Center" />
+
                                                     </StackLayout>
                                                 </gauge:GaugeAnnotation.View>
                                             </gauge:GaugeAnnotation>
                                             <gauge:GaugeAnnotation
                                                 HorizontalAlignment="End"
                                                 VerticalAlignment="End"
-                                                Angle="230"
-                                                Offset="1">
+                                                Angle="220"
+                                                Offset=".9">
                                                 <gauge:GaugeAnnotation.View>
-                                                    <StackLayout Orientation="Horizontal">
-                                                        <Label Text="{Binding ServoDriveService.BatteryOutput.Voltage, StringFormat='{0:F1}v'}" VerticalOptions="Center" />
+                                                    <StackLayout Orientation="Vertical">
                                                         <Label
+                                                            FontSize="{StaticResource BaseFontSize-}"
+                                                            LineBreakMode="NoWrap"
+                                                            Text="{Binding ServoDriveService.BatteryOutput.Voltage, StringFormat='{0:F1}v'}"
+                                                            VerticalOptions="Center" />
+                                                        <Label
+                                                            Margin="0"
+                                                            Padding="0"
                                                             FontFamily="{StaticResource MaterialIcons}"
                                                             FontSize="{StaticResource BaseFontSize+++}"
                                                             Text=""
@@ -422,7 +435,7 @@
                                         </Grid.GestureRecognizers>
 
                                         <Picker
-                                            HorizontalOptions="Center" 
+                                            HorizontalOptions="Center"
                                             ItemsSource="{Binding PedalAssistLevelList}"
                                             SelectedIndex="{Binding SelectedPedalAssistLevel, Mode=TwoWay}"
                                             SelectedIndexChanged="Picker_SelectedIndexChanged"
@@ -467,10 +480,11 @@
                                     Grid.Row="1"
                                     Grid.Column="2"
                                     Margin="0,15,15,15">
+                                    <SFCards:SfCardView.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                    </SFCards:SfCardView.GestureRecognizers>
                                     <Grid>
-                                        <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                        </Grid.GestureRecognizers>
+
 
                                         <Picker
                                             BackgroundColor="Default"

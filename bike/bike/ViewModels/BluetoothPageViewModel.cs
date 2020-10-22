@@ -39,7 +39,8 @@ namespace bike.ViewModels
                 var confirm = await dialogs.Confirm($"Do you want Connect {b.Item1}");
                 if (confirm)
                 {
-                    option.DeviceName = b.Item2;
+                    option.DeviceName = b.Item1;
+                    //option.UUID = b.Item2;
                     if (dataTransport.IsOpen)
                     dataTransport.Close();
                 }

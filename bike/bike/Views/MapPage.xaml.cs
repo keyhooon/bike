@@ -11,50 +11,52 @@ using Prism.Events;
 using bike.Events;
 using System;
 using Mapsui.Geometries;
+using Shiny.Locations;
 
 namespace bike.Views
 {
     public partial class MapPage 
     {
-        //private readonly IEventAggregator eventAggregator;
+        private readonly IEventAggregator eventAggregator;
 
-        //public MapPage(IEventAggregator eventAggregator)
-        //{
-        //    InitializeComponent();
-        //    mapView.Map = CreateMap();
+        public MapPage(IGpsManager manager, IEventAggregator eventAggregator)
+        {
+            InitializeComponent();
+            mapView.Map = CreateMap();
+            manager.RequestAccessAndStart(new GpsRequest() { Interval = TimeSpan.FromSeconds(5), UseBackground = true });
 
-        //    mapView.Navigator = new AnimatedNavigator(mapView.Map, (IViewport)mapView.Viewport);
-        //    this.eventAggregator = eventAggregator;
-        //    eventAggregator.GetEvent<GpsDataReceivedEvent>().Subscribe(e =>
-        //   {
-        //       Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
-        //       {
-        //           var coords = new Position(e.Position.Latitude, e.Position.Longitude);
-        //           info.Text = $"{coords.ToString()} - D:{(int)e.Heading} S:{Math.Round(e.Speed, 2)}";
-                   
-        //           mapView.MyLocationLayer.UpdateMyLocation(new Position(e.Position.Latitude, e.Position.Longitude));
-        //           mapView.MyLocationLayer.UpdateMyDirection(e.Heading, mapView.Viewport.Rotation);
-        //           mapView.MyLocationLayer.UpdateMySpeed(e.Speed);
-        //       });
-        //   });
-        //}
-        //public static Map CreateMap()
-        //{
-        //    var map = new Map
-        //    {
-        //        CRS = "EPSG:3857",
-        //        Transformation = new MinimalTransformation()
-        //    };
-        //    map.Limiter.PanLimits = new BoundingBox(new Point(45.26,24.68), new Point(60.56, 39.26));
-        //    map.Layers.Add(OpenStreetMap.CreateTileLayer());
-        //    map.Widgets.Add(new ScaleBarWidget(map) { TextAlignment = Alignment.Center, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Top });
-        //    map.Widgets.Add(new ZoomInOutWidget { MarginX = 20, MarginY = 40 });
-        //    return map;
-        //}
-        //protected override void OnAppearing()
-        //{
-        //    mapView.Refresh();
-        //}
+            mapView.Navigator = new Navigator(mapView.Map, (IViewport)mapView.Viewport);
+            this.eventAggregator = eventAggregator;
+            eventAggregator.GetEvent<GpsDataReceivedEvent>().Subscribe(e =>
+           {
+               Xamarin.Forms.Device.BeginInvokeOnMainThread(() =>
+               {
+                   var coords = new Position(e.Position.Latitude, e.Position.Longitude);
+                   info.Text = $"{coords.ToString()} - D:{(int)e.Heading} S:{Math.Round(e.Speed, 2)}";
+
+                   mapView.MyLocationLayer.UpdateMyLocation(new Position(e.Position.Latitude, e.Position.Longitude));
+                   mapView.MyLocationLayer.UpdateMyDirection(e.Heading, mapView.Viewport.Rotation);
+                   mapView.MyLocationLayer.UpdateMySpeed(e.Speed);
+               });
+           });
+        }
+        public static Map CreateMap()
+        {
+            var map = new Map
+            {
+                CRS = "EPSG:3857",
+                Transformation = new MinimalTransformation()
+            };
+            map.Limiter.PanLimits = new BoundingBox(new Point(45.26, 24.68), new Point(60.56, 39.26));
+            map.Layers.Add(OpenStreetMap.CreateTileLayer());
+            map.Widgets.Add(new ScaleBarWidget(map) { TextAlignment = Alignment.Center, HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Top });
+            map.Widgets.Add(new ZoomInOutWidget { MarginX = 20, MarginY = 40 });
+            return map;
+        }
+        protected override void OnAppearing()
+        {
+            mapView.Refresh();
+        }
         //private void mapView_MapClicked(object sender, MapClickedEventArgs args)
         //{
         //    var mapView = sender as MapView;

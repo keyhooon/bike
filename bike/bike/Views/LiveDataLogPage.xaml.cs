@@ -5,9 +5,9 @@ namespace bike.Views
 {
     [Preserve(AllMembers = true)]
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ServoPage : ContentPage
+    public partial class LiveDataLogPage : ContentPage
     {
-        public ServoPage()
+        public LiveDataLogPage()
         {
             InitializeComponent();
         }

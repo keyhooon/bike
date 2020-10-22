@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="bike.Views.ServoPage"
+    x:Class="bike.Views.LiveDataLogPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:prism="http://prismlibrary.com"
@@ -76,7 +76,7 @@
                 </sv:Section>
                 <sv:Section Title="Servo Output">
                     <sv:LabelCell Title="Activity Percent" ValueText="{Binding ServoOutput.ActivityPercent, StringFormat='{0:F2} %'}" />
-                    <sv:LabelCell Title="Wheel Speed" ValueText="{Binding ServoOutput.WheelSpeed}" />
+                    <sv:LabelCell Title="Wheel Speed" ValueText="{Binding ServoOutput.WheelSpeed, StringFormat='{0:F2}'}" />
                 </sv:Section>
                 <sv:Section Title="BlueTooth ">
                     <sv:LabelCell Title="Data Received Count" ValueText="{Binding DataReceivedCount}" />

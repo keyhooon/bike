@@ -31,8 +31,8 @@ namespace bike.Droid.Services
         {
             _channels.Clear();
             _socket?.Close();
-            _socket?.Dispose();
-            _socket = null;
+         //   _socket?.Dispose();
+         //   _socket = null;
         }
 
         protected override void OpenCore()
@@ -55,7 +55,7 @@ namespace bike.Droid.Services
             var ch = ((PacketChannelFactory)ChannelFactory).Create(_socket.InputStream, _socket.OutputStream);
             ch.ErrorReceived += (sender, ex) =>
             {
-                _socket = null;
+               // _socket = null;
             };
             _channels.Add(ch);
             ch.DataReceived += (sender, e) => DataReceivedCount = ch.ToMonitoredChannel().GetDataReceivedCount;

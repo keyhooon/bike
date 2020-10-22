@@ -39,7 +39,18 @@
                     Text="Configuration"
                     TextColor="White"
                     VerticalTextAlignment="Center" />
-
+                <Button
+                    Padding="0"
+                    AbsoluteLayout.LayoutBounds="1,0,.2,1"
+                    AbsoluteLayout.LayoutFlags="All"
+                    BackgroundColor="{StaticResource PrimaryColor}"
+                    Command="{Binding RefreshCommand}"
+                    FontFamily="{StaticResource MaterialIcons}"
+                    FontSize="30"
+                    HorizontalOptions="End"
+                    Text=""
+                    TextColor="White"
+                    WidthRequest="50" />
             </AbsoluteLayout>
             <sv:SettingsView Grid.Row="1">
                 <sv:Section Title="Core" BindingContext="{Binding CoreConfiguration}">
