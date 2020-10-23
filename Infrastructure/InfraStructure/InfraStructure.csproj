@@ -29,10 +29,10 @@
     <PackageReference Include="Com.Airbnb.Xamarin.Forms.Lottie" Version="4.0.4" />
 
     <PackageReference Include="Shiny.Prism" Version="7.2.0.1054" />
-    <PackageReference Include="Shiny.Integrations.Sqlite" Version="1.2.0.1686" />
-    <PackageReference Include="Shiny.Locations" Version="1.2.0.1686" />
-    <PackageReference Include="Shiny.Notifications" Version="1.2.0.1686" />
-    <PackageReference Include="Shiny.Sensors" Version="1.2.0.1686" />
+    <PackageReference Include="Shiny.Integrations.Sqlite" Version="1.2.0.1755" />
+    <PackageReference Include="Shiny.Locations" Version="1.2.0.1755" />
+    <PackageReference Include="Shiny.Notifications" Version="1.2.0.1755" />
+    <PackageReference Include="Shiny.Sensors" Version="1.2.0.1755" />
 
     <PackageReference Include="Acr.UserDialogs.Forms" Version="1.0.0.7-beta" />
     <PackageReference Include="ReactiveUI.Fody" Version="11.5.35" />

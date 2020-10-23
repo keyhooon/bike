@@ -14,9 +14,12 @@ using bike.Events;
 using Mapsui.UI.Forms;
 using System;
 using Shiny.Locations;
+using Xamarin.Forms.Xaml;
 
 namespace bike.Views
 {
+    [Preserve(AllMembers = true)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainPage 
     {
         public MainPage(IGpsManager manager, IEventAggregator eventAggregator)

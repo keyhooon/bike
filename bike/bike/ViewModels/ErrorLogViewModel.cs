@@ -35,13 +35,13 @@ namespace bike.ViewModels
                 .WhenExceptionLogged()
                 .Select(x => new LogStore
                 {
-                    Description = x.ToString(),
-                    Detail = String.Empty,
+                    Description = x.Exception.ToString(),
+                    Detail = string.Empty,
                     Parameters = this.serializer.Serialize(x.Parameters),
                     IsError = true,
                     TimestampUtc = DateTime.UtcNow
                 })
-                .Subscribe(this.Add)
+                .SubOnMainThread(this.Add)
                 .DisposeWith(this.DestroyWith);
         }
         public override void Destroy()
@@ -55,7 +55,7 @@ namespace bike.ViewModels
         protected override string DatailText(LogStore item)
         {
             var s = $"{item.TimestampUtc}{Environment.NewLine}{item.Description}{Environment.NewLine}";
-            if (!item.Parameters.IsEmpty())
+            if (!item.Parameters.IsEmpty() && item.Parameters.Length>2)
             {
                 var parameters = this.serializer.Deserialize<Tuple<string, string>[]>(item.Parameters);
                 foreach (var p in parameters)

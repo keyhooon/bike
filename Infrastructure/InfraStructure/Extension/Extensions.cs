@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using ReactiveUI;
 using Acr.UserDialogs.Forms;
 using Shiny;
-
+using Xamarin.Forms;
 
 namespace Infrastructure
 {

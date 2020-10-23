@@ -68,7 +68,7 @@
                             <Grid>
                                 <Label
                                     Margin="5"
-                                    FontSize="Large"
+                                    FontSize="Large" 
                                     HorizontalOptions="FillAndExpand"
                                     HorizontalTextAlignment="Center"
                                     IsVisible="{Binding HasItems, Converter={StaticResource Not}}"

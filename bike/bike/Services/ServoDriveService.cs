@@ -24,10 +24,11 @@ namespace bike.Services
 {
     public class ServoDriveService : INotifyPropertyChanged
     {
+        private Task tryOpenDataTransportTask;
+        private CancellationTokenSource tryOpenDataTransportCancellationTokenSource;
         private readonly DataTransport<Packet> dataTransport;
         private readonly ISettings settings;
         private readonly SqliteConnection connection;
-        private readonly ICache cache;
         private readonly ObservableCollection<Diagnostic> currentDiagnostic;
         public event EventHandler IsOpenChanged;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -48,13 +49,12 @@ namespace bike.Services
         public event EventHandler<EventArg<(Fault.Kind Kind, bool IsFinished)>> FaultOccured;
 
 
-        public ServoDriveService(DataTransport<Packet> dataTransport, ISettings settings, SqliteConnection connection, ICache cache)
+        public ServoDriveService(DataTransport<Packet> dataTransport, ISettings settings, SqliteConnection connection)
         {
             this.dataTransport = dataTransport;
             this.settings = settings;
             this.connection = connection;
-            this.cache = cache;
-
+           
             _ = Task.Run(TryOpenDataTransport);
             this.dataTransport.IsOpenChanged += (sender, e) =>
             {
@@ -147,10 +147,6 @@ namespace bike.Services
 
                         RefreshConfiguration();
                     }
-                    else
-                    {
-                        _ = Task.Run(TryOpenDataTransport);
-                    }
                     IsOpenChanged?.Invoke(this, e);
                 }
             };
@@ -166,20 +162,22 @@ namespace bike.Services
 
         private async Task TryOpenDataTransport()
         {
-            while (!dataTransport.IsOpen)
-            {
-                try
+                while (true)
                 {
+                    try
+                    {
+
+                        if (dataTransport.CanOpen)
+                            dataTransport.Open();
                     await Task.Delay(1000);
-                    if (dataTransport.CanOpen)
-                        dataTransport.Open();
                 }
-                catch
-                {
+                    catch
+                    {
+                    await Task.Delay(4000); ;
 
-
+                    }
                 }
-            }
+            
         }
 
         private void Item_DataReceived(object sender, DataReceivedEventArg<Packet> e)

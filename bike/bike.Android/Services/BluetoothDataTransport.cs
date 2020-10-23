@@ -52,15 +52,23 @@ namespace bike.Droid.Services
                 throw new Exception($"There is no BlueTooth Device with {Java.Util.UUID.FromString(((BluetoothDataTransportOption)Option).DeviceName)} Name.");
             _socket = device.CreateRfcommSocketToServiceRecord(Java.Util.UUID.FromString(((BluetoothDataTransportOption)Option).UUID));
             _socket.Connect();
+            ErrorCount = 0;
             var ch = ((PacketChannelFactory)ChannelFactory).Create(_socket.InputStream, _socket.OutputStream);
             ch.ErrorReceived += (sender, ex) =>
             {
+                if (ErrorCount++>5)
+                {
+                    Close();
+                    ErrorCount = 0;
+                }
+              
                // _socket = null;
             };
             _channels.Add(ch);
             ch.DataReceived += (sender, e) => DataReceivedCount = ch.ToMonitoredChannel().GetDataReceivedCount;
         }
         public int DataReceivedCount { get; set; }
+        public int ErrorCount { get; set; }
         public (string Name,string Address)[] BluetoothBonded => (_adapter.BondedDevices.Select((device) => ( device.Name, device.Address )).ToArray());
     }
 }

@@ -31,6 +31,7 @@ namespace bike.Droid
         protected override void OnBuildApplication(IServiceCollection builder)
         {
             base.OnBuildApplication(builder);
+
             builder.AddSingleton<BluetoothPacketDataTransport>();
             builder.AddSingleton<DataTransport<Packet>>(x => x.GetRequiredService<BluetoothPacketDataTransport>());
             builder.AddSingleton<IBlueToothService>(x => x.GetRequiredService<BluetoothPacketDataTransport>());

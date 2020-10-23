@@ -565,6 +565,7 @@
                 IsEnabled="{Binding IsNavigateOnProgress, Converter={StaticResource Not}}"
                 ItemsSource="{Binding NavigationItems}">
                 <ListView.Resources />
+
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -581,6 +582,7 @@
                                     VerticalTextAlignment="Center" />
                                 <Label
                                     FontSize="16"
+                                    IsVisible="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsBusy, Converter={StaticResource Not}}"
                                     Text="{Binding Text}"
                                     TextColor="{StaticResource Gray-700}"
                                     VerticalOptions="Center" />

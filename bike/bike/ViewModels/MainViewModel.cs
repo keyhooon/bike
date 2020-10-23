@@ -42,14 +42,13 @@ namespace bike.ViewModels
         DelegateCommand<string> _navigateCommand;
         public DelegateCommand<string> NavigateCommand => _navigateCommand ??= new DelegateCommand<string>(async (x) =>
         {
-
-
-            
+           
             IsNavigateOnProgress = true;
-            // IsBusy = true;
-            await Task.Run(() => Application.Current.Dispatcher.BeginInvokeOnMainThread(async() => { await navigationService.NavigateAsync(x); }));
-
-            // IsBusy = false;
+            //IsBusy = true;
+            Application.Current.Dispatcher.BeginInvokeOnMainThread(
+               async () => {await navigationService.NavigateAsync(x); });
+            await Task.Delay(1000);
+            //IsBusy = false;
             IsPresented = false;
             IsNavigateOnProgress = false;
 

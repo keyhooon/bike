@@ -6,6 +6,7 @@ using Xamarin.Forms.Xaml;
 
 namespace bike.Views
 {
+    [Preserve(AllMembers = true)]
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class HelpPage  
     {

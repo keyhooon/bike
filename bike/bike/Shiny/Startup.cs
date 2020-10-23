@@ -18,6 +18,7 @@ namespace bike.Shiny
             services.UseUserDialog();
             services.UseGps<GpsDelegate>();
             services.UseSqliteLogging(true, true);
+          //  services.UseSqliteSettings();
             // Register Stuff
         }
 

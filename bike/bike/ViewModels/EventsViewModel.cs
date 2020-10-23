@@ -40,8 +40,7 @@ namespace bike.ViewModels
                     Detail = x.Description,
                     Parameters = this.serializer.Serialize(x.Parameters),
                     TimestampUtc = DateTime.UtcNow
-                })
-                .Subscribe(Add)
+                }).SubOnMainThread(Add)
                 .DisposeWith(DestroyWith);
 
         }
