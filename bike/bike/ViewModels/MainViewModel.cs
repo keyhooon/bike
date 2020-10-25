@@ -15,23 +15,24 @@ using System.Linq;
 using System.ComponentModel;
 using Xamarin.Forms;
 using System.Collections.ObjectModel;
+using Prism.Ioc;
 
 namespace bike.ViewModels
 {
-    public class MainViewModel : ViewModel, IInitialize
+    public class MainViewModel : ViewModel, IInitializeAsync
     {
-        private readonly IDeviceService deviceService;
         private readonly INavigationService navigationService;
         private readonly IUserDialogs dialogs;
+        private readonly IContainerRegistry containerRegistry;
         private bool isNavigateOnProgress;
         private bool _masterIsPresent;
-        private readonly ServoDriveService _servoDriveService;
-        public MainViewModel(IDeviceService deviceService, INavigationService navigationService, ServoDriveService servoDriveService, IUserDialogs dialogs)
+
+        public MainViewModel(INavigationService navigationService, ServoDriveService servoDriveService, IUserDialogs dialogs, IContainerRegistry containerRegistry)
         {
-            this.deviceService = deviceService;
             this.navigationService = navigationService;
             this.dialogs = dialogs;
-            _servoDriveService = servoDriveService;
+            this.containerRegistry = containerRegistry;
+            ServoDriveService = servoDriveService;
 
             Task.Run(async() => {
                 await Task.Delay(300);
@@ -62,7 +63,7 @@ namespace bike.ViewModels
 
         public bool IsConnected
         {
-            get => _servoDriveService.IsOpen;
+            get => ServoDriveService.IsOpen;
         }
 
 
@@ -84,9 +85,9 @@ namespace bike.ViewModels
         private int _selectedthrottleMode;
 
 
-        public void Initialize(INavigationParameters parameters)
+        public async Task InitializeAsync(INavigationParameters parameters)
         {
-            _servoDriveService.PropertyChanged += (sender, e) =>
+            ServoDriveService.PropertyChanged += (sender, e) =>
             {
                 RaisePropertyChanged(e.PropertyName);
                 if (e.PropertyName == nameof(ServoDriveService.PedalSetting))
@@ -103,7 +104,7 @@ namespace bike.ViewModels
                 }
             };
 
-            _servoDriveService.IsOpenChanged += (sender, e) =>
+            ServoDriveService.IsOpenChanged += (sender, e) =>
             {
                 RaisePropertyChanged(nameof(IsConnected));
             };
@@ -130,6 +131,7 @@ namespace bike.ViewModels
                new NavigationItem (  "Help", "Nav/Help", "" ),
 
             });
+            
         }
 
         public List<string> PedalAssistLevelList { get => pedalAssistLevelList; private set => SetProperty(ref pedalAssistLevelList, value); }
@@ -194,7 +196,7 @@ namespace bike.ViewModels
             });
         }
 
-        public ServoDriveService ServoDriveService => _servoDriveService;
+        public ServoDriveService ServoDriveService { get; }
 
 
     }

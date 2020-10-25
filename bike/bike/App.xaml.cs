@@ -20,6 +20,7 @@ using System.Globalization;
 using Prism.Unity;
 using Unity;
 using Unity.Injection;
+using System.Threading.Tasks;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace bike
@@ -37,7 +38,7 @@ namespace bike
         }
  
 
-        protected override async void OnInitialized()
+        protected override void OnInitialized()
         {
             InitializeComponent();
             ViewModelLocationProvider.SetDefaultViewTypeToViewModelTypeResolver(viewType =>
@@ -49,7 +50,7 @@ namespace bike
                 return Type.GetType(viewModelName);
             });
             SyncfusionLicenseProvider.RegisterLicense("NzM3NEAzMTM3MmUzNDJlMzBPRm41TTBEL2hiZ0pjbG93dDZPQ0VocmRCWkJHSXlzWFgrUkxrZVlDaUpzPQ==");
-            await NavigationService.NavigateAsync("Main");
+            NavigationService.NavigateAsync("Main");
             
         }
 
@@ -69,30 +70,35 @@ namespace bike
                 }
                 return container.Resolve(t);
             });
-                    
 
 
-            containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
-            containerRegistry.RegisterForNavigation<TabbedPage>("TabbedPage");
-            containerRegistry.RegisterForNavigation<MainPage>("Main");
-            containerRegistry.RegisterForNavigation<DashboardPage>("Dashboard");
-            containerRegistry.RegisterForNavigation<GaugePage>("Gauge");
-
-            containerRegistry.RegisterForNavigation<SettingPage>("Settings");
-            containerRegistry.RegisterForNavigation<ReportPage>("Reports");
-            containerRegistry.RegisterForNavigation<DiagnosticPage>("Diagnostics");
-            containerRegistry.RegisterForNavigation<LoggingPage>("Logs");
-            containerRegistry.RegisterForNavigation<ErrorLogPage, ErrorLogViewModel>("Errors");
-            containerRegistry.RegisterForNavigation<EventLogPage, EventLogViewModel>("Events");
-            containerRegistry.RegisterForNavigation<LiveDataLogPage, LiveDataLogViewModel>("Servo");
 
 
-            containerRegistry.RegisterForNavigation<ConfigurationPage>("Configurations");
-            containerRegistry.RegisterForNavigation<ContactUsPage>("ContactUs");
-            containerRegistry.RegisterForNavigation<AboutUsSimplePage>("AboutUs");
-            containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
-            
-            containerRegistry.RegisterForNavigation<BluetoothPage, BluetoothPageViewModel>("BlueTooth");
+
+            Task.Run(() => {
+                containerRegistry.RegisterForNavigation<NavigationPage>("Nav");
+                containerRegistry.RegisterForNavigation<TabbedPage>("TabbedPage");
+                containerRegistry.RegisterForNavigation<MainPage>("Main");
+                containerRegistry.RegisterForNavigation<DashboardPage>("Dashboard");
+                containerRegistry.RegisterForNavigation<GaugePage>("Gauge");
+
+                containerRegistry.RegisterForNavigation<SettingPage>("Settings");
+                containerRegistry.RegisterForNavigation<ReportPage>("Reports");
+                containerRegistry.RegisterForNavigation<DiagnosticPage>("Diagnostics");
+                containerRegistry.RegisterForNavigation<LoggingPage>("Logs");
+                containerRegistry.RegisterForNavigation<ErrorLogPage, ErrorLogViewModel>("Errors");
+                containerRegistry.RegisterForNavigation<EventLogPage, EventLogViewModel>("Events");
+                containerRegistry.RegisterForNavigation<LiveDataLogPage, LiveDataLogViewModel>("Servo");
+
+
+                containerRegistry.RegisterForNavigation<ConfigurationPage>("Configurations");
+                containerRegistry.RegisterForNavigation<ContactUsPage>("ContactUs");
+                containerRegistry.RegisterForNavigation<AboutUsSimplePage>("AboutUs");
+                containerRegistry.RegisterForNavigation<HelpPage, HelpViewModel>("Help");
+
+                containerRegistry.RegisterForNavigation<BluetoothPage, BluetoothPageViewModel>("BlueTooth");
+            });
+
         }
     }
 }

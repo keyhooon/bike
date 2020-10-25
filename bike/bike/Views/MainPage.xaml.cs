@@ -39,7 +39,7 @@ namespace bike.Views
             map.Widgets.Add(new ZoomInOutWidget { MarginX = 20, MarginY = 40 });
             mapView.Map = map;
             
-                manager.RequestAccessAndStart(new GpsRequest());
+            manager.RequestAccessAndStart(new GpsRequest());
             manager.StartListener(new GpsRequest());
 
             mapView.Navigator = new Navigator(mapView.Map, (IViewport)mapView.Viewport);
