@@ -33,6 +33,16 @@ namespace bike.ViewModels
             this.dialogs = dialogs;
             this.containerRegistry = containerRegistry;
             ServoDriveService = servoDriveService;
+            servoDriveService.IsOpenChanged += (sender, e) =>
+            {
+                if (servoDriveService.IsOpen)
+                    this.dialogs.Toast("Bluetooth is Connected");
+                else
+                {
+                    this.dialogs.Toast("Bluetooth is Disconnected");
+
+                }
+            };
 
             Task.Run(async() => {
                 await Task.Delay(300);
@@ -61,10 +71,7 @@ namespace bike.ViewModels
             IsPresented = true;
         });
 
-        public bool IsConnected
-        {
-            get => ServoDriveService.IsOpen;
-        }
+        public bool IsConnected => ServoDriveService.IsOpen;
 
 
         public bool IsPresented
@@ -90,17 +97,18 @@ namespace bike.ViewModels
             ServoDriveService.PropertyChanged += (sender, e) =>
             {
                 RaisePropertyChanged(e.PropertyName);
-                if (e.PropertyName == nameof(ServoDriveService.PedalSetting))
+                switch (e.PropertyName)
                 {
-                    _selectedPedalAssistLevel = (int)ServoDriveService.PedalSetting.AssistLevel;
-                    _selectedpedalAssistSensitivities = (int)ServoDriveService.PedalSetting.ActivationTime;
-                    RaisePropertyChanged(nameof(SelectedPedalAssistLevel));
-                    RaisePropertyChanged(nameof(SelectedPedalAssistSensitivities));
-                }
-                if (e.PropertyName == nameof(ServoDriveService.ThrottleSetting))
-                {
-                    _selectedthrottleMode = (int)ServoDriveService.ThrottleSetting.ActivityType;
-                    RaisePropertyChanged(nameof(SelectedThrottleMode));
+                    case nameof(ServoDriveService.PedalSetting):
+                        _selectedPedalAssistLevel = (int)ServoDriveService.PedalSetting.AssistLevel;
+                        _selectedpedalAssistSensitivities = (int)ServoDriveService.PedalSetting.ActivationTime;
+                        RaisePropertyChanged(nameof(SelectedPedalAssistLevel));
+                        RaisePropertyChanged(nameof(SelectedPedalAssistSensitivities));
+                        break;
+                    case nameof(ServoDriveService.ThrottleSetting):
+                        _selectedthrottleMode = (int)ServoDriveService.ThrottleSetting.ActivityType;
+                        RaisePropertyChanged(nameof(SelectedThrottleMode));
+                        break;
                 }
             };
 

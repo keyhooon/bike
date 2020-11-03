@@ -34,9 +34,8 @@ namespace Device.Communication.Codec
             {
                 var o = (ThrottleSetting)packet;
                 byte crc8 = 0;
-                byte[] value;
-                value = BitConverter.GetBytes((byte)(o.ActivityType));
-                for (int i = 0; i < value.Length; i++)
+                var value = BitConverter.GetBytes((byte)(o.ActivityType));
+                for (var i = 0; i < value.Length; i++)
                     crc8 += value[i];
                 writer.Write(value);
                 writer.Write(crc8);
@@ -46,7 +45,7 @@ namespace Device.Communication.Codec
             {
                 var value = reader.ReadBytes(1);
                 byte crc8 = 0;
-                for (int i = 0; i < value.Length; i++)
+                for (var i = 0; i < value.Length; i++)
                     crc8 += value[i];
                 if (crc8 == reader.ReadByte())
                     return new ThrottleSetting()

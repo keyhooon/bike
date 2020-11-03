@@ -41,8 +41,8 @@
             <sv:SettingsView Grid.Row="1">
 
                 <sv:Section Title="Core State">
-                    <sv:LabelCell Title="Temprature" ValueText="{Binding Core.Temprature}" />
-                    <sv:LabelCell Title="Voltage" ValueText="{Binding Core.Voltage}" />
+                    <sv:LabelCell Title="Temprature" ValueText="{Binding Core.Temprature, StringFormat='{0:F1} c°'}" />
+                    <sv:LabelCell Title="Voltage" ValueText="{Binding Core.Voltage, StringFormat='{0:F2} V'}" />
                 </sv:Section>
                 <sv:Section Title="Battery Output">
                     <sv:LabelCell

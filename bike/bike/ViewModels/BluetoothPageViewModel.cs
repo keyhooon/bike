@@ -37,17 +37,15 @@ namespace bike.ViewModels
             _selectBluetoothCommand ??= new DelegateCommand<Tuple<string, string>>(async (b) =>
             {
                 var confirm = await dialogs.Confirm($"Do you want Connect {b.Item1}");
-                if (confirm)
-                {
-                    option.DeviceName = b.Item1;
-                    //option.UUID = b.Item2;
-                    if (dataTransport.IsOpen)
+                if (!confirm) return;
+                option.DeviceName = b.Item1;
+                //option.UUID = b.Item2;
+                if (dataTransport.IsOpen)
                     dataTransport.Close();
-                }
 
             });
 
-        protected async override Task<IEnumerable<Tuple<string, string>>> LoadItemsAsync(INavigationParameters parameters, CancellationToken token)
+        protected override async Task<IEnumerable<Tuple<string, string>>> LoadItemsAsync(INavigationParameters parameters, CancellationToken token)
         {
             await Task.CompletedTask;
             var result = blueToothService.BluetoothBonded;

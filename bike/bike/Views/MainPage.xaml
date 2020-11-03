@@ -136,6 +136,11 @@
                                     <RowDefinition Height="100" />
                                     <RowDefinition Height="1*" />
                                 </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
                                 <SFCards:SfCardView
                                     Grid.Row="0"
                                     Grid.ColumnSpan="3"
@@ -183,7 +188,7 @@
                                                         <Label
                                                             FontSize="{StaticResource BaseFontSize-}"
                                                             LineBreakMode="NoWrap"
-                                                            Text="{Binding ServoDriveService.BatteryOutput.Temprature, StringFormat='{0:F1}°'}"
+                                                            Text="{Binding ServoDriveService.Core.Temprature, StringFormat='{0:F1}°'}"
                                                             VerticalOptions="Center" />
                                                         <Label
                                                             Margin="0"
@@ -428,12 +433,11 @@
                                     </gauge:SfCircularGauge>
 
                                 </SFCards:SfCardView>
-                                <SFCards:SfCardView Grid.Row="1" Margin="15,15,0,15">
+                                <SFCards:SfCardView Grid.Row="1" Grid.Column="0" Margin="15,15,0,15">
+                                    <SFCards:SfCardView.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                    </SFCards:SfCardView.GestureRecognizers>
                                     <Grid>
-                                        <Grid.GestureRecognizers>
-                                            <SwipeGestureRecognizer Swiped="TapGestureRecognizer_Tapped" />
-                                        </Grid.GestureRecognizers>
-
                                         <Picker
                                             HorizontalOptions="Center"
                                             ItemsSource="{Binding PedalAssistLevelList}"
@@ -454,11 +458,10 @@
                                     Grid.Row="1"
                                     Grid.Column="1"
                                     Margin="7.5,15,7.5,15">
+                                    <SFCards:SfCardView.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
+                                    </SFCards:SfCardView.GestureRecognizers>
                                     <Grid>
-                                        <Grid.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
-                                        </Grid.GestureRecognizers>
-
                                         <Picker
                                             BackgroundColor="Default"
                                             HorizontalOptions="Center"
@@ -484,8 +487,6 @@
                                         <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" />
                                     </SFCards:SfCardView.GestureRecognizers>
                                     <Grid>
-
-
                                         <Picker
                                             BackgroundColor="Default"
                                             HorizontalOptions="Center"

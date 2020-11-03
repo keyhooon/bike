@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading;
-using System.Threading.Tasks;
-using bike.Models;
+﻿using bike.Models;
 using Device.Communication.Codec;
 using SharpCommunication.Channels;
 using SharpCommunication.Codec.Encoding;
@@ -18,14 +10,21 @@ using Shiny.Logging;
 using Shiny.Models;
 using Shiny.Settings;
 using SQLite;
+using System;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Threading.Tasks;
 using Xamarin.Forms.Internals;
 
 namespace bike.Services
 {
     public class ServoDriveService : INotifyPropertyChanged
     {
-        private Task tryOpenDataTransportTask;
-        private CancellationTokenSource tryOpenDataTransportCancellationTokenSource;
+
         private readonly DataTransport<Packet> dataTransport;
         private readonly ISettings settings;
         private readonly SqliteConnection connection;
@@ -54,7 +53,7 @@ namespace bike.Services
             this.dataTransport = dataTransport;
             this.settings = settings;
             this.connection = connection;
-           
+
             _ = Task.Run(TryOpenDataTransport);
             this.dataTransport.IsOpenChanged += (sender, e) =>
             {
@@ -63,87 +62,85 @@ namespace bike.Services
                     {
                         dataTransport.Channels.First().DataReceived += Item_DataReceived;
                         var packetEncodings = ((PacketCodec)dataTransport.Channels.First().Codec).AncestorPacketEncodings;
-                        packetEncodings[typeof(BatteryConfiguration)].DecodeFinished += (sender, e) =>
+                        packetEncodings[typeof(BatteryConfiguration)].DecodeFinished += (o, e1) =>
                         {
-                            BatteryConfiguration = (BatteryConfiguration)e.Packet;
+                            BatteryConfiguration = (BatteryConfiguration)e1.Packet;
                             OnPropertyChanged(nameof(BatteryConfiguration));
-                            BatteryConfigurationChanged?.Invoke(sender, e);
+                            BatteryConfigurationChanged?.Invoke(o, e1);
                         };
-                        packetEncodings[typeof(BatteryOutput)].DecodeFinished += (sender, e) =>
+                        packetEncodings[typeof(BatteryOutput)].DecodeFinished += (o, e1) =>
                         {
-                            BatteryOutput = (BatteryOutput)e.Packet;
+                            BatteryOutput = (BatteryOutput)e1.Packet;
                             OnPropertyChanged(nameof(BatteryOutput));
-                            BatteryOutputChanged?.Invoke(sender, e);
+                            BatteryOutputChanged?.Invoke(o, e1);
                         };
-                        packetEncodings[typeof(CoreConfiguration)].DecodeFinished += (sender, e) =>
+                        packetEncodings[typeof(CoreConfiguration)].DecodeFinished += (o, e1) =>
                         {
-                            CoreConfiguration = (CoreConfiguration)e.Packet;
+                            CoreConfiguration = (CoreConfiguration)e1.Packet;
                             OnPropertyChanged(nameof(CoreConfiguration));
-                            CoreConfigurationChanged?.Invoke(sender, e);
+                            CoreConfigurationChanged?.Invoke(o, e1);
                         };
-                        packetEncodings[typeof(CoreSituation)].DecodeFinished += (sender, e) =>
+                        packetEncodings[typeof(CoreSituation)].DecodeFinished += (o, e1) =>
                         {
-                            Core = (CoreSituation)e.Packet;
-                            OnPropertyChanged(nameof(CoreSituation));
-                            CoreSituationChanged?.Invoke(sender, e);
-                        }; 
-                        packetEncodings[typeof(Fault)].DecodeFinished += (sender, e) =>
+                            Core = (CoreSituation)e1.Packet;
+                            OnPropertyChanged(nameof(Core));
+                            CoreSituationChanged?.Invoke(o, e1);
+                        };
+                        packetEncodings[typeof(Fault)].DecodeFinished += (o, e1) =>
                         {
-                            Fault = (Fault)e.Packet;
+                            Fault = (Fault)e1.Packet;
                             OnPropertyChanged(nameof(Fault));
-                            FaultChanged?.Invoke(sender, e);
-                        }; 
-                        packetEncodings[typeof(LightSetting)].DecodeFinished += (sender, e) =>
+                            FaultChanged?.Invoke(o, e1);
+                        };
+                        packetEncodings[typeof(LightSetting)].DecodeFinished += (o, e1) =>
                         {
-                            settings.Set(nameof(LightSetting), (LightSetting)e.Packet);
-                            //LightSetting = (LightSetting)e.Packet;
+                            settings.Set(nameof(LightSetting), (LightSetting)e1.Packet);
                             OnPropertyChanged(nameof(LightSetting));
-                            LightSettingChanged?.Invoke(sender, e);
-                        }; 
-                        packetEncodings[typeof(LightState)].DecodeFinished += (sender, e) =>
+                            LightSettingChanged?.Invoke(o, e1);
+                        };
+                        packetEncodings[typeof(LightState)].DecodeFinished += (o, e1) =>
                         {
-                            LightState = (LightState)e.Packet;
+                            LightState = (LightState)e1.Packet;
                             OnPropertyChanged(nameof(LightState));
-                            LightStateChanged?.Invoke(sender, e);
-                        }; 
-                        packetEncodings[typeof(PedalConfiguration)].DecodeFinished += (sender, e) =>
+                            LightStateChanged?.Invoke(o, e1);
+                        };
+                        packetEncodings[typeof(PedalConfiguration)].DecodeFinished += (o, e1) =>
                         {
-                            PedalConfiguration = (PedalConfiguration)e.Packet;
+                            PedalConfiguration = (PedalConfiguration)e1.Packet;
                             OnPropertyChanged(nameof(PedalConfiguration));
-                            PedalConfigurationChanged?.Invoke(sender, e);
-                        }; 
-                        packetEncodings[typeof(PedalSetting)].DecodeFinished += (sender, e) =>
+                            PedalConfigurationChanged?.Invoke(o, e1);
+                        };
+                        packetEncodings[typeof(PedalSetting)].DecodeFinished += (o, e1) =>
                         {
-                            settings.Set(nameof(PedalSetting), (PedalSetting)e.Packet);
-                            //PedalSetting = (PedalSetting)e.Packet;
+                            settings.Set(nameof(PedalSetting), (PedalSetting)e1.Packet);
                             OnPropertyChanged(nameof(PedalSetting));
-                            PedalSettingChanged?.Invoke(sender, e);
-                        }; ;
-                        packetEncodings[typeof(ServoInput)].DecodeFinished += (sender, e) =>
+                            PedalSettingChanged?.Invoke(o, e1);
+                        }; 
+                        packetEncodings[typeof(ServoInput)].DecodeFinished += (o, e1) =>
                         {
-                            ServoInput = (ServoInput)e.Packet;
+                            ServoInput = (ServoInput)e1.Packet;
                             OnPropertyChanged(nameof(ServoInput));
-                            ServoInputChanged?.Invoke(sender, e);
-                        }; ;
-                        packetEncodings[typeof(ServoOutput)].DecodeFinished += (sender, e) =>
+                            ServoInputChanged?.Invoke(o, e1);
+                        }; 
+                        packetEncodings[typeof(ServoOutput)].DecodeFinished += (o, e1) =>
                         {
-                            ServoOutput = (ServoOutput)e.Packet;
+                            ServoOutput = (ServoOutput)e1.Packet;
                             OnPropertyChanged(nameof(ServoOutput));
-                            ServoOutputChanged?.Invoke(sender, e);
-                        }; ;
-                        packetEncodings[typeof(ThrottleConfiguration)].DecodeFinished += (sender, e) =>
+                            ServoOutputChanged?.Invoke(o, e1);
+                        }; 
+                        packetEncodings[typeof(ThrottleConfiguration)].DecodeFinished += (o, e1) =>
                         {
-                            ThrottleConfiguration = (ThrottleConfiguration)e.Packet;
+                            ThrottleConfiguration = (ThrottleConfiguration)e1.Packet;
                             OnPropertyChanged(nameof(ThrottleConfiguration));
-                            ThrottleConfigurationChanged?.Invoke(sender, e);
-                        }; ;
-                        packetEncodings[typeof(ThrottleSetting)].DecodeFinished += (sender, e) =>
+                            ThrottleConfigurationChanged?.Invoke(o, e1);
+                        }; 
+                        packetEncodings[typeof(ThrottleSetting)].DecodeFinished += (o, e1) =>
                         {
-                            settings.Set(nameof(ThrottleSetting), (ThrottleSetting)e.Packet);
+                            settings.Set(nameof(ThrottleSetting), (ThrottleSetting)e1.Packet);
                             //ThrottleSetting = (ThrottleSetting)e.Packet;
                             OnPropertyChanged(nameof(ThrottleSetting));
-                            ThrottleSettingChanged?.Invoke(sender, e);
-                        }; ;
+                            ThrottleSettingChanged?.Invoke(o, e1);
+                        }; 
 
                         RefreshConfiguration();
                     }
@@ -162,22 +159,20 @@ namespace bike.Services
 
         private async Task TryOpenDataTransport()
         {
-                while (true)
+            while (true)
+            {
+                try
                 {
-                    try
-                    {
 
-                        if (dataTransport.CanOpen)
-                            dataTransport.Open();
-                    await Task.Delay(1000);
+                    if (dataTransport.CanOpen)
+                        dataTransport.Open();
+                    await Task.Delay(3000);
                 }
-                    catch
-                    {
-                    await Task.Delay(4000); ;
-
-                    }
+                catch
+                {
+                    await Task.Delay(4000);
                 }
-            
+            }
         }
 
         private void Item_DataReceived(object sender, DataReceivedEventArg<Packet> e)
@@ -201,7 +196,7 @@ namespace bike.Services
         public void RefreshFault() => dataTransport.Channels.FirstOrDefault()?.Transmit(new Packet() { DescendantPacket = new Command() { DescendantPacket = new ReadCommand() { DataId = Fault.Encoding.Id } } });
 
 
-        public bool IsOpen { get => dataTransport.IsOpen; }
+        public bool IsOpen => dataTransport.IsOpen;
 
         public BatteryConfiguration BatteryConfiguration { get; private set; }
 
@@ -269,7 +264,7 @@ namespace bike.Services
 
         public ObservableCollection<Diagnostic> CurrentDiagnostic
         {
-            get => currentDiagnostic; 
+            get => currentDiagnostic;
         }
 
         public LightState LightState { get; private set; }

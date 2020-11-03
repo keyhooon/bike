@@ -58,14 +58,9 @@ namespace bike.Views
             });
         }
 
-        private void Button_Clicked(object sender, System.EventArgs e)
-        {
-            //this.Detail.Navigation.PushAsync(new SettingPage());
-        }
-
         private void TapGestureRecognizer_Tapped(object sender, System.EventArgs e)
         {
-            ((Element)sender).GetParent<Grid>().GetChildren<Picker>().FirstOrDefault()?.Focus();
+            ((Element)sender).GetChildren<Picker>().FirstOrDefault()?.Focus();
 
         }
         private void Picker_SelectedIndexChanged(object sender, System.EventArgs e)

@@ -13,7 +13,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 namespace bike.Droid
 {
-    [Activity(Theme = "@style/MainTheme.Splash", MainLauncher = true, NoHistory = true)]
+    [Activity(Theme = "@style/MainTheme.Splash", MainLauncher = false, NoHistory = true)]
     public class SplashActivity : FormsAppCompatActivity
     {
         static readonly string TAG = "X:" + typeof(SplashActivity).Name;

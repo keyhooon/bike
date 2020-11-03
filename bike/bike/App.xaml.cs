@@ -1,6 +1,4 @@
-﻿using Prism;
-using Prism.Ioc;
-using Shiny;
+﻿using Prism.Ioc;
 using bike.ViewModels;
 using bike.Views;
 using Xamarin.Forms.Xaml;
@@ -8,10 +6,8 @@ using AutoMapper;
 using AutoMapper.Configuration;
 using Syncfusion.Licensing;
 using bike.Views.AboutUs;
-using bike.ViewModels.AboutUs;
 using bike.Views.ContactUs;
 using Xamarin.Forms;
-using Communication;
 using bike.Services;
 using Prism.Mvvm;
 using System;
@@ -19,7 +15,6 @@ using System.Reflection;
 using System.Globalization;
 using Prism.Unity;
 using Unity;
-using Unity.Injection;
 using System.Threading.Tasks;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -62,7 +57,7 @@ namespace bike
                 .RegisterSingleton<IConfigurationProvider, MapperConfiguration>()
                 .UseServoDrive()
                 ;
-            ViewModelLocationProvider.SetDefaultViewModelFactory((Type t) =>
+            ViewModelLocationProvider.SetDefaultViewModelFactory((t) =>
             {
                 if (!container.IsRegistered(t, t.ToString()))
                 {

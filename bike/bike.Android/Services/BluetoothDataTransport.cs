@@ -23,9 +23,7 @@ namespace bike.Droid.Services
             _adapter = BluetoothAdapter.DefaultAdapter;
         }
 
-        protected override bool IsOpenCore {
-            get => _socket != null && _socket.IsConnected && Channels.Any();
-        }
+        protected override bool IsOpenCore => _socket != null && _socket.IsConnected && Channels.Any();
 
         protected override void CloseCore()
         {
@@ -46,7 +44,7 @@ namespace bike.Droid.Services
                 if (!SpinWait.SpinUntil(()=>_adapter.IsEnabled, TimeSpan.FromSeconds(2)))
                     throw new Exception("Bluetooth adapter can not enabled.");
             }
-            BluetoothDevice device = (_adapter.BondedDevices.FirstOrDefault((device) => device.Name == ((BluetoothDataTransportOption)Option).DeviceName));
+            var device = (_adapter.BondedDevices.FirstOrDefault((device) => device.Name == ((BluetoothDataTransportOption)Option).DeviceName));
             
             if (device == null)
                 throw new Exception($"There is no BlueTooth Device with {Java.Util.UUID.FromString(((BluetoothDataTransportOption)Option).DeviceName)} Name.");
@@ -56,15 +54,14 @@ namespace bike.Droid.Services
             var ch = ((PacketChannelFactory)ChannelFactory).Create(_socket.InputStream, _socket.OutputStream);
             ch.ErrorReceived += (sender, ex) =>
             {
-                if (ErrorCount++>5)
-                {
-                    Close();
-                    ErrorCount = 0;
-                }
-              
-               // _socket = null;
+                if (ErrorCount++ <= 5) return;
+                Close();
+                ErrorCount = 0;
+
+                // _socket = null;
             };
             _channels.Add(ch);
+
             ch.DataReceived += (sender, e) => DataReceivedCount = ch.ToMonitoredChannel().GetDataReceivedCount;
         }
         public int DataReceivedCount { get; set; }
